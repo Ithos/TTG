@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="Generic/Image" name="GameMenuRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="Image" value="SunBackground/full_image" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+    <Window type="Generic/Image" name="TopBar" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{0,0}}" />
+      <Property name="Image" value="GameMenuImages/TopBar" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="AspectMode" value="Expand" />
+      <Property name="AspectRatio" value="13.714" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="AlwaysOnTop" value="True" />
+      <Window type="Generic/Label" name="TopBarLabel" >
+        <Property name="Area" value="{{0,0},{0.4,0},{0.4,0},{0.7,0}}" />
+        <Property name="Font" value="Jura-16" />
+        <Property name="Text" value="Event" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF00A9FF" />
+        <Property name="HorizontalAlignment" value="Centre" />
+      </Window>
+      <!--TopBarLabel-->
+    </Window>
+    <!--TopBar-->
+    <Window type="Generic/Image" name="BotBar" >
+      <Property name="Area" value="{{0,-1},{0,1},{1,-1},{0,1}}" />
+      <Property name="Image" value="GameMenuImages/BotBar" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="AspectMode" value="Expand" />
+      <Property name="AspectRatio" value="13.714" />
+      <Property name="VerticalAlignment" value="Bottom" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="AlwaysOnTop" value="True" />
+      <Window type="Generic/Label" name="BotBarLabel" >
+        <Property name="Area" value="{{0,0},{0.32,0},{0.4,0},{0.87,0}}" />
+        <Property name="Font" value="Jura-13" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="VertFormatting" value="TopAligned" />
+        <Property name="NormalTextColour" value="FFFFF900" />
+        <Property name="HorizontalAlignment" value="Centre" />
+      </Window>
+      <!--BotBarLabel-->
+    </Window>
+    <!--BotBar-->
+    <Window type="DefaultWindow" name="InnerButtonsContainer" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Window type="TaharezLook/FrameWindow" name="LogWindow" >
+        <Property name="Area" value="{{0.5,0},{0.15,0},{0.95,0},{0.85,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="Alpha" value="0.4" />
+        <Window type="TaharezLook/Listbox" name="MessageBoard" >
+          <Property name="Area" value="{{0.03,0},{0.03,0},{0.957,0},{0.9,0}}" />
+          <Property name="Font" value="DejaVuSans-12" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--MessageBoard-->
+        <Window type="TaharezLook/Button" name="DocksButton" >
+          <Property name="Area" value="{{0.65,0},{0.915,0},{0.95,0},{0.985,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value="Explore Docks" />
+          <Property name="Alpha" value="1.0" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+        </Window>
+        <!--Docks Button-->
+        <Window type="TaharezLook/Button" name="CityButton" >
+          <Property name="Area" value="{{0.05,0},{0.915,0},{0.35,0},{0.985,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value="Search City" />
+          <Property name="Alpha" value="1.0" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+        </Window>
+        <!--City Button-->
+      </Window>
+      <!--LogWindow-->
+    </Window>
+    <!--InnerButtonsContainer-->
+    <Window type="DefaultWindow" name="CityPage" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="Visible" value="False" />
+      <Window type="TaharezLook/FrameWindow" name="LogWindow" >
+        <Property name="Area" value="{{0.1,0},{0.25,0},{0.9,0},{0.65,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="Alpha" value="0.4" />
+        <Window type="TaharezLook/Listbox" name="MessageBoard" >
+          <Property name="Area" value="{{0.03,0},{0.03,0},{0.957,0},{0.9,0}}" />
+          <Property name="Font" value="DejaVuSans-12" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--MessageBoard-->
+        <Window type="TaharezLook/Button" name="AcceptButton" >
+          <Property name="Area" value="{{0.05,0},{0.915,0},{0.35,0},{0.985,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value="Accept" />
+          <Property name="Alpha" value="1.0" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+        </Window>
+        <!--AcceptButton-->
+        <Window type="TaharezLook/Button" name="RejectButton" >
+          <Property name="Area" value="{{0.65,0},{0.915,0},{0.95,0},{0.985,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value="Reject" />
+          <Property name="Alpha" value="1.0" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+        </Window>
+        <!--AcceptButton-->
+      </Window>
+        <!--LogWindow-->
+    </Window>
+      <!--CityPage-->
+    <Window type="DefaultWindow" name="DocksPage" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="Visible" value="False" />
+      <Window type="TaharezLook/FrameWindow" name="ShopWindow" >
+        <Property name="Area" value="{{0.05,0},{0.1,0},{0.95,0},{0.9,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="Alpha" value="0.7" />
+        <Window type="TaharezLook/Listbox" name="ResourcesBoard" >
+          <Property name="Area" value="{{0.03,0},{0.03,0},{0.33,0},{0.10,0}}" />
+          <Property name="Font" value="DejaVuSans-12" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--ResourcesBoard-->
+        <Window type="TaharezLook/Listbox" name="HullBoard" >
+          <Property name="Area" value="{{0.6,0},{0.03,0},{0.957,0},{0.10,0}}" />
+          <Property name="Font" value="DejaVuSans-12" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--HullBoard-->
+        <Window type="TaharezLook/ItemListbox" name="ItemsBoard" >
+          <Property name="Area" value="{{0.03,0},{0.11,0},{0.79,0},{0.75,0}}" />
+          <Property name="Font" value="DejaVuSans-12" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--ItemsBoard-->
+        <Window type="TaharezLook/Listbox" name="CostBoard" >
+          <Property name="Area" value="{{0.81,0},{0.11,0},{0.957,0},{0.75,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--CostBoard-->
+        <Window type="TaharezLook/Listbox" name="DescriptionBoard" >
+          <Property name="Area" value="{{0.03,0},{0.77,0},{0.957,0},{0.95,0}}" />
+          <Property name="Font" value="DejaVuSans-12" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+        </Window>
+        <!--DescriptionBoard-->
+        <Window type="TaharezLook/Button" name="BackButton" >
+          <Property name="Area" value="{{0.05,0},{0.965,0},{0.35,0},{0.995,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value="Back to Ship" />
+          <Property name="Alpha" value="1.0" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+        </Window>
+        <!--BackButton-->
+        <Window type="TaharezLook/Button" name="PurchaseButton" >
+          <Property name="Area" value="{{0.65,0},{0.965,0},{0.95,0},{0.995,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value="Purchase" />
+          <Property name="Alpha" value="1.0" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+        </Window>
+        <!--PurchaseButton-->
+      </Window>
+        <!--LogWindow-->
+    </Window>
+      <!--DocksPage-->
+  </Window>
+  <!--GameMenuRoot-->
+</GUILayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="DefaultWindow" name="PlanetRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Window type="Generic/Image" name="BlackScreen" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="Image" value="GameMenuImages/Background" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+    </Window><!--BlackScreen-->
+    <Window type="DefaultWindow" name="PlanetHUD" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Window type="AlfiskoSkin/FrameWindow" name="InfoBoard" >
+        <Property name="Area" value="{{0,0},{-0.03,0},{1.0,0},{0.175,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="SizingEnabled" value="False" />
+        <Property name="Alpha" value="0.4" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Ship Status" />
+        <Property name="TitlebarEnabled" value="False" />
+        <Property name="DragMovingEnabled" value="False" />
+        <Property name="FrameEnabled" value="False" />
+        <Window type="TaharezLook/Listbox" name="PrimaryWindow" >
+          <Property name="Area" value="{{0.33,0},{0.03,0},{0.53,0},{0.93,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+         </Window>
+         <!--PrimaryWindow-->
+        <Window type="TaharezLook/Listbox" name="SecondaryWindow" >
+          <Property name="Area" value="{{0.56,0},{0.03,0},{0.76,0},{0.93,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+         </Window>
+         <!--SecondaryWindow-->
+         <Window type="TaharezLook/Listbox" name="Others" >
+          <Property name="Area" value="{{0.79,0},{0.03,0},{0.99,0},{0.93,0}}" />
+          <Property name="Font" value="Jura-10" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FFFFFFFF" />
+          <Property name="DisabledTextColour" value="FFFFFFFF" />
+          <Property name="Alpha" value="1.0" />
+         </Window>
+         <!--Others-->
+         <Window type="TaharezLook/Label" name="HullTag" >
+           <Property name="Area" value="{{0.03,0},{0.03,0},{0.3,0},{0.1,0}}" />
+           <Property name="Font" value="Jura-10" />
+           <Property name="Text" value="Hull State" />
+         </Window><!--HullTag-->
+         <Window type="TaharezLook/ProgressBar" name="Hull" >
+           <Property name="Area" value="{{0.03,0},{0.13,0},{0.3,0},{0.28,0}}" />
+           <Property name="CurrentProgress" value="1.0" />
+           <Property name="StepSize" value="0.01" />
+           <Property name="UpdateMode" value="Always" />
+           <Property name="Font" value="Jura-10" />
+           <Property name="Text" value="Hull State" />
+           <Property name="Alpha" value="2.0" />
+         </Window><!--Hull-->
+        <Window type="TaharezLook/Label" name="ShieldTag" >
+           <Property name="Area" value="{{0.03,0},{0.31,0},{0.3,0},{0.41,0}}" />
+           <Property name="Font" value="Jura-10" />
+           <Property name="Text" value="Shield State" />
+         </Window><!--ShieldTag-->
+        <Window type="AlfiskoSkin/ProgressBar" name="Shield" >
+           <Property name="Area" value="{{0.03,0},{0.44,0},{0.3,0},{0.59,0}}" />
+           <Property name="CurrentProgress" value="1.0" />
+           <Property name="StepSize" value="0.01" />
+           <Property name="UpdateMode" value="Always" />
+           <Property name="Font" value="Jura-10" />
+           <Property name="Text" value="Shield State" />
+           <Property name="Alpha" value="2.0" />
+         </Window><!--Shield-->
+         <Window type="TaharezLook/Label" name="EnergyTag" >
+            <Property name="Area" value="{{0.03,0},{0.62,0},{0.3,0},{0.72,0}}" />
+            <Property name="Font" value="Jura-10" />
+            <Property name="Text" value="Energy" />
+         </Window><!--ShieldTag-->
+         <Window type="SampleBrowserSkin/ProgressBar" name="Energy" >
+            <Property name="Area" value="{{0.03,0},{0.75,0},{0.3,0},{0.95,0}}" />
+            <Property name="CurrentProgress" value="1.0" />
+            <Property name="StepSize" value="0.01" />
+            <Property name="UpdateMode" value="Always" />
+            <Property name="Font" value="Jura-10" />
+            <Property name="Text" value="Energy" />
+            <Property name="Alpha" value="2.0" />
+         </Window><!--Shield-->
+     </Window><!--InfoBoard-->
+     <Window type="AlfiskoSkin/Button" name="LeaveButton" >
+        <Property name="Area" value="{{0.03,0},{0.94,0},{0.15,0},{0.97,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Leave Orbit" />
+      </Window><!--LeaveButton-->
+      <Window type="AlfiskoSkin/Button" name="PlanetButton" >
+        <Property name="Area" value="{{0.81,0},{0.70,0},{0.93,0},{0.73,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Land on planet" />
+        <Property name="Visible" value="False" />
+      </Window><!--PlanetButton-->
+      <Window type="TaharezLook/StaticImage" name="Radar" >
+        <Property name="Area" value="{{0.75,0},{0.75,0},{0.99,0},{0.99,0}}" />
+        <Property name="InheritsAlpha" value="False" />
+        <Property name="Alpha" value="1.0" />
+      </Window>
+      <!--Radar-->
+      <Window type="TaharezLook/ItemListbox" name="MessageBoard" >
+        <Property name="Area" value="{{0.03,0},{0.47,0},{0.27,0},{0.53,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Visible" value="False" />
+        <Window type="TaharezLook/ListboxItem" name="MessageTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Selectable" value="False" />
+          <Property name="Text" value=">>Leaving planet orbit." />
+        </Window>
+        <!--MessageTag-->
+      </Window><!--MessageBoard-->
+    </Window><!--PlanetHUD-->
+  </Window><!--PlanetRoot-->
+</GUILayout>

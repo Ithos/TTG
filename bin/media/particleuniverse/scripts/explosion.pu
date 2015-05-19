@@ -1,0 +1,114 @@
+system explosion
+{
+    category                                    Explosion
+    technique Fire
+    {
+        visual_particle_quota                   300
+        material                                ParticleUniverse/Nucleus
+        default_particle_width                  100
+        default_particle_height                 100
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point FireEmitter
+        {
+            emission_rate                       60
+            angle                               360
+            time_to_live                        1
+            velocity                            1.8
+            duration                            0.3
+            all_particle_dimensions             dyn_random
+            {
+                min                             40
+                max                             50
+            }
+            colour                              1 0.5 0.3 1
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           dyn_curved_linear
+            {
+                control_point                   0 60
+                control_point                   0.3 0.6
+                control_point                   1 0
+            }
+        }
+        affector                                TextureRotator 
+        {
+            use_own_rotation                    true
+            rotation                            dyn_random
+            {
+                min                             -90
+                max                             90
+            }
+            rotation_speed                      0
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.05  0.3 0.3 0.3 1
+            time_colour                         1    0 0 0 1
+            colour_operation                    multiply
+        }
+    }
+    technique 
+    {
+        visual_particle_quota                   300
+        material                                PUMediaPack/AtlasSmoke
+        default_particle_width                  100
+        default_particle_height                 100
+        renderer                                Billboard
+        {
+            render_queue_group                  51
+            texture_coords_rows                 4
+            texture_coords_columns              4
+            billboard_rotation_type             vertex
+        }
+        emitter                                 Slave 
+        {
+            time_to_live                        1.2
+            all_particle_dimensions             dyn_random
+            {
+                min                             40
+                max                             50
+            }
+            direction                           0 0 0
+            master_technique_name               Fire
+            master_emitter_name                 FireEmitter
+        }
+        affector                                TextureRotator 
+        {
+            use_own_rotation                    true
+            rotation                            dyn_random
+            {
+                min                             -90
+                max                             90
+            }
+            rotation_speed                      0
+        }
+        affector                                TextureAnimator 
+        {
+            end_texture_coords_range            15
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           dyn_curved_linear
+            {
+                control_point                   0 60
+                control_point                   0.2 0.6
+                control_point                   1 0
+            }
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0 0 0 1
+            time_colour                         0.1  0 0 0 1
+            time_colour                         0.11  0.3 0.3 0.3 1
+            time_colour                         0.8  0.3 0.3 0.3 1
+            time_colour                         1    0 0 0 0
+        }
+        behaviour                               Slave
+        {
+        }
+    }
+}

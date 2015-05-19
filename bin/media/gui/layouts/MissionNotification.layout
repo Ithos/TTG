@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="DefaultWindow" name="NotePageRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+    <Property name="Visible" value="False" />
+    <Window type="TaharezLook/FrameWindow" name="NoteWindow" >
+      <Property name="Area" value="{{0.1,0},{0.25,0},{0.9,0},{0.65,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="Alpha" value="1.0" />
+      <Property name="DragMovingEnabled" value="False" />
+      <Property name="SizingEnabled" value="False" />
+      <Property name="Visible" value="False" />
+      <Window type="TaharezLook/Listbox" name="NoteBoard" >
+        <Property name="Area" value="{{0.03,0},{0.03,0},{0.957,0},{0.9,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+      </Window>
+      <!--NoteBoard-->
+      <Window type="TaharezLook/Button" name="NoteBackButton" >
+        <Property name="Area" value="{{0.35,0},{0.915,0},{0.65,0},{0.985,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Close" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+      </Window>
+      <!--NoteBackButton-->
+    </Window>
+    <!--NoteWindow-->
+  </Window>
+  <!--NotePageRoot-->
+
+</GUILayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="Generic/Image" name="GameMenuRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="Image" value="SunBackground/full_image" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+  </Window>
+</GUILayout>

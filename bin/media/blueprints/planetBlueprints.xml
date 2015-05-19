@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+  <entity type="Player">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+    <component name="CController" number="1" priority="1" />
+    <component name="CMovement" number="2" priority="1" />
+    <component name="CPhysicController" number="3" priority="1" />
+    <component name="CInterpolation" number="4" priority="1" />
+    <component name="CMinimapHighlight" number="5" priority="0" />
+    <component name="CWeapons" number="6" priority="0" />
+    <component name="CLife" number="7" priority="0" />
+    <!--<component name="CShield" number="8" priority="1" />-->
+  </entity>
+  <entity type="Enemy">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+    <component name="CSteeringMovement" number="1" priority="1" />
+    <component name="CMovement" number="2" priority="1" />
+    <component name="CPhysicController" number="3" priority="1" />
+    <component name="CInterpolation" number="4" priority="1" />
+    <component name="CStateMachineExecutor" number="5" priority="1" />
+    <component name="CMinimapHighlight" number="6" priority="0" />
+    <component name="CLife" number="7" priority="0" />
+  </entity>
+  <entity type="Camera">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CCamera" number="0" priority="1" />
+  </entity>
+  <entity type="PlanetDirLight">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CDirectionalLight" number="0" priority="1" />
+  </entity>
+  <entity type="PlanetAmbientLight">
+    <component name="CAmbientLight" number="0" priority="0" />
+  </entity>
+  <entity type="Skybox">
+    <component name="CSkyBox" number="0" priority="0" />
+  </entity>
+  <entity type="Asteroid">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+    <component name="CPhysicDynamicActor" number="1" priority="1" />
+    <component name="CLife" number="2" priority="0" />
+  </entity>
+  <entity type="StaticAsteroid">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+  </entity>
+  <entity type="Planet">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+    <component name="CPlanetRotation" number="1" priority="1" />
+  </entity>
+  <entity type="PlanetTextureCamera">
+    <component name="CRTTCamera" number="0" priority="0" />
+  </entity>
+  <entity type="PlanetTrigger">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CPlanetTrigger" number="1" priority="0" />
+  </entity>
+  <entity type="PlanetLimitTrigger">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CSceneLimitTrigger" number="1" priority="0" />
+  </entity>
+  <entity type="PlanetEndTrigger">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CSceneEndTrigger" number="1" priority="0" />
+  </entity>
+  <entity type="Shield">
+    <component name="CShieldTrigger" number="0" priority="1" />
+  </entity>
+</entities>

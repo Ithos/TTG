@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+  <entity type="Star">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+    <component name="CPointLight" number="0" priority="1" />
+  </entity>
+  <entity type="MovingPlanet">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="0" priority="1" />
+    <component name="CRotation" number="1" priority="1" />
+    <component name="COrbitMovement" number="2" priority="1" />
+  </entity>
+  <entity type="Camera">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CStaticCamera" number="0" priority="0" />
+  </entity>
+  <entity type="SystemAmbientLight">
+    <component name="CAmbientLight" number="0" priority="0" />
+  </entity>
+  <entity type="TextureCamera">
+    <component name="CRTTCamera" number="0" priority="0" />
+  </entity>
+      <entity type="Skybox">
+    <component name="CSkyBox" number="0" priority="0" />
+  </entity>
+</entities>

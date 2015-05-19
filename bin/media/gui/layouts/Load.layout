@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="Generic/Image" name="GameMenuRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="Image" value="GameMenuImages/Background" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+    <Window type="Generic/Label" name="NavigationLabel" >
+      <Property name="Area" value="{{0,0},{0.48,0},{0.4,0},{0.53,0}}" />
+      <Property name="Font" value="Jura-16" />
+      <Property name="Text" value="Stablishing connection..." />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="NormalTextColour" value="FF0094FF" />
+      <Property name="DisabledTextColour" value="FF0094FF" />
+      <Property name="HorizontalAlignment" value="Centre" />
+    </Window>
+  </Window>
+</GUILayout>

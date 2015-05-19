@@ -23,7 +23,27 @@
 # The following files/folders will be ignored.
 
 dependecies/
-bin/*
+
+bin/*.log
+bin/*.dll
+bin/*.lib
+bin/*.manifest
+bin/*.exe
+bin/*.pdb
+bin/*.ilk
+bin/*.ini
+
+bin/log/*.log
+
+bin/media/fonts/*
+bin/media/gui/fonts/*
+bin/media/gui/imagesets/*
+bin/media/materials/textures/*
+bin/media/models/*
+bin/media/particleuniverse/models/*
+bin/media/particleuniverse/textures/*
+bin/media/sounds/*
+
 *.suo
 *.sdf
 *.opensdf
@@ -49,8 +69,4 @@ projects/Console/*
 src/Console/*
 
 # Exceptions, the following files/folders WONT be ignored. 
-!bin/
-bin/*
-!bin/conf/
-!bin/conf/configure.conf
-!bin/media/blueprints/*.xml
+

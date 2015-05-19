@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entities>
+  <entity type="Player">
+    <component name="CTransform" number="-1" priority="0"></component>
+    <component name="CControllerComponent" number="0" priority="1"></component>
+    <component name="CMovementComponent" number="1" priority="5"></component>
+    <component name="CGraphics" number="2" priority="1"></component>
+  </entity>
+  <entity type="Camera">
+    <component name="CTransform" number="-1" priority="0"></component>
+    <component name="CCameraComponent" number="0" priority="1"></component>
+  </entity>
+</entities>

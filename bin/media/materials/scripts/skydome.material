@@ -1,0 +1,17 @@
+material skybox_system
+{
+	technique
+	{
+		pass
+		{
+			depth_write off
+             lighting off
+
+			texture_unit
+			{
+				cubic_texture starfield.jpg separateUV
+				tex_address_mode clamp
+			}
+		}
+	}
+} 

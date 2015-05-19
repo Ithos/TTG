@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entities>
+  <entity type="System">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CGraphics" number="1" priority="0" />
+  </entity>
+  <entity type="Camera">
+    <component name="CTransform" number="0" priority="0" />
+    <component name="CStaticCamera" number="1" priority="0" />
+  </entity>
+  <entity type="SkyDome">
+    <component name="CSkyBox" number="0" priority="0" />
+  </entity>
+  <entity type="AmbientLight">
+    <component name="CAmbientLight" number="0" priority="0" />
+  </entity>
+</entities>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="DefaultWindow" name="SystemRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Window type="Generic/Image" name="BlackScreen" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="Image" value="GameMenuImages/Background" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+    </Window>
+    <!--BlackScreen-->
+    <Window type="TaharezLook/FrameWindow" name="PlanetWindow" >
+      <Property name="Area" value="{{0.21,0},{0,0},{0.81,0},{0.25,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="SizingEnabled" value="True" />
+      <Property name="Alpha" value="0.4" />
+      <Property name="NormalTextColour" value="FF0094FF" />
+      <Property name="Font" value="Jura-10" />
+      <Property name="Text" value="Planet Analysis" />
+      <Property name="DragMovingEnabled" value="False" />
+      <Property name="SizingEnabled" value="False" />
+      <Window type="TaharezLook/Listbox" name="PlanetBoard" >
+        <Property name="Area" value="{{0.43,0},{0.03,0},{0.97,0},{0.85,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+      </Window>
+      <!--PlanetBoard-->
+      <Window type="TaharezLook/StaticImage" name="PlanetImage" >
+        <Property name="Area" value="{{0.03,0},{0.03,0},{0.4,0},{0.85,0}}" />
+        <Property name="InheritsAlpha" value="False" />
+        <Property name="Alpha" value="1.0" />
+      </Window>
+      <!--PlanetImage-->
+      <Window type="TaharezLook/Button" name="PlanetButton" >
+        <Property name="Area" value="{{0.62,0},{0.88,0},{0.97,0},{0.99,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Go To Planet" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Disabled" value="True" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="00000000" />
+      </Window>
+      <!--EquipButton-->
+      <Window type="TaharezLook/Button" name="BackButton" >
+        <Property name="Area" value="{{0.03,0},{0.88,0},{0.38,0},{0.99,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Back" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Disabled" value="False" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="00000000" />
+      </Window>
+      <!--EquipButton-->
+      </Window>
+    <!--PlanetWindow-->
+  </Window>
+</GUILayout>

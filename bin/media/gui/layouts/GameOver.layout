@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="Generic/Image" name="GameMenuRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="Image" value="GameMenuImages/Background" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+    <Window type="Generic/Image" name="TopBar" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{0,0}}" />
+      <Property name="Image" value="GameMenuImages/TopBar" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="AspectMode" value="Expand" />
+      <Property name="AspectRatio" value="13.714" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="AlwaysOnTop" value="True" />
+      <Window type="Generic/Label" name="TopBarLabel" >
+        <Property name="Area" value="{{0,0},{0.4,0},{0.4,0},{0.7,0}}" />
+        <Property name="Font" value="Jura-16" />
+        <Property name="Text" value="Game Over" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF00A9FF" />
+        <Property name="HorizontalAlignment" value="Centre" />
+      </Window>
+      <!--TopBarLabel-->
+    </Window>
+    <!--TopBar-->
+    <Window type="Generic/Image" name="BotBar" >
+      <Property name="Area" value="{{0,-1},{0,1},{1,-1},{0,1}}" />
+      <Property name="Image" value="GameMenuImages/BotBar" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="AspectMode" value="Expand" />
+      <Property name="AspectRatio" value="13.714" />
+      <Property name="VerticalAlignment" value="Bottom" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="AlwaysOnTop" value="True" />
+      <Window type="Generic/Label" name="BotBarLabel" >
+        <Property name="Area" value="{{0,0},{0.32,0},{0.4,0},{0.87,0}}" />
+        <Property name="Font" value="Jura-13" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="VertFormatting" value="TopAligned" />
+        <Property name="NormalTextColour" value="FFFFF900" />
+        <Property name="HorizontalAlignment" value="Centre" />
+      </Window>
+      <!--BotBarLabel-->
+    </Window>
+    <!--BotBar-->
+    <Window type="DefaultWindow" name="InnerPartContainer" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="VerticalAlignment" value="Centre" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Window type="Generic/Image" name="LabelBackground" >
+        <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+        <Property name="Image" value="GameMenuImages/Background" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="MousePassThroughEnabled" value="True" />
+        <Window type="Generic/Label" name="NavigationLabel" >
+          <Property name="Area" value="{{0,0},{0.48,0},{0.4,0},{0.53,0}}" />
+          <Property name="Font" value="Jura-16" />
+          <Property name="Text" value="Connection Lost" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="DisabledTextColour" value="FF0094FF" />
+          <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+      </Window>
+    </Window>
+    <!--InnerPartContainer-->
+    <Window type="DefaultWindow" name="InnerButtonsContainer" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Window type="TaharezLook/FrameWindow" name="ExitContainer" >
+        <Property name="Area" value="{{0.56275,0},{0.779,0},{0.89725,0},{0.820667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Window type="Generic/Label" name="ExitLabel" >
+          <Property name="Area" value="{{0.0,0},{0.0,0},{1.0,0},{1.0,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Exit" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="DisabledTextColour" value="FF0094FF" />
+          <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+        <!--ExitLabel-->
+      </Window>
+      <!--ExitContainer-->
+      <Window type="TaharezLook/FrameWindow" name="MenuContainer" >
+        <Property name="Area" value="{{0.11275,0},{0.779,0},{0.44725,0},{0.820667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Window type="Generic/Label" name="MenuLabel" >
+          <Property name="Area" value="{{0.0,0},{0.0,0},{1.0,0},{1.0,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Menu" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="DisabledTextColour" value="FF0094FF" />
+          <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+        <!--MenuLabel-->
+      </Window>
+      <!--MenuContainer-->
+    </Window>
+    <!--InnerButtonsContainer-->
+  </Window>
+  <!--GameMenuRoot-->
+</GUILayout>

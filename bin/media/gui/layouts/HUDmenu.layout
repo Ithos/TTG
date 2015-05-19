@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="DefaultWindow" name="HUDMenuRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+    <Window type="TaharezLook/FrameWindow" name="LeftWindow" >
+      <Property name="Area" value="{{0,0},{0.1,0},{0.2,0},{0.9,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="SizingEnabled" value="True" />
+      <Property name="Alpha" value="0.4" />
+      <Property name="NormalTextColour" value="FF0094FF" />
+      <Property name="Font" value="Jura-10" />
+      <Property name="Text" value="Ship Status" />
+      <Window type="TaharezLook/ItemListbox" name="EquipmentBoard" >
+        <Property name="Area" value="{{0.03,0},{0.03,0},{0.957,0},{0.3,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Window type="TaharezLook/ListboxItem" name="EquipmentTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Equipment ----" />
+        </Window>
+        <!--EquipmentTag-->
+        <Window type="TaharezLook/ListboxItem" name="PrimaryWeaponTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Primary Weapon:" />
+        </Window>
+        <!--PrimaryWeaponTag-->
+        <Window type="TaharezLook/ListboxItem" name="SecondaryWeaponTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Secondary Weapon:" />
+        </Window>
+        <!--SecondaryWeaponTag-->
+        <Window type="TaharezLook/ListboxItem" name="EngineTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Engine:" />
+        </Window>
+        <!--EngineTag-->
+        <Window type="TaharezLook/ListboxItem" name="SensorsTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Sensors:" />
+        </Window>
+        <!--SensorsTag-->
+        <Window type="TaharezLook/ListboxItem" name="OthersTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Others ----" />
+        </Window>
+        <!--OthersTag-->
+      </Window>
+      <!--EquipmentBoard-->
+      <Window type="TaharezLook/ItemListbox" name="StateBoard" >
+        <Property name="Area" value="{{0.03,0},{0.33,0},{0.957,0},{0.5,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Window type="TaharezLook/ListboxItem" name="StateTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Ship State ----" />
+        </Window>
+        <!--StateTag-->
+        <Window type="TaharezLook/ListboxItem" name="HullTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Hull State:" />
+        </Window>
+        <!--HullTag-->
+        <Window type="TaharezLook/ListboxItem" name="ShieldsTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Shield:" />
+        </Window>
+        <!--ShieldsTag-->
+        <Window type="TaharezLook/ListboxItem" name="EnergyTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Energy:" />
+        </Window>
+        <!--ShieldsTag-->
+      </Window>
+      <!--StateBoard-->
+      <Window type="TaharezLook/ItemListbox" name="CrewBoard" >
+        <Property name="Area" value="{{0.03,0},{0.53,0},{0.957,0},{0.7,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Window type="TaharezLook/ListboxItem" name="CrewTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Crew Members ----" />
+        </Window>
+        <!--CrewTag-->
+        <Window type="TaharezLook/ListboxItem" name="MilitaryTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Military:" />
+        </Window>
+        <!--MilitaryTag-->
+        <Window type="TaharezLook/ListboxItem" name="EngineersTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Engineers:" />
+        </Window>
+        <!--EngineersTag-->
+        <Window type="TaharezLook/ListboxItem" name="ScientificsTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Scientifics:" />
+        </Window>
+        <!--ScientificsTag-->
+      </Window>
+      <!--CrewBoard-->
+      <Window type="TaharezLook/Listbox" name="InfoBoard" >
+        <Property name="Area" value="{{0.03,0},{0.73,0},{0.957,0},{0.99,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+      </Window>
+      <!--InfoBoard-->
+    </Window>
+    <!--LeftWindow-->
+    <Window type="TaharezLook/FrameWindow" name="RightWindow" >
+      <Property name="Area" value="{{0.82,0},{0.1,0},{1.0,0},{0.9,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="SizingEnabled" value="True" />
+      <Property name="Alpha" value="0.4" />
+      <Property name="NormalTextColour" value="FF0094FF" />
+      <Property name="Font" value="Jura-10" />
+      <Property name="Text" value="General" />
+      <Window type="TaharezLook/ItemListbox" name="ResourcesBoard" >
+        <Property name="Area" value="{{0.03,0},{0.03,0},{0.957,0},{0.2,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Window type="TaharezLook/ListboxItem" name="ResourcesTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Resources ----" />
+        </Window>
+        <!--ResourcesTag-->
+        <Window type="TaharezLook/ListboxItem" name="FuelTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Fuel:" />
+        </Window>
+        <!--FuelTag-->
+        <Window type="TaharezLook/ListboxItem" name="OreTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Ore:" />
+        </Window>
+        <!--OreTag-->
+      </Window>
+      <!--ResourcesBoard-->
+      <Window type="TaharezLook/ItemListbox" name="CargoBoard" >
+        <Property name="Area" value="{{0.03,0},{0.23,0},{0.957,0},{0.5,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Window type="TaharezLook/ListboxItem" name="CargoTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Cargo ----" />
+        </Window>
+        <!--CargoTag-->
+      </Window>
+      <!--CargoBoard-->
+      <Window type="TaharezLook/ItemListbox" name="InformationBoard" >
+        <Property name="Area" value="{{0.03,0},{0.53,0},{0.957,0},{0.7,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+        <Window type="TaharezLook/ListboxItem" name="InformationTag" >
+          <Property name="Font" value="Jura-13" />
+          <Property name="Text" value="---- Info ----" />
+        </Window>
+        <!--InfoTag-->
+        <Window type="TaharezLook/ListboxItem" name="MissionsTag" >
+          <Property name="Font" value="Jura-10" />
+          <Property name="Text" value=">>Notes:" />
+        </Window>
+        <!--MissionsTag-->
+      </Window>
+      <!--InfoBoard-->
+      <Window type="TaharezLook/Listbox" name="DescriptionBoard" >
+        <Property name="Area" value="{{0.03,0},{0.73,0},{0.957,0},{0.95,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FFFFFFFF" />
+        <Property name="DisabledTextColour" value="FFFFFFFF" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Font" value="Jura-10" />
+      </Window>
+      <!--DescriptionBoard-->
+      <Window type="TaharezLook/Button" name="EquipButton" >
+        <Property name="Area" value="{{0.2,0},{0.955,0},{0.8,0},{0.99,0}}" />
+        <Property name="Font" value="Jura-10" />
+        <Property name="Text" value="Equip" />
+        <Property name="Alpha" value="1.0" />
+        <Property name="Disabled" value="True" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="00000000" />
+      </Window>
+      <!--EquipButton-->
+    </Window>
+    <!--RightWindow-->
+  </Window>
+</GUILayout>

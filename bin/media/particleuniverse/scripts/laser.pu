@@ -1,0 +1,32 @@
+system laser
+{
+    category                                    laser_shoot
+    technique 
+    {
+        visual_particle_quota                   1
+        material                                ParticleUniverse/RibbonTrail
+        default_particle_width                  500
+        default_particle_height                 500
+        renderer                                RibbonTrail
+        {
+            max_elements                        20
+            ribbontrail_length                  15
+            ribbontrail_width                    10
+            colour_change                       0 0 0 0
+        }
+        emitter                                 Line 
+        {
+            angle                               0
+            time_to_live                        10
+            velocity                            200
+            direction                           1 0 0
+            end_colour_range                    1 1 1 0
+            force_emission                      true
+        }
+        affector                                Colour colour
+        {
+            time_colour                         0    1 1 0 1
+            time_colour                         1    1 1 0 1
+        }
+    }
+}

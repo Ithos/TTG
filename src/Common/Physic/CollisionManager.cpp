@@ -66,11 +66,11 @@ void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const P
 					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
 					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[1]->userData);
 					comp1->onContact(comp2);
-				} /*else {
+				} else {
 					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
 					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[1]->userData);
-					comp1->onContact(comp2->getEntity(),comp2);
-				}*/
+					comp1->onContact(comp2);
+				}
 
 			}
 			if(PxRigidDynamic* actor = pairHeader.actors[1]->isRigidDynamic()){
@@ -79,11 +79,11 @@ void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const P
 					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
 					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[0]->userData);
 					comp1->onContact(comp2);
-				} /*else {
+				} else {
 					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
 					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[0]->userData);
-					comp1->onContact(comp2->getEntity(),comp2);
-				}*/
+					comp1->onContact(comp2);
+				}
 			}
 		}
 	}

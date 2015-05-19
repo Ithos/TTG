@@ -831,7 +831,7 @@ namespace Map
 		std::uniform_int_distribution<int> enemy_distribution(
 					atof(getDefaultValue(GEN_ENEMY_NEG_BOUNDARY).c_str()),
 					atof(getDefaultValue(GEN_ENEMY_POS_BOUNDARY).c_str()));
-		for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {
+		for (int i=5; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {
 			char str[20];
 			std::string name = getDefaultValue(GEN_ENEMY_NAME);
 			sprintf(str,"%s%d",name.c_str(),i);
@@ -854,6 +854,11 @@ namespace Map
 			//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 			//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
 			//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
+			entityInProgress->setAttribute("physic_entity", "rigid");
+			entityInProgress->setAttribute("physic_type", "kinematic");
+			entityInProgress->setAttribute("physic_shape", "sphere");
+			entityInProgress->setAttribute("physic_mass", "10");
+			entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 			entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
 			entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
 			entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
@@ -882,6 +887,11 @@ namespace Map
 		//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
 		//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
+		entityInProgress->setAttribute("physic_entity", "rigid");
+		entityInProgress->setAttribute("physic_type", "kinematic");
+		entityInProgress->setAttribute("physic_shape", "sphere");
+		entityInProgress->setAttribute("physic_mass", "10");
+		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
 		entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
 		entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
@@ -909,6 +919,11 @@ namespace Map
 		//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
 		//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
+		entityInProgress->setAttribute("physic_entity", "rigid");
+		entityInProgress->setAttribute("physic_type", "kinematic");
+		entityInProgress->setAttribute("physic_shape", "sphere");
+		entityInProgress->setAttribute("physic_mass", "10");
+		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
 		entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
 		entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));

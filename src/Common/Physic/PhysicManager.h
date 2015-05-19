@@ -108,6 +108,8 @@ namespace Common
 
 			void moveKinematicActor(physx::PxRigidDynamic *actor, const Matrix4 &transform);
 
+			void moveDynamicActor(physx::PxRigidDynamic *actor, const Matrix4 &transform);
+
 			void moveKinematicActor(physx::PxRigidDynamic *actor, const Vector3 &displ);
 			//void moveKinematicActor(physx::PxRigidDynamic *actor, const Matrix4& tf);
 

@@ -18,6 +18,8 @@
 
 #include "PhysicEntity.h"
 
+#include <log.h>
+
 #include "../../Entity.h"
 #include "../Movement/Transform.h"
 #include "../Movement/Movement.h"
@@ -34,6 +36,8 @@ namespace Logic { namespace Component {
 	using namespace physx;
 	using namespace Common::Physic;
 	using namespace Common::Data;
+
+	const char* const LOG_PHYSIC = "Logic::CPhysic";
 
 CPhysicEntity::CPhysicEntity() : IPhysic(), m_actor(nullptr), m_movement(0,0,0)
 {
@@ -67,7 +71,8 @@ void CPhysicEntity::tick(unsigned int msecs)
 		return;
 	if(!m_physicMng->isKinematic(dinActor)){
 		Matrix4 m = m_physicMng->getActorTransform(m_actor);
-		static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+		//m_physicMng->moveDynamicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
 	}
 	if(m_physicMng->isKinematic(dinActor)){
 		m_physicMng->moveKinematicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
@@ -182,7 +187,13 @@ void CPhysicEntity::onOverlapEnd(IPhysic* otherComponent)
 
 void CPhysicEntity::onContact(IPhysic* otherComponent)
 {
-
+	if(m_actor->isRigidDynamic()){
+		if(!m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))){
+			log_trace(LOG_PHYSIC,"Moving on contact\n");
+			Matrix4 m = m_physicMng->getActorTransform(m_actor);
+			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+		}
+	}
 }
 
 }}

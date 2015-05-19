@@ -49,8 +49,10 @@ namespace Logic { namespace Component {
 		virtual void onOverlapBegin(IPhysic* otherComponent);
 		virtual void onOverlapEnd(IPhysic* otherComponent);
 		virtual void onContact(IPhysic* otherComponent);
-	protected:
+
 		physx::PxRigidActor* m_actor;
+
+	protected:
 	private:
 		physx::PxRigidActor* createActor(const Map::CMapEntity *entityInfo);
 

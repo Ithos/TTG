@@ -183,14 +183,18 @@ namespace Physic
 		if (!sceneDesc.filterShader)
 			sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 
+		//sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
+		//sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
+
 #ifdef PX_WINDOWS
 		if (!sceneDesc.gpuDispatcher && m_cudaContextManager)
 		{
 			sceneDesc.gpuDispatcher = m_cudaContextManager->getGpuDispatcher();
 		}
 #endif
-
 		m_scene = m_physics->createScene(sceneDesc);
+		m_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
+		m_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
 	}
 
 	void CPhysicManager::destroyScene ()
@@ -344,6 +348,15 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
+		PxD6Joint* joint = PxD6JointCreate(*m_physics, actor, PxTransform::createIdentity(), nullptr, actor->getGlobalPose());
+		joint->setMotion(PxD6Axis::eX,PxD6Motion::eFREE);
+		joint->setMotion(PxD6Axis::eY,PxD6Motion::eLOCKED);
+		joint->setMotion(PxD6Axis::eZ,PxD6Motion::eFREE);
+		joint->setMotion(PxD6Axis::eSWING1,PxD6Motion::eFREE);
+		joint->setMotion(PxD6Axis::eSWING2,PxD6Motion::eLOCKED);
+		joint->setMotion(PxD6Axis::eTWIST,PxD6Motion::eLOCKED);
+		//TODO release
+
 		m_scene->addActor(*actor);
 
 		return actor;
@@ -393,6 +406,13 @@ namespace Physic
 		assert(isKinematic(actor));
 		actor->setKinematicTarget(Matrix4ToPxTransform(transform));
 	}
+
+	void CPhysicManager::moveDynamicActor(physx::PxRigidDynamic *actor, const Matrix4 &transform)
+	{
+		assert(actor);
+		actor->setGlobalPose(Matrix4ToPxTransform(transform));
+	}
+
 	void CPhysicManager::moveKinematicActor(physx::PxRigidDynamic *actor, const Vector3 &displ)
 	{
 		assert(actor);

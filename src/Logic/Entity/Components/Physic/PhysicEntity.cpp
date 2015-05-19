@@ -137,7 +137,7 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CMapEntity *entityInfo)
 		}
 
 	} else {
-		float mass = 0;
+		float mass = 1;
 		if(entityInfo->hasAttribute("physic_mass"))
 			mass = entityInfo->getFloatAttribute("physic_mass");
 

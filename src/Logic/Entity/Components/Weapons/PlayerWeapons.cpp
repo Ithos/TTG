@@ -52,7 +52,7 @@ namespace Logic
                 log_error(LOG_PWEAPON, "Error getting Transform, m_trans is null\n");
 
             m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo));
-            m_weapons.push_back(new CMissileWeapon_Linear());
+            //m_weapons.push_back(new CMissileWeapon_Linear());
 
             m_primary   = 0;
             m_secondary = 0;

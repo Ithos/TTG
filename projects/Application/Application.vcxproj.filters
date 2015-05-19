@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{cd3d3993-a51f-4662-baef-8e92fbbd2a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="States\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b3c22cd2-084e-4300-a9fe-6acc17f93164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{87c92b65-4d8b-4f58-ad19-5a2939fa0826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{4cff6d93-9823-42b4-b483-088374b89c37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\Header Files">
+      <UniqueIdentifier>{c9daaab2-c24c-47a3-a0c5-a058df7397e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\Source Files">
+      <UniqueIdentifier>{f8223e4c-d409-45cc-bc8f-7256c0323ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\State GUI">
+      <UniqueIdentifier>{a53704de-1470-4fee-ab81-87eff4350a97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\State GUI\Source Files">
+      <UniqueIdentifier>{b9039e48-95c1-427c-a60f-01845b944092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\State GUI\Header Files">
+      <UniqueIdentifier>{b53e9ceb-c924-4431-bc6c-339ad105169b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Application\TTG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\TTGApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\3DApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\BaseApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\Clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\Manager\GameManager.cpp">
+      <Filter>Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\EventState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\GalaxyState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\MenuState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\PauseState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\PlanetState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\SystemState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\LoadState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\Manager\MissionManager.cpp">
+      <Filter>Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\State GUI\PlanetGUI.cpp">
+      <Filter>States\State GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\State GUI\EventGUI.cpp">
+      <Filter>States\State GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\GameFinishedState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\GameOverState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\State GUI\MissionNotification.cpp">
+      <Filter>States\State GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\State GUI\GeneralNotification.cpp">
+      <Filter>States\State GUI\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Application\TTGApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\3DApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\BaseApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\CLock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\Manager\GameManager.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\ApplicationState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\EventState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\ExitState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\GalaxyState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\PauseState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\PlanetState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\SystemState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\MenuState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\LoadState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\Manager\MissionManager.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\State GUI\PlanetGUI.h">
+      <Filter>States\State GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\State GUI\EventGUI.h">
+      <Filter>States\State GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\GameFinishedState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\GameOverState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\State GUI\MissionNotification.h">
+      <Filter>States\State GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\State GUI\GeneralNotification.h">
+      <Filter>States\State GUI\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

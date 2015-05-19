@@ -1,0 +1,56 @@
+# .gitignore file
+#
+# The root folder must contain the following files:
+#
+# .gitignore
+# AUTHORS
+# COPYNG
+# LICENSE
+# README
+# TTG.sln
+#
+# Also must contain the following folders:
+#
+# projects/ where should be placed JUST all the .vcxproj and .filters files
+# src/ where should be placed JUST all the source files
+# bin/ where should be placed JUST the resources files (blueprints, maps, textures, etc).
+#
+# The binary files must NOT be uploaded to the repository, neither the .dll, .lib, etc.
+# Notice you could have in your own working folder more files and folders. All these 
+# files/folders must NOT be uploaded to the repository. So if you have files/folders 
+# out of the above list you should add them in this file (.gitignore).
+#
+# The following files/folders will be ignored.
+
+dependecies/
+bin/*
+*.suo
+*.sdf
+*.opensdf
+projects/Application/Debug
+projects/Application/Release
+projects/Application/*.user
+projects/GUI/Debug
+projects/GUI/Release
+projects/GUI/*.user
+projects/Logic/Debug
+projects/Logic/Release
+projects/Logic/*.user
+projects/Map/Debug
+projects/Map/Release
+projects/Map/*.user
+projects/Common/Debug
+projects/Common/Release
+projects/Common/*.user
+projects/AI/Debug
+projects/AI/Release
+projects/AI/*.user
+projects/Console/*
+src/Console/*
+
+# Exceptions, the following files/folders WONT be ignored. 
+!bin/
+bin/*
+!bin/conf/
+!bin/conf/configure.conf
+!bin/media/blueprints/*.xml

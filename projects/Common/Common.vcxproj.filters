@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Configure">
+      <UniqueIdentifier>{28598b58-5d37-42f6-938c-63d87d08c8d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configure\Header Files">
+      <UniqueIdentifier>{d9e2160c-0cc2-40fb-8f8f-9489a906e8fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configure\Source Files">
+      <UniqueIdentifier>{3b86af18-7c0c-400b-8080-5f230881dd9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{b5b9d9f4-4930-4f98-8f3f-a252d9cb725a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physic">
+      <UniqueIdentifier>{c7b82e44-d23d-46ef-b7a8-e57363573985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Header Files">
+      <UniqueIdentifier>{d178e966-01d5-4ddf-a662-332fc624dde0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Source Files">
+      <UniqueIdentifier>{f8b68b94-3bae-4ab9-87ae-23d5c18a88ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{3ce3a0fd-31a8-4429-840b-c7ed338f397f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Header Files">
+      <UniqueIdentifier>{e7de695f-95ec-4c3a-b397-dc3e3e8b7568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Source Files">
+      <UniqueIdentifier>{e8e9f9d4-2d5d-4e3c-bea8-813714521b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{2d88c696-287a-4042-97d8-cf8fede3707b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Header Files">
+      <UniqueIdentifier>{88360ee4-9d3a-4b7a-b7e6-126adec84322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Source Files">
+      <UniqueIdentifier>{fff7f63d-9482-4b28-ab04-3f9d8cd8bf2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{a21e5ab7-4672-4899-94a7-185ec6e868b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log\Header Files">
+      <UniqueIdentifier>{66d529cc-7754-4db2-99d8-ead02f48b474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log\Source Files">
+      <UniqueIdentifier>{2ec18d06-53f0-43fe-87dd-2ccb158499e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\XML Parser">
+      <UniqueIdentifier>{d15ba8ce-d2d4-4a4a-a1cb-9e04fbf86903}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\XML Parser\Header Files">
+      <UniqueIdentifier>{70a09d17-165d-43f2-ab6e-480d244ba537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\XML Parser\Source Files">
+      <UniqueIdentifier>{e0e88db0-2810-40be-897a-7ec26ab7c667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\XML Parser\RapidXml">
+      <UniqueIdentifier>{a7de70ea-697f-41c4-a506-ea6bb31a526f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{88597377-1b80-420a-9712-02bce0bfad45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Header Files">
+      <UniqueIdentifier>{a0dcfd8a-5ec8-45de-bf1e-ae50bd64e9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Source Files">
+      <UniqueIdentifier>{3ff0ec27-4fa0-4109-ae27-05d2b99e00a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{7648bfea-7e34-40c0-bed5-e4196b3ae7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Generator">
+      <UniqueIdentifier>{a1d10563-277e-4dd8-a140-fdf6a1cddc34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Parser">
+      <UniqueIdentifier>{be011977-e1d5-4e64-9f56-b9c94cceb04f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Parser\Header Files">
+      <UniqueIdentifier>{388ea6af-26f9-4fab-aeb2-d3bade10a6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Generator\Header Files">
+      <UniqueIdentifier>{2d7daca9-e36a-4c91-acf5-6d17e114b1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Generator\Source Files">
+      <UniqueIdentifier>{ed6e4f8d-ba59-4d88-afaa-dbaa06f922c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Parser\Source Files">
+      <UniqueIdentifier>{5fbd63c8-2f27-43b5-ae57-026318e369ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Header Files">
+      <UniqueIdentifier>{e94ca5be-ee6e-41f0-90d7-d84fa22bff90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Source Files">
+      <UniqueIdentifier>{62c2f7c6-0ee3-4b76-ad42-ac9ab1e5d9d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{cab31a7d-179a-4065-9814-ee673ee3122b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{60c4476f-b662-43c7-89f4-899cddacd609}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles\Headers">
+      <UniqueIdentifier>{c7d9d155-f6e7-4c63-b615-3c08f01e6404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles\Sources">
+      <UniqueIdentifier>{f2d508f1-eda3-4d6c-9773-f25d5f65fe61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Common\Configure\Configure.h">
+      <Filter>Configure\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\Math.h">
+      <Filter>Util\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Input\Input.h">
+      <Filter>Input\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Data\TTG_Types.h">
+      <Filter>Data\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Log\log.h">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\XmlParser.h">
+      <Filter>Util\XML Parser\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml.hpp">
+      <Filter>Util\XML Parser\RapidXml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml_iterators.hpp">
+      <Filter>Util\XML Parser\RapidXml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml_print.hpp">
+      <Filter>Util\XML Parser\RapidXml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml_utils.hpp">
+      <Filter>Util\XML Parser\RapidXml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Util\PxConversor.h">
+      <Filter>Util\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Sound\Sound.h">
+      <Filter>Sound\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Data\Spawn_Constants.h">
+      <Filter>Data\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Map\Map.h">
+      <Filter>Map\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Map\MapEntity.h">
+      <Filter>Map\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Map\Generator\MapGenerator.h">
+      <Filter>Map\Generator\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Map\Parser\MapParser.h">
+      <Filter>Map\Parser\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Data\Game_Constants.h">
+      <Filter>Data\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Particles\ParticleManager.h">
+      <Filter>Particles\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Lua\LuaManager.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Physic\PhysicManager.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Physic\ErrorManager.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Physic\CollisionManager.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Physic\Conversions.h">
+      <Filter>Physic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Common\Configure\Configure.cpp">
+      <Filter>Configure\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Log\log.cpp">
+      <Filter>Log\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Util\XMLParser\XmlParser.cpp">
+      <Filter>Util\XML Parser\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Sound\Sound.cpp">
+      <Filter>Sound\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Map\Map.cpp">
+      <Filter>Map\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Map\MapEntity.cpp">
+      <Filter>Map\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Map\Generator\MapGenerator.cpp">
+      <Filter>Map\Generator\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Map\Parser\MapParser.cpp">
+      <Filter>Map\Parser\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Particles\ParticleManager.cpp">
+      <Filter>Particles\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Lua\LuaManager.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Physic\PhysicManager.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Physic\ErrorManager.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Physic\CollisionManager.cpp">
+      <Filter>Physic</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

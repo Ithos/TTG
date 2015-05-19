@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="InputListeners">
+      <UniqueIdentifier>{f15f936e-72e9-41dd-8622-b45d15c3478b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputListeners\Header Files">
+      <UniqueIdentifier>{de344ee0-5ae2-4920-b2f5-1f61b19d9685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputListeners\Source Files">
+      <UniqueIdentifier>{de0d30f5-2f5c-4645-b0a7-680ae98149f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers">
+      <UniqueIdentifier>{f18eb3d5-f99c-47f0-902e-5c293f5cf13d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers\Commands">
+      <UniqueIdentifier>{12f6e0ef-b7b2-4d48-b6c2-55760ef02b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers\Header Files">
+      <UniqueIdentifier>{94ecefe3-49cb-4e28-aa91-ed0745be04bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers\Source Files">
+      <UniqueIdentifier>{d11ebbdd-cf75-48b2-bdc5-6f79dc9dc00c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers\Commands\Header Files">
+      <UniqueIdentifier>{5aaad788-7a4b-4ed4-ad3c-18e6eefb3a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controllers\Commands\Source Files">
+      <UniqueIdentifier>{950fa970-9a14-49ff-9095-669410f01417}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\GUI\GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\InputListeners\InputListener.h">
+      <Filter>InputListeners\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\Commands\Command.h">
+      <Filter>Controllers\Commands\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\PlayerController.h">
+      <Filter>Controllers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\Commands\SlowDown.h">
+      <Filter>Controllers\Commands\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\Commands\TurnRight.h">
+      <Filter>Controllers\Commands\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\Commands\TurnLeft.h">
+      <Filter>Controllers\Commands\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\Commands\Shoots.h">
+      <Filter>Controllers\Commands\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUI\Controllers\Commands\MoveForward.h">
+      <Filter>Controllers\Commands\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\GUI\GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\InputListeners\InputListener.cpp">
+      <Filter>InputListeners\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\Commands\Command.cpp">
+      <Filter>Controllers\Commands\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\PlayerController.cpp">
+      <Filter>Controllers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\Commands\SlowDown.cpp">
+      <Filter>Controllers\Commands\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\Commands\TurnRight.cpp">
+      <Filter>Controllers\Commands\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\Commands\TurnLeft.cpp">
+      <Filter>Controllers\Commands\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\Commands\Shoots.cpp">
+      <Filter>Controllers\Commands\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUI\Controllers\Commands\MoveForward.cpp">
+      <Filter>Controllers\Commands\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

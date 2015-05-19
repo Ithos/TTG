@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EA322AD9-BAE8-47EE-B9C8-82B3BC3DEDE8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Logic</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(Configuration)\</OutDir>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(Configuration)\</OutDir>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(BOOST_HOME);$(PHYSX_HOME)\include;$(LOG_HOME)/include;$(CEGUI_HOME)\cegui\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(BOOST_HOME);$(PHYSX_HOME)\include;$(LOG_HOME)/include;$(CEGUI_HOME)\cegui\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Logic\ComponentFactory.h" />
+    <ClInclude Include="..\..\src\Logic\EntityFactory.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\AI\StateMachineExecutor.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\AI\SteeringMovement.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Cameras\Camera.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Cameras\RTTCamera.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Cameras\StaticCamera.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Component.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Gameplay\Life.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Gameplay\Shield.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Graphic\Graphics.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Graphic\SkyBox.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Graphic\SkyDome.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Lights\AmbientLight.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Lights\DirectionalLight.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Lights\PointLight.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Minimap\MinimapHighlight.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Graphic\GraphicPrimitive.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Movement\Controller.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Movement\ControllerComponent.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Movement\Interpolation.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Movement\Movement.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Movement\PlanetRotation.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Movement\Transform.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Physic\IPhysic.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Physic\PhysicContact.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Physic\PhysicEntity.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Sound\Emitter.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Sound\Listener.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Sound\PropertyManager.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\System\CameraLookAt.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\System\OrbitMovement.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\System\Rotation.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\MissileTrigger.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\PlanetTrigger.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\SceneEndTrigger.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\SceneLimitTrigger.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\ShieldTrigger.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\LaserWeapon.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\MissileWeapon.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\MissileWeapon_Linear.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\PlayerWeapons.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\Weapon.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Entity.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\MessageManager.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Messages\Message.h" />
+    <ClInclude Include="..\..\src\Logic\Logic.h" />
+    <ClInclude Include="..\..\src\Logic\Scene\Scene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Logic\ComponentFactory.cpp" />
+    <ClCompile Include="..\..\src\Logic\EntityFactory.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\AI\StateMachineExecutor.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\AI\SteeringMovement.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Cameras\Camera.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Cameras\RTTCamera.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Cameras\StaticCamera.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Component.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Gameplay\Life.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Gameplay\Shield.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Graphic\Graphics.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Graphic\SkyBox.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Graphic\SkyDome.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Lights\AmbientLight.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Lights\PointLight.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Minimap\MinimapHighlight.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Graphic\GraphicPrimitive.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\Controller.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\ControllerComponent.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\Interpolation.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\Movement.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\PlanetRotation.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\Transform.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Physic\PhysicContact.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Physic\PhysicEntity.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Sound\Emitter.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Sound\Listener.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Sound\PropertyManager.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\System\CameraLookAt.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\System\OrbitMovement.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\System\Rotation.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\MissileTrigger.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\PlanetTrigger.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\SceneEndTrigger.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\SceneLimitTrigger.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\ShieldTrigger.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\LaserWeapon.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\MissileWeapon_Linear.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\PlayerWeapons.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Entity.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\MessageManager.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Messages\Message.cpp" />
+    <ClCompile Include="..\..\src\Logic\Logic.cpp" />
+    <ClCompile Include="..\..\src\Logic\Scene\Scene.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

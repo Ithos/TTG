@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Movement">
+      <UniqueIdentifier>{2dee3cf7-fe4a-4381-a35a-f0dccfd5a8ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Movement\Header Files">
+      <UniqueIdentifier>{96a779b2-d438-4397-aa49-919c1892af67}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Movement\Source Files">
+      <UniqueIdentifier>{0dd1c46d-2582-4ca5-b81e-8c8fb4c40b83}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Decision">
+      <UniqueIdentifier>{9286de99-ab75-4807-9661-73001b9ffb71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decision\LatentActions">
+      <UniqueIdentifier>{5c539095-e0a0-4484-b7d6-b4e1d8351364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decision\StateMachines">
+      <UniqueIdentifier>{63a0d6b1-523b-4115-9e31-4ef6e592e6c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decision\LatentActions\Header Files">
+      <UniqueIdentifier>{8cb9ad63-a359-4b73-99f2-86655a41b69d}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Decision\LatentActions\Source Files">
+      <UniqueIdentifier>{88270737-1210-494d-a1db-41388e833cce}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Decision\StateMachines\Header Files">
+      <UniqueIdentifier>{73974305-b8a3-4565-97bd-ce6ac846ceda}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Decision\StateMachines\Source Files">
+      <UniqueIdentifier>{b2bbad9a-0b0d-4487-96ec-16c8e76f7f9e}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Perception">
+      <UniqueIdentifier>{3b909b5e-68c6-4d7d-86f9-3fd5d35f06be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Perception\Header Files">
+      <UniqueIdentifier>{226f11e2-3cd2-4b8b-8207-1dea3da5cf63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Perception\Source Files">
+      <UniqueIdentifier>{887b2572-2b0e-4bdf-9cdf-4b051e0cd04b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\AI\AI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Movement\Movement.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Movement\KinematicMovement.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Movement\DynamicMovement.h">
+      <Filter>Movement\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\Condition.h">
+      <Filter>Decision\StateMachines\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\StateMachine.h">
+      <Filter>Decision\StateMachines\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\LatentActions\LatentAction.h">
+      <Filter>Decision\LatentActions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\StateMachineFactory.h">
+      <Filter>Decision\StateMachines\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\LatentActions\SimpleLatentActions.h">
+      <Filter>Decision\LatentActions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\LatentActions\LAGoTo.h">
+      <Filter>Decision\LatentActions\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\CSMDummy.h">
+      <Filter>Decision\StateMachines\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\CSMWander.h">
+      <Filter>Decision\StateMachines\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionListener.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionSignal.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\Sensor.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionManager.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionEntity.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionEntityFactory.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AI\Perception\SightSensor.h">
+      <Filter>Perception\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\AI\AI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Movement\Movement.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Movement\KinematicMovement.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Movement\DynamicMovement.cpp">
+      <Filter>Movement\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Decision\LatentActions\LatentAction.cpp">
+      <Filter>Decision\LatentActions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Decision\LatentActions\SimpleLatentActions.cpp">
+      <Filter>Decision\LatentActions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Decision\LatentActions\LAGoTo.cpp">
+      <Filter>Decision\LatentActions\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Perception\PerceptionManager.cpp">
+      <Filter>Perception\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Perception\PerceptionEntity.cpp">
+      <Filter>Perception\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Perception\PerceptionEntityFactory.cpp">
+      <Filter>Perception\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AI\Perception\SightSensor.cpp">
+      <Filter>Perception\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FA85CD7D-D5F3-4E68-AF2B-B238E12A58F9}</ProjectGuid>
+    <RootNamespace>AI</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(CEGUI_HOME)\cegui\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(BOOST_HOME);$(LOG_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(CEGUI_HOME)\cegui\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(BOOST_HOME);$(LOG_HOME)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\AI\AI.h" />
+    <ClInclude Include="..\..\src\AI\Decision\LatentActions\LAGoTo.h" />
+    <ClInclude Include="..\..\src\AI\Decision\LatentActions\LatentAction.h" />
+    <ClInclude Include="..\..\src\AI\Decision\LatentActions\SimpleLatentActions.h" />
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\Condition.h" />
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\CSMDummy.h" />
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\CSMWander.h" />
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\StateMachine.h" />
+    <ClInclude Include="..\..\src\AI\Decision\StateMachines\StateMachineFactory.h" />
+    <ClInclude Include="..\..\src\AI\Movement\DynamicMovement.h" />
+    <ClInclude Include="..\..\src\AI\Movement\KinematicMovement.h" />
+    <ClInclude Include="..\..\src\AI\Movement\Movement.h" />
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionEntity.h" />
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionEntityFactory.h" />
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionListener.h" />
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionManager.h" />
+    <ClInclude Include="..\..\src\AI\Perception\PerceptionSignal.h" />
+    <ClInclude Include="..\..\src\AI\Perception\Sensor.h" />
+    <ClInclude Include="..\..\src\AI\Perception\SightSensor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\AI\AI.cpp" />
+    <ClCompile Include="..\..\src\AI\Decision\LatentActions\LAGoTo.cpp" />
+    <ClCompile Include="..\..\src\AI\Decision\LatentActions\LatentAction.cpp" />
+    <ClCompile Include="..\..\src\AI\Decision\LatentActions\SimpleLatentActions.cpp" />
+    <ClCompile Include="..\..\src\AI\Movement\DynamicMovement.cpp" />
+    <ClCompile Include="..\..\src\AI\Movement\KinematicMovement.cpp" />
+    <ClCompile Include="..\..\src\AI\Movement\Movement.cpp" />
+    <ClCompile Include="..\..\src\AI\Perception\PerceptionEntity.cpp" />
+    <ClCompile Include="..\..\src\AI\Perception\PerceptionEntityFactory.cpp" />
+    <ClCompile Include="..\..\src\AI\Perception\PerceptionManager.cpp" />
+    <ClCompile Include="..\..\src\AI\Perception\SightSensor.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

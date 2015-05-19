@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AE0B47ED-DCB0-4443-8176-10A6482165B5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Common</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(Configuration)\</OutDir>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(Configuration)\</OutDir>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(CEGUI_HOME)\cegui\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(BOOST_HOME);$(LOG_HOME)/include;$(PHYSX_HOME)/include;$(FMOD_HOME)/inc;$(FMODSTUDIO_HOME)/inc;$(LUA_HOME)/include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(CEGUI_HOME)\cegui\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(BOOST_HOME);$(LOG_HOME)/include;$(PHYSX_HOME)/include;$(FMOD_HOME)/inc;$(FMODSTUDIO_HOME)/inc;$(LUA_HOME)/include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Common\Configure\Configure.h" />
+    <ClInclude Include="..\..\src\Common\Data\Game_Constants.h" />
+    <ClInclude Include="..\..\src\Common\Data\Spawn_Constants.h" />
+    <ClInclude Include="..\..\src\Common\Data\TTG_Types.h" />
+    <ClInclude Include="..\..\src\Common\Input\Input.h" />
+    <ClInclude Include="..\..\src\Common\Log\log.h" />
+    <ClInclude Include="..\..\src\Common\Lua\LuaManager.h" />
+    <ClInclude Include="..\..\src\Common\Map\Generator\MapGenerator.h" />
+    <ClInclude Include="..\..\src\Common\Map\Map.h" />
+    <ClInclude Include="..\..\src\Common\Map\MapEntity.h" />
+    <ClInclude Include="..\..\src\Common\Map\Parser\MapParser.h" />
+    <ClInclude Include="..\..\src\Common\Particles\ParticleManager.h" />
+    <ClInclude Include="..\..\src\Common\Physic\CollisionManager.h" />
+    <ClInclude Include="..\..\src\Common\Physic\Conversions.h" />
+    <ClInclude Include="..\..\src\Common\Physic\ErrorManager.h" />
+    <ClInclude Include="..\..\src\Common\Physic\PhysicManager.h" />
+    <ClInclude Include="..\..\src\Common\Sound\Sound.h" />
+    <ClInclude Include="..\..\src\Common\Util\Math.h" />
+    <ClInclude Include="..\..\src\Common\Util\PxConversor.h" />
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml.hpp" />
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml_iterators.hpp" />
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml_print.hpp" />
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\RapidXml\rapidxml_utils.hpp" />
+    <ClInclude Include="..\..\src\Common\Util\XMLParser\XmlParser.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Common\Configure\Configure.cpp" />
+    <ClCompile Include="..\..\src\Common\Log\log.cpp" />
+    <ClCompile Include="..\..\src\Common\Lua\LuaManager.cpp" />
+    <ClCompile Include="..\..\src\Common\Map\Generator\MapGenerator.cpp" />
+    <ClCompile Include="..\..\src\Common\Map\Map.cpp" />
+    <ClCompile Include="..\..\src\Common\Map\MapEntity.cpp" />
+    <ClCompile Include="..\..\src\Common\Map\Parser\MapParser.cpp" />
+    <ClCompile Include="..\..\src\Common\Particles\ParticleManager.cpp" />
+    <ClCompile Include="..\..\src\Common\Physic\CollisionManager.cpp" />
+    <ClCompile Include="..\..\src\Common\Physic\ErrorManager.cpp" />
+    <ClCompile Include="..\..\src\Common\Physic\PhysicManager.cpp" />
+    <ClCompile Include="..\..\src\Common\Sound\Sound.cpp" />
+    <ClCompile Include="..\..\src\Common\Util\XMLParser\XmlParser.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

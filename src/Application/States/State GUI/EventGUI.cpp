@@ -1,0 +1,718 @@
+/*
+ 	Copyright 2015 Francisco Javier Martinez Garcia
+	Copyright 2015 Alvaro Perez Corral
+	Copyright 2015 Luis Valero Martin
+	Copyright 2015 Adrian Vizcaino Gonzalez
+	This file is part of Through the galaxy.
+	Through the galaxy is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	any later version.
+	Through the galaxy is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	You should have received a copy of the GNU General Public License
+	along with Through the galaxy.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "EventGUI.h"
+
+#include "../EventState.h"
+
+#include <log.h>
+#include <random>
+#include <chrono>
+#include <ctime>
+
+#include "../../Manager/MissionManager.h"
+#include "../../Manager/GameManager.h"
+#include "../../../Common/Data/Game_Constants.h"
+#include "../../../Common/Sound/Sound.h"
+#include "MissionNotification.h"
+
+#include <CEGUI/WindowManager.h>
+#include <CEGUI/Window.h>
+#include <CEGUI/AnimationManager.h>
+#include <CEGUI/AnimationInstance.h>
+#include <CEGUI/widgets/Listbox.h>
+#include <CEGUI\widgets\ListboxTextItem.h>
+#include <CEGUI/widgets/ItemListbox.h>
+#include <CEGUI/widgets/ListboxItem.h>
+#include <CEGUI\widgets\PushButton.h>
+
+namespace Application
+{
+	const char* const LOG_CEVENTGUI = "Application::CEventGUI";
+	CEventGUI* CEventGUI::m_instance = nullptr;
+
+	const char* const PLANET_EVENT_INTRO[] = {"Unoccupied Yellow planet.","Unoccupied Desert planet.","Unoccupied Red planet.","Unoccupied Earth-like planet.",
+												"Unoccupied Purple planet.","Unoccupied Green planet.","Unoccupied LightBlue planet.","Unoccupied Blue planet.",
+												"Inhabited Yellow planet.","Inhabited Desert planet.","Inhabited Red planet.","Inhabited Earth-like planet.",
+												"Inhabited Purple planet.","Inhabited Green planet.","Inhabited LightBlue planet.","Inhabited Blue planet."
+											};
+
+	CEventGUI::CEventGUI(CEventState* state) : m_eventState(state), m_menuWindow(nullptr), m_mgrInstance(nullptr), m_missionManager(nullptr),
+		m_topBarAnimInst(nullptr), m_botBarAnimInst(nullptr), m_insideAnimInst(nullptr), m_windowAnimInst(nullptr), m_inhabitedMenuWindow(nullptr),
+		m_unoccupiedMenuWindow(nullptr), m_fadeAnimInst(nullptr), m_eventPageInAnimInst(nullptr), m_docksPageInAnimInst(nullptr), m_cityPageInAnimInst(nullptr),
+		m_topBarAnimInstInhabited(nullptr), m_botBarAnimInstInhabited(nullptr), m_insideAnimInstInhabited(nullptr),
+		m_fadeAnimInstInhabited(nullptr), m_windowAnimInstInhabited(nullptr)
+	{
+		m_instance = this;
+
+		m_mgrInstance = CGameManager::getInstance();
+		m_missionManager = CMissionManager::getInstance();
+
+		m_inhabitedMenuWindow = CEGUI::WindowManager::getSingletonPtr()->loadLayoutFromFile("InhabitedPlanetEvent.layout");
+		m_unoccupiedMenuWindow = CEGUI::WindowManager::getSingletonPtr()->loadLayoutFromFile("UnoccupiedPlanetEvent.layout");
+
+		setupEvents();
+		setupAnimations();
+
+		//Sounds & music
+		Common::Sound::CSound::getSingletonPtr()->addSound("Button2.wav","backButton");
+		Common::Sound::CSound::getSingletonPtr()->addSound("Intro1.wav","introEventSound");
+	}
+
+	CEventGUI::~CEventGUI()
+	{
+		Common::Sound::CSound::getSingletonPtr()->releaseSound("backButton");
+		Common::Sound::CSound::getSingletonPtr()->releaseSound("introEventSound");
+		m_instance = nullptr;
+	}
+
+	bool CEventGUI::init(CEventState* state)
+	{
+		assert(!m_instance && "Second initialization of Application::CPlanetGUI is not allowed!");
+
+		log_trace(LOG_CEVENTGUI,"Init\n");
+
+		new CEventGUI(state);
+
+		return true;
+	}
+
+	void CEventGUI::release()
+	{
+		log_trace(LOG_CEVENTGUI,"Release\n");
+
+		if(m_instance)
+		{
+			delete m_instance;
+		}
+	}
+
+	void CEventGUI::activate()
+	{
+		log_trace(LOG_CEVENTGUI,"Activate\n");
+
+		if(m_mgrInstance->isInhabitedPlanet())
+			m_menuWindow = m_inhabitedMenuWindow;
+		else
+			m_menuWindow = m_unoccupiedMenuWindow;
+
+		CEGUI::System::getSingletonPtr()->getDefaultGUIContext().setRootWindow(m_menuWindow);
+		m_menuWindow->setVisible(true);
+		m_menuWindow->activate();
+
+		setupHUD();
+
+		CEGUI::System::getSingletonPtr()->getDefaultGUIContext().getMouseCursor().show();
+
+		CMissionNotification::getInstance()->activate(m_menuWindow);
+
+		//Missions
+		bool check(m_mgrInstance->isTargetPlanet());
+		if(m_mgrInstance->isTargetPlanet() && !m_mgrInstance->isSystemVisited()){
+			m_mgrInstance->setSystemVisited();
+			CMissionNotification::getInstance()->showNote(true);
+			m_mgrInstance->objectiveAquired();
+		}
+
+		m_missionManager->checkPlanet();
+
+		onActivateAnims();
+
+		//Sound
+		Common::Sound::CSound::getSingletonPtr()->playDelayedSound("introEventSound",400);
+
+
+	}
+
+	void CEventGUI::deactivate()
+	{
+		log_trace(LOG_CEVENTGUI,"Deactivate\n");
+
+		CMissionNotification::getInstance()->deactivate();
+
+		CEGUI::System::getSingletonPtr()->getDefaultGUIContext().getMouseCursor().hide();
+		m_menuWindow->deactivate();
+		m_menuWindow->setVisible(false);
+	}
+
+	void CEventGUI::setupAnimations()
+	{
+		CEGUI::AnimationManager& animMgr = CEGUI::AnimationManager::getSingleton();
+
+		CEGUI::Animation* topBarAnim = animMgr.getAnimation("TopBarMoveInAnimationQuick");
+
+		m_topBarAnimInst = animMgr.instantiateAnimation(topBarAnim);
+		CEGUI::Window* topBarWindow = m_unoccupiedMenuWindow->getChild("TopBar");
+		m_topBarAnimInst->setTargetWindow(topBarWindow);
+
+		m_topBarAnimInstInhabited = animMgr.instantiateAnimation(topBarAnim);
+		topBarWindow = m_inhabitedMenuWindow->getChild("TopBar");
+		m_topBarAnimInstInhabited->setTargetWindow(topBarWindow);
+
+
+		CEGUI::Animation* botBarAnim = animMgr.getAnimation("BotBarMoveInAnimationQuick");
+
+		m_botBarAnimInst = animMgr.instantiateAnimation(botBarAnim);
+		CEGUI::Window* botBarWindow = m_unoccupiedMenuWindow->getChild("BotBar");
+		m_botBarAnimInst->setTargetWindow(botBarWindow);
+
+		m_botBarAnimInstInhabited = animMgr.instantiateAnimation(botBarAnim);
+		botBarWindow = m_inhabitedMenuWindow->getChild("BotBar");
+		m_botBarAnimInstInhabited->setTargetWindow(botBarWindow);
+
+
+		CEGUI::Animation* insideAnim = animMgr.getAnimation("InsideBlendInQuick");
+
+		m_insideAnimInst = animMgr.instantiateAnimation(insideAnim);
+		CEGUI::Window* insideWindows = m_unoccupiedMenuWindow->getChild("InnerButtonsContainer");
+		m_insideAnimInst->setTargetWindow(insideWindows);
+
+		m_insideAnimInstInhabited = animMgr.instantiateAnimation(insideAnim);
+		insideWindows = m_inhabitedMenuWindow->getChild("InnerButtonsContainer");
+		m_insideAnimInstInhabited->setTargetWindow(insideWindows);
+
+		m_eventPageInAnimInst = animMgr.instantiateAnimation(insideAnim);
+		insideWindows = m_unoccupiedMenuWindow->getChild("EventPage");
+		m_eventPageInAnimInst->setTargetWindow(insideWindows);
+
+		m_docksPageInAnimInst = animMgr.instantiateAnimation(insideAnim);
+		insideWindows = m_inhabitedMenuWindow->getChild("DocksPage");
+		m_docksPageInAnimInst->setTargetWindow(insideWindows);
+
+		m_cityPageInAnimInst = animMgr.instantiateAnimation(insideAnim);
+		insideWindows = m_inhabitedMenuWindow->getChild("CityPage");
+		m_cityPageInAnimInst->setTargetWindow(insideWindows);
+
+
+		CEGUI::Animation* fadeAnim = animMgr.getAnimation("InsideFadeOutQuick");
+
+		m_fadeAnimInst = animMgr.instantiateAnimation(fadeAnim);
+		insideWindows = m_unoccupiedMenuWindow->getChild("InnerButtonsContainer");
+		m_fadeAnimInst->setTargetWindow(insideWindows);
+
+		m_fadeAnimInstInhabited = animMgr.instantiateAnimation(fadeAnim);
+		insideWindows = m_inhabitedMenuWindow->getChild("InnerButtonsContainer");
+		m_fadeAnimInstInhabited->setTargetWindow(insideWindows);
+
+		m_eventPageFadeAnimInst = animMgr.instantiateAnimation(fadeAnim);
+		insideWindows = m_unoccupiedMenuWindow->getChild("EventPage");
+		m_eventPageFadeAnimInst->setTargetWindow(insideWindows);
+
+		m_docksPageFadeAnimInst = animMgr.instantiateAnimation(fadeAnim);
+		insideWindows = m_inhabitedMenuWindow->getChild("DocksPage");
+		m_docksPageFadeAnimInst->setTargetWindow(insideWindows);
+
+		m_cityPageFadeAnimInst = animMgr.instantiateAnimation(fadeAnim);
+		insideWindows = m_inhabitedMenuWindow->getChild("CityPage");
+		m_cityPageFadeAnimInst->setTargetWindow(insideWindows);
+
+
+		CEGUI::Animation* windowAnim = animMgr.getAnimation("OpenWindow");
+
+		m_windowAnimInst = animMgr.instantiateAnimation(windowAnim);
+		CEGUI::Window* buttonWindow1 = m_unoccupiedMenuWindow->getChild("InnerButtonsContainer/LogWindow");
+		m_windowAnimInst->setTargetWindow(buttonWindow1);
+
+		m_windowAnimInstInhabited = animMgr.instantiateAnimation(windowAnim);
+		buttonWindow1 = m_inhabitedMenuWindow->getChild("InnerButtonsContainer/LogWindow");
+		m_windowAnimInstInhabited->setTargetWindow(buttonWindow1);
+	}
+
+	void CEventGUI::setupHUD()
+	{
+		/// TODO -- Generate real texts--///
+		int i(m_mgrInstance->isInhabitedPlanet()?1:0), 
+			j(std::atoi(m_mgrInstance->getPlanet().substr(m_mgrInstance->getPlanet().length()-2,1).c_str()));
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->
+			getChildElement("MessageBoard"))->addItem(new CEGUI::ListboxTextItem(CEGUI::String(
+						PLANET_EVENT_INTRO[i*8+j]
+			)));
+	}
+
+	void CEventGUI::setupEvents()
+	{
+		//Inhabited
+		m_inhabitedMenuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->getChildElement("DocksButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::exploreDocks, this));
+
+		m_inhabitedMenuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->getChildElement("CityButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::searchCity, this));
+
+		m_inhabitedMenuWindow->getChildElement("CityPage")->getChildElement("LogWindow")->getChildElement("RejectButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::onRejectMission, this));
+
+		m_inhabitedMenuWindow->getChildElement("CityPage")->getChildElement("LogWindow")->getChildElement("AcceptButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::onAcceptMission, this));
+
+		m_inhabitedMenuWindow->getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("ItemsBoard")->
+		subscribeEvent(CEGUI::Listbox::EventSelectionChanged, 
+		CEGUI::SubscriberSlot(&CEventGUI::onItemSelected, this));
+
+		m_inhabitedMenuWindow->getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("BackButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::onBackShop, this));
+
+		m_inhabitedMenuWindow->getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("PurchaseButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::purchase, this));
+
+		//Unoccupied
+		m_unoccupiedMenuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->getChildElement("ExploreButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::explorePlanet, this));
+
+		m_unoccupiedMenuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->getChildElement("ResourcesButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::gatherResources, this));
+
+		m_unoccupiedMenuWindow->getChildElement("EventPage")->getChildElement("LogWindow")->getChildElement("BackButton")->
+		subscribeEvent(CEGUI::PushButton::EventClicked, 
+		CEGUI::SubscriberSlot(&CEventGUI::onBackEvent, this));
+
+	}
+
+	void CEventGUI::onActivateAnims()
+	{
+		if(m_mgrInstance->isInhabitedPlanet()){
+
+			m_topBarAnimInstInhabited->start();
+			m_botBarAnimInstInhabited->start();
+			m_insideAnimInstInhabited->start();
+			m_windowAnimInstInhabited->start();
+
+		}else{
+
+			m_topBarAnimInst->start();
+			m_botBarAnimInst->start();
+			m_insideAnimInst->start();
+			m_windowAnimInst->start();
+
+		}
+	}
+
+	bool CEventGUI::explorePlanet(const CEGUI::EventArgs& e)
+	{
+		setupEvent();
+		m_fadeAnimInst->start();
+		m_eventPageInAnimInst->start();
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::gatherResources(const CEGUI::EventArgs& e)
+	{
+		setupResources();
+		m_fadeAnimInst->start();
+		m_eventPageInAnimInst->start();
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::exploreDocks(const CEGUI::EventArgs& e)
+	{
+		/// TODO --Generate objects--///
+		setupShop();
+		m_fadeAnimInstInhabited->start();
+		m_docksPageInAnimInst->start();
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::searchCity(const CEGUI::EventArgs& e)
+	{
+		setupCity();
+		m_fadeAnimInstInhabited->start();
+		m_cityPageInAnimInst->start();
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::purchase(const CEGUI::EventArgs& e)
+	{
+		CEGUI::ItemListbox* box = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/ItemsBoard"));
+		CEGUI::Listbox* costList = static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/CostBoard"));
+		CEGUI::Window* item(box->getFirstSelectedItem());
+		if(!item)return true;
+		int idx(box->getItemIndex(box->getFirstSelectedItem()));
+		if(idx == 0)return true;
+
+		std::string str(costList->getListboxItemFromIndex(idx)->getText().c_str());
+		int cost(std::atoi(costList->getListboxItemFromIndex(idx)->getText().c_str()));
+
+		if(idx != 1)
+		{
+			for(auto it = m_shopMap.begin(); it != m_shopMap.end(); ++it){
+				if(item->getText() == ">>" + it->second.first){
+					if(cost <= m_mgrInstance->getPlayerResourceByName(Common::Data::Game::GAME_ORE)){
+						if(!m_mgrInstance->decreaseResourceByName(Common::Data::Game::GAME_ORE, cost)) return true;
+						m_mgrInstance->addToCargo(it->first,it->second.first,it->second.second);
+						if(it->first == Common::Data::Game::GAME_ENGINE)
+							m_mgrInstance->addEngineData(it->second.first,
+							m_engineDataMap[it->second.first].first, m_engineDataMap[it->second.first].second);
+
+						m_shopMap.erase(it);
+						item->destroy();
+						costList->removeItem(costList->getListboxItemFromIndex(idx));
+
+						static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->resetList();
+						static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->addItem(
+						new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_ORE) 
+						+ std::to_string(m_mgrInstance->getPlayerResourceByName(Common::Data::Game::GAME_ORE)) ));
+
+						break;
+					}else{
+						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->resetList();
+						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->addItem(
+						new CEGUI::ListboxTextItem("\" Seems that you don't have enough money for that\"")
+						);
+					}
+				}
+			}
+		}else{
+			if(cost <= m_mgrInstance->getPlayerResourceByName(Common::Data::Game::GAME_ORE)){
+				if(!m_mgrInstance->decreaseResourceByName(Common::Data::Game::GAME_ORE, cost)) return true;
+				m_mgrInstance->increaseLife(50);
+
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/HullBoard"))->resetList();
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/HullBoard"))->addItem(
+				new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_HULL) + std::to_string(m_mgrInstance->getLife()) + "/"
+				+ std::to_string(m_mgrInstance->getTotalLife())));
+
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->resetList();
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->addItem(
+				new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_ORE) 
+				+ std::to_string(m_mgrInstance->getPlayerResourceByName(Common::Data::Game::GAME_ORE)) ));
+
+			}else{
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->resetList();
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->addItem(
+				new CEGUI::ListboxTextItem("\" Seems that you don't have enough money for that\"")
+				);
+			}
+		}
+		return true;
+	}
+
+	bool CEventGUI::onItemSelected(const CEGUI::EventArgs& e)
+	{
+		const CEGUI::WindowEventArgs& mouseArgs = static_cast<const CEGUI::WindowEventArgs&>(e);
+
+		CEGUI::ItemListbox* boardWindow = static_cast<CEGUI::ItemListbox*>(mouseArgs.window);
+
+		if(boardWindow->getFirstSelectedItem()){
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->resetList();
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->addItem(
+				new CEGUI::ListboxTextItem(boardWindow->getFirstSelectedItem()->getUserString(Common::Data::Game::GAME_HUD_DESCRIPTION))
+				);
+		}
+
+		return true;
+	}
+
+	bool CEventGUI::onRejectMission(const CEGUI::EventArgs& e)
+	{
+		m_missionManager->rejectMission();
+		m_cityPageFadeAnimInst->start();
+		m_eventState->backReleased(CEGUI::EventArgs());
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::onAcceptMission(const CEGUI::EventArgs& e)
+	{
+		m_missionManager->acceptMission();
+		m_cityPageFadeAnimInst->start();
+		m_eventState->backReleased(CEGUI::EventArgs());
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::onBackEvent(const CEGUI::EventArgs& e)
+	{
+		m_eventPageFadeAnimInst->start();
+		m_eventState->backReleased(CEGUI::EventArgs());
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	bool CEventGUI::onBackShop(const CEGUI::EventArgs& e)
+	{
+		m_docksPageFadeAnimInst->start();
+		m_eventState->backReleased(CEGUI::EventArgs());
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+		return true;
+	}
+
+	void CEventGUI::resetGUI()
+	{
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->
+			getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->getChildElement("MessageBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->
+			getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("ResourcesBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->
+			getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("HullBoard"))->resetList();
+		static_cast<CEGUI::ItemListbox*>(m_inhabitedMenuWindow->
+			getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("ItemsBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->
+			getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("CostBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->
+			getChildElement("DocksPage")->getChildElement("ShopWindow")->getChildElement("DescriptionBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->
+			getChildElement("CityPage")->getChildElement("LogWindow")->getChildElement("MessageBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_unoccupiedMenuWindow->
+			getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->getChildElement("MessageBoard"))->resetList();
+		static_cast<CEGUI::Listbox*>(m_unoccupiedMenuWindow->
+			getChildElement("EventPage")->getChildElement("LogWindow")->getChildElement("MessageBoard"))->resetList();
+
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->getChildElement("CityPage"))->setVisible(false);
+		static_cast<CEGUI::Listbox*>(m_inhabitedMenuWindow->getChildElement("DocksPage"))->setVisible(false);
+		static_cast<CEGUI::Listbox*>(m_unoccupiedMenuWindow->getChildElement("EventPage"))->setVisible(false);
+	}
+
+	void CEventGUI::setupShop()
+	{
+		std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
+		std::default_random_engine generator(seed);
+		std::uniform_int_distribution<int> priceVariance1(0,20);
+		std::uniform_int_distribution<int> priceVariance2(0,35);
+		std::uniform_int_distribution<int> priceVariance3(0,50);
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_ORE) 
+			+ std::to_string(m_mgrInstance->getPlayerResourceByName(Common::Data::Game::GAME_ORE)) ));
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/HullBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_HULL) + std::to_string(m_mgrInstance->getLife()) + "/"
+			+ std::to_string(m_mgrInstance->getTotalLife())));
+		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
+			createChild("TaharezLook/ListboxItem","Title");
+		item->setText("--- SHOP ---");
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "\"Need something?\"");
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+			new CEGUI::ListboxTextItem("--Ore--") );
+
+		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
+			createChild("TaharezLook/ListboxItem","Repair");
+		item->setText(Common::Data::Game::GAME_SHOP_REPAIR);
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Repair the Hull for a reasonable price.");
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::to_string(100 + (10 * priceVariance1(generator)) )) );
+
+		/// TODO -- Read random items from file -- ///
+		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
+			createChild("TaharezLook/ListboxItem","Item1");
+		item->setText(">>Energy Beam");
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Primary Weapon\nA short ranged but powerful and quick weapon.");
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance2(generator)) )) );
+
+		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_PRIMARY_WEAPON,
+			std::pair<std::string,std::string>("Energy Beam","Primary Weapon\nA short ranged but powerful and quick weapon.")));
+
+		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
+			createChild("TaharezLook/ListboxItem","Item2");
+		item->setText(">>Plasma Stream Engine");
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Engine\nA top notch engine that is both efficient and powerful.");
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance3(generator)) )) );
+
+		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_ENGINE,
+			std::pair<std::string,std::string>("Plasma Stream Engine","Engine\nA top notch engine that is both efficient and powerful.")));
+
+		m_engineDataMap["Plasma Stream Engine"] = std::pair<int, int>(85, 185);
+
+		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
+			createChild("TaharezLook/ListboxItem","Item3");
+		item->setText(">>EMP Bombs");
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Secondary Weapon\nThese bombs damage electronic devices and sensors in a wide area.");
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance1(generator)) )) );
+
+		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SECONDARY_WEAPON,
+			std::pair<std::string,std::string>("EMP Bombs","Secondary Weapon\nThese bombs damage electronic devices and sensors in a wide area.")));
+
+		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->endInitialisation();
+	}
+	
+	void CEventGUI::setupCity()
+	{
+		///TODO -- get real texts --///
+
+		Application::CMissionManager::TMissionDescriptor mission = m_missionManager->generateMission();
+
+		Application::CMissionManager::TItemDescriptor item = m_missionManager->getTmpItemReward();
+
+		Application::CMissionManager::TResourceDescriptor resource = m_missionManager->getTmpResourceReward();
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
+			CEGUI::String("--- Mission ---")));
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
+			mission.second.first));
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
+			CEGUI::String("--- Reward ---")));
+
+		if(item.first != "")
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
+			">>"+item.second.first));
+
+		if(resource.first != "")
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
+			resource.first + std::to_string(resource.second)));
+	}
+	
+	void CEventGUI::setupEvent()
+	{
+		///TODO --Real Texts, more events?--///
+
+		std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
+		std::default_random_engine generator(seed);
+		std::uniform_int_distribution<int> eventSelector(1,100);
+
+		int diceRoll1(eventSelector(generator));
+
+		if(diceRoll1 < 31){
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+			new CEGUI::ListboxTextItem(std::string("Nothig happens.") ));
+		}else{
+			int diceRoll2(eventSelector(generator));
+			if(diceRoll2<51){
+				std::uniform_int_distribution<int> resourceVariance(1,50);
+				int moneyFound(resourceVariance(generator) * 10);
+				m_mgrInstance->addResourceByName(Common::Data::Game::GAME_ORE, moneyFound);
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::string("You found something valuable.\n" + std::to_string(moneyFound) + " ore gained.") ));
+
+			}else if(diceRoll2<70){
+				std::uniform_int_distribution<int> lifeGain(10,40);
+				int gain(lifeGain(generator));
+				int lifeLeft(m_mgrInstance->getTotalLife() - m_mgrInstance->getLife());
+				m_mgrInstance->increaseLife(gain);
+				if(gain > lifeLeft) gain = lifeLeft;
+				if(gain = 0)
+				{
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::string("You found a place to repair your ship.\n" + std::to_string(gain) + "% of the hull repaired.") ));
+				}else{
+					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::string("You found a place to repair your ship,\nbut the hull doesn't need any repairing.") ));
+				}
+			}else if(diceRoll2<76){
+
+				std::uniform_int_distribution<int> crewType(0,2);
+				int crewMember(crewType(generator));
+
+				std::string newMember;
+				if(crewMember == 0){
+					newMember = Common::Data::Game::GAME_MILITARY;
+				}else if(crewMember == 1){
+					newMember = Common::Data::Game::GAME_ENGINEERS;
+				}else if(crewMember == 2){
+					newMember = Common::Data::Game::GAME_SCIENTIFICS;
+				}
+
+				m_mgrInstance->addCrewMemberByName(newMember);
+
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::string("You found a new crew-member.\n+1" + newMember.substr(2,newMember.length()-3) + ".") ));
+			}else if(diceRoll2<90){
+				int maxDamage(m_mgrInstance->getLife() - 10);
+				if(maxDamage < 5) maxDamage = 0;
+				if(maxDamage > 30) maxDamage = 30;
+				if(maxDamage != 0)
+				{
+					std::uniform_int_distribution<int> lifeLost(5,m_mgrInstance->getLife() - 10 > 30 ? 30 :m_mgrInstance->getLife() - 10 );
+					int damage(lifeLost(generator));
+					m_mgrInstance->decreaseLife(damage);
+
+					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+						new CEGUI::ListboxTextItem(std::string("The ship crashed on the planet.\n" + std::to_string(damage) + "% of the hull damaged.") ));
+				}else{
+					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::string("Nothig happens.") ));
+				}
+			}else if(diceRoll2<96){
+
+				m_mgrInstance->addToCargo(Common::Data::Game::GAME_ITEM,"Useless Item", "Item\nUseless item found in a planet.");
+
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::string("You found an Item.\nUseless Item added to cargo.") ));
+
+			}else{
+				std::uniform_int_distribution<int> crewType(0,2);
+				int crewMember(crewType(generator));
+
+				std::string newMember;
+				if(crewMember == 0){
+					newMember = Common::Data::Game::GAME_MILITARY;
+				}else if(crewMember == 1){
+					newMember = Common::Data::Game::GAME_ENGINEERS;
+				}else if(crewMember == 2){
+					newMember = Common::Data::Game::GAME_SCIENTIFICS;
+				}
+
+				if(m_mgrInstance->getCrewMembersByName(newMember) > 0){
+					m_mgrInstance->subtractCrewMemberByName(newMember);
+
+					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+						new CEGUI::ListboxTextItem(std::string("You lost a crew-member.\n-1" + newMember.substr(2,newMember.length()-3) + ".") ));
+				}else{
+					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+						new CEGUI::ListboxTextItem(std::string("Nothig happens.") ));
+				}
+			}
+		}
+	}
+	
+	void CEventGUI::setupResources()
+	{
+		///TODO --Real texts--///
+
+		std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
+		std::default_random_engine generator(seed);
+		std::uniform_int_distribution<int> resourcesSelector(1,100);
+
+		if(resourcesSelector(generator) < 71){
+			std::uniform_int_distribution<int> fuelDist(5,30);
+			int fuelExtracted = fuelDist(generator) * 10;
+			m_mgrInstance->addResourceByName(Common::Data::Game::GAME_FUEL, fuelExtracted);
+
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+				new CEGUI::ListboxTextItem(std::string("Dark matter recolected.\n" + std::to_string(fuelExtracted) + " fuel gained." )));
+
+		}else{
+			std::uniform_int_distribution<int> moneyDist(1,15);
+			int oreExtracted = moneyDist(generator) * 10 + 20;
+			m_mgrInstance->addResourceByName(Common::Data::Game::GAME_ORE, oreExtracted);
+
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
+				new CEGUI::ListboxTextItem(std::string("Minerals found.\n" + std::to_string(oreExtracted) + " ore gained." )));
+		}
+	}
+
+	void CEventGUI::finishGame()
+	{
+		m_eventState->setGameFinished();
+	}
+}

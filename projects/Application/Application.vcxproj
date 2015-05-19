@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F7152ADC-9E81-4A6E-885B-9D7542C553AF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Application</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <TargetName>$(SolutionName)D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\</OutDir>
+    <TargetName>$(SolutionName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(CEGUI_HOME)\cegui\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(VLD_HOME)\include;$(BOOST_HOME);$(LOG_HOME)/include;$(PHYSX_HOME)/include;$(FMOD_HOME)/inc;$(FMODSTUDIO_HOME)/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DisableSpecificWarnings>4275;4251;4193;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(BOOST_HOME)\stage\lib;$(OGRE_HOME)\lib\$(Configuration);$(OGRE_HOME)\boost\lib;$(CEGUI_HOME)\lib\$(Configuration);$(FMOD_HOME)\lib\;$(FMODSTUDIO_HOME)\lib\;$(PHYSX_HOME)/Lib/win32;$(VLD_HOME)\lib;$(LOG_HOME)/lib;%(AdditionalLibraryDirectories);$(LUA_HOME)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain_d.lib;OIS_d.lib;CEGUIBase-0_d.lib;CEGUIOgreRenderer-0_d.lib;PhysX3CharacterKinematicCHECKED_x86.lib;PhysX3CHECKED_x86.lib;OgreOverlay_d.lib;PhysX3CommonCHECKED_x86.lib;PhysX3CookingCHECKED_x86.lib;PhysX3ExtensionsCHECKED.lib;PhysX3VehicleCHECKED.lib;PhysXProfileSDKCHECKED.lib;PhysXVisualDebuggerSDKCHECKED.lib;PxTaskCHECKED.lib;ParticleUniverse_d.lib;Log_d.lib;fmodL_vc.lib;fmodstudioL_vc.lib;lua_d.lib;luabindd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib;LIBCMTD.lib;libcpmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;$(OGRE_HOME)\include;$(OGRE_HOME)\include\OIS;$(CEGUI_HOME)\cegui\include;$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\boost;$(VLD_HOME)\include;$(BOOST_HOME);$(LOG_HOME)/include;$(PHYSX_HOME)/include;$(FMOD_HOME)/inc;$(FMODSTUDIO_HOME)/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4275;4251;4193;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(BOOST_HOME)\stage\lib;$(OGRE_HOME)\lib\$(Configuration);$(OGRE_HOME)\boost\lib;$(CEGUI_HOME)\lib\$(Configuration);$(FMOD_HOME)\lib\;$(FMODSTUDIO_HOME)\lib\;$(PHYSX_HOME)\Lib\win32;$(VLD_HOME)\lib;$(LOG_HOME)/lib;%(AdditionalLibraryDirectories);$(LUA_HOME)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreMain.lib;OIS.lib;CEGUIBase-0.lib;CEGUIOgreRenderer-0.lib;PhysX3CharacterKinematic_x86.lib;OgreOverlay.lib;PhysX3_x86.lib;PhysX3Common_x86.lib;PhysX3Cooking_x86.lib;PhysX3Extensions.lib;PhysX3Vehicle.lib;PhysXProfileSDK.lib;PhysXVisualDebuggerSDK.lib;PxTask.lib;Log.lib;fmod_vc.lib;fmodstudio_vc.lib;ParticleUniverse.lib;lua.lib;luabind.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <IgnoreSpecificDefaultLibraries>LIBCMT.lib;libcpmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/verbose:lib</AdditionalOptions>
+    </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Application\3DApplication.cpp" />
+    <ClCompile Include="..\..\src\Application\BaseApplication.cpp" />
+    <ClCompile Include="..\..\src\Application\Clock.cpp" />
+    <ClCompile Include="..\..\src\Application\Manager\GameManager.cpp" />
+    <ClCompile Include="..\..\src\Application\Manager\MissionManager.cpp" />
+    <ClCompile Include="..\..\src\Application\States\EventState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\GalaxyState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\GameFinishedState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\GameOverState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\LoadState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\MenuState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\PauseState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\PlanetState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\State GUI\EventGUI.cpp" />
+    <ClCompile Include="..\..\src\Application\States\State GUI\GeneralNotification.cpp" />
+    <ClCompile Include="..\..\src\Application\States\State GUI\MissionNotification.cpp" />
+    <ClCompile Include="..\..\src\Application\States\State GUI\PlanetGUI.cpp" />
+    <ClCompile Include="..\..\src\Application\States\SystemState.cpp" />
+    <ClCompile Include="..\..\src\Application\TTG.cpp" />
+    <ClCompile Include="..\..\src\Application\TTGApplication.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Application\3DApplication.h" />
+    <ClInclude Include="..\..\src\Application\BaseApplication.h" />
+    <ClInclude Include="..\..\src\Application\CLock.h" />
+    <ClInclude Include="..\..\src\Application\Manager\GameManager.h" />
+    <ClInclude Include="..\..\src\Application\Manager\MissionManager.h" />
+    <ClInclude Include="..\..\src\Application\States\ApplicationState.h" />
+    <ClInclude Include="..\..\src\Application\States\EventState.h" />
+    <ClInclude Include="..\..\src\Application\States\ExitState.h" />
+    <ClInclude Include="..\..\src\Application\States\GalaxyState.h" />
+    <ClInclude Include="..\..\src\Application\States\GameFinishedState.h" />
+    <ClInclude Include="..\..\src\Application\States\GameOverState.h" />
+    <ClInclude Include="..\..\src\Application\States\LoadState.h" />
+    <ClInclude Include="..\..\src\Application\States\MenuState.h" />
+    <ClInclude Include="..\..\src\Application\States\PauseState.h" />
+    <ClInclude Include="..\..\src\Application\States\PlanetState.h" />
+    <ClInclude Include="..\..\src\Application\States\State GUI\EventGUI.h" />
+    <ClInclude Include="..\..\src\Application\States\State GUI\GeneralNotification.h" />
+    <ClInclude Include="..\..\src\Application\States\State GUI\MissionNotification.h" />
+    <ClInclude Include="..\..\src\Application\States\State GUI\PlanetGUI.h" />
+    <ClInclude Include="..\..\src\Application\States\SystemState.h" />
+    <ClInclude Include="..\..\src\Application\TTGApplication.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AI\AI.vcxproj">
+      <Project>{fa85cd7d-d5f3-4e68-af2b-b238e12a58f9}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{ae0b47ed-dcb0-4443-8176-10a6482165b5}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\GUI\GUI.vcxproj">
+      <Project>{63708f2e-2455-444c-bee3-99db7bf1b7ca}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\Logic\Logic.vcxproj">
+      <Project>{ea322ad9-bae8-47ee-b9c8-82b3bc3dede8}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

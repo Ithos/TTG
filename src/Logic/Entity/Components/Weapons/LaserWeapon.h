@@ -1,0 +1,93 @@
+/*
+ 	Copyright 2015 Francisco Javier Martinez Garcia
+	Copyright 2015 Alvaro Perez Corral
+	Copyright 2015 Luis Valero Martin
+	Copyright 2015 Adrian Vizcaino Gonzalez
+	This file is part of Through the galaxy.
+	Through the galaxy is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	any later version.
+	Through the galaxy is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	You should have received a copy of the GNU General Public License
+	along with Through the galaxy.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#ifndef __LOGIC_LASERWEAPON_H
+#define __LOGIC_LASERWEAPON_H
+
+#include "Weapon.h"
+#include <Common/Util/Math.h>
+
+namespace Ogre
+{
+	class Entity;
+	class SceneManager;
+	class SceneNode;
+}
+
+namespace Map
+{
+    class CMapEntity;
+}
+
+namespace physx
+{
+    class PxScene;
+}
+
+namespace Common
+{
+    namespace Particles
+    {
+        class CParticleManager;
+    }
+
+    namespace Physic
+    {
+        class CPhysicManager;
+    }
+}
+
+using namespace Common::Particles;
+using namespace Common::Physic;
+
+namespace Logic
+{
+    class CScene;
+
+	namespace Component
+	{
+        class CLaserWeapon : public IWeapon
+        {
+        public:
+            CLaserWeapon(CScene*, Ogre::SceneManager*, physx::PxScene*, const Map::CMapEntity*);
+            ~CLaserWeapon();
+
+            void shoot(const Vector3& src, const Vector3& dir);
+
+            /**
+                Set parameters for a weapon.
+            */
+            void setWeapon( const float& damage, const float& cadence, 
+                            const float& range, const float& speed, int charger );
+
+            void setPosition(const Vector3& pos);
+
+        private:
+		   Ogre::SceneManager*  m_sceneMngr;
+		   Ogre::SceneNode*     m_ogreNode;
+           physx::PxScene*      m_pxScene;
+           CScene*              m_scene;
+           Vector3              m_currPos;
+           CParticleManager*    m_particles;
+           CPhysicManager*      m_phyMngr;
+           Ogre::Ray            m_ray;
+        };
+    }
+}
+
+#endif

@@ -472,4 +472,16 @@ namespace Physic
 
 		return nullptr;
 	}
+
+	const float CPhysicManager::getActorRadius(physx::PxRigidDynamic* actor)
+	{
+		PxShape* buff;
+		PxU32 num =  actor->getShapes(&buff,actor->getNbShapes());
+		if(num == 1){
+			PxSphereGeometry geom;
+			if(buff->getSphereGeometry(geom)){
+				return geom.radius;
+			}
+		}
+	}
 }}

@@ -119,6 +119,8 @@ namespace Common
 			Logic::CEntity* raycastClosest (const Ray& ray, float maxDist) const;
 
 			Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const;
+
+			const float getActorRadius(physx::PxRigidDynamic* actor);
 		protected:
 		private:
 

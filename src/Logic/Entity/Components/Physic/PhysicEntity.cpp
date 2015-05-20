@@ -190,8 +190,8 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 	if(m_actor->isRigidDynamic()){
 		if(!m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))){
 			log_trace(LOG_PHYSIC,"Moving on contact\n");
-			Matrix4 m = m_physicMng->getActorTransform(m_actor);
-			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+			//Matrix4 m = m_physicMng->getActorTransform(m_actor);
+			//static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
 		}
 	}
 }

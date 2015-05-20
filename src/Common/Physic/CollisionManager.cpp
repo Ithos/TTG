@@ -17,6 +17,9 @@
 */
 
 #include "CollisionManager.h"
+
+#include <log.h>
+
 #include <Logic/Entity/Components/Physic/PhysicEntity.h>
 #include "Conversions.h"
 
@@ -30,6 +33,8 @@ using namespace Logic::Component;
 using namespace physx;
 
 namespace Common { namespace Physic {
+
+const char* const LOG_PHYSIC = "Common::Physic";
 
 CCollisionManager::CCollisionManager()
 {
@@ -124,6 +129,40 @@ void CCollisionManager::onControllerHit(const PxControllersHit &hit)
 
 void CCollisionManager::onObstacleHit(const PxControllerObstacleHit &hit)
 {
+}
+
+void CContactManager::onContactModify(physx::PxContactModifyPair* const pairs, physx::PxU32 count)
+{
+	for(PxU32 i = 0; i < count; i++){
+		const PxContactModifyPair& cp = pairs[i];
+
+		if(const PxRigidDynamic* actor = cp.actor[0]->isRigidDynamic()){
+				//PxActor* actor = pairHeader.actors[0];
+
+			if(actor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC){
+				Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+				Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(cp.actor[1]->userData);
+				comp1->onContact(comp2);
+			} else {
+				Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+				Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(cp.actor[1]->userData);
+				comp1->onContact(comp2);
+			}
+
+		}
+		if(const PxRigidDynamic* actor = cp.actor[1]->isRigidDynamic()){
+			//PxActor* actor = pairHeader.actors[1];
+			if(actor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC){
+				Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+				Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(cp.actor[0]->userData);
+				comp1->onContact(comp2);
+			} else {
+				Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+				Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(cp.actor[0]->userData);
+				comp1->onContact(comp2);
+			}
+		}
+	}
 }
 
 }}

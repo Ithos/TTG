@@ -37,6 +37,7 @@ namespace Common
 	{
 		class CCollisionManager;
 		class CErrorManager;
+		class CContactManager;
 	}
 }
 
@@ -145,6 +146,8 @@ namespace Common
 			physx::PxMaterial* m_defaultMaterial;
 
 			CCollisionManager* m_collisionManager;
+
+			CContactManager* m_contactManager;
 		};
 	}
 }

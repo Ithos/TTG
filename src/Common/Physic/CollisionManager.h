@@ -19,7 +19,8 @@
 #ifndef __COMMON_PHYSIC_COLLISIONMANAGER_H
 #define __COMMON_PHYSIC_COLLISIONMANAGER_H
 
-#include <PxSimulationEventCallback.h> 
+#include <PxSimulationEventCallback.h>
+#include <PxContactModifyCallback.h>
 #include <characterkinematic/PxController.h>
 
 namespace Common
@@ -51,7 +52,37 @@ namespace Common
 			void onControllerHit(const physx::PxControllersHit &hit); 
    
 			void onObstacleHit(const physx::PxControllerObstacleHit &hit);
+
+			static physx::PxFilterFlags PxCustomSpaceFilterShader(
+					physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+					physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+					physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+			{
+				using namespace physx;
+
+				if(PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+				{
+						pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+						return PxFilterFlag::eDEFAULT;
+				}
+
+				//pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+				pairFlags = PxPairFlag::eMODIFY_CONTACTS;
+
+				if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+						pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+
+				return PxFilterFlag::eDEFAULT;
+			}
    
+		};
+		class CContactManager : public physx::PxContactModifyCallback
+		{
+		public:
+			CContactManager(){}
+			~CContactManager(){}
+
+			virtual void onContactModify(physx::PxContactModifyPair* const pairs, physx::PxU32 count);
 		};
 	}
 }

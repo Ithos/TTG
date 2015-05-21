@@ -46,10 +46,16 @@ namespace Application
 	const char* const LOG_CEVENTGUI = "Application::CEventGUI";
 	CEventGUI* CEventGUI::m_instance = nullptr;
 
-	const char* const PLANET_EVENT_INTRO[] = {"Unoccupied Yellow planet.","Unoccupied Desert planet.","Unoccupied Red planet.","Unoccupied Earth-like planet.",
-												"Unoccupied Purple planet.","Unoccupied Green planet.","Unoccupied LightBlue planet.","Unoccupied Blue planet.",
-												"Inhabited Yellow planet.","Inhabited Desert planet.","Inhabited Red planet.","Inhabited Earth-like planet.",
-												"Inhabited Purple planet.","Inhabited Green planet.","Inhabited LightBlue planet.","Inhabited Blue planet."
+	const char* const PLANET_EVENT_INTRO[] = {"Unoccupied Desert planet.","Unoccupied Lava planet.","Unoccupied Red planet.","Unoccupied Earth-like planet.",
+												"Unoccupied Ocean planet.","Unoccupied Gas planet.","Unoccupied Ice planet.","Unoccupied Barren planet.",
+												"Inhabited Desert planet.","Inhabited Lava planet.","Inhabited Red planet.","Inhabited Earth-like planet.",
+												"Inhabited Ocean planet.","Inhabited Gas planet.","Inhabited Ice planet.","Inhabited Barren planet."
+											};
+
+	const char* const BACKGROUND_IMAGES[] = {"DesertPlanet/full_image","LavaPlanet/full_image","RedPlanet/full_image","EarthLikePlanet/full_image",
+												"OceanPlanet/full_image","GasPlanet/full_image","IcePlanet/full_image","PurplePlanet/full_image",
+												"DesertPlanetInhabited/full_image","LavaPlanetInhabited/full_image","RedPlanetInhabited/full_image","EarthLikePlanetInhabited/full_image",
+												"OceanPlanetInhabited/full_image","GasPlanetInhabited/full_image","IcePlanetInhabited/full_image","PurplePlanetInhabited/full_image"
 											};
 
 	CEventGUI::CEventGUI(CEventState* state) : m_eventState(state), m_menuWindow(nullptr), m_mgrInstance(nullptr), m_missionManager(nullptr),
@@ -242,6 +248,8 @@ namespace Application
 			getChildElement("MessageBoard"))->addItem(new CEGUI::ListboxTextItem(CEGUI::String(
 						PLANET_EVENT_INTRO[i*8+j]
 			)));
+
+		m_menuWindow->setProperty("Image",BACKGROUND_IMAGES[i*8+j]);
 	}
 
 	void CEventGUI::setupEvents()
@@ -409,6 +417,9 @@ namespace Application
 				);
 			}
 		}
+
+		Common::Sound::CSound::getSingletonPtr()->playSound("backButton");
+
 		return true;
 	}
 

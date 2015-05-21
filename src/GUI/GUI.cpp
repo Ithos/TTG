@@ -75,13 +75,10 @@ namespace GUI
 		CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
 		CEGUI::SchemeManager::getSingleton().createFromFile("AlfiskoSkin.scheme");
 		CEGUI::SchemeManager::getSingleton().createFromFile("SampleBrowser.scheme");
-		//CEGUI::SchemeManager::getSingleton().createFromFile("GameMenu.scheme");
-		//CEGUI::SchemeManager::getSingleton().createFromFile("Generic.scheme");
 		CEGUI::SchemeManager::getSingleton().createFromFile("TTGBackground.scheme");
 
 		
 #ifndef NON_EXCLUSIVE_MODE_IN_WINDOW_MODE 
-		//CEGUI::System::getSingletonPtr()->getDefaultGUIContext().getMouseCursor().setDefaultImage("OgreTrayImages/MouseArrow");
 		CEGUI::System::getSingletonPtr()->getDefaultGUIContext().getMouseCursor().setDefaultImage("GameMenuImages/MouseCursor");
 #endif	
 		

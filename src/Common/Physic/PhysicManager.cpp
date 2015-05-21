@@ -483,5 +483,6 @@ namespace Physic
 				return geom.radius;
 			}
 		}
+		return 0;
 	}
 }}

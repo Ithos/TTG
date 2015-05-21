@@ -204,9 +204,9 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 			float distance = radius + radius2;
 			float curr_distanace = m.getTrans().distance(m2.getTrans());
 			if(distance > curr_distanace){
-				float to_move = distance - curr_distanace;
+				float to_move = (distance - curr_distanace);
 				Vector3 dir(m.getTrans() - m2.getTrans());
-				Vector3 pos(m.getTrans() + dir);
+				Vector3 pos(m.getTrans() + (dir.normalise()*to_move));
 				m.setTrans(pos);
 				m_actor->setGlobalPose(Common::Physic::Matrix4ToPxTransform(m));
 				Matrix4 m = m_physicMng->getActorTransform(m_actor);

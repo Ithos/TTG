@@ -36,7 +36,7 @@ namespace Logic
             DEC_FACTORY(CMissileTrigger)
         public:
             CMissileTrigger() 
-                : m_parent(nullptr), move(nullptr), m_shooted(false) 
+                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false) 
             { }
             ~CMissileTrigger();
 
@@ -49,12 +49,12 @@ namespace Logic
 			void onOverlapEnd(IPhysic* otherComponent);
 
             // movFunc = define how to move the trigger, linear by default.
-            void setMove(void (*movFunc)(_InOut Vector3&/*src*/, const Vector3&/*dir*/, float/*speed*/) = nullptr) { move = movFunc; }
+            void setMove(void (*movFunc)(_InOut Vector3&/*src*/, const Vector3&/*dir*/, float/*speed*/) = nullptr) { moveFunc = movFunc; }
 
-            void shoot();
+            void shoot(const Vector3& src, const Vector3& dir);
 
         private:
-            void (*move)(_InOut Vector3&, const Vector3&, float);
+            void (*moveFunc)(_InOut Vector3&, const Vector3&, float);
 
             CEntity*    m_parent;
             CTransform* m_parentTrans;

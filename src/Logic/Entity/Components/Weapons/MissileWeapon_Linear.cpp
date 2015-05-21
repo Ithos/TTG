@@ -33,7 +33,7 @@ namespace Logic
 	{
         const int MAX_MISSILES = 20;
 
-        CMissileWeapon_Linear::CMissileWeapon_Linear()
+        CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0)
         {
             m_type = MISSILE_LINEAR;
 
@@ -45,6 +45,9 @@ namespace Logic
              //-- attributes...
             eInfo.setType(getDefaultValue(GEN_MISSILE_LINEAR_TYPE));
             eInfo.setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ENTITY));
+            eInfo.setAttribute("physic_type", "kinematic");
+            eInfo.setAttribute("physic_shape", "sphere");
+            eInfo.setAttribute("physic_mass", "1");
             eInfo.setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_RADIUS));
             eInfo.setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ISTRIGGER));
             eInfo.setAttribute(MISSILE_SPEED,  getDefaultValue(GEN_MISSILE_LINEAR_SPEED));
@@ -54,6 +57,8 @@ namespace Logic
             //init pool of missiles (
             for ( int i = 0; i < MAX_MISSILES; ++i) {
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(&eInfo, nullptr);
+                ent->spawnEx(parent, scene, &eInfo);
+                ent->activate();
                 m_subEntity.push_back(ent);
                 static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
             }
@@ -72,7 +77,7 @@ namespace Logic
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
             // todo: gestion el pool de entidades.
-            static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot();
+            static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
             if (m_iMissile < MAX_MISSILES )
                 m_iMissile = 0;
             else

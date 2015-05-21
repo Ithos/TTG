@@ -75,7 +75,9 @@ namespace Logic
         else
             m_weapons->releasePrimaryTrigger();
 
-      //  if (m_secondaryShoot)
-       //     m_weapons->getSecondaryWeapon()->shoot();
+        if (m_secondaryShoot)
+            m_weapons->shootSecondaryWeapon();
+        else
+            m_weapons->releaseSecondayTrigger();
 	}
 }

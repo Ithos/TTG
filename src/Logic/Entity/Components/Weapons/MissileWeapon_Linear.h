@@ -35,7 +35,7 @@ namespace Logic
         class CMissileWeapon_Linear : public IWeapon, public CBaseMissileWeapon
         {
         public:
-            CMissileWeapon_Linear();
+            CMissileWeapon_Linear(CEntity* parent, CScene* scene);
             ~CMissileWeapon_Linear() {}
 
             void shoot(const Vector3& src, const Vector3& dir);

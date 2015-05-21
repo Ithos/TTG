@@ -25,6 +25,8 @@
 #include "../../Components/Movement/Transform.h"
 #include <PxPhysicsAPI.h>
 
+using namespace Common::Util::PxConversor;
+
 namespace Logic
 {
 	namespace Component
@@ -39,6 +41,7 @@ namespace Logic
 
             m_parent      = entity;
             m_parentTrans = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
+            reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_parentTrans->getTransform()));
             
             using namespace Common::Data::Spawn;
 
@@ -58,13 +61,13 @@ namespace Logic
             if (!m_shooted)
                 return;
 
-            using namespace Common::Util::PxConversor;
-            if (!move) {
+            
+            if (!moveFunc) {
                 m_pos += (m_dir * m_speed * msecs);
                 m_trans.setTrans(m_pos);
             }
             else {
-                move(m_pos, m_dir, m_speed);
+                moveFunc(m_pos, m_dir, m_speed);
             }
 
             m_trans.setTrans(m_pos);
@@ -74,17 +77,18 @@ namespace Logic
         void CMissileTrigger::onOverlapBegin(IPhysic* hitPhysicComp)
         {
             m_shooted = false;
+            /* quitar vida emplotar y todo eso*/
         }
 
 		void CMissileTrigger::onOverlapEnd(IPhysic* hitPhysicComp)
         {
         }
 
-        void CMissileTrigger::shoot()
+        void CMissileTrigger::shoot(const Vector3& src, const Vector3& dir)
         {
             m_shooted = true;
-            m_pos     = m_parentTrans->getPosition();
-            m_dir     = Common::Util::Math::getDirection(m_parentTrans->getTransform());
+            m_pos     = src;
+            m_dir     = dir;
         }
     }
 }

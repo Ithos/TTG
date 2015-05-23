@@ -55,11 +55,11 @@ namespace Logic
 
         // move
         if (m_moveForward)
-            m_mov->moveForward();
+            m_mov->moveForward(msecs);
         else if (m_braking)
-            m_mov->moveBackward();
+            m_mov->moveBackward(msecs);
         else
-            m_mov->slowDownByFriction();
+            m_mov->slowDownByFriction(msecs);
 
         // turn
         if (m_turningRight && !m_turningLeft)

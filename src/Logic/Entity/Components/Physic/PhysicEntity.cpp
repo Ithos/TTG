@@ -218,11 +218,17 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 
 bool CPhysicEntity::activate()
 {
+	if(!IComponent::activate()) return false;
+
+	return m_physicMng->activateActor(m_actor);
+
 	return true;
 }
 void CPhysicEntity::deactivate()
 {
+	m_physicMng->deactivateActor(m_actor);
 
+	IComponent::deactivate();
 }
 
 }}

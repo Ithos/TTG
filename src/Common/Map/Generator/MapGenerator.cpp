@@ -637,8 +637,6 @@ namespace Map
 			tmpStr2 = Common::Configuration::getDefaultValue(aux);
 			entityInProgress->setAttribute(PHYSIC_RADIUS, tmpStr2.c_str());
 
-			entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::METEOR));
-
 			aux = GEN_ASTEROID_MODEL + std::to_string(mod);
 			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
 

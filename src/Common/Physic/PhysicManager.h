@@ -121,6 +121,10 @@ namespace Common
 			Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const;
 
 			const float getActorRadius(physx::PxRigidDynamic* actor);
+
+			bool activateActor(physx::PxRigidActor *actor);
+			void deactivateActor(physx::PxRigidActor *actor);
+
 		protected:
 		private:
 

@@ -242,7 +242,7 @@ namespace Physic
 
 		actor->userData = (void*)component;
 		PxSetGroup(*actor,group);
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 
 		return actor;
 	}
@@ -269,7 +269,7 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 	
 		return actor;
 	}
@@ -302,7 +302,7 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 
 		return actor;
 	}
@@ -327,7 +327,7 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 	
 		return actor;
 	}
@@ -367,7 +367,7 @@ namespace Physic
 		joint->setMotion(PxD6Axis::eTWIST,PxD6Motion::eLOCKED);
 		//TODO release
 
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 
 		return actor;
 	}
@@ -484,5 +484,16 @@ namespace Physic
 			}
 		}
 		return 0;
+	}
+
+	bool CPhysicManager::activateActor(physx::PxRigidActor *actor)
+	{
+		m_scene->addActor(*actor);
+		return true;
+	}
+
+	void CPhysicManager::deactivateActor(physx::PxRigidActor *actor)
+	{
+		m_scene->removeActor(*actor);
 	}
 }}

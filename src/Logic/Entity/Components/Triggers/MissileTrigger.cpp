@@ -88,7 +88,8 @@ namespace Logic
 
             m_trans.setTrans(m_pos);
             //reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_trans));
-			m_physicMng->moveKinematicActor(static_cast<physx::PxRigidDynamic*>(m_actor),m_trans);
+			physx::PxRigidDynamic *dinActor = m_actor->isRigidDynamic();
+			m_physicMng->moveKinematicActor(dinActor,m_trans);
         }
 
         void CMissileTrigger::onOverlapBegin(IPhysic* hitComp)
@@ -134,7 +135,9 @@ namespace Logic
 		{
 			if(!CPhysicEntity::activate()) return false;
 
-			m_physicMng->moveKinematicActor(static_cast<physx::PxRigidDynamic*>(m_actor),m_parentTrans->getTransform());
+			physx::PxRigidDynamic *dinActor = m_actor->isRigidDynamic();
+
+			m_physicMng->moveKinematicActor(dinActor,m_parentTrans->getTransform());
 
 			return true;
 		}

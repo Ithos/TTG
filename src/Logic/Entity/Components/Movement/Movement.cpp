@@ -83,11 +83,20 @@ namespace Logic
 
             //rotate
             //getRotation(m_trans->getTransform(), m_iniRot);
-            m_iniRot    = m_nextRot;
-            m_nextRot.x = m_pitch;
-            m_nextRot.y = m_yaw;
-            m_nextRot.z = m_roll;
-            m_trans->rotateRad(m_yaw, m_pitch, m_roll);
+			if(getEntity()->isPlayer()){
+				float secs = msecs * 0.001;
+				m_iniRot    = m_nextRot;
+				m_nextRot.x = m_pitch * secs;
+				m_nextRot.y = m_yaw * secs;
+				m_nextRot.z = m_roll * secs;
+				m_trans->rotateRad(m_yaw * secs, m_pitch * secs, m_roll * secs);
+			}else{
+				m_iniRot    = m_nextRot;
+				m_nextRot.x = m_pitch;
+				m_nextRot.y = m_yaw;
+				m_nextRot.z = m_roll;
+				m_trans->rotateRad(m_yaw, m_pitch, m_roll);
+			}
         }
 
         void CMovement::move(const Vector3& dir /*normalised*/)
@@ -102,27 +111,27 @@ namespace Logic
             m_roll  = roll; 
         }
 
-        void CMovement::moveForward()
+        void CMovement::moveForward(unsigned int msecs)
         {
             Vector3 vecx, vecy, vecz;
             m_trans->getOrientation().ToAxes(vecx, vecy, vecz);
-            m_speed = (m_speed < m_maxSpeed) ? m_speed + (m_aceleration * m_friction) : m_maxSpeed;
+            m_speed = (m_speed < m_maxSpeed) ? m_speed + (m_aceleration * msecs * 0.001) : m_maxSpeed;
             move(-vecz.normalisedCopy());
         }
 
-        void CMovement::moveBackward()
+        void CMovement::moveBackward(unsigned int msecs)
         {
             Vector3 vecx, vecy, vecz;
             m_trans->getOrientation().ToAxes(vecx, vecy, vecz);
-            m_speed = (m_speed > -m_maxSpeed) ? m_speed - (m_desaceleration * m_friction) : -m_maxSpeed;
+            m_speed = (m_speed > -m_maxSpeed) ? m_speed - (m_desaceleration * msecs * 0.001) : -m_maxSpeed;
             move(-vecz.normalisedCopy());
         }
 
-        void CMovement::slowDownByFriction()
+        void CMovement::slowDownByFriction(unsigned int msecs)
         {
             Vector3 vecx, vecy, vecz;
             m_trans->getOrientation().ToAxes(vecx, vecy, vecz);
-            m_speed = (m_speed > 0.005) ? m_speed - m_friction * 0.1 : (m_speed < -0.005) ? m_speed + m_friction * 0.1 : 0.0f;
+            m_speed = (m_speed > 0.005) ? m_speed - m_friction * 0.1 * msecs * 0.001 : (m_speed < -0.005) ? m_speed + m_friction * 0.1 * msecs * 0.001 : 0.0f;
             move(-vecz.normalisedCopy());
         }
 

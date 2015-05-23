@@ -32,6 +32,7 @@ bin/*.exe
 bin/*.pdb
 bin/*.ilk
 bin/*.ini
+bin/*.map
 
 bin/log/*.log
 

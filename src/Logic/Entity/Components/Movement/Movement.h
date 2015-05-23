@@ -44,9 +44,9 @@ namespace Logic
             bool spawn(CEntity* entity, CScene *scene, const Map::CMapEntity* entityInfo);
             void tick(unsigned int);
 
-            void moveForward();
-            void moveBackward();
-            void slowDownByFriction(); 
+            void moveForward(unsigned int msecs);
+            void moveBackward(unsigned int msecs);
+            void slowDownByFriction(unsigned int msecs); 
             // -size : hit object size. Bigger size, bigger slowing dowm.
             void slowDownByHit(unsigned size = 1);
             void turnLeft();

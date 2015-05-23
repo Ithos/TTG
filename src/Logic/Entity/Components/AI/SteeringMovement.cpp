@@ -164,7 +164,7 @@ namespace Logic
 				if (speedValue > m_maxLinearSpeed)
 					m_currentProperties.linearSpeed *= (m_maxLinearSpeed / speedValue);
 
-				m_currentProperties.angularSpeed += m_currentProperties.angularAccel;
+				m_currentProperties.angularSpeed += m_currentProperties.angularAccel  * msecs * 0.01;
 				if (m_currentProperties.angularSpeed > m_maxAngularSpeed) 
 					m_currentProperties.angularSpeed = Ogre::Math::Sign((float)m_currentProperties.angularSpeed) * m_maxAngularSpeed;
 			}

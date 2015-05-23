@@ -1,20 +1,8 @@
 <?xml version="1.0" ?>
 <GUIScheme version="5" name="TTG">
 	<Imageset filename="TTGBackground.imageset" />
-  <Imageset filename="DesertBackground.imageset" />
-  <Imageset filename="InhabitedDesertBackground.imageset" />
-  <Imageset filename="EarthBackground.imageset" />
-  <Imageset filename="InhabitedEarthBackground.imageset" />
-  <Imageset filename="GasPlanetBackground.imageset" />
-  <Imageset filename="InhabitedGasPlanetBackground.imageset" />
-  <Imageset filename="IcePlanetBackground.imageset" />
-  <Imageset filename="InhabitedIcePlanetBackground.imageset" />
-  <Imageset filename="LavaPlanetBackground.imageset" />
-  <Imageset filename="InhabitedLavaPlanetBackground.imageset" />
-  <Imageset filename="OceanPlanetBackground.imageset" />
-  <Imageset filename="InhabitedOceanPlanetBackground.imageset" />
-  <Imageset filename="PurplePlanetBackground.imageset" />
-  <Imageset filename="InhabitedPurplePlanetBackground.imageset" />
-  <Imageset filename="RedPlanetBackground.imageset" />
-  <Imageset filename="InhabitedRedPlanetBackground.imageset" />
+    <!--<Font filename="Jura-10.font" />
+	  <Font filename="Jura-13.font" />
+    <Font filename="Jura-18.font" />
+  <WindowRendererSet filename="CEGUICoreWindowRendererSet" />-->	
 </GUIScheme>

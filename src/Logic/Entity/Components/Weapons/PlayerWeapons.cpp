@@ -93,21 +93,17 @@ namespace Logic
         }
 
         /* For cadence */
-        void CWeapons::releasePrimaryTrigger()
+        void CWeapons::releaseTrigger(int weapon)
         {
             using namespace Common::Data;
             log_trace(LOG_PWEAPON, "Release trigger primary weapon\n");
-            switch (m_weapons[m_primary]->m_type)
+            switch (m_weapons[weapon]->m_type)
             {
             case LASER:
-                static_cast<CLaserWeapon*>(m_weapons[m_primary])->releaseTrigger();
-                break;
+                static_cast<CLaserWeapon*>(m_weapons[weapon])->releaseTrigger(); break;
+            case MISSILE_LINEAR:
+                static_cast<CMissileWeapon_Linear*>(m_weapons[weapon])->releaseTrigger(); break;
             }
-        }
-
-        void CWeapons::releaseSecondayTrigger()
-        {
-            
         }
     }
 }

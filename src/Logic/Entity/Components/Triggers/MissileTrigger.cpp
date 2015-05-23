@@ -24,35 +24,51 @@
 #include "Common/data/Spawn_Constants.h"
 #include "../../Components/Movement/Transform.h"
 #include <PxPhysicsAPI.h>
+<<<<<<< HEAD
 #include <Common/Physic/PhysicManager.h>
+=======
+#include "../Gameplay/Life.h"
+#include "common/Particles/ParticleManager.h"
+>>>>>>> c891420f67dc78da1cc89af0f833159dc2365036
 
 using namespace Common::Util::PxConversor;
+using namespace Common::Data::Spawn;
+using namespace Common::Data;
 
 namespace Logic
 {
 	namespace Component
 	{
-
         IMP_FACTORY(CMissileTrigger)
 
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
+            CEntity* thisEnt = m_entity;
             if (!CPhysicEntity::spawn(entity, scene, entityInfo))
                 return false;
 
+            m_entity      = thisEnt;
             m_parent      = entity;
+			
             m_parentTrans = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
             //reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_parentTrans->getTransform()));
 			
 			//Esto en el activate
 			//m_physicMng->moveKinematicActor(static_cast<physx::PxRigidDynamic*>(m_actor),m_parentTrans->getTransform());
-
             
-            using namespace Common::Data::Spawn;
-
             if (entityInfo->hasAttribute(MISSILE_SPEED))
                 m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
 
+            if (entityInfo->hasAttribute(MISSILE_DAMAGE))
+                m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
+
+            if (entityInfo->hasAttribute(MISSILE_RANGE))
+                m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
+
+            m_trans = Matrix4::IDENTITY;
+            // Particles code ----
+            m_particles = Common::Particles::CParticleManager::getInstance();
+            m_particles->addShootType(MISSILE_LINEAR);
             return true;
         }
 
@@ -66,10 +82,8 @@ namespace Logic
             if (!m_shooted)
                 return;
 
-            
-            if (!moveFunc) {
-                m_pos += (m_dir * m_speed * msecs);
-                m_trans.setTrans(m_pos);
+           if (!moveFunc) {
+                m_pos = m_pos + (m_dir * m_speed * msecs);
             }
             else {
                 moveFunc(m_pos, m_dir, m_speed);
@@ -79,10 +93,32 @@ namespace Logic
             reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_trans));
         }
 
-        void CMissileTrigger::onOverlapBegin(IPhysic* hitPhysicComp)
+        void CMissileTrigger::onOverlapBegin(IPhysic* hitComp)
         {
-            m_shooted = false;
-            /* quitar vida emplotar y todo eso*/
+            CEntity* hitEnt = hitComp->getEntity();
+            std::string type = hitComp->getEntity()->getType();
+            if (  type == "Enemy" || type == "Asteroid") {
+                m_shooted = false;
+                m_entity->deactivate();
+                unsigned int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
+                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+                if ( *life > 0) {
+                    *life = (*life <= m_damage)? 0 : *life - m_damage;
+                        
+                    if (*life  == 0) {
+                        hitEnt->deactivate();
+                        m_particles->startNextExplosion(pos);
+                    }
+                    else {
+                        //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+                    }
+                }
+                // make boom boom with particles
+            }
+            else if (type == "PlanetLimitTrigger") {
+                m_shooted = false;
+                m_entity->deactivate();
+            }
         }
 
 		void CMissileTrigger::onOverlapEnd(IPhysic* hitPhysicComp)

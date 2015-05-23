@@ -216,4 +216,13 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 	}
 }
 
+bool CPhysicEntity::activate()
+{
+	return true;
+}
+void CPhysicEntity::deactivate()
+{
+
+}
+
 }}

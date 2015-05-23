@@ -46,6 +46,9 @@ namespace Logic { namespace Component {
 
 		virtual void tick(unsigned int msecs);
 
+		virtual bool activate();
+		virtual void deactivate();
+
 		virtual void onOverlapBegin(IPhysic* otherComponent);
 		virtual void onOverlapEnd(IPhysic* otherComponent);
 		virtual void onContact(IPhysic* otherComponent);

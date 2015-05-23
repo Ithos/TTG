@@ -18,6 +18,8 @@
 
 #include "PhysicManager.h"
 
+#include <log.h>
+
 #include "ErrorManager.h"
 #include "CollisionManager.h"
 #include "Conversions.h"
@@ -35,6 +37,8 @@ namespace Physic
 	using namespace physx;
 	using namespace Logic::Component;
 
+	const char* const LOG_PHYSIC = "Common::Physic";
+
 	CPhysicManager* CPhysicManager::m_instance = nullptr;
 
 	CPhysicManager::CPhysicManager() : m_cudaContextManager(nullptr), m_scene(nullptr)
@@ -44,6 +48,8 @@ namespace Physic
 		m_allocator = new PxDefaultAllocator();
 
 		m_collisionManager = new CCollisionManager();
+
+		m_contactManager = new CContactManager();
 
 		m_foundation = PxCreateFoundation(PX_PHYSICS_VERSION, *m_allocator,*m_errorManager);
 
@@ -131,6 +137,11 @@ namespace Physic
 			m_foundation = nullptr;
 		}
 
+		if(m_contactManager){
+			delete m_contactManager;
+			m_contactManager = nullptr;
+		}
+
 		if(m_collisionManager){
 			delete m_collisionManager;
 			m_collisionManager = nullptr;
@@ -171,6 +182,7 @@ namespace Physic
 		PxSceneDesc sceneDesc(m_physics->getTolerancesScale());
 
 		sceneDesc.simulationEventCallback = m_collisionManager;
+		sceneDesc.contactModifyCallback = m_contactManager;
 
 		if (!sceneDesc.cpuDispatcher) {
 			int mNbThreads = 1;
@@ -181,9 +193,9 @@ namespace Physic
 		}
 
 		if (!sceneDesc.filterShader)
-			sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+			sceneDesc.filterShader = CCollisionManager::PxCustomSpaceFilterShader;
 
-		//sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
+		sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
 		//sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
 
 #ifdef PX_WINDOWS
@@ -193,8 +205,6 @@ namespace Physic
 		}
 #endif
 		m_scene = m_physics->createScene(sceneDesc);
-		m_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_PAIRS, true);
-		m_scene->setFlag(PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS, true);
 	}
 
 	void CPhysicManager::destroyScene ()
@@ -461,5 +471,18 @@ namespace Physic
 		}
 
 		return nullptr;
+	}
+
+	const float CPhysicManager::getActorRadius(physx::PxRigidDynamic* actor)
+	{
+		PxShape* buff;
+		PxU32 num =  actor->getShapes(&buff,actor->getNbShapes());
+		if(num == 1){
+			PxSphereGeometry geom;
+			if(buff->getSphereGeometry(geom)){
+				return geom.radius;
+			}
+		}
+		return 0;
 	}
 }}

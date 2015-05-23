@@ -50,7 +50,7 @@ namespace Logic
                 ent->setMaterialName("Shield");
                 m_sceneNode = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode("mandafurcias");
                 m_sceneNode->attachObject(ent);
-                m_sceneNode->setScale(Vector3(70));
+                m_sceneNode->setScale(Vector3(80));
             }
 
             return true;

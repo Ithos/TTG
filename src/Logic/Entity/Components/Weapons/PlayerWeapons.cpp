@@ -52,10 +52,10 @@ namespace Logic
                 log_error(LOG_PWEAPON, "Error getting Transform, m_trans is null\n");
 
             m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo));
-            //m_weapons.push_back(new CMissileWeapon_Linear());
+            m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
 
             m_primary   = 0;
-            m_secondary = 0;
+            m_secondary = 1;
 
             return true;
         }
@@ -76,23 +76,19 @@ namespace Logic
 
         void CWeapons::shoot(int index)
         {
+            Vector3 pos;
             using namespace Common::Data;
             log_trace(LOG_PWEAPON, "Shoot with secondary weapon\n");
             switch (m_weapons[index]->m_type)
             {
             case LASER:
-                {
-                Vector3 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+                pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
                 m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
-             //   static_cast<CLaserWeapon*>(m_weapons[index])->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
                 break;
-                }
             case MISSILE_LINEAR:
-                {
-                Vector3 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+                pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
                 m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
                 break;
-                }
             }
         }
 

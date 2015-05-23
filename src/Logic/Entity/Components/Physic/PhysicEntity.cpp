@@ -26,6 +26,7 @@
 
 #include <Common/Map/MapEntity.h>
 #include <Common/Physic/PhysicManager.h>
+#include <Common/Physic/Conversions.h>
 #include <Common/Data/TTG_Types.h>
 
 #include <PxPhysicsAPI.h>
@@ -187,11 +188,30 @@ void CPhysicEntity::onOverlapEnd(IPhysic* otherComponent)
 
 void CPhysicEntity::onContact(IPhysic* otherComponent)
 {
-	if(m_actor->isRigidDynamic()){
-		if(!m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))){
+	if(m_actor->isRigidDynamic() && static_cast<CPhysicEntity*>(otherComponent)->m_actor->isRigidDynamic()){
+		if(m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))
+			&& m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor))){
 			log_trace(LOG_PHYSIC,"Moving on contact\n");
-			Matrix4 m = m_physicMng->getActorTransform(m_actor);
-			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+			physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
+			physx::PxRigidDynamic* actor2 =  static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor);
+
+			Matrix4 m = m_physicMng->getActorTransform(actor);
+			Matrix4 m2 = m_physicMng->getActorTransform(actor2);
+
+			const float radius = m_physicMng->getActorRadius(actor);
+			const float radius2 = m_physicMng->getActorRadius(actor2);
+
+			float distance = radius + radius2;
+			float curr_distanace = m.getTrans().distance(m2.getTrans());
+			if(distance > curr_distanace){
+				float to_move = (distance - curr_distanace);
+				Vector3 dir(m.getTrans() - m2.getTrans());
+				Vector3 pos(m.getTrans() + (dir.normalise()*to_move));
+				m.setTrans(pos);
+				m_actor->setGlobalPose(Common::Physic::Matrix4ToPxTransform(m));
+				Matrix4 m = m_physicMng->getActorTransform(m_actor);
+				static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+			}
 		}
 	}
 }

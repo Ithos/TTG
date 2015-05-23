@@ -37,6 +37,7 @@ namespace Common
 	{
 		class CCollisionManager;
 		class CErrorManager;
+		class CContactManager;
 	}
 }
 
@@ -118,6 +119,8 @@ namespace Common
 			Logic::CEntity* raycastClosest (const Ray& ray, float maxDist) const;
 
 			Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const;
+
+			const float getActorRadius(physx::PxRigidDynamic* actor);
 		protected:
 		private:
 
@@ -145,6 +148,8 @@ namespace Common
 			physx::PxMaterial* m_defaultMaterial;
 
 			CCollisionManager* m_collisionManager;
+
+			CContactManager* m_contactManager;
 		};
 	}
 }

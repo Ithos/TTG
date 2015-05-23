@@ -10,7 +10,7 @@
     <component name="CMinimapHighlight" number="5" priority="0" />
     <component name="CWeapons" number="6" priority="1" />
     <component name="CLife" number="7" priority="0" />
-   <component name="CShield" number="8" priority="0" />
+   <component name="CShield" number="8" priority="1" />
   </entity>
   <entity type="Enemy">
     <component name="CTransform" number="0" priority="0" />

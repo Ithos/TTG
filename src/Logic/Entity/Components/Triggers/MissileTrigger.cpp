@@ -24,12 +24,9 @@
 #include "Common/data/Spawn_Constants.h"
 #include "../../Components/Movement/Transform.h"
 #include <PxPhysicsAPI.h>
-<<<<<<< HEAD
 #include <Common/Physic/PhysicManager.h>
-=======
 #include "../Gameplay/Life.h"
 #include "common/Particles/ParticleManager.h"
->>>>>>> c891420f67dc78da1cc89af0f833159dc2365036
 
 using namespace Common::Util::PxConversor;
 using namespace Common::Data::Spawn;

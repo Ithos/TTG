@@ -44,6 +44,8 @@ namespace Logic
 
             void tick(unsigned int);
 
+			virtual bool activate();
+
             void onOverlapBegin(IPhysic* otherComponent);
 
 			void onOverlapEnd(IPhysic* otherComponent);

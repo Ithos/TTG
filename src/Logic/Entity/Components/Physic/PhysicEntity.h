@@ -56,6 +56,7 @@ namespace Logic { namespace Component {
 		physx::PxRigidActor* m_actor;
 
 	protected:
+		Common::Physic::CPhysicManager* m_physicMng;
 	private:
 		physx::PxRigidActor* createActor(const Map::CMapEntity *entityInfo);
 
@@ -64,8 +65,6 @@ namespace Logic { namespace Component {
 		physx::PxRigidActor* createRigid(const Map::CMapEntity *entityInfo);
 		
 		physx::PxRigidActor* createFromFile(const Map::CMapEntity *entityInfo);
-
-		Common::Physic::CPhysicManager* m_physicMng;
 
 		Vector3 m_movement;
 

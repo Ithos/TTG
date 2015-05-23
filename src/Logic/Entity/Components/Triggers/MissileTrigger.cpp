@@ -24,6 +24,7 @@
 #include "Common/data/Spawn_Constants.h"
 #include "../../Components/Movement/Transform.h"
 #include <PxPhysicsAPI.h>
+#include <Common/Physic/PhysicManager.h>
 
 using namespace Common::Util::PxConversor;
 
@@ -41,7 +42,11 @@ namespace Logic
 
             m_parent      = entity;
             m_parentTrans = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
-            reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_parentTrans->getTransform()));
+            //reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_parentTrans->getTransform()));
+			
+			//Esto en el activate
+			//m_physicMng->moveKinematicActor(static_cast<physx::PxRigidDynamic*>(m_actor),m_parentTrans->getTransform());
+
             
             using namespace Common::Data::Spawn;
 
@@ -90,5 +95,14 @@ namespace Logic
             m_pos     = src;
             m_dir     = dir;
         }
+
+		bool CMissileTrigger::activate()
+		{
+			if(!CPhysicEntity::activate()) return false;
+
+			m_physicMng->moveKinematicActor(static_cast<physx::PxRigidDynamic*>(m_actor),m_parentTrans->getTransform());
+
+			return true;
+		}
     }
 }

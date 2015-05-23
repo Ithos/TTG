@@ -19,14 +19,6 @@
 #include "MissileWeapon.h"
 #include "Weapon.h"
 
-namespace Common
-{
-    namespace Particles
-    {
-        class CParticleManager;
-    }
-}
-
 namespace Logic
 {
 	namespace Component
@@ -47,7 +39,6 @@ namespace Logic
             void tick(unsigned int msecs);
 
         private:
-            Common::Particles::CParticleManager* m_particles; //??? particulas o ribbon trail?? aqui o en el trigger?
             unsigned  m_iMissile;
             float     m_speed;
             std::map<unsigned, Map::CMapEntity*> m_mapInfo;

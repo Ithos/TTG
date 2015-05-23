@@ -25,6 +25,7 @@
 #include "../../Components/Movement/Transform.h"
 #include <PxPhysicsAPI.h>
 #include "../Gameplay/Life.h"
+#include "common/Particles/ParticleManager.h"
 
 using namespace Common::Util::PxConversor;
 using namespace Common::Data::Spawn;
@@ -34,10 +35,7 @@ namespace Logic
 {
 	namespace Component
 	{
-
         IMP_FACTORY(CMissileTrigger)
-
-        int CMissileTrigger::numEntity = 0;
 
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
@@ -53,9 +51,16 @@ namespace Logic
             if (entityInfo->hasAttribute(MISSILE_SPEED))
                 m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
 
-            m_trans = Matrix4::IDENTITY;
-            m_instance = numEntity;
+            if (entityInfo->hasAttribute(MISSILE_DAMAGE))
+                m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
 
+            if (entityInfo->hasAttribute(MISSILE_RANGE))
+                m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
+
+            m_trans = Matrix4::IDENTITY;
+            // Particles code ----
+            m_particles = Common::Particles::CParticleManager::getInstance();
+            m_particles->addShootType(MISSILE_LINEAR);
             return true;
         }
 
@@ -88,12 +93,13 @@ namespace Logic
                 m_shooted = false;
                 m_entity->deactivate();
                 unsigned int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
+                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
                     *life = (*life <= m_damage)? 0 : *life - m_damage;
                         
                     if (*life  == 0) {
                         hitEnt->deactivate();
-                        //m_particles->startNextExplosion(m_currPos);
+                        m_particles->startNextExplosion(pos);
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
@@ -102,7 +108,8 @@ namespace Logic
                 // make boom boom with particles
             }
             else if (type == "PlanetLimitTrigger") {
-            
+                m_shooted = false;
+                m_entity->deactivate();
             }
         }
 
@@ -110,12 +117,11 @@ namespace Logic
         {
         }
 
-        void CMissileTrigger::shoot(const Vector3& src, const Vector3& dir, float damage)
+        void CMissileTrigger::shoot(const Vector3& src, const Vector3& dir)
         {
             m_shooted = true;
             m_pos     = src;
             m_dir     = dir;
-            m_damage  = damage;
         }
     }
 }

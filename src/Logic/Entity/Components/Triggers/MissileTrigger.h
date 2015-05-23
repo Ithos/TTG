@@ -25,6 +25,14 @@
 #define _InOut
 #endif
 
+namespace Common
+{
+    namespace Particles
+    {
+        class CParticleManager;
+    }
+}
+
 namespace Logic
 {
 	namespace Component
@@ -36,10 +44,9 @@ namespace Logic
             DEC_FACTORY(CMissileTrigger)
         public:
             CMissileTrigger() 
-                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false) 
-            { 
-                ++numEntity;
-            }
+                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f)
+            {  }
+
             ~CMissileTrigger();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
@@ -53,7 +60,7 @@ namespace Logic
             // movFunc = define how to move the trigger, linear by default.
             void setMove(void (*movFunc)(_InOut Vector3&/*src*/, const Vector3&/*dir*/, float/*speed*/) = nullptr) { moveFunc = movFunc; }
 
-            void shoot(const Vector3& src, const Vector3& dir, float damage);
+            void shoot(const Vector3& src, const Vector3& dir);
 
         private:
             void (*moveFunc)(_InOut Vector3&, const Vector3&, float);
@@ -65,9 +72,9 @@ namespace Logic
             Vector3     m_pos;
             float       m_speed;
             float       m_damage;
+            float       m_range;
             bool        m_shooted;
-            static int numEntity;
-            int         m_instance;
+            Common::Particles::CParticleManager* m_particles;
         };
 
         REG_FACTORY(CMissileTrigger)

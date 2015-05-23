@@ -17,8 +17,6 @@
 */
 
 #include "MissileWeapon_Linear.h"
-
-#include "common/Particles/ParticleManager.h"
 #include "../Triggers/MissileTrigger.h"
 #include "Common/Map/MapEntity.h"
 #include "Common/Configure/Configure.h"
@@ -60,10 +58,7 @@ namespace Logic
                 m_subEntity.push_back(ent);
                 static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
             }
-
-            // Particles code ----
-             m_particles = Common::Particles::CParticleManager::getInstance();
-             m_particles->addShootType(MISSILE_LINEAR);
+            
         }
 
         void CMissileWeapon_Linear::tick(unsigned int msecs)
@@ -79,7 +74,7 @@ namespace Logic
                 m_trigger = true;
                 m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
                 m_subEntity[m_iMissile]->activate();
-                static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir, m_damage);
+                static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
                 if (m_iMissile < MAX_MISSILES-1 )
                     ++m_iMissile;
                 else

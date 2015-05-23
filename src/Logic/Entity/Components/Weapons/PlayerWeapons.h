@@ -49,8 +49,8 @@ namespace Logic
             void shootPrimaryWeapon()   { shoot(m_primary);   }
             void shootSecondaryWeapon() { shoot(m_secondary); }
 
-            void releasePrimaryTrigger();
-            void releaseSecondayTrigger();
+            void releasePrimaryTrigger()  { releaseTrigger(m_primary); }
+            void releaseSecondayTrigger() { releaseTrigger(m_secondary); }
 
             IWeapon* getPrimaryWeapon()   { return m_weapons[m_primary];   }
             IWeapon* getSecondaryWeapon() { return m_weapons[m_secondary]; }
@@ -64,6 +64,7 @@ namespace Logic
             CTransform*           m_trans;
             int                   m_shipRadius;
 
+            void releaseTrigger(int weapon);
             void shoot(int index);
 		};
 

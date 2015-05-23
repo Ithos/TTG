@@ -24,8 +24,11 @@
 #include "Common/data/Spawn_Constants.h"
 #include "../../Components/Movement/Transform.h"
 #include <PxPhysicsAPI.h>
+#include "../Gameplay/Life.h"
 
 using namespace Common::Util::PxConversor;
+using namespace Common::Data::Spawn;
+using namespace Common::Data;
 
 namespace Logic
 {
@@ -34,19 +37,24 @@ namespace Logic
 
         IMP_FACTORY(CMissileTrigger)
 
+        int CMissileTrigger::numEntity = 0;
+
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
+            CEntity* thisEnt = m_entity;
             if (!CPhysicEntity::spawn(entity, scene, entityInfo))
                 return false;
 
+            m_entity      = thisEnt;
             m_parent      = entity;
-            m_parentTrans = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
+            m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(TRANSFORM_COMP));
             reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_parentTrans->getTransform()));
             
-            using namespace Common::Data::Spawn;
-
             if (entityInfo->hasAttribute(MISSILE_SPEED))
                 m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
+
+            m_trans = Matrix4::IDENTITY;
+            m_instance = numEntity;
 
             return true;
         }
@@ -61,10 +69,8 @@ namespace Logic
             if (!m_shooted)
                 return;
 
-            
-            if (!moveFunc) {
-                m_pos += (m_dir * m_speed * msecs);
-                m_trans.setTrans(m_pos);
+           if (!moveFunc) {
+                m_pos = m_pos + (m_dir * m_speed * msecs);
             }
             else {
                 moveFunc(m_pos, m_dir, m_speed);
@@ -74,21 +80,42 @@ namespace Logic
             reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_trans));
         }
 
-        void CMissileTrigger::onOverlapBegin(IPhysic* hitPhysicComp)
+        void CMissileTrigger::onOverlapBegin(IPhysic* hitComp)
         {
-            m_shooted = false;
-            /* quitar vida emplotar y todo eso*/
+            CEntity* hitEnt = hitComp->getEntity();
+            std::string type = hitComp->getEntity()->getType();
+            if (  type == "Enemy" || type == "Asteroid") {
+                m_shooted = false;
+                m_entity->deactivate();
+                unsigned int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
+                if ( *life > 0) {
+                    *life = (*life <= m_damage)? 0 : *life - m_damage;
+                        
+                    if (*life  == 0) {
+                        hitEnt->deactivate();
+                        //m_particles->startNextExplosion(m_currPos);
+                    }
+                    else {
+                        //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+                    }
+                }
+                // make boom boom with particles
+            }
+            else if (type == "PlanetLimitTrigger") {
+            
+            }
         }
 
 		void CMissileTrigger::onOverlapEnd(IPhysic* hitPhysicComp)
         {
         }
 
-        void CMissileTrigger::shoot(const Vector3& src, const Vector3& dir)
+        void CMissileTrigger::shoot(const Vector3& src, const Vector3& dir, float damage)
         {
             m_shooted = true;
             m_pos     = src;
             m_dir     = dir;
+            m_damage  = damage;
         }
     }
 }

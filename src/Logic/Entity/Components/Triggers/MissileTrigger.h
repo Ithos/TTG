@@ -37,7 +37,9 @@ namespace Logic
         public:
             CMissileTrigger() 
                 : m_parent(nullptr), moveFunc(nullptr), m_shooted(false) 
-            { }
+            { 
+                ++numEntity;
+            }
             ~CMissileTrigger();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
@@ -51,7 +53,7 @@ namespace Logic
             // movFunc = define how to move the trigger, linear by default.
             void setMove(void (*movFunc)(_InOut Vector3&/*src*/, const Vector3&/*dir*/, float/*speed*/) = nullptr) { moveFunc = movFunc; }
 
-            void shoot(const Vector3& src, const Vector3& dir);
+            void shoot(const Vector3& src, const Vector3& dir, float damage);
 
         private:
             void (*moveFunc)(_InOut Vector3&, const Vector3&, float);
@@ -62,7 +64,10 @@ namespace Logic
             Vector3     m_dir;
             Vector3     m_pos;
             float       m_speed;
+            float       m_damage;
             bool        m_shooted;
+            static int numEntity;
+            int         m_instance;
         };
 
         REG_FACTORY(CMissileTrigger)

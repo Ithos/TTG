@@ -40,9 +40,10 @@ namespace Logic { namespace Component {
 
 	const char* const LOG_PHYSIC = "Logic::CPhysic";
 
-CPhysicEntity::CPhysicEntity() : IPhysic(), m_actor(nullptr), m_movement(0,0,0)
+	CPhysicEntity::CPhysicEntity() : IPhysic(), m_actor(nullptr), m_movement(0,0,0),m_onContact(false)
 {
 	m_physicMng = CPhysicManager::getInstance();
+	m_lastPosition.setTrans(m_movement);
 }
 
 CPhysicEntity::~CPhysicEntity() 
@@ -70,14 +71,34 @@ void CPhysicEntity::tick(unsigned int msecs)
 	PxRigidDynamic *dinActor = m_actor->isRigidDynamic();
 	if (!dinActor) 
 		return;
+	
+	if(!m_onContact){
+		m_lastPosition = static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform();
+	} /*else {
+		m_onContact = false;
+		static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m_lastPosition);
+	}
+	*/
 	if(!m_physicMng->isKinematic(dinActor)){
-		Matrix4 m = m_physicMng->getActorTransform(m_actor);
+		if(m_onContact) {
+			m_onContact = false;
+			Matrix4 m = m_physicMng->getActorTransform(m_actor);
 			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
-		//m_physicMng->moveDynamicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
+			return;
+		}
+		//Matrix4 m = m_physicMng->getActorTransform(m_actor);
+		//static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+		m_physicMng->moveDynamicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
 	}
 	if(m_physicMng->isKinematic(dinActor)){
-		m_physicMng->moveKinematicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
+		//if(!m_onContact){
+			m_physicMng->moveKinematicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
+		//} else {
+		//	m_onContact = false;
+		//	static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m_lastPosition);
+		//}
 	}
+	
 }
 
 //---------------------------------------------------------
@@ -188,10 +209,14 @@ void CPhysicEntity::onOverlapEnd(IPhysic* otherComponent)
 
 void CPhysicEntity::onContact(IPhysic* otherComponent)
 {
+	if(!m_onContact) m_onContact = true; return;
 	if(m_actor->isRigidDynamic() && static_cast<CPhysicEntity*>(otherComponent)->m_actor->isRigidDynamic()){
 		if(m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))
 			&& m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor))){
 			log_trace(LOG_PHYSIC,"Moving on contact\n");
+			//if(!m_onContact) m_onContact = true;
+
+			/*
 			physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
 			physx::PxRigidDynamic* actor2 =  static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor);
 
@@ -205,13 +230,19 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 			float curr_distanace = m.getTrans().distance(m2.getTrans());
 			if(distance > curr_distanace){
 				float to_move = (distance - curr_distanace);
-				Vector3 dir(m.getTrans() - m2.getTrans());
-				Vector3 pos(m.getTrans() + (dir.normalise()*to_move));
+				Vector3 dir(m2.getTrans() - m.getTrans());
+				dir.normalise();
+				Vector3 pos(m.getTrans() + (dir*(to_move)));
+
+				pos.y = -300;
+
 				m.setTrans(pos);
 				m_actor->setGlobalPose(Common::Physic::Matrix4ToPxTransform(m));
+				//actor->addForce(Common::Physic::Vector3ToPxVec3(dir),physx::PxForceMode::eIMPULSE);
 				Matrix4 m = m_physicMng->getActorTransform(m_actor);
 				static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
 			}
+			*/
 		}
 	}
 }
@@ -230,5 +261,7 @@ void CPhysicEntity::deactivate()
 
 	IComponent::deactivate();
 }
+
+
 
 }}

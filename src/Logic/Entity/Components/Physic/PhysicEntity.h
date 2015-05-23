@@ -68,6 +68,10 @@ namespace Logic { namespace Component {
 		Common::Physic::CPhysicManager* m_physicMng;
 
 		Vector3 m_movement;
+
+		Matrix4 m_lastPosition;
+
+		bool m_onContact;
 	};
 	REG_FACTORY(CPhysicEntity);
 }}

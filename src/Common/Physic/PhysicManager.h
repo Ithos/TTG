@@ -71,6 +71,14 @@ namespace physx
 	}
 }
 
+struct FilterGroup
+{
+        enum Enum
+        {
+                eSPACE_FILTER = (1 << 0)
+        };
+};
+
 namespace Common
 {
 	namespace Physic
@@ -154,6 +162,8 @@ namespace Common
 			CCollisionManager* m_collisionManager;
 
 			CContactManager* m_contactManager;
+
+			void setupFiltering(physx::PxRigidActor* actor, unsigned int filterGroup, unsigned int filterMask);
 		};
 	}
 }

@@ -853,7 +853,7 @@ namespace Map
 			//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
 			//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
 			entityInProgress->setAttribute("physic_entity", "rigid");
-			entityInProgress->setAttribute("physic_type", "kinematic");
+			entityInProgress->setAttribute("physic_type", "dynamic");
 			entityInProgress->setAttribute("physic_shape", "sphere");
 			entityInProgress->setAttribute("physic_mass", "10");
 			entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));

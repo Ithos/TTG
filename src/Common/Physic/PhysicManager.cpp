@@ -196,7 +196,7 @@ namespace Physic
 			sceneDesc.filterShader = CCollisionManager::PxCustomSpaceFilterShader;
 
 		sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_PAIRS;
-		//sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
+		sceneDesc.flags |= PxSceneFlag::eENABLE_KINEMATIC_STATIC_PAIRS;
 
 #ifdef PX_WINDOWS
 		if (!sceneDesc.gpuDispatcher && m_cudaContextManager)
@@ -242,7 +242,7 @@ namespace Physic
 
 		actor->userData = (void*)component;
 		PxSetGroup(*actor,group);
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 
 		return actor;
 	}
@@ -269,7 +269,9 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
-		m_scene->addActor(*actor);
+		setupFiltering(actor,FilterGroup::eSPACE_FILTER,FilterGroup::eSPACE_FILTER);
+
+		//m_scene->addActor(*actor);
 	
 		return actor;
 	}
@@ -302,7 +304,9 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
-		m_scene->addActor(*actor);
+		setupFiltering(actor,FilterGroup::eSPACE_FILTER,FilterGroup::eSPACE_FILTER);
+
+		//m_scene->addActor(*actor);
 
 		return actor;
 	}
@@ -327,7 +331,9 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
-		m_scene->addActor(*actor);
+		setupFiltering(actor,FilterGroup::eSPACE_FILTER,FilterGroup::eSPACE_FILTER);
+
+		//m_scene->addActor(*actor);
 	
 		return actor;
 	}
@@ -358,6 +364,8 @@ namespace Physic
 
 		PxSetGroup(*actor,group);
 
+		setupFiltering(actor,FilterGroup::eSPACE_FILTER,FilterGroup::eSPACE_FILTER);
+
 		PxD6Joint* joint = PxD6JointCreate(*m_physics, actor, PxTransform::createIdentity(), nullptr, actor->getGlobalPose());
 		joint->setMotion(PxD6Axis::eX,PxD6Motion::eFREE);
 		joint->setMotion(PxD6Axis::eY,PxD6Motion::eLOCKED);
@@ -367,7 +375,7 @@ namespace Physic
 		joint->setMotion(PxD6Axis::eTWIST,PxD6Motion::eLOCKED);
 		//TODO release
 
-		m_scene->addActor(*actor);
+		//m_scene->addActor(*actor);
 
 		return actor;
 	}
@@ -484,5 +492,33 @@ namespace Physic
 			}
 		}
 		return 0;
+	}
+
+	bool CPhysicManager::activateActor(physx::PxRigidActor *actor)
+	{
+		m_scene->addActor(*actor);
+		return true;
+	}
+
+	void CPhysicManager::deactivateActor(physx::PxRigidActor *actor)
+	{
+		m_scene->removeActor(*actor);
+	}
+
+	void CPhysicManager::setupFiltering(physx::PxRigidActor* actor, unsigned int filterGroup, unsigned int filterMask)
+	{
+		using namespace physx;
+		PxFilterData filterData;
+		filterData.word0 = filterGroup;
+		filterData.word1 = filterMask;
+		const PxU32 numShapes = actor->getNbShapes();
+		PxShape** shapes = (PxShape**) malloc (sizeof(PxShape*)*numShapes);
+		actor->getShapes(shapes, numShapes);
+		for(PxU32 i = 0; i < numShapes; i++)
+		{
+				PxShape* shape = shapes[i];
+				shape->setSimulationFilterData(filterData);
+		}
+		free(shapes);
 	}
 }}

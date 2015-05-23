@@ -133,6 +133,7 @@ void CCollisionManager::onObstacleHit(const PxControllerObstacleHit &hit)
 
 void CContactManager::onContactModify(physx::PxContactModifyPair* const pairs, physx::PxU32 count)
 {
+	return;
 	for(PxU32 i = 0; i < count; i++){
 		const PxContactModifyPair& cp = pairs[i];
 

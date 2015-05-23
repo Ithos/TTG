@@ -34,8 +34,9 @@ namespace Logic
 {
 	namespace Component
 	{
-		
         IMP_FACTORY(CShieldTrigger)
+
+        int CShieldTrigger::m_numTriggers = 0;
 
         bool CShieldTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
@@ -48,9 +49,10 @@ namespace Logic
             if (entityInfo->hasAttribute(Common::Data::Spawn::GRAPHIC_MODEL)) {
                 Ogre::Entity* ent = scene->getSceneManager()->createEntity("shield_model", entityInfo->getStringAttribute(Common::Data::Spawn::GRAPHIC_MODEL));
                 ent->setMaterialName("Shield");
-                m_sceneNode = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode("mandafurcias");
+                m_nameChildNode =  "shield_" + std::to_string(m_numTriggers);
+                m_sceneNode = scene->getSceneManager()->getRootSceneNode()->createChildSceneNode(m_nameChildNode);
                 m_sceneNode->attachObject(ent);
-                m_sceneNode->setScale(Vector3(80));
+                m_sceneNode->setScale(Vector3(100));
             }
 
             return true;

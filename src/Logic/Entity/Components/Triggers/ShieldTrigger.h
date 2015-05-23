@@ -36,7 +36,10 @@ namespace Logic
             DEC_FACTORY(CShieldTrigger)
 			
         public:
-            CShieldTrigger() : m_parent(nullptr), m_trans(nullptr) { }
+            CShieldTrigger() : m_parent(nullptr), m_trans(nullptr) 
+            {
+                ++m_numTriggers;
+            }
 
             ~CShieldTrigger() { m_parent =  nullptr; }
 
@@ -52,6 +55,8 @@ namespace Logic
             CEntity*         m_parent;
             CTransform*      m_trans;
             Ogre::SceneNode* m_sceneNode;
+            static int       m_numTriggers;
+            std::string      m_nameChildNode;
         };
 
         REG_FACTORY(CShieldTrigger)

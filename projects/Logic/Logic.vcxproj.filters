@@ -223,6 +223,9 @@
     <ClInclude Include="..\..\src\Logic\Entity\Components\Physic\PhysicContact.h">
       <Filter>Entity\Components\Physic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Logic\Entity\Components\AI\PerceptionComponent.h">
+      <Filter>Entity\Components\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Logic\Entity\Messages\Message.cpp">
@@ -351,6 +354,9 @@
     <ClCompile Include="..\..\src\Logic\Entity\Components\Movement\PlanetRotation.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Physic\PhysicContact.cpp">
       <Filter>Entity\Components\Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Logic\Entity\Components\AI\PerceptionComponent.cpp">
+      <Filter>Entity\Components\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

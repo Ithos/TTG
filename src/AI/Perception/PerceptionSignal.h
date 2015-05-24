@@ -19,6 +19,8 @@
 #ifndef __AI_PERCEPTIONSIGNAL_H
 #define __AI_PERCEPTIONSIGNAL_H
 
+#include "PerceptionManager.h"
+
 namespace AI
 {
 	/*

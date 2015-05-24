@@ -28,6 +28,10 @@
 #include "../Gameplay/Life.h"
 #include "common/Particles/ParticleManager.h"
 
+#include <Logic/Scene/Scene.h>
+#include "OGRE\OgreRibbonTrail.h"
+#include <OGRE\OgreBillboardSet.h>
+
 using namespace Common::Util::PxConversor;
 using namespace Common::Data::Spawn;
 using namespace Common::Data;
@@ -45,13 +49,8 @@ namespace Logic
                 return false;
 
             m_entity      = thisEnt;
-            m_parent      = entity;
-			
-            m_parentTrans = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
-            //reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_parentTrans->getTransform()));
-			
-			//Esto en el activate
-			//m_physicMng->moveKinematicActor(static_cast<physx::PxRigidDynamic*>(m_actor),m_parentTrans->getTransform());
+            m_parent      = entity;			
+            m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
             
             if (entityInfo->hasAttribute(MISSILE_SPEED))
                 m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
@@ -66,12 +65,33 @@ namespace Logic
             // Particles code ----
             m_particles = Common::Particles::CParticleManager::getInstance();
             m_particles->addShootType(MISSILE_LINEAR);
+
+       /*     m_sceneMgr = scene->getSceneManager();
+            m_node = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+            Ogre::BillboardSet* set = m_sceneMgr->createBillboardSet("bbset");
+            set->setMaterialName("Missile");
+            set->setDefaultDimensions(1024, 1024);
+            set->createBillboard(m_parentTrans->getPosition());
+            m_node->attachObject(set);*/
+
+       /*     m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
+            m_rt->setMaterialName("LightRibbonTrail");
+            m_rt->setTrailLength(20);
+            m_rt->setMaxChainElements(40);
+            m_rt->setInitialColour(0, 0.2, 1.0, 0.3, 0.8);
+            m_rt->setColourChange(0, 0.5, 0.5, 0.5, 0.5);
+            m_rt->setInitialWidth(0, 0.1);
+            m_sceneMgr->getRootSceneNode()->attachObject(m_rt);*/
+
             return true;
         }
 
         CMissileTrigger::~CMissileTrigger()
         {
-            m_parent = nullptr;
+            m_node->detachAllObjects();
+            m_sceneMgr->destroySceneNode(m_node);
+            m_sceneMgr = nullptr;
+            m_parent   = nullptr;
         }
 
         void CMissileTrigger::tick(unsigned int msecs)
@@ -87,9 +107,7 @@ namespace Logic
             }
 
             m_trans.setTrans(m_pos);
-            //reinterpret_cast<physx::PxRigidDynamic*>(m_actor)->setKinematicTarget(Matrix4ToPxTransform(m_trans));
-			physx::PxRigidDynamic *dinActor = m_actor->isRigidDynamic();
-			m_physicMng->moveKinematicActor(dinActor,m_trans);
+			m_physicMng->moveKinematicActor(m_actor->isRigidDynamic(), m_trans);
         }
 
         void CMissileTrigger::onOverlapBegin(IPhysic* hitComp)
@@ -130,16 +148,5 @@ namespace Logic
             m_pos     = src;
             m_dir     = dir;
         }
-
-		bool CMissileTrigger::activate()
-		{
-			if(!CPhysicEntity::activate()) return false;
-
-			physx::PxRigidDynamic *dinActor = m_actor->isRigidDynamic();
-
-			m_physicMng->moveKinematicActor(dinActor,m_parentTrans->getTransform());
-
-			return true;
-		}
     }
 }

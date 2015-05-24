@@ -33,6 +33,8 @@ namespace Common
     }
 }
 
+using namespace Common::Particles;
+
 namespace Logic
 {
 	namespace Component
@@ -53,7 +55,7 @@ namespace Logic
 
             void tick(unsigned int);
 
-			virtual bool activate();
+            bool activate() { return CPhysicEntity::activate(); }
 
             void onOverlapBegin(IPhysic* otherComponent);
 
@@ -76,7 +78,10 @@ namespace Logic
             float       m_damage;
             float       m_range;
             bool        m_shooted;
-            Common::Particles::CParticleManager* m_particles;
+            CParticleManager* m_particles;
+            Ogre::RibbonTrail* m_rt;
+            Ogre::SceneNode*   m_node;
+            Ogre::SceneManager* m_sceneMgr;
         };
 
         REG_FACTORY(CMissileTrigger)

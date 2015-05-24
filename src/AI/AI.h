@@ -19,6 +19,8 @@
 #ifndef __AI_AI_H
 #define __AI_AI_H
 
+#include "Perception/PerceptionManager.h"
+
 namespace AI
 {
 	class CAI
@@ -29,6 +31,7 @@ namespace AI
 		static bool init();
 		static void release();
 		bool tick(float secs);
+		CPerceptionManager* getPerceptionManager() { return m_pManager; };
 		static double correctAngle(double angle);
 
 	private:
@@ -36,6 +39,7 @@ namespace AI
 		virtual ~CAI();
 
 		static CAI* m_instance;
+		CPerceptionManager* m_pManager;
 	};
 }
 

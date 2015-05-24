@@ -19,14 +19,6 @@
 #include "MissileWeapon.h"
 #include "Weapon.h"
 
-namespace Common
-{
-    namespace Particles
-    {
-        class CParticleManager;
-    }
-}
-
 namespace Logic
 {
 	namespace Component
@@ -36,16 +28,22 @@ namespace Logic
         {
         public:
             CMissileWeapon_Linear(CEntity* parent, CScene* scene);
-            ~CMissileWeapon_Linear() {}
+            ~CMissileWeapon_Linear() {
+                for (auto it = m_mapInfo.begin(); it != m_mapInfo.end();  ++it)
+                    if (it->second)
+                        delete it->second;
+            }
 
             void shoot(const Vector3& src, const Vector3& dir);
 
             void tick(unsigned int msecs);
 
         private:
-            Common::Particles::CParticleManager* m_particles; //??? particulas o ribbon trail?? aqui o en el trigger?
-            int   m_iMissile;
-            float m_speed;
+            unsigned  m_iMissile;
+            float     m_speed;
+            std::map<unsigned, Map::CMapEntity*> m_mapInfo;
+            CEntity* m_parent;
+            CScene*  m_scene;
         };
     }
 }

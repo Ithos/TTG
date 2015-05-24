@@ -46,6 +46,9 @@ namespace Logic { namespace Component {
 
 		virtual void tick(unsigned int msecs);
 
+		virtual bool activate();
+		virtual void deactivate();
+
 		virtual void onOverlapBegin(IPhysic* otherComponent);
 		virtual void onOverlapEnd(IPhysic* otherComponent);
 		virtual void onContact(IPhysic* otherComponent);
@@ -53,6 +56,7 @@ namespace Logic { namespace Component {
 		physx::PxRigidActor* m_actor;
 
 	protected:
+		Common::Physic::CPhysicManager* m_physicMng;
 	private:
 		physx::PxRigidActor* createActor(const Map::CMapEntity *entityInfo);
 
@@ -62,9 +66,11 @@ namespace Logic { namespace Component {
 		
 		physx::PxRigidActor* createFromFile(const Map::CMapEntity *entityInfo);
 
-		Common::Physic::CPhysicManager* m_physicMng;
-
 		Vector3 m_movement;
+
+		Matrix4 m_lastPosition;
+
+		bool m_onContact;
 	};
 	REG_FACTORY(CPhysicEntity);
 }}

@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\Logic\ComponentFactory.h" />
     <ClInclude Include="..\..\src\Logic\EntityFactory.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\AI\PerceptionComponent.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\AI\StateMachineExecutor.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\AI\SteeringMovement.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\Cameras\Camera.h" />
@@ -134,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\Logic\ComponentFactory.cpp" />
     <ClCompile Include="..\..\src\Logic\EntityFactory.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\AI\PerceptionComponent.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\AI\StateMachineExecutor.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\AI\SteeringMovement.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Cameras\Camera.cpp" />

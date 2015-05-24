@@ -71,6 +71,14 @@ namespace physx
 	}
 }
 
+struct FilterGroup
+{
+        enum Enum
+        {
+                eSPACE_FILTER = (1 << 0)
+        };
+};
+
 namespace Common
 {
 	namespace Physic
@@ -121,6 +129,10 @@ namespace Common
 			Logic::CEntity* raycastClosest (const Ray& ray, float maxDist, int group) const;
 
 			const float getActorRadius(physx::PxRigidDynamic* actor);
+
+			bool activateActor(physx::PxRigidActor *actor);
+			void deactivateActor(physx::PxRigidActor *actor);
+
 		protected:
 		private:
 
@@ -150,6 +162,8 @@ namespace Common
 			CCollisionManager* m_collisionManager;
 
 			CContactManager* m_contactManager;
+
+			void setupFiltering(physx::PxRigidActor* actor, unsigned int filterGroup, unsigned int filterMask);
 		};
 	}
 }

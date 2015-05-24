@@ -66,7 +66,7 @@ namespace Common
 						return PxFilterFlag::eDEFAULT;
 				}
 
-				//pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+				//pairFlags = PxPairFlag::eCCD_LINEAR;
 				pairFlags = PxPairFlag::eMODIFY_CONTACTS;
 
 				if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))

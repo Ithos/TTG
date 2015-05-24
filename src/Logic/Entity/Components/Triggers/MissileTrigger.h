@@ -25,6 +25,16 @@
 #define _InOut
 #endif
 
+namespace Common
+{
+    namespace Particles
+    {
+        class CParticleManager;
+    }
+}
+
+using namespace Common::Particles;
+
 namespace Logic
 {
 	namespace Component
@@ -36,13 +46,17 @@ namespace Logic
             DEC_FACTORY(CMissileTrigger)
         public:
             CMissileTrigger() 
-                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false) 
-            { }
+                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
+                m_particles(nullptr)
+            {  }
+
             ~CMissileTrigger();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 
             void tick(unsigned int);
+
+            bool activate() { return CPhysicEntity::activate(); }
 
             void onOverlapBegin(IPhysic* otherComponent);
 
@@ -62,7 +76,13 @@ namespace Logic
             Vector3     m_dir;
             Vector3     m_pos;
             float       m_speed;
+            float       m_damage;
+            float       m_range;
             bool        m_shooted;
+            CParticleManager* m_particles;
+            Ogre::RibbonTrail* m_rt;
+            Ogre::SceneNode*   m_node;
+            Ogre::SceneManager* m_sceneMgr;
         };
 
         REG_FACTORY(CMissileTrigger)

@@ -26,12 +26,14 @@ namespace AI {
 	CAI::CAI()
 	{
 		m_instance = this;
+		m_pManager = new CPerceptionManager();
 	}
 
 
 	CAI::~CAI()
 	{
 		m_instance = 0;
+		delete m_pManager;
 	}
 
 

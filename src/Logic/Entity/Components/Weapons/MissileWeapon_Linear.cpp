@@ -17,8 +17,6 @@
 */
 
 #include "MissileWeapon_Linear.h"
-
-#include "common/Particles/ParticleManager.h"
 #include "../Triggers/MissileTrigger.h"
 #include "Common/Map/MapEntity.h"
 #include "Common/Configure/Configure.h"
@@ -37,35 +35,30 @@ namespace Logic
         {
             m_type = MISSILE_LINEAR;
 
-             Map::CMapEntity eInfo("Missile_Linear");
-
             using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
-
-             //-- attributes...
-            eInfo.setType(getDefaultValue(GEN_MISSILE_LINEAR_TYPE));
-            eInfo.setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ENTITY));
-            eInfo.setAttribute("physic_type", "kinematic");
-            eInfo.setAttribute("physic_shape", "sphere");
-            eInfo.setAttribute("physic_mass", "1");
-            eInfo.setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_RADIUS));
-            eInfo.setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ISTRIGGER));
-            eInfo.setAttribute(MISSILE_SPEED,  getDefaultValue(GEN_MISSILE_LINEAR_SPEED));
-            eInfo.setAttribute(MISSILE_DAMAGE, getDefaultValue(GEN_MISSILE_LINEAR_DAMAGE));
-            eInfo.setAttribute(MISSILE_RANGE,  getDefaultValue(GEN_MISSILE_LINEAR_RANGE));
+            m_parent = parent;
+            m_scene  = scene; 
 
             //init pool of missiles (
             for ( int i = 0; i < MAX_MISSILES; ++i) {
-                CEntity* ent = CEntityFactory::getInstance()->createEntity(&eInfo, nullptr);
-                ent->spawnEx(parent, scene, &eInfo);
-                ent->activate();
+                m_mapInfo[i] = new Map::CMapEntity("Missile_linear" + std::to_string(i));
+                m_mapInfo[i]->setType(getDefaultValue(GEN_MISSILE_LINEAR_TYPE));
+                m_mapInfo[i]->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ENTITY));
+                m_mapInfo[i]->setAttribute("physic_type", "kinematic");
+                m_mapInfo[i]->setAttribute("physic_shape", "sphere");
+                m_mapInfo[i]->setAttribute("physic_mass",  "1");
+                m_mapInfo[i]->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_RADIUS));
+                m_mapInfo[i]->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ISTRIGGER));
+                m_mapInfo[i]->setAttribute(MISSILE_SPEED,  getDefaultValue(GEN_MISSILE_LINEAR_SPEED));
+                m_mapInfo[i]->setAttribute(MISSILE_DAMAGE, getDefaultValue(GEN_MISSILE_LINEAR_DAMAGE));
+                m_mapInfo[i]->setAttribute(MISSILE_RANGE,  getDefaultValue(GEN_MISSILE_LINEAR_RANGE));
+                
+                CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
                 m_subEntity.push_back(ent);
                 static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
             }
-
-            // Particles code ----
-             m_particles = Common::Particles::CParticleManager::getInstance();
-             m_particles->addShootType(MISSILE_LINEAR);
+            
         }
 
         void CMissileWeapon_Linear::tick(unsigned int msecs)
@@ -77,11 +70,16 @@ namespace Logic
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
             // todo: gestion el pool de entidades.
-            static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
-            if (m_iMissile < MAX_MISSILES )
-                m_iMissile = 0;
-            else
-                ++m_iMissile;
+            if (!m_trigger) {
+                m_trigger = true;
+                m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+                m_subEntity[m_iMissile]->activate();
+                static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+                if (m_iMissile < MAX_MISSILES-1 )
+                    ++m_iMissile;
+                else
+                    m_iMissile = 0;
+            }
         }
 
     }

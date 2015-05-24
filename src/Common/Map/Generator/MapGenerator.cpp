@@ -638,8 +638,6 @@ namespace Map
 			tmpStr2 = Common::Configuration::getDefaultValue(aux);
 			entityInProgress->setAttribute(PHYSIC_RADIUS, tmpStr2.c_str());
 
-			entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::METEOR));
-
 			aux = GEN_ASTEROID_MODEL + std::to_string(mod);
 			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
 
@@ -856,7 +854,7 @@ namespace Map
 			//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
 			//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
 			entityInProgress->setAttribute("physic_entity", "rigid");
-			entityInProgress->setAttribute("physic_type", "kinematic");
+			entityInProgress->setAttribute("physic_type", "dynamic");
 			entityInProgress->setAttribute("physic_shape", "sphere");
 			entityInProgress->setAttribute("physic_mass", "10");
 			entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
@@ -1000,6 +998,7 @@ namespace Map
 		entityList.push_back(entityInProgress);
 
 		//Texture Camera
+		/*
 #ifndef _DEBUG
 		entityInProgress = new CMapEntity(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYNAME));
 		entityInProgress->setType(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYTYPE));
@@ -1016,7 +1015,7 @@ namespace Map
 
 		entityList.push_back(entityInProgress);
 #endif
-
+		*/
 		//Skybox
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_SKYBOX_NAME));
 

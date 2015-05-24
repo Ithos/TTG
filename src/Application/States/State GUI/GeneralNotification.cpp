@@ -136,8 +136,6 @@ namespace Application
 
 	bool CGeneralNotification::onContinuePushed(const CEGUI::EventArgs& e)
 	{
-		/// TODO -- reset text & disable continue -- ///
-
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->resetList();
 		m_menuWindow->getChild("NoteWindow/NoteContinueButton")->disable();
 		Common::Sound::CSound::getSingletonPtr()->playSound("genBackButton");
@@ -148,15 +146,16 @@ namespace Application
 
 	void CGeneralNotification::setupWindow()
 	{
-		/// TODO -- introduction, real texts -- ///
+		/// TODO -- Internationalization -- /// Begin{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String("Add an introduction here..."))
 			);
+		/// TODO -- Internationalization -- /// }End
 	}
 
 	void CGeneralNotification::setupSecondWindow()
 	{
-		/// TODO -- Real texts -- ///
+		/// TODO -- Internationalization -- /// Begin{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->setFont("Jura-13");
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String(">> Controls\n"))
@@ -165,7 +164,7 @@ namespace Application
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String("->General:\nESC-->>pause\n->Galaxy:\nDrag window frame-->>Move window\nDouble click window frame-->>Hide window\nDrag window edge-->>Resize window\n->Combat:\nWASD-->>Move\nSPACE-->>Fire"))
 			);
-
+		/// TODO -- Internationalization -- /// }End
 	}
 
 	void CGeneralNotification::showTutorialMessage()

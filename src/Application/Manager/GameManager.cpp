@@ -181,6 +181,11 @@ namespace Application
 				item->setFont("Jura-10");
 				item->setText("->" + m_activeMission.second);
 				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, m_activeMission.second);
+		}else{
+			CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem",m_activeMission.second);
+				item->setFont("Jura-10");
+				item->setText(m_activeMission.second);
+				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, m_activeMission.second);
 		}
 
 		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem", Common::Data::Game::GAME_MISSION_NAME);
@@ -657,16 +662,19 @@ namespace Application
 		//m_stateMap[Common::Data::Game::GAME_TIME] = 200;
 
 		m_equipmentMap[Common::Data::Game::GAME_PRIMARY_WEAPON] = std::pair<std::string,std::string>(
-			"Heavy Laser", "Primary Weapon\nStandar heavy laser gun,\nused as primary weapon for nearly any kind of spaceship.");
+			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[0][0], Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[0][1]);
 		m_equipmentMap[Common::Data::Game::GAME_SECONDARY_WEAPON] = std::pair<std::string,std::string>(
-			"Missile Launcher", "Secondary Weapon\nPowerfull but slightly slow.\nThis missile launcher mounted on\na turret takes a lot of energy to use.");
+			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[0][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[0][1]);
 		m_equipmentMap[Common::Data::Game::GAME_ENGINE] = std::pair<std::string,std::string>(
-			"Ion Pulse Engine", "Engine\nAs the most basic faster than light\nengine it provides a short range quantic jump\nand medium slower than light speed.");
-		addEngineData("Ion Pulse Engine",35, 140);
+			Common::Data::Game::GAME_ENGINES_LIST[0][0], Common::Data::Game::GAME_ENGINES_LIST[0][1]);
+
+		addEngineData(Common::Data::Game::ENGINE_DATA_MAP[0].first,Common::Data::Game::ENGINE_DATA_MAP[0].second.first,
+			Common::Data::Game::ENGINE_DATA_MAP[0].second.second);
+
 		m_equipmentMap[Common::Data::Game::GAME_SENSORS] = std::pair<std::string,std::string>(
-			"Radar", "Lvl 1 Sensor\nThis common sensor measures\nelectromagnetic echoes.\nIt detects some enemies and\nit`s also able to get some information\nfrom planets.");
-		m_equipmentMap[Common::Data::Game::GAME_REGENERATOR] = std::pair<std::string,std::string>(
-			"Shield Energy Regenerator", "Special Device\nA quantic reverse\nenthropy device\nthat slowly regenerates\nthe shield energy over time.");
+			Common::Data::Game::GAME_SENSORS_LIST[0][0], Common::Data::Game::GAME_SENSORS_LIST[0][1]);
+		m_equipmentMap[Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0]] = std::pair<std::string,std::string>(
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2]);
 
 		m_crewMembersMap[Common::Data::Game::GAME_MILITARY] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_ENGINEERS] = 0;
@@ -675,28 +683,30 @@ namespace Application
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			"Tesla Cannon","Primary Weapon\nThis weapon fires a continuous lightning ray.\nThough it`s technology it`s\nquite old this weapon is\nstill in use today.")));
+			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][1])));
 
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			"Static Mines", "Secondary Weapon\nMines that are left behind the ship\nand attach to any spaceship that gets\nclose enough.")));
+			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][1])));
 
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_STEALTH, std::pair<std::string,std::string>(
-			"Stealth Module", "Special Device\nHides the ship from enemies sensors.\nIt has a high energy cost.")));
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][0], std::pair<std::string,std::string>(
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][2])));
 
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_ENGINE, std::pair<std::string,std::string>(
-			"Test Engine", "Engine\nTest.")));
+			Common::Data::Game::GAME_ENGINES_LIST[1][0], Common::Data::Game::GAME_ENGINES_LIST[1][1])));
 
-		addEngineData("Test Engine", 50, 200);
+		addEngineData(Common::Data::Game::ENGINE_DATA_MAP[1].first, Common::Data::Game::ENGINE_DATA_MAP[1].second.first
+			, Common::Data::Game::ENGINE_DATA_MAP[1].second.second);
 
-		m_activeMission = std::pair<int,std::string>(1,"Go to planet Alpha 0X3");
+		// Just for testing
+		m_activeMission = std::pair<int,std::string>(0," ");
 
-		changeEquippedEngine(std::string("Ion Pulse Engine"));
+		changeEquippedEngine(Common::Data::Game::ENGINE_DATA_MAP[0].first);
 	}
 
 	void CGameManager::resetGame()
@@ -821,8 +831,10 @@ namespace Application
 
 		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem","target_message");
 				item->setFont("Jura-10");
+				/// TODO -- Internationalization -- /// Begin{
 				item->setText("!!>>Signal detected in the system");
 				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,"An active signal has been\ndetected in this system.");
+				/// TODO -- Internationalization -- /// }End
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
 	}

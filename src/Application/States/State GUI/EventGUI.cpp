@@ -46,12 +46,6 @@ namespace Application
 	const char* const LOG_CEVENTGUI = "Application::CEventGUI";
 	CEventGUI* CEventGUI::m_instance = nullptr;
 
-	const char* const PLANET_EVENT_INTRO[] = {"Unoccupied Desert planet.","Unoccupied Lava planet.","Unoccupied Red planet.","Unoccupied Earth-like planet.",
-												"Unoccupied Ocean planet.","Unoccupied Gas planet.","Unoccupied Ice planet.","Unoccupied Barren planet.",
-												"Inhabited Desert planet.","Inhabited Lava planet.","Inhabited Red planet.","Inhabited Earth-like planet.",
-												"Inhabited Ocean planet.","Inhabited Gas planet.","Inhabited Ice planet.","Inhabited Barren planet."
-											};
-
 	const char* const BACKGROUND_IMAGES[] = {"DesertPlanet/full_image","LavaPlanet/full_image","RedPlanet/full_image","EarthLikePlanet/full_image",
 												"OceanPlanet/full_image","GasPlanet/full_image","IcePlanet/full_image","PurplePlanet/full_image",
 												"DesertPlanetInhabited/full_image","LavaPlanetInhabited/full_image","RedPlanetInhabited/full_image","EarthLikePlanetInhabited/full_image",
@@ -241,12 +235,11 @@ namespace Application
 
 	void CEventGUI::setupHUD()
 	{
-		/// TODO -- Generate real texts--///
 		int i(m_mgrInstance->isInhabitedPlanet()?1:0), 
 			j(std::atoi(m_mgrInstance->getPlanet().substr(m_mgrInstance->getPlanet().length()-2,1).c_str()));
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->
 			getChildElement("MessageBoard"))->addItem(new CEGUI::ListboxTextItem(CEGUI::String(
-						PLANET_EVENT_INTRO[i*8+j]
+				Common::Data::Game::GAME_PLANET_EVENT_INTRO[i*8+j]
 			)));
 
 		m_menuWindow->setProperty("Image",BACKGROUND_IMAGES[i*8+j]);
@@ -389,9 +382,11 @@ namespace Application
 						break;
 					}else{
 						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->resetList();
+						/// TODO -- Internationalization -- /// Begin{
 						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->addItem(
 						new CEGUI::ListboxTextItem("\" Seems that you don't have enough money for that\"")
 						);
+						/// TODO -- Internationalization -- /// }End
 					}
 				}
 			}
@@ -412,9 +407,11 @@ namespace Application
 
 			}else{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->resetList();
+				/// TODO -- Internationalization -- /// Begin{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("DocksPage/ShopWindow/DescriptionBoard"))->addItem(
 				new CEGUI::ListboxTextItem("\" Seems that you don't have enough money for that\"")
 				);
+				/// TODO -- Internationalization -- /// }End
 			}
 		}
 
@@ -515,16 +512,20 @@ namespace Application
 			+ std::to_string(m_mgrInstance->getTotalLife())));
 		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
 			createChild("TaharezLook/ListboxItem","Title");
-		item->setText("--- SHOP ---");
+		
+		item->setText(Common::Data::Game::GAME_EVENT_SHOP);
+		/// TODO -- Internationalization -- /// Begin{
 		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "\"Need something?\"");
-
+		/// TODO -- Internationalization -- /// }End
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem("--Ore--") );
+			new CEGUI::ListboxTextItem(Common::Data::Game::GAME_EVENT_COST) );
 
 		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
 			createChild("TaharezLook/ListboxItem","Repair");
 		item->setText(Common::Data::Game::GAME_SHOP_REPAIR);
+		/// TODO -- Internationalization -- /// Begin{
 		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Repair the Hull for a reasonable price.");
+		/// TODO -- Internationalization -- /// }End
 
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::to_string(100 + (10 * priceVariance1(generator)) )) );
@@ -532,35 +533,37 @@ namespace Application
 		/// TODO -- Read random items from file -- ///
 		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
 			createChild("TaharezLook/ListboxItem","Item1");
-		item->setText(">>Energy Beam");
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Primary Weapon\nA short ranged but powerful and quick weapon.");
+
+		item->setText(">>"+std::string(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0]));
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1]);
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance2(generator)) )) );
 
 		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_PRIMARY_WEAPON,
-			std::pair<std::string,std::string>("Energy Beam","Primary Weapon\nA short ranged but powerful and quick weapon.")));
+			std::pair<std::string,std::string>(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1])));
 
 		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
 			createChild("TaharezLook/ListboxItem","Item2");
-		item->setText(">>Plasma Stream Engine");
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Engine\nA top notch engine that is both efficient and powerful.");
+		item->setText(">>"+ std::string(Common::Data::Game::GAME_ENGINES_LIST[2][0]));
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, std::string(Common::Data::Game::GAME_ENGINES_LIST[2][1]));
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance3(generator)) )) );
 
 		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_ENGINE,
-			std::pair<std::string,std::string>("Plasma Stream Engine","Engine\nA top notch engine that is both efficient and powerful.")));
+			std::pair<std::string,std::string>(Common::Data::Game::GAME_ENGINES_LIST[2][0],Common::Data::Game::GAME_ENGINES_LIST[2][1])));
 
-		m_engineDataMap["Plasma Stream Engine"] = std::pair<int, int>(85, 185);
+		m_engineDataMap[Common::Data::Game::ENGINE_DATA_MAP[2].first] = std::pair<int, int>(Common::Data::Game::ENGINE_DATA_MAP[2].second.first
+																							, Common::Data::Game::ENGINE_DATA_MAP[2].second.second);
 
 		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
 			createChild("TaharezLook/ListboxItem","Item3");
-		item->setText(">>EMP Bombs");
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, "Secondary Weapon\nThese bombs damage electronic devices and sensors in a wide area.");
+		item->setText(">>" + std::string(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]));
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1]);
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance1(generator)) )) );
 
 		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SECONDARY_WEAPON,
-			std::pair<std::string,std::string>("EMP Bombs","Secondary Weapon\nThese bombs damage electronic devices and sensors in a wide area.")));
+			std::pair<std::string,std::string>(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1])));
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->endInitialisation();
 	}
@@ -574,16 +577,16 @@ namespace Application
 		Application::CMissionManager::TItemDescriptor item = m_missionManager->getTmpItemReward();
 
 		Application::CMissionManager::TResourceDescriptor resource = m_missionManager->getTmpResourceReward();
-
+		/// TODO -- Internationalization -- /// Begin{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String("--- Mission ---")));
-
+		/// TODO -- Internationalization -- /// }End
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
 			mission.second.first));
-
+		/// TODO -- Internationalization -- /// Begin{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String("--- Reward ---")));
-
+		/// TODO -- Internationalization -- /// }End
 		if(item.first != "")
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
 			">>"+item.second.first));
@@ -595,7 +598,7 @@ namespace Application
 	
 	void CEventGUI::setupEvent()
 	{
-		///TODO --Real Texts, more events?--///
+		///TODO --More events?--///
 
 		std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
 		std::default_random_engine generator(seed);
@@ -604,16 +607,20 @@ namespace Application
 		int diceRoll1(eventSelector(generator));
 
 		if(diceRoll1 < 31){
+			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::string("Nothig happens.") ));
+			/// TODO -- Internationalization -- /// }End
 		}else{
 			int diceRoll2(eventSelector(generator));
 			if(diceRoll2<51){
 				std::uniform_int_distribution<int> resourceVariance(1,50);
 				int moneyFound(resourceVariance(generator) * 10);
 				m_mgrInstance->addResourceByName(Common::Data::Game::GAME_ORE, moneyFound);
+				/// TODO -- Internationalization -- /// Begin{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 					new CEGUI::ListboxTextItem(std::string("You found something valuable.\n" + std::to_string(moneyFound) + " ore gained.") ));
+				/// TODO -- Internationalization -- /// }End
 
 			}else if(diceRoll2<70){
 				std::uniform_int_distribution<int> lifeGain(10,40);
@@ -621,6 +628,7 @@ namespace Application
 				int lifeLeft(m_mgrInstance->getTotalLife() - m_mgrInstance->getLife());
 				m_mgrInstance->increaseLife(gain);
 				if(gain > lifeLeft) gain = lifeLeft;
+				/// TODO -- Internationalization -- /// Begin{
 				if(gain = 0)
 				{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
@@ -629,6 +637,7 @@ namespace Application
 					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 					new CEGUI::ListboxTextItem(std::string("You found a place to repair your ship,\nbut the hull doesn't need any repairing.") ));
 				}
+				/// TODO -- Internationalization -- /// }End
 			}else if(diceRoll2<76){
 
 				std::uniform_int_distribution<int> crewType(0,2);
@@ -644,9 +653,10 @@ namespace Application
 				}
 
 				m_mgrInstance->addCrewMemberByName(newMember);
-
+				/// TODO -- Internationalization -- /// Begin{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 					new CEGUI::ListboxTextItem(std::string("You found a new crew-member.\n+1" + newMember.substr(2,newMember.length()-3) + ".") ));
+				/// TODO -- Internationalization -- /// }End
 			}else if(diceRoll2<90){
 				int maxDamage(m_mgrInstance->getLife() - 10);
 				if(maxDamage < 5) maxDamage = 0;
@@ -656,20 +666,20 @@ namespace Application
 					std::uniform_int_distribution<int> lifeLost(5,m_mgrInstance->getLife() - 10 > 30 ? 30 :m_mgrInstance->getLife() - 10 );
 					int damage(lifeLost(generator));
 					m_mgrInstance->decreaseLife(damage);
-
+					/// TODO -- Internationalization -- /// Begin{
 					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 						new CEGUI::ListboxTextItem(std::string("The ship crashed on the planet.\n" + std::to_string(damage) + "% of the hull damaged.") ));
 				}else{
 					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 					new CEGUI::ListboxTextItem(std::string("Nothig happens.") ));
 				}
+					/// TODO -- Internationalization -- /// }End
 			}else if(diceRoll2<96){
-
-				m_mgrInstance->addToCargo(Common::Data::Game::GAME_ITEM,"Useless Item", "Item\nUseless item found in a planet.");
-
+				m_mgrInstance->addToCargo(Common::Data::Game::GAME_ITEM,Common::Data::Game::GAME_ITEM_LIST[1][0], Common::Data::Game::GAME_ITEM_LIST[1][1]);
+				/// TODO -- Internationalization -- /// Begin{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
-					new CEGUI::ListboxTextItem(std::string("You found an Item.\nUseless Item added to cargo.") ));
-
+					new CEGUI::ListboxTextItem(std::string("You found an Item.\n" + std::string(Common::Data::Game::GAME_ITEM_LIST[1][0])+ " added to cargo.") ));
+				/// TODO -- Internationalization -- /// }End
 			}else{
 				std::uniform_int_distribution<int> crewType(0,2);
 				int crewMember(crewType(generator));
@@ -682,7 +692,7 @@ namespace Application
 				}else if(crewMember == 2){
 					newMember = Common::Data::Game::GAME_SCIENTIFICS;
 				}
-
+				/// TODO -- Internationalization -- /// Begin{
 				if(m_mgrInstance->getCrewMembersByName(newMember) > 0){
 					m_mgrInstance->subtractCrewMemberByName(newMember);
 
@@ -692,6 +702,7 @@ namespace Application
 					static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 						new CEGUI::ListboxTextItem(std::string("Nothig happens.") ));
 				}
+				/// TODO -- Internationalization -- /// }End
 			}
 		}
 	}
@@ -708,17 +719,19 @@ namespace Application
 			std::uniform_int_distribution<int> fuelDist(5,30);
 			int fuelExtracted = fuelDist(generator) * 10;
 			m_mgrInstance->addResourceByName(Common::Data::Game::GAME_FUEL, fuelExtracted);
-
+			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 				new CEGUI::ListboxTextItem(std::string("Dark matter recolected.\n" + std::to_string(fuelExtracted) + " fuel gained." )));
+			/// TODO -- Internationalization -- /// }End
 
 		}else{
 			std::uniform_int_distribution<int> moneyDist(1,15);
 			int oreExtracted = moneyDist(generator) * 10 + 20;
 			m_mgrInstance->addResourceByName(Common::Data::Game::GAME_ORE, oreExtracted);
-
+			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 				new CEGUI::ListboxTextItem(std::string("Minerals found.\n" + std::to_string(oreExtracted) + " ore gained." )));
+			/// TODO -- Internationalization -- /// }End
 		}
 	}
 

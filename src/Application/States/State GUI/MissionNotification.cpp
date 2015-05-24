@@ -101,10 +101,13 @@ namespace Application
 	void CMissionNotification::showNote(bool mainMission)
 	{
 		if(mainMission){
+			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 				m_gameManager->getObjectivesAquired()!=m_gameManager->getTotalObjectives() ? CEGUI::String("Signal source found.") : CEGUI::String("All signals checked.")
 				));
+			/// TODO -- Internationalization -- /// }End
 		}else{
+			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 				CEGUI::String(">> Mission Completed\n") + (m_missionManager->getStringReward().second == -1 ? 
 				CEGUI::String("") : CEGUI::String(std::to_string(m_missionManager->getStringReward().second).c_str())) + 
@@ -112,6 +115,7 @@ namespace Application
 				CEGUI::String(m_missionManager->getStringReward().first.c_str()) : CEGUI::String(" ") + 
 				CEGUI::String(m_missionManager->getStringReward().first.substr(2, m_missionManager->getStringReward().first.length()-3 ).c_str()))
 				+ " obtained."));
+			/// TODO -- Internationalization -- /// }End
 			}
 		m_blendIn->start();
 	}

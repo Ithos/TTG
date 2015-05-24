@@ -10,8 +10,9 @@
 
 #include "../../GUI/GUI.h"
 
-#include "../../Common/Sound/Sound.h"
+#include <Common/Sound/Sound.h>
 #include <Common/Data/Spawn_Constants.h>
+#include <Common/Data/Game_Constants.h>
 
 #include <log.h>
 
@@ -293,8 +294,10 @@ namespace Application
 							m_CurrentPlanet->getScale().x*offset
 							);
 						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetWindow/PlanetBoard"))->resetList();
+						std::string tmpstr(str.substr(6,1));
 						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetWindow/PlanetBoard"))->addItem(new CEGUI::ListboxTextItem(
-							str.substr(7)
+							Common::Data::Game::GAME_PLANETS_NAMES[std::atoi(CGameManager::getInstance()->getSystem().c_str())][std::atoi(str.substr(6,1).c_str())]
+							+ std::string("\n") + str.substr(7)
 							));
 						m_menuWindow->getChild("PlanetWindow/PlanetButton")->enable();
 						Common::Sound::CSound::getSingletonPtr()->playSound("planetSlected");

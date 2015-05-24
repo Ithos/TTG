@@ -76,20 +76,6 @@ const char* const GEN_GALAXY_AMBIENT_NAME = "galaxy_ambient_name";
 const char* const GEN_GALAXY_AMBIENT_TYPE = "galaxy_ambient_type";
 const char* const GEN_GALAXY_AMBIENT_COLOUR = "galaxy_ambient_colour";
 
-// Galaxy System names
-const char* const GEN_GALAXY_SYSTEM_NAME[] = {
-												"galaxy_sysname_system0","galaxy_sysname_system1","galaxy_sysname_system2","galaxy_sysname_system3",
-												"galaxy_sysname_system4","galaxy_sysname_system5","galaxy_sysname_system6","galaxy_sysname_system7",
-												"galaxy_sysname_system8","galaxy_sysname_system9","galaxy_sysname_system10","galaxy_sysname_system11",
-												"galaxy_sysname_system12","galaxy_sysname_system13","galaxy_sysname_system14","galaxy_sysname_system15",
-												"galaxy_sysname_system16","galaxy_sysname_system17","galaxy_sysname_system18","galaxy_sysname_system19",
-												"galaxy_sysname_system20","galaxy_sysname_system21","galaxy_sysname_system22","galaxy_sysname_system23",
-												"galaxy_sysname_system24","galaxy_sysname_system25","galaxy_sysname_system26","galaxy_sysname_system27",
-												"galaxy_sysname_system28","galaxy_sysname_system29","galaxy_sysname_system30","galaxy_sysname_system31",
-												"galaxy_sysname_system32","galaxy_sysname_system33","galaxy_sysname_system34","galaxy_sysname_system35",
-												"galaxy_sysname_system36","galaxy_sysname_system37","galaxy_sysname_system38","galaxy_sysname_system39"
-											};
-
 /// ----------------- SYSTEM --------------------------///
 
 // Star
@@ -127,113 +113,6 @@ const char* const GEN_MOVPLANET_YAW = "movplanet_yaw";
 const char* const GEN_MOVPLANET_CENTER_NODE_NAME = "movplanet_center_node_name";
 const char* const GEN_MOVPLANET_CENTER_NAME = "movplanet_center_name";
 const char* const GEN_MOVPLANET_DIRECTION = "movplanet_direction";
-const char* const GEN_MOVPLANET_DESCTYPE1[] = {
-												"movplanet_desctype1_desc1",
-												"movplanet_desctype1_desc2",
-												"movplanet_desctype1_desc3",
-												"movplanet_desctype1_desc4",
-												"movplanet_desctype1_desc5",
-												"movplanet_desctype1_desc6",
-												"movplanet_desctype1_desc7",
-												"movplanet_desctype1_desc8",
-												"movplanet_desctype1_desc9",
-												"movplanet_desctype1_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE2[] = {
-												"movplanet_desctype2_desc1",
-												"movplanet_desctype2_desc2",
-												"movplanet_desctype2_desc3",
-												"movplanet_desctype2_desc4",
-												"movplanet_desctype2_desc5",
-												"movplanet_desctype2_desc6",
-												"movplanet_desctype2_desc7",
-												"movplanet_desctype2_desc8",
-												"movplanet_desctype2_desc9",
-												"movplanet_desctype2_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE3[] = {
-												"movplanet_desctype3_desc1",
-												"movplanet_desctype3_desc2",
-												"movplanet_desctype3_desc3",
-												"movplanet_desctype3_desc4",
-												"movplanet_desctype3_desc5",
-												"movplanet_desctype3_desc6",
-												"movplanet_desctype3_desc7",
-												"movplanet_desctype3_desc8",
-												"movplanet_desctype3_desc9",
-												"movplanet_desctype3_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE4[] = {
-												"movplanet_desctype4_desc1",
-												"movplanet_desctype4_desc2",
-												"movplanet_desctype4_desc3",
-												"movplanet_desctype4_desc4",
-												"movplanet_desctype4_desc5",
-												"movplanet_desctype4_desc6",
-												"movplanet_desctype4_desc7",
-												"movplanet_desctype4_desc8",
-												"movplanet_desctype4_desc9",
-												"movplanet_desctype4_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE5[] = {
-												"movplanet_desctype5_desc1",
-												"movplanet_desctype5_desc2",
-												"movplanet_desctype5_desc3",
-												"movplanet_desctype5_desc4",
-												"movplanet_desctype5_desc5",
-												"movplanet_desctype5_desc6",
-												"movplanet_desctype5_desc7",
-												"movplanet_desctype5_desc8",
-												"movplanet_desctype5_desc9",
-												"movplanet_desctype5_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE6[] = {
-												"movplanet_desctype6_desc1",
-												"movplanet_desctype6_desc2",
-												"movplanet_desctype6_desc3",
-												"movplanet_desctype6_desc4",
-												"movplanet_desctype6_desc5",
-												"movplanet_desctype6_desc6",
-												"movplanet_desctype6_desc7",
-												"movplanet_desctype6_desc8",
-												"movplanet_desctype6_desc9",
-												"movplanet_desctype6_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE7[] = {
-												"movplanet_desctype7_desc1",
-												"movplanet_desctype7_desc2",
-												"movplanet_desctype7_desc3",
-												"movplanet_desctype7_desc4",
-												"movplanet_desctype7_desc5",
-												"movplanet_desctype7_desc6",
-												"movplanet_desctype7_desc7",
-												"movplanet_desctype7_desc8",
-												"movplanet_desctype7_desc9",
-												"movplanet_desctype7_desc10"
-											};
-const char* const GEN_MOVPLANET_DESCTYPE8[] = {
-												"movplanet_desctype8_desc1",
-												"movplanet_desctype8_desc2",
-												"movplanet_desctype8_desc3",
-												"movplanet_desctype8_desc4",
-												"movplanet_desctype8_desc5",
-												"movplanet_desctype8_desc6",
-												"movplanet_desctype8_desc7",
-												"movplanet_desctype8_desc8",
-												"movplanet_desctype8_desc9",
-												"movplanet_desctype8_desc10"
-											};
-
-const std::array<const char* const*,8> GEN_MOVPLANET_DESC = {
-												GEN_MOVPLANET_DESCTYPE1,
-												GEN_MOVPLANET_DESCTYPE2,
-												GEN_MOVPLANET_DESCTYPE3,
-												GEN_MOVPLANET_DESCTYPE4,
-												GEN_MOVPLANET_DESCTYPE5,
-												GEN_MOVPLANET_DESCTYPE6,
-												GEN_MOVPLANET_DESCTYPE7,
-												GEN_MOVPLANET_DESCTYPE8
-										};
 
 // Ambient Light
 const char* const GEN_SYS_AMBIENT_NAME = "sysambient_name";

@@ -26,6 +26,7 @@
 #include <Common/Util/Math.h>
 #include <Common/Configure/Configure.h>
 #include <Common/Data/Spawn_Constants.h>
+#include <Common/Data/Game_Constants.h>
 
 #include "MapGenerator.h"
 #include "../MapEntity.h"
@@ -482,7 +483,7 @@ namespace Map
 					tmpStr2 += std::to_string(sc)[2];
 					tmpStr2 += "0"+std::to_string(model);
 					tmpStr2 += std::to_string(j-1);
-					tmpStr2 += Common::Configuration::getDefaultValue(GEN_MOVPLANET_DESC[model][descDist(generator)]);
+					tmpStr2 += Common::Data::Game::GAME_MOVPLANET_DESC[model][descDist(generator)];
 					entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
 					tmpStr1 = Common::Configuration::getDefaultValue(GEN_MOVPLANET_CENTER_NODE_NAME);
@@ -831,7 +832,7 @@ namespace Map
 		std::uniform_int_distribution<int> enemy_distribution(
 					atof(getDefaultValue(GEN_ENEMY_NEG_BOUNDARY).c_str()),
 					atof(getDefaultValue(GEN_ENEMY_POS_BOUNDARY).c_str()));
-		for (int i=5; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {
+		for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {
 			char str[20];
 			std::string name = getDefaultValue(GEN_ENEMY_NAME);
 			sprintf(str,"%s%d",name.c_str(),i);

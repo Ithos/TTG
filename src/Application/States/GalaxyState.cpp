@@ -297,7 +297,7 @@ namespace Application
 						str.erase(pos,str.length());
 						CGameManager::getInstance()->setSystem(str);
 						m_menuWindow->getChild("ButtonContainer/LabelSysName")->
-							setText(Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[std::atoi(str.c_str())]));
+							setText(std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[std::atoi(str.c_str())]));
 						Ogre::Vector2 vec(GetScreenspaceCoords(m_CurrentSystem->getPosition(), *Logic::CLogic::getInstance()->getScene()->getSceneCamera()));
 						CEGUI::UDim height(m_menuWindow->getChild("ButtonContainer")->getHeight()),width(m_menuWindow->getChild("ButtonContainer")->getWidth());
 						CEGUI::UDim dim1(vec.x,0),dim2(vec.y,0);

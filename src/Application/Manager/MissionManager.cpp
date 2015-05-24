@@ -126,11 +126,11 @@ namespace Application
 				m_tmpTargetSystem = systemDistribution(generator);
 			}while(m_tmpTargetSystem == tmpSystem);
 
-			/// TODO --Use string constants and config files--///
-			m_tmpMission.second.first = "Go to " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
-
+			/// TODO -- Internationalization -- /// Begin{
+			m_tmpMission.second.first = "Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 			/// TODO --Description--///
-			m_tmpMission.second.second = "Go to " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.second = "Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			/// TODO -- Internationalization -- /// }End
 
 			/// TODO --Aditional constraints (maybe)--///
 
@@ -148,8 +148,8 @@ namespace Application
 				/// TODO -- select a random item type and a random item, also create a set of items -- ///
 
 				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = "Reward Item";
-				m_tmpItemReward.second.second = "Item\nTest item to be given as a reward\nfor completing missions.";
+				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
+				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
 
 			}
 
@@ -165,11 +165,12 @@ namespace Application
 
 			m_tmpTargets.first = enemyTypeDist(generator);
 			m_tmpTargets.second = numTargetsDist(generator);
-
+			/// TODO -- Internationalization -- /// Begin{
 			m_tmpMission.second.first = "Defeat " + std::to_string(m_tmpTargets.second) + " type " + std::to_string(m_tmpTargets.first) + " enemies.";
 
 			/// TODO --Description--///
 			m_tmpMission.second.second = "0/" + std::to_string(m_tmpTargets.first) + " enemies defeated.";
+			/// TODO -- Internationalization -- /// }End
 
 			/// TODO --Aditional constraints (maybe)--///
 
@@ -187,8 +188,8 @@ namespace Application
 				/// TODO -- select a random item type and a random item, also create a set of items -- ///
 
 				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = "Reward Item";
-				m_tmpItemReward.second.second = "Item\nTest item to be given as a reward\nfor completing missions.";
+				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
+				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
 
 			}
 
@@ -200,9 +201,10 @@ namespace Application
 			std::string str(CGameManager::getInstance()->getPlanet());
 			m_tmpPlanet = std::atoi(str.substr(str.length()-1,1).c_str());
 
-			/// TODO -- Use real strings -- ///
+			/// TODO -- Internationalization -- /// Begin{
 			m_tmpMission.second.first = "Visit an inhabited planet in another system.";
-			m_tmpMission.second.second = "Get away from " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.second = "Get away from " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			/// TODO -- Internationalization -- /// }End
 
 			/// TODO --Aditional constraints (maybe)--///
 
@@ -220,9 +222,8 @@ namespace Application
 				/// TODO -- select a random item type and a random item, also create a set of items -- ///
 
 				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = "Reward Item";
-				m_tmpItemReward.second.second = "Item\nTest item to be given as a reward\nfor completing missions.";
-
+				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
+				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
 			}
 
 			return m_tmpMission;
@@ -233,12 +234,14 @@ namespace Application
 			m_tmpPlanet = std::atoi(str.substr(str.length()-1,1).c_str());
 
 			/// TODO -- Choose a random item -- ///
+			/// TODO -- Internationalization -- /// Begin{
 			m_tmpDesiredItem = "Test Engine";
 
-			/// TODO -- Use real strings -- ///
 			m_tmpMission.second.first = "Bring me a " + m_tmpDesiredItem;
-			m_tmpMission.second.second = "Bring a " + m_tmpDesiredItem + " to planet" + std::to_string(m_tmpPlanet +1) + 
-				" in " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.second = "Bring a " + m_tmpDesiredItem + " to planet" + Common::Data::Game::GAME_PLANETS_NAMES[m_tmpTargetSystem][m_tmpPlanet] + 
+				" in " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+
+			/// TODO -- Internationalization -- /// }End
 
 			/// TODO --Aditional constraints (maybe)--///
 
@@ -256,8 +259,8 @@ namespace Application
 				/// TODO -- select a random item type and a random item, also create a set of items -- ///
 
 				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = "Reward Item";
-				m_tmpItemReward.second.second = "Item\nTest item to be given as a reward\nfor completing missions.";
+				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
+				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
 			}
 
 			return m_tmpMission;
@@ -270,10 +273,13 @@ namespace Application
 			std::uniform_int_distribution<int> quant(10,50);
 			m_tmpTotalTargets = quant(generator) * 10;
 
-			/// TODO -- Use real strings -- ///
+			/// TODO -- Internationalization -- /// Begin{
 			m_tmpMission.second.first = "Bring me " + std::to_string(m_tmpTotalTargets) + " fuel units.";
-			m_tmpMission.second.second = "Bring " + std::to_string(m_tmpTotalTargets) + " fuel units to planet" + std::to_string(m_tmpPlanet +1) + 
-				" in " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.second = "Bring " + std::to_string(m_tmpTotalTargets) + " fuel units to planet" + 
+				Common::Data::Game::GAME_PLANETS_NAMES[m_tmpTargetSystem][m_tmpPlanet] + 
+				" in " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			/// TODO -- Internationalization -- /// }End
+
 
 			/// TODO --Aditional constraints (maybe)--///
 
@@ -291,8 +297,8 @@ namespace Application
 				/// TODO -- select a random item type and a random item, also create a set of items -- ///
 
 				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = "Reward Item";
-				m_tmpItemReward.second.second = "Item\nTest item to be given as a reward\nfor completing missions.";
+				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0]/*"Reward Item"*/;
+				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1]/*"Item\nTest item to be given as a reward\nfor completing missions."*/;
 			}
 
 			return m_tmpMission;
@@ -425,7 +431,7 @@ namespace Application
 				std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
 
 				std::default_random_engine generator(seed);
-				std::uniform_int_distribution<int> distribution(1,m_planetsPos.size());
+				std::uniform_int_distribution<int> distribution(0,m_planetsPos.size()-1);
 
 				m_targetPlanet = distribution(generator);
 
@@ -436,13 +442,14 @@ namespace Application
 				}
 
 				/// TODO --Planet names--///
+				/// TODO -- Internationalization -- /// Begin{
 				CGameManager::getInstance()->setMission(
 					1,
-					"Go to " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_targetSystem]) + 
-					". Land on Planet" + std::to_string(m_targetPlanet) + ".",
-					"Go to " + Common::Configuration::getDefaultValue(GEN_GALAXY_SYSTEM_NAME[m_targetSystem]) + 
-					".\nLand on Planet" + std::to_string(m_targetPlanet) + ".");
-
+					"Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_targetSystem]) + 
+					". Land on Planet" + std::string(Common::Data::Game::GAME_PLANETS_NAMES[m_targetSystem][m_targetPlanet]) + ".",
+					"Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_targetSystem]) + 
+					".\nLand on Planet" + std::string(Common::Data::Game::GAME_PLANETS_NAMES[m_targetSystem][m_targetPlanet]) + ".");
+				/// TODO -- Internationalization -- /// }End
 			}
 		}
 	}
@@ -455,15 +462,16 @@ namespace Application
 		{
 			std::string str(CGameManager::getInstance()->getPlanet());
 			str = str.substr(str.length()-1,1);
-			std::string tmp(std::to_string(m_planetsPos[m_targetPlanet-1]-1));
+			std::string tmp(std::to_string(m_planetsPos[m_targetPlanet]-1));
 			if( str == tmp ){
 				getReward();
 				abandonMission();
 			}
 		}else if(m_missionType == 3 && CGameManager::getInstance()->isInhabitedPlanet()){
-			std::string str(CGameManager::getInstance()->getPlanet());
-			str = str.substr(str.length()-1,1);
-			if(m_targetPlanet == std::atoi(str.c_str()) && m_targetSystem == std::atoi(CGameManager::getInstance()->getSystem().c_str()))
+			//Uncomment to allow other inhabited planets in the same system
+			/*std::string str(CGameManager::getInstance()->getPlanet());
+			str = str.substr(str.length()-1,1);*/
+			if(m_targetSystem == std::atoi(CGameManager::getInstance()->getSystem().c_str())/* && m_targetPlanet == std::atoi(str.c_str())*/ )
 				return;
 
 			getReward();
@@ -490,8 +498,10 @@ namespace Application
 	{
 		if(m_missionType == 2 && type == m_targets.first){
 			++m_targetsDefeated;
+			/// TODO -- Internationalization -- /// Begin{
 			CGameManager::getInstance()->setMission(CGameManager::getInstance()->getMission().first,CGameManager::getInstance()->getMission().second,
 				std::to_string(m_targetsDefeated) + "/" + std::to_string(m_targets.second) + " enemies defeated.");
+			/// TODO -- Internationalization -- /// }End
 			if(m_targetsDefeated >= m_targets.second){
 				getReward();
 				abandonMission();

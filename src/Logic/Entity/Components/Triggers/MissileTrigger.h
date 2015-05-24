@@ -46,7 +46,8 @@ namespace Logic
             DEC_FACTORY(CMissileTrigger)
         public:
             CMissileTrigger() 
-                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f)
+                : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
+                m_particles(nullptr)
             {  }
 
             ~CMissileTrigger();

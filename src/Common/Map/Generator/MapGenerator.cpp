@@ -998,7 +998,6 @@ namespace Map
 		entityList.push_back(entityInProgress);
 
 		//Texture Camera
-		/*
 #ifndef _DEBUG
 		entityInProgress = new CMapEntity(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYNAME));
 		entityInProgress->setType(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYTYPE));
@@ -1015,7 +1014,6 @@ namespace Map
 
 		entityList.push_back(entityInProgress);
 #endif
-		*/
 		//Skybox
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_SKYBOX_NAME));
 

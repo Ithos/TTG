@@ -147,7 +147,12 @@ namespace Logic
 				}
 	
 				// Calculamos la rotación
-				m_yaw->move(m_currentProperties);
+				if(m_fixedTime >= 0.3f){
+					m_yaw->move(m_currentProperties);
+					m_fixedTime = 0.0f;
+				}else{
+					m_fixedTime += msecs * 0.001;
+				}
 
 				// Mover
 				float speedValue = m_currentProperties.linearSpeed.length();
@@ -155,7 +160,7 @@ namespace Logic
 				movement->move(m_currentProperties.linearSpeed);
 
 				// Aplicar la rotación
-				movement->rotate((float)m_currentProperties.angularSpeed);
+				movement->rotate((float)m_currentProperties.angularSpeed * 5.1 );
 
 				// Acelerar
 				m_currentProperties.linearSpeed += m_currentProperties.linearAccel;
@@ -164,7 +169,7 @@ namespace Logic
 				if (speedValue > m_maxLinearSpeed)
 					m_currentProperties.linearSpeed *= (m_maxLinearSpeed / speedValue);
 
-				m_currentProperties.angularSpeed += m_currentProperties.angularAccel  * msecs * 0.01;
+				m_currentProperties.angularSpeed += m_currentProperties.angularAccel;
 				if (m_currentProperties.angularSpeed > m_maxAngularSpeed) 
 					m_currentProperties.angularSpeed = Ogre::Math::Sign((float)m_currentProperties.angularSpeed) * m_maxAngularSpeed;
 			}

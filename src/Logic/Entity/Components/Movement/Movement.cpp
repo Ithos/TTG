@@ -83,20 +83,12 @@ namespace Logic
 
             //rotate
             //getRotation(m_trans->getTransform(), m_iniRot);
-			if(getEntity()->isPlayer()){
-				float secs = msecs * 0.001;
-				m_iniRot    = m_nextRot;
-				m_nextRot.x = m_pitch * secs;
-				m_nextRot.y = m_yaw * secs;
-				m_nextRot.z = m_roll * secs;
-				m_trans->rotateRad(m_yaw * secs, m_pitch * secs, m_roll * secs);
-			}else{
-				m_iniRot    = m_nextRot;
-				m_nextRot.x = m_pitch;
-				m_nextRot.y = m_yaw;
-				m_nextRot.z = m_roll;
-				m_trans->rotateRad(m_yaw, m_pitch, m_roll);
-			}
+			float secs = msecs * 0.001;
+			m_iniRot    = m_nextRot;
+			m_nextRot.x = m_pitch * secs;
+			m_nextRot.y = m_yaw * secs;
+			m_nextRot.z = m_roll * secs;
+			m_trans->rotateRad(m_yaw * secs, m_pitch * secs, m_roll * secs);
         }
 
         void CMovement::move(const Vector3& dir /*normalised*/)

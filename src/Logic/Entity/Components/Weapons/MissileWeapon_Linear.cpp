@@ -61,6 +61,16 @@ namespace Logic
             
         }
 
+        CMissileWeapon_Linear::~CMissileWeapon_Linear()
+        {
+            for (unsigned i = 0; i < m_mapInfo.size(); ++i)
+                if (m_mapInfo[i]) {
+                    Map::CMapEntity* me = m_mapInfo[i];
+                    delete me;
+                    m_mapInfo[i] = nullptr;
+                }
+        }
+
         void CMissileWeapon_Linear::tick(unsigned int msecs)
         {
             for (auto it = m_subEntity.begin(); it != m_subEntity.end(); ++it)

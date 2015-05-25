@@ -28,11 +28,7 @@ namespace Logic
         {
         public:
             CMissileWeapon_Linear(CEntity* parent, CScene* scene);
-            ~CMissileWeapon_Linear() {
-                for (auto it = m_mapInfo.begin(); it != m_mapInfo.end();  ++it)
-                    if (it->second)
-                        delete it->second;
-            }
+            ~CMissileWeapon_Linear();
 
             void shoot(const Vector3& src, const Vector3& dir);
 

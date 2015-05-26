@@ -66,9 +66,7 @@ namespace Logic
                 m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
 
             m_trans = Matrix4::IDENTITY;
-            // Particles code ----
             m_particles = Common::Particles::CParticleManager::getInstance();
-            m_particles->addShootType(MISSILE_LINEAR);
 
             if (!m_sceneMgr)
                 m_sceneMgr = scene->getSceneManager();

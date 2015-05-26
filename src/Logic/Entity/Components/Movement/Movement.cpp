@@ -75,7 +75,7 @@ namespace Logic
         void CMovement::tick(unsigned int msecs)
         {
 
-			if(m_onContact){ m_onContact = false; return; }
+			if(m_onContact){ return; }
 
             using namespace Common::Util::Math;
             m_lastTime = (float)Application::CClock::getInstance().getTime();

@@ -35,7 +35,7 @@ namespace Logic
 			CSteeringMovement() : IComponent(), m_arrived(true), m_maxLinearSpeed(0.05f), m_maxAngularSpeed(0.01f),
 				m_maxLinearAccel(0.1f), m_maxAngularAccel(0.1f), m_currentMovement(0), 
 				m_movType(AI::Movement::IMovement::MOVEMENT_DYNAMIC_ARRIVE), m_yaw(NULL), m_evade(NULL),
-				m_playerTarget(true){ };
+				m_playerTarget(true),m_fixedTime(0.0f){ };
 			~CSteeringMovement();
 			void setTarget(Vector3 target);
 			void setPlayerAsTarget() { m_playerTarget = true; };
@@ -53,6 +53,8 @@ namespace Logic
 			AI::Movement::IMovement* m_evade;
 			float m_evadeDistance;
 			AI::Movement::IMovement::DynamicMovement m_currentProperties;
+
+			float m_fixedTime;
 
 			bool m_playerTarget;
 		};

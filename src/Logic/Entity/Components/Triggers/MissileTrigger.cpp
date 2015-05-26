@@ -42,6 +42,9 @@ namespace Logic
 	{
         IMP_FACTORY(CMissileTrigger)
 
+        Ogre::BillboardSet* CMissileTrigger::m_set      = nullptr;
+        Ogre::SceneManager* CMissileTrigger::m_sceneMgr = nullptr;
+
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
             CEntity* thisEnt = m_entity;
@@ -66,22 +69,28 @@ namespace Logic
             m_particles = Common::Particles::CParticleManager::getInstance();
             m_particles->addShootType(MISSILE_LINEAR);
 
-       /*     m_sceneMgr = scene->getSceneManager();
+            if (!m_sceneMgr)
+                m_sceneMgr = scene->getSceneManager();
+
             m_node = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
-            Ogre::BillboardSet* set = m_sceneMgr->createBillboardSet("bbset");
-            set->setMaterialName("Missile");
-            set->setDefaultDimensions(1024, 1024);
-            set->createBillboard(m_parentTrans->getPosition());
-            m_node->attachObject(set);*/
+          /*  m_set = m_sceneMgr->createBillboardSet();
+            m_set->setMaterialName("Missile");
+            m_set->setDefaultDimensions(20, 20);
+            Vector3 pos = m_parentTrans->getPosition();
+            m_set->createBillboard(pos);
+            node = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+            node->attachObject(m_set);*/
+ 
 
        /*     m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
-            m_rt->setMaterialName("LightRibbonTrail");
+            m_rt->setMaterialName("Missile");
             m_rt->setTrailLength(20);
             m_rt->setMaxChainElements(40);
             m_rt->setInitialColour(0, 0.2, 1.0, 0.3, 0.8);
             m_rt->setColourChange(0, 0.5, 0.5, 0.5, 0.5);
-            m_rt->setInitialWidth(0, 0.1);
-            m_sceneMgr->getRootSceneNode()->attachObject(m_rt);*/
+            m_rt->setInitialWidth(0, 10);
+            m_rt->addNode(node);
+            m_node->attachObject(m_rt);*/
 
             return true;
         }
@@ -101,6 +110,8 @@ namespace Logic
 
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
+            //    node->setPosition(m_pos);
+                m_node->setPosition(m_parentTrans->getPosition());
             }
             else {
                 moveFunc(m_pos, m_dir, m_speed);

@@ -82,7 +82,9 @@ namespace Logic
             CParticleManager* m_particles;
             Ogre::RibbonTrail* m_rt;
             Ogre::SceneNode*   m_node;
-            Ogre::SceneManager* m_sceneMgr;
+            Ogre::SceneNode* node;
+            static Ogre::SceneManager* m_sceneMgr;
+            static Ogre::BillboardSet* m_set;
         };
 
         REG_FACTORY(CMissileTrigger)

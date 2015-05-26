@@ -58,7 +58,7 @@ namespace AI
 			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP));
 			currentProperties.angularSpeed = (atan2(-currentProperties.linearSpeed.x, -currentProperties.linearSpeed.z) - transf->getYaw());
 			currentProperties.angularSpeed = AI::CAI::correctAngle(currentProperties.angularSpeed);
-			currentProperties.angularSpeed /= IMovement::ATTENUATION;
+			//currentProperties.angularSpeed /= IMovement::ATTENUATION;
 			if (abs(currentProperties.angularSpeed) > m_maxAngularSpeed) {
 				currentProperties.angularSpeed = Ogre::Math::Sign(currentProperties.angularSpeed) * m_maxAngularSpeed;
 			}

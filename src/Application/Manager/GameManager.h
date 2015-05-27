@@ -80,8 +80,8 @@ namespace Application
 
 		void setMission(unsigned int id, const std::string& str, const std::string& desc);
 
-		const unsigned int& getLife() { return m_life; }
-        unsigned int* getRefLife()    { return &m_life; }
+		const int& getLife() { return m_life; }
+        int* getRefLife()    { return &m_life; }
 		void increaseLife(unsigned int num);
 		void decreaseLife(unsigned int num);
 		unsigned int getTotalLife(){return m_totalLife;}; // ??
@@ -163,7 +163,7 @@ namespace Application
 
 		void changeEquippedEngine(const std::string& name);
 
-		unsigned m_life;
+		int m_life;
         unsigned m_totalLife; // ??
         unsigned m_shield;
         unsigned m_tmpShield;

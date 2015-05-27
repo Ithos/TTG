@@ -91,13 +91,13 @@ namespace Logic
             if (hitEntity) {
                 std::string type = hitEntity->getType();
                 if (type == "Asteroid" || type == "Enemy") {
-                    unsigned int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;
+                    int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 
                     if ( *life > 0) {
                         *life = (*life <= m_damage)? 0 : *life - m_damage;
                         
-                        if (*life  == 0) {
+                        if (*life  <= 0) {
                             m_scene->deactivateEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
                         }

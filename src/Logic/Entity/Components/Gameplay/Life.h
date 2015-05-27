@@ -33,8 +33,8 @@ namespace Logic
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 
-            unsigned int* m_life;
-            bool          m_player;
+            int* m_life;
+            bool m_player;
         };
 
         REG_FACTORY(CLife)

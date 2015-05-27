@@ -31,6 +31,7 @@
 #include <Logic/Scene/Scene.h>
 #include "OGRE\OgreRibbonTrail.h"
 #include <OGRE\OgreBillboardSet.h>
+#include <OGRE\OgreBillboard.h>
 
 using namespace Common::Util::PxConversor;
 using namespace Common::Data::Spawn;
@@ -65,30 +66,27 @@ namespace Logic
                 m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
 
             m_trans = Matrix4::IDENTITY;
-            // Particles code ----
             m_particles = Common::Particles::CParticleManager::getInstance();
-            m_particles->addShootType(MISSILE_LINEAR);
 
             if (!m_sceneMgr)
                 m_sceneMgr = scene->getSceneManager();
 
-            m_node = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
-          /*  m_set = m_sceneMgr->createBillboardSet();
+            m_set = m_sceneMgr->createBillboardSet();
             m_set->setMaterialName("Missile");
             m_set->setDefaultDimensions(20, 20);
             Vector3 pos = m_parentTrans->getPosition();
-            m_set->createBillboard(pos);
-            node = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
-            node->attachObject(m_set);*/
- 
+            m_bb = m_set->createBillboard(pos);
+            m_node = m_sceneMgr->getRootSceneNode();
+            m_node->attachObject(m_set);
 
-       /*     m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
-            m_rt->setMaterialName("Missile");
-            m_rt->setTrailLength(20);
-            m_rt->setMaxChainElements(40);
-            m_rt->setInitialColour(0, 0.2, 1.0, 0.3, 0.8);
-            m_rt->setColourChange(0, 0.5, 0.5, 0.5, 0.5);
-            m_rt->setInitialWidth(0, 10);
+      /*      m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
+            m_rt->setMaterialName("LightRibbonTrail");
+            m_rt->setTrailLength(80);
+            m_rt->setMaxChainElements(500);
+            m_rt->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
+            m_rt->setColourChange(0, 1, 1, 1, 0.8);
+            m_rt->setInitialWidth(0, 6);
+            m_rt->setWidthChange(0, 3);
             m_rt->addNode(node);
             m_node->attachObject(m_rt);*/
 
@@ -105,13 +103,13 @@ namespace Logic
 
         void CMissileTrigger::tick(unsigned int msecs)
         {
+
             if (!m_shooted)
                 return;
 
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
-            //    node->setPosition(m_pos);
-                m_node->setPosition(m_parentTrans->getPosition());
+                m_bb->setPosition(m_pos);
             }
             else {
                 moveFunc(m_pos, m_dir, m_speed);
@@ -128,14 +126,17 @@ namespace Logic
             if (  type == "Enemy" || type == "Asteroid") {
                 m_shooted = false;
                 m_entity->deactivate();
-                unsigned int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
+                int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
                     *life = (*life <= m_damage)? 0 : *life - m_damage;
                         
-                    if (*life  == 0) {
+                    if (*life  <= 0) {
                         hitEnt->deactivate();
                         m_particles->startNextExplosion(pos);
+                        m_node->detachObject(m_set);
+                        delete m_bb;
+                        delete m_set;
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
@@ -146,6 +147,9 @@ namespace Logic
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;
                 m_entity->deactivate();
+                m_node->detachObject(m_set);
+                delete m_bb;
+                delete m_set;
             }
         }
 

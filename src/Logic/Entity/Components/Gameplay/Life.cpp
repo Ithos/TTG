@@ -52,7 +52,7 @@ namespace Logic
             }
             else {
                 m_player = false;
-                m_life   = new unsigned int();
+                m_life   = new int();
             }
 
             if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_LIFE) /*&& !entity->isPlayer()*/) {

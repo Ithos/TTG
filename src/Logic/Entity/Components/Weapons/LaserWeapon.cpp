@@ -83,7 +83,7 @@ namespace Logic
             using namespace Common::Data;
             using namespace Logic::Component;
 			
-            m_particles->startShoot(LASER, src, dir, 2);
+       //     m_particles->startShoot(LASER, src, dir, 2);
 
             CEntity* hitEntity = nullptr;
             m_ray.setOrigin(src);

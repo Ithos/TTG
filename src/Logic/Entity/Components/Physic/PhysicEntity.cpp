@@ -177,9 +177,21 @@ void CPhysicEntity::tick(unsigned int msecs)
 		return;
 
 	if(!m_physicMng->isKinematic(dinActor)){
-		Matrix4 m = m_physicMng->getActorTransform(m_actor);
-		static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
-		return;
+		if(m_entity->getType() == "Asteroid"){
+			Matrix4 m = m_physicMng->getActorTransform(m_actor);
+			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+			return;
+		}
+		if(m_onContact){
+			physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
+			contactMovement();
+			//actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
+			actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement)*10,physx::PxForceMode::eFORCE);
+			Matrix4 m = m_physicMng->getActorTransform(m_actor);
+			static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->setTransform(m);
+			return;
+		}
+		m_physicMng->moveDynamicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
 	}
 	if(m_physicMng->isKinematic(dinActor)){
 		if(m_onContact){
@@ -196,8 +208,12 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 {
 	//if(!m_onContact) m_onContact = true; return;
 	if(m_actor->isRigidDynamic() && static_cast<CPhysicEntity*>(otherComponent)->m_actor->isRigidDynamic()){
-		if(m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))
-			&& m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor))){
+		//if(m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))
+		//	&& m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor))){
+		if(!m_physicMng->isKinematic(static_cast<PxRigidDynamic*>(m_actor))){
+			std::string otype = otherComponent->getEntity()->getType();
+			std::string mtype = m_entity->getType();
+			if(m_entity->getType() == "Enemy" && (otherComponent->getEntity()->getType() == "Enemy" || otherComponent->getEntity()->isPlayer())){
 			log_trace(LOG_PHYSIC,"Moving on contact\n");
 			//if(!m_onContact) m_onContact = true;
 			
@@ -210,10 +226,10 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 			static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP))->m_onContact = true;
 			m_onContact = true;
 			m_contacts.push_back(actor2);
-			//contactMovement();
-			actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
-			//actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement),physx::PxForceMode::eIMPULSE);
-			
+			contactMovement();
+			//actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
+			actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement)*10,physx::PxForceMode::eFORCE);
+			}
 		}
 	}
 }
@@ -235,7 +251,8 @@ void CPhysicEntity::onContactEnd(IPhysic* otherComponent)
 	if(m_contacts.empty()){
 		m_onContact = false;		
 		physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
-		actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, true);
+		//actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, true);
+		actor->clearForce();
 		static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP))->m_onContact = false;
 	}
 }

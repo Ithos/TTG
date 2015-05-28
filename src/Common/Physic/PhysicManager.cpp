@@ -494,6 +494,12 @@ namespace Physic
 		return 0;
 	}
 
+	bool CPhysicManager::isTrigger(physx::PxRigidActor* actor)
+	{
+		PxShape *shape; actor->getShapes(&shape,1,0);
+		return (shape->getFlags() & PxShapeFlag::eTRIGGER_SHAPE);
+	}
+
 	bool CPhysicManager::activateActor(physx::PxRigidActor *actor, bool trigger)
 	{
 		if(trigger){

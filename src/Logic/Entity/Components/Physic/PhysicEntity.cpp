@@ -203,6 +203,9 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 			
 			physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
 			physx::PxRigidDynamic* actor2 =  static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor);
+
+			if(m_physicMng->isTrigger(actor) || m_physicMng->isTrigger(actor2)) return;
+
 			static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP))->m_onContact = true;
 			m_onContact = true;
 			m_contacts.push_back(actor2);

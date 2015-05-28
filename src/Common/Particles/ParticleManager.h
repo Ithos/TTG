@@ -74,8 +74,10 @@ namespace Common
             /*--------- Shoots --------*/
             void initShoots();
             void addShootType(Weapons_t);
-            void startShoot(Weapons_t type, const Vector3& src, const Vector3& dir, unsigned = 0, Ogre::Node* = nullptr);
+            void startShoot(Weapons_t type, const Vector3& src, const Vector3& dir, float = 0.0f, Ogre::Node* = nullptr);
             void releaseShoots(Weapons_t = ALL);
+
+            void laserShot(const Vector3& init, const Vector3& dir, const float& range);
 
             /********** Stars **********/
             void addStar(star_t , Ogre::SceneNode* = nullptr);
@@ -100,6 +102,12 @@ namespace Common
             std::map<Weapons_t, vPU> m_shoots;
 
             std::string m_galaxyParticles[NUM_PART_TYPES_GALAXY];
+
+            // laser
+            std::vector<Ogre::SceneNode*>   m_node1; // node for creating ribbontrail
+            std::vector<Ogre::SceneNode*>   m_node2; // node for moving ribbontrail
+            std::vector<Ogre::RibbonTrail*> m_rt; 
+            unsigned m_iRt;
             
             // index
             unsigned m_index;
@@ -111,6 +119,7 @@ namespace Common
             const unsigned int MAX_EXPLOSIONS;
             const unsigned int MAX_HITS;
             const unsigned int MAX_SHOOTS;
+            const unsigned int MAX_TRAILS;
 
             static CParticleManager* m_instance;
         };

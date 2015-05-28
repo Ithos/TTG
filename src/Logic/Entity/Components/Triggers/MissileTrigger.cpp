@@ -122,6 +122,7 @@ namespace Logic
 
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
+                // for moving a ribbontrail move this node for make a trail.
                 m_bb->setPosition(m_pos);
             }
             else {

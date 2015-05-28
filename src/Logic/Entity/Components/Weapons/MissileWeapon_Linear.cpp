@@ -79,7 +79,6 @@ namespace Logic
 
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
-            // todo: gestion el pool de entidades.
             if (!m_trigger) {
                 m_trigger = true;
                 m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);

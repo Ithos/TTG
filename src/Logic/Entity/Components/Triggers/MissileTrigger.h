@@ -81,7 +81,7 @@ namespace Logic
             bool        m_shooted;
             bool        m_stillActive;
             CParticleManager*          m_particles;
-            Ogre::RibbonTrail*         m_rt;
+            //Ogre::RibbonTrail*         m_rt;
             static Ogre::SceneNode*    m_node;
             static Ogre::SceneManager* m_sceneMgr;
             static Ogre::BillboardSet* m_set;

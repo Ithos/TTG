@@ -24,7 +24,6 @@
 
 #include <Common/Map/MapEntity.h>
 #include <Logic/Scene/Scene.h>
-#include <Logic/Entity/Entity.h>
 #include <Common/data/TTG_Types.h>
 #include <Common/Data/Spawn_Constants.h>
 
@@ -51,7 +50,7 @@ namespace Logic
             if (!m_trans)
                 log_error(LOG_PWEAPON, "Error getting Transform, m_trans is null\n");
 
-            m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo));
+            m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
             m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
 
             m_primary   = 0;

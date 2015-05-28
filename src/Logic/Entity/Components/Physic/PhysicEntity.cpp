@@ -221,7 +221,8 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 				m_onContact = true;
 				m_contacts.push_back(actor2);
 				contactMovement();
-				actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement)*200,physx::PxForceMode::eIMPULSE);
+				actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
+				actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement),physx::PxForceMode::eIMPULSE);
 			}
 			
 		}
@@ -244,6 +245,8 @@ void CPhysicEntity::onContactEnd(IPhysic* otherComponent)
 
 	if(m_contacts.empty()){
 		m_onContact = false;
+		physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
+		actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, true);
 		static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP))->m_onContact = false;
 	}
 }

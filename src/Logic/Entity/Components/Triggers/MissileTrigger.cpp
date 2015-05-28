@@ -71,6 +71,8 @@ namespace Logic
                 m_trans = Matrix4::IDENTITY;
                 m_particles = Common::Particles::CParticleManager::getInstance();
             }
+            else 
+                m_stillActive = true;
 
             if (!m_sceneMgr)
                 m_sceneMgr = scene->getSceneManager();
@@ -141,7 +143,7 @@ namespace Logic
                 if (!hitEnt->isActivated())
                     return;
                 m_shooted = false;
-                m_entity->deactivate();
+               // m_entity->deactivate();
                 int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
@@ -160,7 +162,7 @@ namespace Logic
             }
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;
-                m_entity->deactivate();
+                //m_entity->deactivate();
                 delete m_bb;
                 m_bb =  nullptr;
             }
@@ -179,8 +181,8 @@ namespace Logic
 
 		bool CMissileTrigger::activate()
 		{
-			if(!IComponent::activate()) return false;
-			m_physicMng->activateActor(m_actor,true);
+			if (!IComponent::activate()) return false;
+            if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
 		}
     }
 }

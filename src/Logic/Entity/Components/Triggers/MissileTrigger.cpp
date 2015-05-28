@@ -49,25 +49,28 @@ namespace Logic
 
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
-            CEntity* thisEnt = m_entity;
-            if (!CPhysicEntity::spawn(entity, scene, entityInfo))
-                return false;
+            // create trigger
+            if (!m_parent) {
+                CEntity* thisEnt = m_entity;
+                if (!CPhysicEntity::spawn(entity, scene, entityInfo))
+                    return false;
 
-            m_entity      = thisEnt;
-            m_parent      = entity;			
-            m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
+                m_entity      = thisEnt;
+                m_parent      = entity;			
+                m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
             
-            if (entityInfo->hasAttribute(MISSILE_SPEED))
-                m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
+                if (entityInfo->hasAttribute(MISSILE_SPEED))
+                    m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
 
-            if (entityInfo->hasAttribute(MISSILE_DAMAGE))
-                m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
+                if (entityInfo->hasAttribute(MISSILE_DAMAGE))
+                    m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
 
-            if (entityInfo->hasAttribute(MISSILE_RANGE))
-                m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
+                if (entityInfo->hasAttribute(MISSILE_RANGE))
+                    m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
 
-            m_trans = Matrix4::IDENTITY;
-            m_particles = Common::Particles::CParticleManager::getInstance();
+                m_trans = Matrix4::IDENTITY;
+                m_particles = Common::Particles::CParticleManager::getInstance();
+            }
 
             if (!m_sceneMgr)
                 m_sceneMgr = scene->getSceneManager();
@@ -135,6 +138,8 @@ namespace Logic
             CEntity* hitEnt = hitComp->getEntity();
             std::string type = hitComp->getEntity()->getType();
             if (  type == "Enemy" || type == "Asteroid") {
+                if (!hitEnt->isActivated())
+                    return;
                 m_shooted = false;
                 m_entity->deactivate();
                 int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
@@ -145,13 +150,13 @@ namespace Logic
                     if (*life  <= 0) {
                         hitEnt->deactivate();
                         m_particles->startNextExplosion(pos);
-                        delete m_bb;
-                        m_bb =  nullptr;
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                     }
                 }
+                delete m_bb;
+                m_bb =  nullptr;
             }
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;

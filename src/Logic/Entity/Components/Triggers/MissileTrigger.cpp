@@ -45,6 +45,7 @@ namespace Logic
 
         Ogre::BillboardSet* CMissileTrigger::m_set      = nullptr;
         Ogre::SceneManager* CMissileTrigger::m_sceneMgr = nullptr;
+        Ogre::SceneNode*    CMissileTrigger::m_node     = nullptr;
 
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
@@ -71,14 +72,19 @@ namespace Logic
             if (!m_sceneMgr)
                 m_sceneMgr = scene->getSceneManager();
 
-            m_set = m_sceneMgr->createBillboardSet();
-            m_set->setMaterialName("Missile");
-            m_set->setDefaultDimensions(20, 20);
+            if (!m_set) {
+                m_set = m_sceneMgr->createBillboardSet();
+                m_set->setMaterialName("Missile");
+                m_set->setDefaultDimensions(20, 20);
+                m_node = m_sceneMgr->getRootSceneNode();
+                m_node->attachObject(m_set);
+            }
             Vector3 pos = m_parentTrans->getPosition();
-            m_bb = m_set->createBillboard(pos);
-            m_node = m_sceneMgr->getRootSceneNode();
-            m_node->attachObject(m_set);
+            if (m_bb)
+                delete m_bb;
 
+            m_bb = m_set->createBillboard(pos);
+            
       /*      m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
             m_rt->setMaterialName("LightRibbonTrail");
             m_rt->setTrailLength(80);
@@ -97,15 +103,17 @@ namespace Logic
         {
             m_node->detachAllObjects();
             m_sceneMgr->destroySceneNode(m_node);
+            m_sceneMgr->destroyBillboardSet(m_set);
             m_sceneMgr = nullptr;
             m_parent   = nullptr;
         }
 
         void CMissileTrigger::tick(unsigned int msecs)
         {
-
             if (!m_shooted)
                 return;
+
+            // if (m_pos - initalPos > m_range) destroy();
 
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
@@ -121,6 +129,9 @@ namespace Logic
 
         void CMissileTrigger::onOverlapBegin(IPhysic* hitComp)
         {
+            if (!m_shooted)
+                return;
+
             CEntity* hitEnt = hitComp->getEntity();
             std::string type = hitComp->getEntity()->getType();
             if (  type == "Enemy" || type == "Asteroid") {
@@ -134,22 +145,19 @@ namespace Logic
                     if (*life  <= 0) {
                         hitEnt->deactivate();
                         m_particles->startNextExplosion(pos);
-                        m_node->detachObject(m_set);
-                        m_sceneMgr->destroyBillboardSet(m_set);
                         delete m_bb;
+                        m_bb =  nullptr;
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                     }
                 }
-                // make boom boom with particles
             }
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;
                 m_entity->deactivate();
-                m_node->detachObject(m_set);
-                m_sceneMgr->destroyBillboardSet(m_set);
                 delete m_bb;
+                m_bb =  nullptr;
             }
         }
 

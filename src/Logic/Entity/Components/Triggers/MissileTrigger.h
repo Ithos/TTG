@@ -47,7 +47,7 @@ namespace Logic
         public:
             CMissileTrigger() 
                 : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
-                m_particles(nullptr), m_node(nullptr), m_bb(nullptr)
+                m_particles(nullptr), m_bb(nullptr)
             {  }
 
             ~CMissileTrigger();
@@ -81,7 +81,7 @@ namespace Logic
             bool        m_shooted;
             CParticleManager* m_particles;
             Ogre::RibbonTrail* m_rt;
-            Ogre::SceneNode*   m_node;
+            static Ogre::SceneNode*    m_node;
             static Ogre::SceneManager* m_sceneMgr;
             static Ogre::BillboardSet* m_set;
             Ogre::Billboard*  m_bb;

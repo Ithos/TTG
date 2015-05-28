@@ -204,26 +204,14 @@ void CPhysicEntity::onContact(IPhysic* otherComponent)
 			physx::PxRigidDynamic* actor =  static_cast<PxRigidDynamic*>(m_actor);
 			physx::PxRigidDynamic* actor2 =  static_cast<PxRigidDynamic*>(static_cast<CPhysicEntity*>(otherComponent)->m_actor);
 
-			Matrix4 m = m_physicMng->getActorTransform(actor);
-			Matrix4 m2 = m_physicMng->getActorTransform(actor2);
+			if(m_physicMng->isTrigger(actor) || m_physicMng->isTrigger(actor2)) return;
 
-			const float radius = m_physicMng->getActorRadius(actor);
-			const float radius2 = m_physicMng->getActorRadius(actor2);
-
-			float distance = radius + radius2;
-			float curr_distanace = m.getTrans().distance(m2.getTrans());
-			if(distance > curr_distanace){
-				Vector3 dir(m2.getTrans() - m.getTrans());
-				dir.normalise();
-
-				//actor->addForce(Common::Physic::Vector3ToPxVec3(dir)*10,physx::PxForceMode::eIMPULSE);
-				static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP))->m_onContact = true;
-				m_onContact = true;
-				m_contacts.push_back(actor2);
-				contactMovement();
-				actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
-				actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement),physx::PxForceMode::eIMPULSE);
-			}
+			static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP))->m_onContact = true;
+			m_onContact = true;
+			m_contacts.push_back(actor2);
+			//contactMovement();
+			actor->setRigidDynamicFlag(physx::PxRigidDynamicFlag::eKINEMATIC, false);
+			//actor->addForce(Common::Physic::Vector3ToPxVec3(m_movement),physx::PxForceMode::eIMPULSE);
 			
 		}
 	}

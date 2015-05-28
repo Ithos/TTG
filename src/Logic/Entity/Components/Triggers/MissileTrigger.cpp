@@ -171,5 +171,11 @@ namespace Logic
             m_pos     = src;
             m_dir     = dir;
         }
+
+		bool CMissileTrigger::activate()
+		{
+			if(!IComponent::activate()) return false;
+			m_physicMng->activateActor(m_actor,true);
+		}
     }
 }

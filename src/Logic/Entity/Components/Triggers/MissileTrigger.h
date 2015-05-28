@@ -56,7 +56,7 @@ namespace Logic
 
             void tick(unsigned int);
 
-            bool activate() { return CPhysicEntity::activate(); }
+            bool activate();
 
             void onOverlapBegin(IPhysic* otherComponent);
 

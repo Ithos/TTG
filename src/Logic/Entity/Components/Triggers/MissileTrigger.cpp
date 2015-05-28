@@ -135,8 +135,8 @@ namespace Logic
                         hitEnt->deactivate();
                         m_particles->startNextExplosion(pos);
                         m_node->detachObject(m_set);
+                        m_sceneMgr->destroyBillboardSet(m_set);
                         delete m_bb;
-                        delete m_set;
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
@@ -148,8 +148,8 @@ namespace Logic
                 m_shooted = false;
                 m_entity->deactivate();
                 m_node->detachObject(m_set);
+                m_sceneMgr->destroyBillboardSet(m_set);
                 delete m_bb;
-                delete m_set;
             }
         }
 

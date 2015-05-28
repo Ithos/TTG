@@ -496,23 +496,23 @@ namespace Physic
 
 	bool CPhysicManager::activateActor(physx::PxRigidActor *actor, bool trigger)
 	{
-		/*if(trigger){
+		if(trigger){
 			PxShape *shape; actor->getShapes(&shape,1,0);
 			shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 			shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
-		}*/
+		}
 		m_scene->addActor(*actor);
 		return true;
 	}
 
 	void CPhysicManager::deactivateActor(physx::PxRigidActor *actor)
 	{
-		/*PxShape *shape; actor->getShapes(&shape,1,0);
+		PxShape *shape; actor->getShapes(&shape,1,0);
 		
 		if(shape->getFlags() & PxShapeFlag::eTRIGGER_SHAPE){
 			shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 			shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, false);
-		}*/
+		}
 		m_scene->removeActor(*actor);
 	}
 

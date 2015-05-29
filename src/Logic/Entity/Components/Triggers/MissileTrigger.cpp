@@ -45,40 +45,51 @@ namespace Logic
 
         Ogre::BillboardSet* CMissileTrigger::m_set      = nullptr;
         Ogre::SceneManager* CMissileTrigger::m_sceneMgr = nullptr;
+        Ogre::SceneNode*    CMissileTrigger::m_node     = nullptr;
 
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
-            CEntity* thisEnt = m_entity;
-            if (!CPhysicEntity::spawn(entity, scene, entityInfo))
-                return false;
+            // create trigger
+            if (!m_parent) {
+                CEntity* thisEnt = m_entity;
+                if (!CPhysicEntity::spawn(entity, scene, entityInfo))
+                    return false;
 
-            m_entity      = thisEnt;
-            m_parent      = entity;			
-            m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
+                m_entity      = thisEnt;
+                m_parent      = entity;			
+                m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
             
-            if (entityInfo->hasAttribute(MISSILE_SPEED))
-                m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
+                if (entityInfo->hasAttribute(MISSILE_SPEED))
+                    m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
 
-            if (entityInfo->hasAttribute(MISSILE_DAMAGE))
-                m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
+                if (entityInfo->hasAttribute(MISSILE_DAMAGE))
+                    m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
 
-            if (entityInfo->hasAttribute(MISSILE_RANGE))
-                m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
+                if (entityInfo->hasAttribute(MISSILE_RANGE))
+                    m_range =  entityInfo->getFloatAttribute(MISSILE_RANGE);
 
-            m_trans = Matrix4::IDENTITY;
-            m_particles = Common::Particles::CParticleManager::getInstance();
+                m_trans = Matrix4::IDENTITY;
+                m_particles = Common::Particles::CParticleManager::getInstance();
+            }
+            else 
+                m_stillActive = true;
 
             if (!m_sceneMgr)
                 m_sceneMgr = scene->getSceneManager();
 
-            m_set = m_sceneMgr->createBillboardSet();
-            m_set->setMaterialName("Missile");
-            m_set->setDefaultDimensions(20, 20);
+            if (!m_set) {
+                m_set = m_sceneMgr->createBillboardSet();
+                m_set->setMaterialName("Missile");
+                m_set->setDefaultDimensions(20, 20);
+                m_node = m_sceneMgr->getRootSceneNode();
+                m_node->attachObject(m_set);
+            }
             Vector3 pos = m_parentTrans->getPosition();
-            m_bb = m_set->createBillboard(pos);
-            m_node = m_sceneMgr->getRootSceneNode();
-            m_node->attachObject(m_set);
+            if (m_bb)
+                delete m_bb;
 
+            m_bb = m_set->createBillboard(pos);
+            
       /*      m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
             m_rt->setMaterialName("LightRibbonTrail");
             m_rt->setTrailLength(80);
@@ -97,18 +108,21 @@ namespace Logic
         {
             m_node->detachAllObjects();
             m_sceneMgr->destroySceneNode(m_node);
+            m_sceneMgr->destroyBillboardSet(m_set);
             m_sceneMgr = nullptr;
             m_parent   = nullptr;
         }
 
         void CMissileTrigger::tick(unsigned int msecs)
         {
-
             if (!m_shooted)
                 return;
 
+            // if (m_pos - initalPos > m_range) destroy();
+
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
+                // for moving a ribbontrail move this node for make a trail.
                 m_bb->setPosition(m_pos);
             }
             else {
@@ -121,11 +135,16 @@ namespace Logic
 
         void CMissileTrigger::onOverlapBegin(IPhysic* hitComp)
         {
+            if (!m_shooted)
+                return;
+
             CEntity* hitEnt = hitComp->getEntity();
             std::string type = hitComp->getEntity()->getType();
             if (  type == "Enemy" || type == "Asteroid") {
+                if (!hitEnt->isActivated())
+                    return;
                 m_shooted = false;
-                m_entity->deactivate();
+               // m_entity->deactivate();
                 int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
@@ -134,22 +153,19 @@ namespace Logic
                     if (*life  <= 0) {
                         hitEnt->deactivate();
                         m_particles->startNextExplosion(pos);
-                        m_node->detachObject(m_set);
-                        delete m_bb;
-                        delete m_set;
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                     }
                 }
-                // make boom boom with particles
+                delete m_bb;
+                m_bb =  nullptr;
             }
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;
-                m_entity->deactivate();
-                m_node->detachObject(m_set);
+                //m_entity->deactivate();
                 delete m_bb;
-                delete m_set;
+                m_bb =  nullptr;
             }
         }
 
@@ -163,5 +179,11 @@ namespace Logic
             m_pos     = src;
             m_dir     = dir;
         }
+
+		bool CMissileTrigger::activate()
+		{
+			if (!IComponent::activate()) return false;
+            if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
+		}
     }
 }

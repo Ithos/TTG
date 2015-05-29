@@ -52,6 +52,7 @@ namespace Logic { namespace Component {
 		virtual void onOverlapBegin(IPhysic* otherComponent);
 		virtual void onOverlapEnd(IPhysic* otherComponent);
 		virtual void onContact(IPhysic* otherComponent);
+		virtual void onContactEnd(IPhysic* otherComponent);
 
 		physx::PxRigidActor* m_actor;
 
@@ -71,6 +72,10 @@ namespace Logic { namespace Component {
 		Matrix4 m_lastPosition;
 
 		bool m_onContact;
+
+		std::vector<physx::PxRigidActor*> m_contacts;
+
+		void contactMovement();
 	};
 	REG_FACTORY(CPhysicEntity);
 }}

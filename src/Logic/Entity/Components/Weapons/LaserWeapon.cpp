@@ -40,8 +40,10 @@ namespace Logic
 {
 	namespace Component
 	{
-        CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo)
-            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene)
+        const char* const RIBBON_NAME = "ribbontrail_";
+
+        CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
+            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player)
         { 
              m_type = LASER;
 
@@ -66,10 +68,10 @@ namespace Logic
             m_particles = nullptr; 
         }
         
-        inline void CLaserWeapon::setPosition(const ::Vector3& pos) 
+       /* inline void CLaserWeapon::setPosition(const ::Vector3& pos) 
         {
             m_ogreNode->setPosition(pos);
-        }
+        }*/
 
         void CLaserWeapon::shoot(const ::Vector3& src, const ::Vector3& dir)
         {
@@ -81,18 +83,21 @@ namespace Logic
             using namespace Common::Data;
             using namespace Logic::Component;
 			
-            m_particles->startShoot(LASER, src, dir, 2);
+       //     m_particles->startShoot(LASER, src, dir, 2);
 
             CEntity* hitEntity = nullptr;
             m_ray.setOrigin(src);
             m_ray.setDirection(dir);
 
-            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group
+            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group                       
+
             if (hitEntity) {
                 std::string type = hitEntity->getType();
                 if (type == "Asteroid" || type == "Enemy") {
                     int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
+                    float distance = src.distance(m_currPos);
+                    m_particles->laserShot(src, dir, distance);
 
                     if ( *life > 0) {
                         *life = (*life <= m_damage)? 0 : *life - m_damage;
@@ -106,7 +111,14 @@ namespace Logic
                         }
                     }
                 } // hit asteroid or enemy
-             }
+                else {
+                    m_particles->laserShot(src, dir, m_range);
+                }
+            }
+            else { //no hit
+                m_particles->laserShot(src, dir, m_range);
+            }
+
         } // shoot
 
     } // Component

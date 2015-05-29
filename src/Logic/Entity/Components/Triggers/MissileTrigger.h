@@ -47,7 +47,7 @@ namespace Logic
         public:
             CMissileTrigger() 
                 : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
-                m_particles(nullptr), m_node(nullptr), m_bb(nullptr)
+                m_particles(nullptr), m_bb(nullptr), m_stillActive(false)
             {  }
 
             ~CMissileTrigger();
@@ -56,7 +56,7 @@ namespace Logic
 
             void tick(unsigned int);
 
-            bool activate() { return CPhysicEntity::activate(); }
+            bool activate();
 
             void onOverlapBegin(IPhysic* otherComponent);
 
@@ -79,12 +79,13 @@ namespace Logic
             float       m_damage;
             float       m_range;
             bool        m_shooted;
-            CParticleManager* m_particles;
-            Ogre::RibbonTrail* m_rt;
-            Ogre::SceneNode*   m_node;
+            bool        m_stillActive;
+            CParticleManager*          m_particles;
+            //Ogre::RibbonTrail*         m_rt;
+            static Ogre::SceneNode*    m_node;
             static Ogre::SceneManager* m_sceneMgr;
             static Ogre::BillboardSet* m_set;
-            Ogre::Billboard*  m_bb;
+            Ogre::Billboard*           m_bb;
         };
 
         REG_FACTORY(CMissileTrigger)

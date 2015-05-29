@@ -4,8 +4,8 @@
     <component name="CTransform" number="0" priority="0" />
     <component name="CGraphics" number="0" priority="1" />
     <component name="CController" number="1" priority="1" />
-    <component name="CMovement" number="2" priority="1" />
-    <component name="CPlayerPhysic" number="3" priority="1" />
+	<component name="CPlayerPhysic" number="2" priority="1" />
+    <component name="CMovement" number="3" priority="1" />
     <component name="CInterpolation" number="4" priority="1" />
     <component name="CMinimapHighlight" number="5" priority="0" />
     <component name="CWeapons" number="6" priority="1" />
@@ -16,8 +16,8 @@
     <component name="CTransform" number="0" priority="0" />
     <component name="CGraphics" number="0" priority="1" />
     <component name="CSteeringMovement" number="1" priority="1" />
-    <component name="CMovement" number="2" priority="1" />
-    <component name="CPhysicEntity" number="3" priority="1" />
+	<component name="CPhysicEntity" number="2" priority="1" />
+    <component name="CMovement" number="3" priority="1" />
     <component name="CInterpolation" number="4" priority="1" />
     <component name="CStateMachineExecutor" number="5" priority="1" />
     <component name="CMinimapHighlight" number="6" priority="0" />

@@ -20,6 +20,7 @@
 #include <OgreSceneManager.h>
 #include <Ogre/ParticleUniverse\ParticleUniverseSystemManager.h>
 #include <OGRE/ParticleUniverse/ParticleEmitters/ParticleUniverseLineEmitter.h>
+#include <OGRE\OgreRibbonTrail.h>
 
 using namespace ParticleUniverse;
 
@@ -31,20 +32,27 @@ namespace Common
 
         const char* const PARTCLE_NAME = "particle";
         const char* const STAR_GALAXY  = "starGalaxy";
+        const char* const LASER_NAME   = "laserTrail_";
 
         CParticleManager::CParticleManager() 
             : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0),
-              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200)
+              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(10), m_iRt(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
                 m_galaxyParticles[i] = STAR_GALAXY + std::to_string(i);
+
+            for (unsigned i = 0; i < MAX_TRAILS; ++i) {
+                m_rt.push_back(nullptr);
+                m_node1.push_back(nullptr);
+                m_node2.push_back(nullptr);
+            }
         }
 
         bool CParticleManager::init(Ogre::SceneManager* sceneMgr)
         {
             m_mgr      = ParticleSystemManager::getSingletonPtr();
             m_sceneMgr = sceneMgr;
-
+            
             return true;
         }
 
@@ -52,6 +60,12 @@ namespace Common
         {
             //Delete the particle systems
 		    ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(m_sceneMgr);
+            // delete trails
+            for (unsigned i = 0; i < m_rt.size(); ++i) {
+                m_sceneMgr->destroySceneNode(m_node1[i]);
+                m_sceneMgr->destroySceneNode(m_node2[i]);
+                m_sceneMgr->destroyRibbonTrail(m_rt[i]);
+            }
         }
 
         //----------- hits ------------------//
@@ -170,7 +184,6 @@ namespace Common
 
         void CParticleManager::addShootType(Weapons_t type)
         {
-            // add every shoot into their own pool
             if (m_shoots[type].size() < MAX_SHOOTS) {
                 for (int i = 0; i < 20; ++i) {
                     ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), getShootScript(type), m_sceneMgr);
@@ -180,7 +193,7 @@ namespace Common
             }
         }
 
-        void CParticleManager::startShoot(Weapons_t type, const ::Vector3& src, const ::Vector3& dir, unsigned secs, Ogre::Node* node)
+        void CParticleManager::startShoot(Weapons_t type, const ::Vector3& src, const ::Vector3& dir, float secs, Ogre::Node* node)
         { 
             LineEmitter* emitter = nullptr;
             switch (type) {
@@ -194,7 +207,7 @@ namespace Common
                 m_shoots[type][m_vShoots[type]]->getTechnique(0)->position = src;
             }
             
-            secs == 0 ? m_shoots[type][m_vShoots[type]]->start() : m_shoots[type][m_vShoots[type]]->start(secs);
+            secs == 0.000000 ? m_shoots[type][m_vShoots[type]]->start() : m_shoots[type][m_vShoots[type]]->start(secs);
             m_vShoots[type] = (m_vShoots[type] < m_shoots[type].size()-1) ? m_vShoots[type] + 1 : 0;
         }
 
@@ -221,7 +234,37 @@ namespace Common
             }
         }
 
+        void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range)
+        {
+            if (m_node1[m_iRt]) {
+                m_node1[m_iRt]->detachAllObjects();
+                m_node2[m_iRt]->detachAllObjects();
+                m_sceneMgr->destroySceneNode(m_node1[m_iRt]);
+                m_sceneMgr->destroySceneNode(m_node2[m_iRt]);
+                if (m_rt[m_iRt])
+                    m_sceneMgr->destroyRibbonTrail(m_rt[m_iRt]);
+            }
 
+            m_node1[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+            m_node2[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+            m_rt[m_iRt] = static_cast<Ogre::RibbonTrail*>(m_sceneMgr->createMovableObject(buildName(LASER_NAME, m_index++).c_str() , "RibbonTrail"));
+            m_rt[m_iRt]->setMaterialName("LightRibbonTrail");
+            m_rt[m_iRt]->setTrailLength(500);
+            m_rt[m_iRt]->setMaxChainElements(500);
+            m_rt[m_iRt]->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
+            m_rt[m_iRt]->setColourChange(0, 1, 1, 1, 0.8);
+            m_rt[m_iRt]->setInitialWidth(0, 6);
+            m_rt[m_iRt]->setWidthChange(0, 3);
+            m_rt[m_iRt]->addNode(m_node1[m_iRt]); // node to move
+            m_node2[m_iRt]->attachObject(m_rt[m_iRt]);
+            m_node2[m_iRt]->setPosition(src); // end
+            m_node1[m_iRt]->setPosition(src + (dir * range)); // init
+
+            if (m_iRt < MAX_TRAILS-1)
+                ++m_iRt;            
+            else 
+                m_iRt = 0;             
+        }
 
     } // Particles
 }

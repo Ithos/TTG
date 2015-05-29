@@ -21,6 +21,7 @@
 
 #include "Weapon.h"
 #include <Common/Util/Math.h>
+#include <Logic/Entity/Entity.h>
 
 namespace Ogre
 {
@@ -64,7 +65,7 @@ namespace Logic
         class CLaserWeapon : public IWeapon
         {
         public:
-            CLaserWeapon(CScene*, Ogre::SceneManager*, physx::PxScene*, const Map::CMapEntity*);
+            CLaserWeapon(CScene*, Ogre::SceneManager*, physx::PxScene*, const Map::CMapEntity*, CEntity*);
             ~CLaserWeapon();
 
             void shoot(const Vector3& src, const Vector3& dir);
@@ -75,17 +76,17 @@ namespace Logic
             void setWeapon( const float& damage, const float& cadence, 
                             const float& range, const float& speed, int charger );
 
-            void setPosition(const Vector3& pos);
+            //void setPosition(const Vector3& pos);
 
         private:
 		   Ogre::SceneManager*  m_sceneMngr;
-		   Ogre::SceneNode*     m_ogreNode;
            physx::PxScene*      m_pxScene;
            CScene*              m_scene;
            Vector3              m_currPos;
            CParticleManager*    m_particles;
            CPhysicManager*      m_phyMngr;
            Ogre::Ray            m_ray;
+           CEntity*             m_player;
         };
     }
 }

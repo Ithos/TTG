@@ -39,6 +39,7 @@ namespace Logic { namespace Component {
 		virtual void onOverlapBegin(IPhysic* otherComponent) = 0;
 		virtual void onOverlapEnd(IPhysic* otherComponent) = 0;
 		virtual void onContact(IPhysic* otherComponent) = 0;
+		virtual void onContactEnd(IPhysic* otherComponent) = 0;
 	};
 }}
 

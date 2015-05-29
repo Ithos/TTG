@@ -90,6 +90,33 @@ void CCollisionManager::onContact(const PxContactPairHeader &pairHeader, const P
 					comp1->onContact(comp2);
 				}
 			}
+		} else if(cp.events & PxPairFlag::eNOTIFY_TOUCH_LOST){
+			if(PxRigidDynamic* actor = pairHeader.actors[0]->isRigidDynamic()){
+					//PxActor* actor = pairHeader.actors[0];
+
+				if(actor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC){
+					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[1]->userData);
+					comp1->onContactEnd(comp2);
+				} else {
+					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[1]->userData);
+					comp1->onContactEnd(comp2);
+				}
+
+			}
+			if(PxRigidDynamic* actor = pairHeader.actors[1]->isRigidDynamic()){
+				//PxActor* actor = pairHeader.actors[1];
+				if(actor->getRigidDynamicFlags() & PxRigidDynamicFlag::eKINEMATIC){
+					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[0]->userData);
+					comp1->onContactEnd(comp2);
+				} else {
+					Logic::Component::IPhysic* comp1 = static_cast<Logic::Component::IPhysic*>(actor->userData);
+					Logic::Component::IPhysic* comp2 = static_cast<Logic::Component::IPhysic*>(pairHeader.actors[0]->userData);
+					comp1->onContactEnd(comp2);
+				}
+			}
 		}
 	}
 }

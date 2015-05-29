@@ -80,6 +80,8 @@ namespace Common
 
 		}
 
+		const int Y_COOR = -300;
+
         // Components
         const char* const TRANSFORM_COMP        = "CTransform";
         const char* const GRAPHICS_COMP         = "CGraphics";

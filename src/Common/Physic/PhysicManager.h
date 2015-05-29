@@ -130,7 +130,9 @@ namespace Common
 
 			const float getActorRadius(physx::PxRigidDynamic* actor);
 
-			bool activateActor(physx::PxRigidActor *actor);
+			bool isTrigger(physx::PxRigidActor* actor);
+
+			bool activateActor(physx::PxRigidActor *actor, bool trigger = false);
 			void deactivateActor(physx::PxRigidActor *actor);
 
 		protected:

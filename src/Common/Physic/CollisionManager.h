@@ -69,8 +69,10 @@ namespace Common
 				//pairFlags = PxPairFlag::eCCD_LINEAR;
 				pairFlags = PxPairFlag::eMODIFY_CONTACTS;
 
-				if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
+				if((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1)){
 						pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+						pairFlags |= PxPairFlag::eNOTIFY_TOUCH_LOST;
+				}
 
 				return PxFilterFlag::eDEFAULT;
 			}

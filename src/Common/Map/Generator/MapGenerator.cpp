@@ -689,12 +689,12 @@ namespace Map
 
 			int mod = astDist2(generator);
 
-			std::string aux = GEN_ASTEROID_MODEL + std::to_string(mod);
+			std::string aux = GEN_STATIC_ASTEROID_MODEL + std::to_string(mod);
 			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
 
 			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_STATIC_ASTEROID_VISIBILITY_MASK).c_str());
 
-			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
+			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_STATIC_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
 			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
 
 			entityList.push_back(entityInProgress);

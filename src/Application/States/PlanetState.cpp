@@ -43,15 +43,6 @@ namespace Application
 
 		m_guiInstance = CPlanetGUI::getInstance();
 
-		//This is just for testing
-		/*m_mgrInstance->decreaseLife(20);
-		m_mgrInstance->decreaseShieldState(70);
-		m_mgrInstance->decreaseEnergyState(50);
-
-		m_guiInstance->addBackLock();
-		m_guiInstance->addBackLock();
-		m_guiInstance->releaseBackLock();*/
-
 		return true;
 	}//init
 
@@ -114,10 +105,10 @@ namespace Application
 			m_app->setState("pause");
 			break;
 		case Common::Input::Key::G:
-			m_app->popState();
+			/*m_app->popState();*/
 			break;
 		case Common::Input::Key::E:
-			m_app->setState("event");
+			/*m_app->setState("event");*/
 			break;
 		default:
 			return false;

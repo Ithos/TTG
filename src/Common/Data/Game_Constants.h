@@ -400,6 +400,13 @@ namespace Common
 
 			const int TOTAL_PRIMARY_WEAPONS = 3;
 
+			const std::pair<std::string,std::pair<int, int>> PRIMARY_WEAPON_COST[] =
+			{
+				std::make_pair (GAME_HEAVY_LASER[0],std::make_pair (50, 10)), // base cost, variance/10
+				std::make_pair (GAME_TESLA_CANNON[0],std::make_pair (80, 20)),
+				std::make_pair (GAME_ENERGY_BEAM[0],std::make_pair (200, 35))
+			};
+
 			const std::array<const char* const*,TOTAL_PRIMARY_WEAPONS> GAME_PRIMARY_WEAPONS_LIST = {
 				GAME_HEAVY_LASER,
 				GAME_TESLA_CANNON,
@@ -420,6 +427,13 @@ namespace Common
 			};
 
 			const int TOTAL_SECONDARY_WEAPONS = 3;
+
+			const std::pair<std::string,std::pair<int, int>> SECONDARY_WEAPON_COST[] =
+			{
+				std::make_pair (GAME_MISSILE_LAUNCHER[0],std::make_pair (40, 15)), // base cost, variance/10
+				std::make_pair (GAME_STATIC_MINES[0],std::make_pair (60, 20)),
+				std::make_pair (GAME_EMP[0],std::make_pair (200, 10))
+			};
 
 			const std::array<const char* const*,TOTAL_SECONDARY_WEAPONS> GAME_SECONDARY_WEAPONS_LIST = {
 				GAME_MISSILE_LAUNCHER,
@@ -444,10 +458,17 @@ namespace Common
 			{
 				std::make_pair (GAME_PULSE_ENGINE[0],std::make_pair (35, 140)), // distance, cost
 				std::make_pair (GAME_TEST_ENGINE[0],std::make_pair (50, 200)),
-				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (85, 105)),
+				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (85, 105))
 			};
 
 			const int TOTAL_ENGINES = 3;
+
+			const std::pair<std::string,std::pair<int, int>> ENGINE_COST[] =
+			{
+				std::make_pair (GAME_PULSE_ENGINE[0],std::make_pair (30, 6)), // base cost, variance/10
+				std::make_pair (GAME_TEST_ENGINE[0],std::make_pair (800, 200)),
+				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (300, 50))
+			};
 
 			const std::array<const char* const*,TOTAL_ENGINES> GAME_ENGINES_LIST = {
 				GAME_PULSE_ENGINE,
@@ -477,6 +498,12 @@ namespace Common
 
 			const int TOTAL_SPECIAL = 2;
 
+			const std::pair<std::string,std::pair<int, int>> SPECIAL_EQUIPMENT_COST[] =
+			{
+				std::make_pair (GAME_ITEM_REGENERATOR[0],std::make_pair (200, 20)), // base cost, variance/10
+				std::make_pair (GAME_ITEM_STEALTH[0],std::make_pair (300, 10))
+			};
+
 			const std::array<const char* const*,TOTAL_SPECIAL> GAME_SPECIAL_EQUIPMENT_LIST = {
 				GAME_ITEM_REGENERATOR,
 				GAME_ITEM_STEALTH
@@ -493,10 +520,20 @@ namespace Common
 
 			const int TOTAL_ITEMS = 2;
 
+			const std::pair<std::string,std::pair<int, int>> ITEM_COST[] =
+			{
+				std::make_pair (GAME_REWARD[0],std::make_pair (-1, -1)), // base cost, variance/10
+				std::make_pair (GAME_USELESS[0],std::make_pair (-1, -1))
+			};
+
 			const std::array<const char* const*,TOTAL_ITEMS> GAME_ITEM_LIST = {
 				GAME_REWARD,
 				GAME_USELESS
 			};
+
+			const int REPAIR_HULL_COST = 100;
+
+			/// TODO -- shop costs -- ///
 
 			/// TODO -- Internationalization -- /// }End
 		}

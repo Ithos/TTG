@@ -500,9 +500,8 @@ namespace Application
 	{
 		std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
 		std::default_random_engine generator(seed);
-		std::uniform_int_distribution<int> priceVariance1(0,20);
-		std::uniform_int_distribution<int> priceVariance2(0,35);
-		std::uniform_int_distribution<int> priceVariance3(0,50);
+		std::uniform_int_distribution<int> priceVariance(0,20);
+		std::uniform_int_distribution<int>::param_type price(0,20);
 
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_ORE) 
@@ -528,7 +527,7 @@ namespace Application
 		/// TODO -- Internationalization -- /// }End
 
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(100 + (10 * priceVariance1(generator)) )) );
+			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::REPAIR_HULL_COST + (10 * priceVariance(generator)) )) );
 
 		/// TODO -- Read random items from file -- ///
 		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
@@ -536,8 +535,10 @@ namespace Application
 
 		item->setText(">>"+std::string(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0]));
 		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1]);
+		price._Max = Common::Data::Game::PRIMARY_WEAPON_COST[2].second.second;
+		priceVariance.param(price);
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance2(generator)) )) );
+			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::PRIMARY_WEAPON_COST[2].second.first + (10 * priceVariance(generator)) )) );
 
 		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_PRIMARY_WEAPON,
 			std::pair<std::string,std::string>(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1])));
@@ -546,8 +547,10 @@ namespace Application
 			createChild("TaharezLook/ListboxItem","Item2");
 		item->setText(">>"+ std::string(Common::Data::Game::GAME_ENGINES_LIST[2][0]));
 		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, std::string(Common::Data::Game::GAME_ENGINES_LIST[2][1]));
+		price._Max = Common::Data::Game::ENGINE_COST[2].second.second;
+		priceVariance.param(price);
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance3(generator)) )) );
+			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::ENGINE_COST[2].second.first + (10 * priceVariance(generator)) )) );
 
 		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_ENGINE,
 			std::pair<std::string,std::string>(Common::Data::Game::GAME_ENGINES_LIST[2][0],Common::Data::Game::GAME_ENGINES_LIST[2][1])));
@@ -559,8 +562,10 @@ namespace Application
 			createChild("TaharezLook/ListboxItem","Item3");
 		item->setText(">>" + std::string(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]));
 		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1]);
+		price._Max = Common::Data::Game::SECONDARY_WEAPON_COST[2].second.second;
+		priceVariance.param(price);
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(200 + (10 * priceVariance1(generator)) )) );
+			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::SECONDARY_WEAPON_COST[2].second.first + (10 * priceVariance(generator)) )) );
 
 		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SECONDARY_WEAPON,
 			std::pair<std::string,std::string>(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1])));

@@ -56,7 +56,7 @@ namespace Application
 		m_topBarAnimInst(nullptr), m_botBarAnimInst(nullptr), m_insideAnimInst(nullptr), m_windowAnimInst(nullptr), m_inhabitedMenuWindow(nullptr),
 		m_unoccupiedMenuWindow(nullptr), m_fadeAnimInst(nullptr), m_eventPageInAnimInst(nullptr), m_docksPageInAnimInst(nullptr), m_cityPageInAnimInst(nullptr),
 		m_topBarAnimInstInhabited(nullptr), m_botBarAnimInstInhabited(nullptr), m_insideAnimInstInhabited(nullptr),
-		m_fadeAnimInstInhabited(nullptr), m_windowAnimInstInhabited(nullptr)
+		m_fadeAnimInstInhabited(nullptr), m_windowAnimInstInhabited(nullptr), eventFired(false)
 	{
 		m_instance = this;
 
@@ -115,7 +115,8 @@ namespace Application
 		m_menuWindow->setVisible(true);
 		m_menuWindow->activate();
 
-		setupHUD();
+		if(!eventFired)
+			setupHUD();
 
 		CEGUI::System::getSingletonPtr()->getDefaultGUIContext().getMouseCursor().show();
 
@@ -136,7 +137,7 @@ namespace Application
 		//Sound
 		Common::Sound::CSound::getSingletonPtr()->playDelayedSound("introEventSound",400);
 
-
+		eventFired = true;
 	}
 
 	void CEventGUI::deactivate()
@@ -297,15 +298,19 @@ namespace Application
 
 			m_topBarAnimInstInhabited->start();
 			m_botBarAnimInstInhabited->start();
-			m_insideAnimInstInhabited->start();
-			m_windowAnimInstInhabited->start();
+			if(!eventFired){
+				m_insideAnimInstInhabited->start();
+				m_windowAnimInstInhabited->start();
+			}
 
 		}else{
 
 			m_topBarAnimInst->start();
 			m_botBarAnimInst->start();
-			m_insideAnimInst->start();
-			m_windowAnimInst->start();
+			if(!eventFired){
+				m_insideAnimInst->start();
+				m_windowAnimInst->start();
+			}
 
 		}
 	}

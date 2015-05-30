@@ -11,6 +11,7 @@
 #include "../../GUI/GUI.h"
 
 #include "State GUI\PlanetGUI.h"
+#include "State GUI\EventGUI.h"
 
 #include <log.h>
 
@@ -68,6 +69,8 @@ namespace Application
 		Logic::CLogic::getInstance()->activateScene();
 
 		m_guiInstance->activate();
+
+		CEventGUI::getInstance()->reactivateEventGUI();
 
 	}
 

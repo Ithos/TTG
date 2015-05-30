@@ -51,10 +51,14 @@ namespace Application
 		void resetGUI();
 		void finishGame();
 
+		void reactivateEventGUI(){eventFired = false;}
+
 	private:
 
 		CEventGUI(CEventState* state);
 		~CEventGUI();
+
+		bool eventFired;
 
 		static CEventGUI* m_instance;
 		CEventState* m_eventState;

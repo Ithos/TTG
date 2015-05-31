@@ -44,14 +44,23 @@ namespace AI
 	*/
 	CPerceptionEntityEnemy::CPerceptionEntityEnemy(void* userData, IPerceptionListener* listener) : CPerceptionEntity(userData, listener)
 	{
-		// Esta clase sólo tiene un sensor de visión básico (AI::CSightSensor), inicializado
-		// con los siguientes parámetros:
+		// Esta clase tiene un sensor de visión básico (AI::CSightSensor) y una señal
+		// Sensor:
 		// · active = true
 		// · threshold = 1.0
 		// · maxDistance = 200.0
 		// · alpha = PI / 4
 		// Cuidado: estos parámetros son datos y, por lo tanto, deberían declararse en un archivo de configuración externo.
 		this->addSensor(new CSightSensor(this,true,1.0f,200.0f,Common::Util::Math::PI/4.0f));
+
+		// Señal:
+		// · type = PERCEPTION_SIGHT (es decir, que la señal es de visibilidad)
+		// · intensity = 1.0
+		// · delay = 0.0 (instantánea)
+		// · isActive = true
+		// · keepAlive = true (la señal no se destruye después de un ciclo de percepción, sino que sigue activa)
+		// Cuidado: estos parámetros son datos y, por lo tanto, deberían declararse en un archivo de configuración aparte.
+		this->addSignal(new CPerceptionSignal(this,PERCEPTION_SIGHT,1.0f,0.0f,true,true));
 	}
 
 	/*

@@ -81,6 +81,24 @@ namespace AI
 		~CPerceptionEntityPlayer() {};
 	};
 
+
+
+	/*
+	Clase de entidad de percepción que representa a un asteroide
+	Esta clase sólo tiene una señal con los siguientes parámetros:
+	· type = PERCEPTION_SIGHT (es decir, que la señal es de visibilidad)
+	· intensity = 1.0
+	· isActive = true
+	· keepAlive = true (la señal no se destruye después de un ciclo de percepción, sino que sigue activa)
+	Cuidado: estos parámetros son datos y, por lo tanto, deberían declararse en un archivo de configuración aparte.
+	*/
+	class CPerceptionEntityAsteroid : public CPerceptionEntity
+	{
+	public:
+		CPerceptionEntityAsteroid(void* userData, IPerceptionListener* listener);
+		~CPerceptionEntityAsteroid() {};
+	};
+
 }
 
 #endif

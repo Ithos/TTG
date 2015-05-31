@@ -33,9 +33,10 @@ namespace AI
 	*/
 	CPerceptionEntity* CPerceptionEntityFactory::getPerceptionEntity(std::string type, void* userData, IPerceptionListener* listener)
 	{
-		if (type == "enemy")		return new CPerceptionEntityEnemy(userData, listener);
-		else if (type == "player")	return new CPerceptionEntityPlayer(userData, listener);
-		else						return NULL;
+		if		(type == "enemy")		return new CPerceptionEntityEnemy(userData, listener);
+		else if (type == "player")		return new CPerceptionEntityPlayer(userData, listener);
+		else if (type == "asteroid")	return new CPerceptionEntityAsteroid(userData, listener);
+		else							return NULL;
 	}
 
 	/*
@@ -57,6 +58,22 @@ namespace AI
 	Clase de entidad de percepción que representa al jugador
 	*/
 	CPerceptionEntityPlayer::CPerceptionEntityPlayer(void* userData, IPerceptionListener* listener) :
+		CPerceptionEntity(userData, listener)
+	{
+		// Esta clase sólo tiene una señal con los siguientes parámetros:
+		// · type = PERCEPTION_SIGHT (es decir, que la señal es de visibilidad)
+		// · intensity = 1.0
+		// · delay = 0.0 (instantánea)
+		// · isActive = true
+		// · keepAlive = true (la señal no se destruye después de un ciclo de percepción, sino que sigue activa)
+		// Cuidado: estos parámetros son datos y, por lo tanto, deberían declararse en un archivo de configuración aparte.
+		this->addSignal(new CPerceptionSignal(this,PERCEPTION_SIGHT,1.0f,0.0f,true,true));
+	}
+
+	/*
+	Clase de entidad de percepción que representa a un asteroide
+	*/
+	CPerceptionEntityAsteroid::CPerceptionEntityAsteroid(void* userData, IPerceptionListener* listener) :
 		CPerceptionEntity(userData, listener)
 	{
 		// Esta clase sólo tiene una señal con los siguientes parámetros:

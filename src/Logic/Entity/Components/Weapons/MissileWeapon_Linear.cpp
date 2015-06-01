@@ -98,7 +98,7 @@ namespace Logic
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
             if (!m_trigger) {
-                if (m_ammo > 0) {
+                if (m_ammo != 0) {
                     m_trigger = true;
                     m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
                     m_subEntity[m_iMissile]->activate();

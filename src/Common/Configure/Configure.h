@@ -240,6 +240,8 @@ const char* const GEN_MISSILE_LINEAR_TRIGGER_ISTRIGGER = "missile_linear_trigger
 const char* const GEN_MISSILE_LINEAR_DAMAGE            = "missile_linear_damage";
 const char* const GEN_MISSILE_LINEAR_RANGE             = "missile_linear_range";
 const char* const GEN_MISSILE_LINEAR_SPEED             = "missile_linear_speed";
+const char* const GEN_MISSILE_LINEAR_AMMO              = "missile_linear_ammo";
+const char* const GEN_MISSILE_LINEAR_MAXCHARGER        = "missile_linear_maxCharger";
 
 // Camera
 const char* const GEN_CAMERA_NAME				= "camera_name";

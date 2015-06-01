@@ -251,9 +251,9 @@ namespace Common
             m_rt[m_iRt]->setMaterialName("LightRibbonTrail");
             m_rt[m_iRt]->setTrailLength(500);
             m_rt[m_iRt]->setMaxChainElements(500);
-            m_rt[m_iRt]->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
-            m_rt[m_iRt]->setColourChange(0, 1, 1, 1, 0.8);
-            m_rt[m_iRt]->setInitialWidth(0, 6);
+      //      m_rt[m_iRt]->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
+            m_rt[m_iRt]->setColourChange(0, 1, 1, 1, 0.5);
+            m_rt[m_iRt]->setInitialWidth(0, 10);
             m_rt[m_iRt]->setWidthChange(0, 3);
             m_rt[m_iRt]->addNode(m_node1[m_iRt]); // node to move
             m_node2[m_iRt]->attachObject(m_rt[m_iRt]);

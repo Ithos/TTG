@@ -58,17 +58,28 @@ namespace Logic
                 m_subEntity.push_back(ent);
                 static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
             }
-            
+
+            m_maxCharger = atoi(getDefaultValue(GEN_MISSILE_LINEAR_MAXCHARGER).c_str());
+            m_ammo       = atoi(getDefaultValue(GEN_MISSILE_LINEAR_AMMO).c_str());
+
+            if (m_ammo > m_maxCharger)
+                m_ammo = m_maxCharger;
         }
 
         CMissileWeapon_Linear::~CMissileWeapon_Linear()
         {
-            for (unsigned i = 0; i < m_mapInfo.size(); ++i)
+            for (unsigned i = 0; i < m_mapInfo.size(); ++i) {
                 if (m_mapInfo[i]) {
                     Map::CMapEntity* me = m_mapInfo[i];
                     delete me;
                     m_mapInfo[i] = nullptr;
                 }
+            }
+
+            while (!m_subEntity.empty()) {
+                CEntityFactory::getInstance()->deleteEntityEx(m_subEntity[m_subEntity.size()-1]);
+                m_subEntity.pop_back();
+            }
         }
 
         void CMissileWeapon_Linear::tick(unsigned int msecs)
@@ -77,17 +88,30 @@ namespace Logic
                 (*it)->tick(msecs);
         }
 
+        void CMissileWeapon_Linear::reload(int ammount)
+        {
+            m_ammo += ammount;
+            if (m_ammo > m_maxCharger)
+                m_ammo = m_maxCharger;
+        }
+
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
             if (!m_trigger) {
-                m_trigger = true;
-                m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
-                m_subEntity[m_iMissile]->activate();
-                static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
-                if (m_iMissile < MAX_MISSILES-1 )
-                    ++m_iMissile;
-                else
-                    m_iMissile = 0;
+                if (m_ammo > 0) {
+                    m_trigger = true;
+                    m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+                    m_subEntity[m_iMissile]->activate();
+                    static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+                    if (m_iMissile < MAX_MISSILES-1 )
+                        ++m_iMissile;
+                    else
+                        m_iMissile = 0;
+                    --m_ammo;
+                }
+                else {
+                    // sound empty weapon
+                }
             }
         }
 

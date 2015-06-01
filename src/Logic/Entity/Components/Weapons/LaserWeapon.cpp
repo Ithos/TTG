@@ -112,11 +112,11 @@ namespace Logic
                     }
                 } // hit asteroid or enemy
                 else {
-                    m_particles->laserShot(src, dir, m_range);
+                    m_particles->laserShot(src-(dir*10), dir, m_range);
                 }
             }
             else { //no hit
-                m_particles->laserShot(src, dir, m_range);
+                m_particles->laserShot(src-(dir*10), dir, m_range);
             }
 
         } // shoot

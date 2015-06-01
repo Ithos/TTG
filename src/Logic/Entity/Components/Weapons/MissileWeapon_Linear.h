@@ -34,6 +34,8 @@ namespace Logic
 
             void tick(unsigned int msecs);
 
+            void reload(int);
+
         private:
             unsigned  m_iMissile;
             float     m_speed;

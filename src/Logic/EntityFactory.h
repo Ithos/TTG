@@ -70,6 +70,7 @@ namespace Logic
 		void unloadBluePrints();
 		CEntity* createEntity(const Map::CMapEntity *entityInfo, CScene *scene = nullptr);
 		void deleteEntity(CEntity* entity);
+        void deleteEntityEx(CEntity* ent) { delete ent; }
 		void deferredDeleteEntity(CEntity* entity);
 		void deleteDeferredEntities();
 

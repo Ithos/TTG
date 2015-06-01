@@ -48,8 +48,8 @@ namespace Logic
             float    m_cadence;
             unsigned m_range;   // dintance before disappear
             float    m_speed;
-            int      m_bullets; // current bullets in changers
-            int      m_charger; // max capacity
+            int      m_ammo; // current bullets in changers
+            int      m_maxCharger; // max capacity
             Vector3  m_position;
             bool     m_trigger;
 

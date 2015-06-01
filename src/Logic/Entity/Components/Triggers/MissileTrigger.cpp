@@ -89,28 +89,20 @@ namespace Logic
                 delete m_bb;
 
             m_bb = m_set->createBillboard(pos);
-            
-      /*      m_rt = static_cast<Ogre::RibbonTrail*>(scene->getSceneManager()->createMovableObject("testribbon", "RibbonTrail"));
-            m_rt->setMaterialName("LightRibbonTrail");
-            m_rt->setTrailLength(80);
-            m_rt->setMaxChainElements(500);
-            m_rt->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
-            m_rt->setColourChange(0, 1, 1, 1, 0.8);
-            m_rt->setInitialWidth(0, 6);
-            m_rt->setWidthChange(0, 3);
-            m_rt->addNode(node);
-            m_node->attachObject(m_rt);*/
-
             return true;
         }
 
         CMissileTrigger::~CMissileTrigger()
         {
-            m_node->detachAllObjects();
-            m_sceneMgr->destroySceneNode(m_node);
-            m_sceneMgr->destroyBillboardSet(m_set);
-            m_sceneMgr = nullptr;
-            m_parent   = nullptr;
+            if (m_node) {
+                m_node->detachAllObjects();
+                if (m_set) {
+                    m_sceneMgr->destroyBillboardSet(m_set);
+                    m_set = nullptr;
+                }
+                m_sceneMgr = nullptr;
+                m_parent   = nullptr;
+            }
         }
 
         void CMissileTrigger::tick(unsigned int msecs)
@@ -148,7 +140,7 @@ namespace Logic
                 int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
-                    *life = (*life <= m_damage)? 0 : *life - m_damage;
+                    *life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);
                         
                     if (*life  <= 0) {
                         hitEnt->deactivate();
@@ -158,14 +150,18 @@ namespace Logic
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                     }
                 }
-                delete m_bb;
-                m_bb =  nullptr;
+                if (m_bb) {
+                    delete m_bb;
+                    m_bb =  nullptr;
+                }
             }
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;
                 //m_entity->deactivate();
-                delete m_bb;
-                m_bb =  nullptr;
+                if (m_bb) {
+                    delete m_bb;
+                    m_bb =  nullptr;
+                }
             }
         }
 
@@ -184,6 +180,7 @@ namespace Logic
 		{
 			if (!IComponent::activate()) return false;
             if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
+            return true;
 		}
     }
 }

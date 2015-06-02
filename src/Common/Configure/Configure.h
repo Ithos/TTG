@@ -35,11 +35,9 @@ const char* const CONF_GENERATOR_PATH = "conf_generator_path";
 const char* const CONF_CONSOLE_PATH = "conf_console_path";
 
 // Console
-
 const char* const CON_UI = "console_ui";
 
 /// ----------------- GALAXY --------------------------///
-
 // System
 const char* const GEN_SYSTEM_MINGEN = "system_mingen";
 const char* const GEN_SYSTEM_MAXGEN = "system_maxgen";
@@ -54,7 +52,6 @@ const char* const GEN_SYSTEM_MASK = "system_mask";
 const char* const GEN_SYSTEM_GLOW = "system_glow";
 const char* const GEN_SYSTEM_GLOW_SCALE = "system_glow_scale";
 const char* const GEN_SYSTEM_MODEL = "system_model";
-
 
 // Galaxy SkyDome
 const char* const GEN_GAL_SKYDOME_NAME = "gl_skydome_name";
@@ -120,7 +117,6 @@ const char* const GEN_SYS_AMBIENT_TYPE = "sysambient_type";
 const char* const GEN_SYS_AMBIENT_COLOUR = "sysambient_colour";
 
 // Static Camera
-
 const char* const GEN_SYS_STATIC_CAMERA_ENTIYNAME   = "sys_static_camera_entityname";
 const char* const GEN_SYS_STATIC_CAMERA_ENTIYTYPE   = "sys_static_camera_entitytype";
 const char* const GEN_SYS_STATIC_CAMERA_NAME        = "sys_static_camera_name";
@@ -132,7 +128,6 @@ const char* const GEN_SYS_STATIC_CAMERA_ORIENTATION = "sys_static_camera_orienta
 const char* const GEN_SYS_STATIC_CAMERA_LOOKAT      = "sys_static_camera_lookat";
 
 //Texture Camera
-
 const char* const GEN_SYS_TEXTURE_CAMERA_ENTITYNAME	= "sys_texture_camera_entityname";
 const char* const GEN_SYS_TEXTURE_CAMERA_ENTITYTYPE	= "sys_texture_camera_entitytype";
 const char* const GEN_SYS_TEXTURE_CAMERA_NAME		= "sys_texture_camera_name";
@@ -195,6 +190,8 @@ const char* const GEN_PLAYER_LIFE              = "player_life";
 const char* const GEN_PLAYER_SHIELD            = "player_shield";
 const char* const GEN_PLAYER_SHIELD_RESISTANCE = "player_shield_resistance";
 const char* const GEN_PLAYER_SCALE			   = "player_graphic_scale";
+const char* const GEN_PLAYER_PRIM_WEAPON       = "player_primary_weapon";
+const char* const GEN_PLAYER_SEC_WEAPON        = "player_secondary_weapon";
 
 // Enemy
 const char* const GEN_ENEMY_NAME			  = "enemy_name";

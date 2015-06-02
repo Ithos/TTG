@@ -56,6 +56,8 @@ namespace Common
             const char* const COMMON_LIFE           = "life";
             const char* const COMMON_SHIELD_RESIS   = "shield_resistance";
             const char* const COMMON_SHIELD         = "shield";
+            const char* const COMMON_PRIMARY_WEAPON = "primary";
+            const char* const COMMON_SECONDARY_WEAPON = "secondary";
 			//AI
 			const char* const AI_TOLERANCE			= "tolerance";
 			const char* const AI_BEHAVIOR			= "behavior";

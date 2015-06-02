@@ -733,6 +733,8 @@ namespace Map
         entityInProgress->setAttribute(COMMON_LIFE,           getDefaultValue(GEN_PLAYER_LIFE));
 		entityInProgress->setAttribute(COMMON_SHIELD,         getDefaultValue(GEN_PLAYER_SHIELD));
         entityInProgress->setAttribute(COMMON_SHIELD_RESIS,   getDefaultValue(GEN_PLAYER_SHIELD_RESISTANCE));
+        entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, getDefaultValue(GEN_PLAYER_PRIM_WEAPON));
+        entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, getDefaultValue(GEN_PLAYER_SEC_WEAPON));
 
         // Weapons
         entityInProgress->setAttribute(LASER_DAMAGE, getDefaultValue(GEN_LASER_DAMAGE));

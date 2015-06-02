@@ -53,8 +53,11 @@ namespace Logic
             m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
             m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
 
-            m_primary   = 0;
-            m_secondary = 1;
+            if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
+                m_primary = getWeapon(entityInfo->getStringAttribute(COMMON_PRIMARY_WEAPON));
+
+            if (entityInfo->hasAttribute(COMMON_SECONDARY_WEAPON))
+                m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON));
 
             return true;
         }
@@ -103,6 +106,16 @@ namespace Logic
             case MISSILE_LINEAR:
                 static_cast<CMissileWeapon_Linear*>(m_weapons[weapon])->releaseTrigger(); break;
             }
+        }
+
+        unsigned CWeapons::getWeapon(const std::string& weapon)
+        {
+            if (weapon == "laser")
+                return 0;
+            else if (weapon == "missile_linear")
+                return 1;
+            else
+                return 0;
         }
     }
 }

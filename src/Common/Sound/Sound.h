@@ -62,7 +62,7 @@ namespace Common
 			bool addSound(const std::string& fileName, const std::string& soundName);
 
 			/**
-			Adds a log duration tune to be played as a stream
+			Adds a long duration tune to be played as a stream
 			*/
 			bool addMusic(const std::string& fileName, const std::string& musicName, bool loop = false);
 
@@ -208,6 +208,16 @@ namespace Common
 			Releases the chosen bank and erases it from the map
 			*/
 			void releaseBank(const std::string& bankName);
+
+			/**
+			Returns true if the chosen sound is being played
+			*/
+			bool isPlaying(const std::string& soundName){return (m_channels.find(soundName) != m_channels.end());}
+
+			/**
+			Returns true if the chosen music is in the map
+			*/
+			bool hasMusic(const std::string& soundName){return (m_music.find(soundName) != m_music.end());}
 
 		protected:
 			CSound();

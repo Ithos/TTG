@@ -32,6 +32,8 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->addSound("Intro1.wav","introSound");
 		Common::Sound::CSound::getSingletonPtr()->addSound("IntroMenu.wav","introMenu");
 
+		Common::Sound::CSound::getSingletonPtr()->addMusic("TTG_Planetas.wav","MenuMusic",true);
+
 		return true;
 
 	}
@@ -45,6 +47,8 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->releaseSound("rotateButtonHover");
 		Common::Sound::CSound::getSingletonPtr()->releaseSound("introSound");
 		Common::Sound::CSound::getSingletonPtr()->releaseSound("introMenu");
+
+		Common::Sound::CSound::getSingletonPtr()->releaseMusic("MenuMusic");
 
 		CApplicationState::release();
 
@@ -65,6 +69,8 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->playDelayedSound("introMenu",m_delay2);
 		if(m_delay1!=1200)m_delay1=1200;
 		if(m_delay2!=2300)m_delay2=2300;
+		if(Common::Sound::CSound::getSingletonPtr()->isPlaying("MenuMusic"))
+			Common::Sound::CSound::getSingletonPtr()->stopMusic("MenuMusic");
 	}
 
 	void CMenuState::deactivate() 
@@ -132,6 +138,7 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->playSound("startButtonSound");
 
 		if(static_cast<const CEGUI::MouseEventArgs&>(e).button == CEGUI::LeftButton){
+			Common::Sound::CSound::getSingletonPtr()->playMusic("MenuMusic");
 			m_app->setState("galaxy");
 		}
 		return true;

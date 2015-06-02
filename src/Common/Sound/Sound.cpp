@@ -197,7 +197,7 @@ namespace Common
 			if(ERRCHECK(result))
 				return false;
 
-			m_sounds[musicName] = music;
+			m_music[musicName] = music;
 
 			return true;
 		}

@@ -4,6 +4,8 @@
 #include "../../Logic/EntityFactory.h"
 #include "../../Logic/Scene/Scene.h"
 
+#include "../../Common/Sound/Sound.h"
+
 #include "../3DApplication.h"
 #include "../Manager/GameManager.h"
 #include "../../Common/Data/Game_Constants.h"
@@ -44,12 +46,23 @@ namespace Application
 
 		m_guiInstance = CPlanetGUI::getInstance();
 
+		//Music
+		Common::Sound::CSound::getSingletonPtr()->addMusic("TTG_exploracion.wav","PlanetMusic",true);
+
+		Common::Sound::CSound::getSingletonPtr()->pauseResumeMusic("MenuMusic");
+		Common::Sound::CSound::getSingletonPtr()->playMusic("PlanetMusic");
+
 		return true;
 	}//init
 
 	void CPlanetState::release() 
 	{
 		log_trace(LOG_CPLANETSTATE,"Release\n");
+
+		Common::Sound::CSound::getSingletonPtr()->releaseMusic("PlanetMusic");
+
+		if(Common::Sound::CSound::getSingletonPtr()->hasMusic("MenuMusic"))
+			Common::Sound::CSound::getSingletonPtr()->pauseResumeMusic("MenuMusic");
 
 		CPlanetGUI::release();
 

@@ -639,7 +639,7 @@ namespace Application
 				m_mgrInstance->increaseLife(gain);
 				if(gain > lifeLeft) gain = lifeLeft;
 				/// TODO -- Internationalization -- /// Begin{
-				if(gain = 0)
+				if(gain != 0)
 				{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 					new CEGUI::ListboxTextItem(std::string("You found a place to repair your ship.\n" + std::to_string(gain) + "% of the hull repaired.") ));

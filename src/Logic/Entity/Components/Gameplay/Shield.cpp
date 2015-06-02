@@ -51,14 +51,15 @@ namespace Logic
             else {
                 m_player = false;
                 m_value = new unsigned int();
-            }
+            
 
-            // get by config resistance value
-            if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD)) 
-                *m_value = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD);
+				// get by config resistance value
+				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD)) 
+					*m_value = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD);
 
-            if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS))
-                m_resistance = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS);
+				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS))
+					m_resistance = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS);
+			}
 
             Map::CMapEntity eInfo("Shield");
 

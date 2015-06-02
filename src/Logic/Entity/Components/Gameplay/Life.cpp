@@ -53,21 +53,21 @@ namespace Logic
             else {
                 m_player = false;
                 m_life   = new int();
-            }
+			
+				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_LIFE)) {
 
-            if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_LIFE) /*&& !entity->isPlayer()*/) {
+					*m_life = (unsigned) entityInfo->getIntAttribute(Common::Data::Spawn::COMMON_LIFE);
 
-                *m_life = (unsigned) entityInfo->getIntAttribute(Common::Data::Spawn::COMMON_LIFE);
-
-                if (entity->getType() == "Asteroid") {
-                    // smaller size, less life
-                    float scale = static_cast<CGraphics*>(entity->getComponentByName(Common::Data::GRAPHICS_COMP))->getScale();
-                    if (scale == 10)
-                        (*m_life) /= 3;
-                    else if (scale == 20)
-                        *m_life /= 2;
-                }
-            }
+					if (entity->getType() == "Asteroid") {
+						// smaller size, less life
+						float scale = static_cast<CGraphics*>(entity->getComponentByName(Common::Data::GRAPHICS_COMP))->getScale();
+						if (scale == 10)
+							(*m_life) /= 3;
+						else if (scale == 20)
+							*m_life /= 2;
+					}
+				}
+			}
             
             return true;
         }

@@ -89,7 +89,7 @@ namespace Application
 		void decreaseTotalLife(unsigned int num);
 
 		unsigned int getShield() { return m_shield; }
-        unsigned* getShieldREF() { return &m_shield; }
+        unsigned* getShieldREF() { m_tmpShield = m_shield;return &m_tmpShield; }
 		void increaseShield(unsigned int num);
 		void decreaseShield(unsigned int num);
 		unsigned int getShieldState(){return m_tmpShield;}

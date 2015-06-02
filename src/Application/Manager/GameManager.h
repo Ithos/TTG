@@ -89,19 +89,27 @@ namespace Application
 		void decreaseTotalLife(unsigned int num);
 
 		unsigned int getShield() { return m_shield; }
-        unsigned* getShieldREF() { m_tmpShield = m_shield;return &m_tmpShield; }
+        unsigned* getShieldREF() { return &m_tmpShield; }
+		void resetSceneShield() {m_tmpShield = m_shield;}
 		void increaseShield(unsigned int num);
 		void decreaseShield(unsigned int num);
 		unsigned int getShieldState(){return m_tmpShield;}
 		void decreaseShieldState(unsigned int num) { m_tmpShield = (num > m_tmpShield) ? 0 : m_tmpShield - num; }
 		void increaseShieldState(unsigned int num) { m_tmpShield += num;  if ( m_tmpShield > m_shield)  m_tmpShield = m_shield; }
+		unsigned int getShieldRegen() {return m_shieldRegen;}
+		void increaseShieldRegen(unsigned int num) {(m_shieldRegen<=30-num)?m_energyRegen+=num:m_energyRegen;}
+		void decreaseShieldRegen(unsigned int num) {(m_shieldRegen>=6+num)?m_energyRegen-=num:m_energyRegen;}
 
 		unsigned int getEnergy(){return m_energy;}
+		void resetSceneEnergy() {m_tmpEnergy = m_energy;}
 		void increaseEnergy(unsigned int num);
 		void decreaseEnergy(unsigned int num);
 		unsigned int getEnergyState(){return m_tmpEnergy;}
 		void decreaseEnergyState(unsigned int num){num>m_tmpEnergy ? m_tmpEnergy : m_tmpEnergy -= num;}
 		void increaseEnergyState(unsigned int num){m_tmpEnergy += num; m_tmpEnergy>m_energy ? m_tmpEnergy=m_energy : m_tmpEnergy;}
+		unsigned int getEnergyRegen() {return m_energyRegen;}
+		void increaseEnergyRegen(unsigned int num) {(m_energyRegen<=30-num)?m_energyRegen+=num:m_energyRegen;}
+		void decreaseEnergyRegen(unsigned int num) {(m_energyRegen>=6+num)?m_energyRegen-=num:m_energyRegen;}
 
 		void addEngineData(const std::string& name, int maxDist, int cons);
 
@@ -167,8 +175,10 @@ namespace Application
         unsigned m_totalLife; // ??
         unsigned m_shield;
         unsigned m_tmpShield;
+		unsigned int m_shieldRegen;
         unsigned m_energy;
         unsigned m_tmpEnergy;
+		unsigned int m_energyRegen;
         unsigned m_objectives;
         unsigned m_totalObjectives;
         unsigned m_nameRepeatCounter;

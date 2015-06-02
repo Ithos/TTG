@@ -46,6 +46,9 @@ namespace Application
 
 		m_guiInstance = CPlanetGUI::getInstance();
 
+		m_mgrInstance->resetSceneShield();
+		m_mgrInstance->resetSceneEnergy();
+
 		//Music
 		Common::Sound::CSound::getSingletonPtr()->addMusic("TTG_exploracion.wav","PlanetMusic",true);
 
@@ -103,6 +106,14 @@ namespace Application
 		CApplicationState::tick(msecs);
 
 		Logic::CLogic::getInstance()->tick(msecs);
+
+		if(m_time < 0.5)
+			m_time+=msecs/100.0f;
+		else{
+			m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
+			m_mgrInstance->increaseShieldState(m_mgrInstance->getShieldRegen() * m_time);
+			m_time = 0;
+		}
 
 		m_guiInstance->tick(msecs);
 	}

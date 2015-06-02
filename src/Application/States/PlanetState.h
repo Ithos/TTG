@@ -53,7 +53,7 @@ namespace Application
 							Ogre::Root* root,
 							CEGUI::System* sys,
 							Ogre::RenderWindow* render) : CApplicationState(app, type,root,render), m_mgrInstance(nullptr),
-							m_guiInstance(nullptr), m_ceguiSystem(sys)
+							m_guiInstance(nullptr), m_ceguiSystem(sys), m_time(0.0f)
 				{}
 		virtual ~CPlanetState() {}
 
@@ -79,6 +79,7 @@ namespace Application
 		CGameManager* m_mgrInstance;
 		CEGUI::System* m_ceguiSystem;
 		CPlanetGUI* m_guiInstance;
+		float m_time;
 	};
 
 }

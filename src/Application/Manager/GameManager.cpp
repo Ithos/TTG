@@ -54,9 +54,13 @@ namespace Application
 	const int SHIELD_INCREMENT = 5;
 	const int ENERGY_INCREMENT = 5;
 
+	const int BASE_SHIELD_REGEN = 0;
+	const int BASE_ENERGY_REGEN = 10;
+
 	CGameManager::CGameManager():m_system(""), m_planet(""),m_totalLife(BASE_LIFE),m_life(BASE_LIFE),m_shield(BASE_SHIELD),
 		m_objectives(0),m_totalObjectives(NUM_TARGETS),m_tmpShield(BASE_SHIELD),m_energy(BASE_ENERGY),m_tmpEnergy(BASE_ENERGY),m_menuWindow(nullptr),
-		m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr)
+		m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr),
+		m_shieldRegen(BASE_SHIELD_REGEN), m_energyRegen(BASE_ENERGY_REGEN)
 	{
 		m_instance = this;
 		m_activeMission.first = 0;

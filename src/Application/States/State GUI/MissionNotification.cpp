@@ -21,6 +21,7 @@
 #include "../../../Common/Sound/Sound.h"
 #include "../../Manager/MissionManager.h"
 #include "../../Manager/GameManager.h"
+#include "EventGUI.h"
 
 #include <log.h>
 
@@ -37,7 +38,8 @@ namespace Application
 	const char* const LOG_CMISSIONNOTE = "Application::CMissionNotification";
 	CMissionNotification* CMissionNotification::m_instance = nullptr;
 
-	CMissionNotification::CMissionNotification(): m_menuWindow(nullptr),m_blendIn(nullptr),m_fadeOut(nullptr),m_missionManager(nullptr) 
+	CMissionNotification::CMissionNotification(): m_menuWindow(nullptr),m_blendIn(nullptr),m_fadeOut(nullptr),m_missionManager(nullptr),
+												m_gameEnded(false)
 	{
 		m_instance = this;
 
@@ -148,6 +150,8 @@ namespace Application
 	{
 		m_fadeOut->start();
 		Common::Sound::CSound::getSingletonPtr()->playSound("noteBackButton");
+		if(m_gameEnded)
+			CEventGUI::getInstance()->finishGame();
 		return true;
 	}
 }

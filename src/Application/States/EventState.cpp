@@ -82,9 +82,6 @@ namespace Application
 		case Common::Input::Key::ESCAPE:
 			m_app->setState("pause");
 			break;
-		case Common::Input::Key::RETURN:
-			m_app->popState();
-			break;
 		default:
 			return false;
 		}

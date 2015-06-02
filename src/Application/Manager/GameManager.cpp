@@ -36,7 +36,7 @@
 #include "../../Common/Sound/Sound.h"
 #include "../../Common/Data/Game_Constants.h"
 #include "../States/State GUI/PlanetGUI.h"
-#include "../States/State GUI/EventGUI.h"
+#include "../States/State GUI/MissionNotification.h"
 #include "../States/State GUI/GeneralNotification.h"
 
 
@@ -646,7 +646,7 @@ namespace Application
 		m_objectives++;
 
 		if(m_objectives >= m_totalObjectives)
-			CEventGUI::getInstance()->finishGame();
+			CMissionNotification::getInstance()->gameEnded();
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(3)->setText(
 			"=== " + std::string(Common::Data::Game::GAME_MISSION_TEXT) + std::to_string(m_objectives) + "/" + std::to_string(m_totalObjectives) + " ==="
@@ -711,6 +711,7 @@ namespace Application
 
 	void CGameManager::resetGame()
 	{
+		CMissionNotification::getInstance()->resetGame();
 		m_stateMap.clear();
 		m_equipmentMap.clear();
 		m_crewMembersMap.clear();

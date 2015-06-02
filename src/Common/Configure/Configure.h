@@ -194,6 +194,7 @@ const char* const GEN_PLAYER_MAX_SPEED         = "player_maxSpeed";
 const char* const GEN_PLAYER_LIFE              = "player_life";
 const char* const GEN_PLAYER_SHIELD            = "player_shield";
 const char* const GEN_PLAYER_SHIELD_RESISTANCE = "player_shield_resistance";
+const char* const GEN_PLAYER_SCALE			   = "player_graphic_scale";
 
 // Enemy
 const char* const GEN_ENEMY_NAME			  = "enemy_name";

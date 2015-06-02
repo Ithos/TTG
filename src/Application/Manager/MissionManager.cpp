@@ -446,9 +446,9 @@ namespace Application
 				CGameManager::getInstance()->setMission(
 					1,
 					"Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_targetSystem]) + 
-					". Land on Planet" + std::string(Common::Data::Game::GAME_PLANETS_NAMES[m_targetSystem][m_targetPlanet]) + ".",
+					". Land on Planet" + std::string(Common::Data::Game::GAME_PLANETS_NAMES[m_targetSystem][m_planetsPos[m_targetPlanet]-1]) + ".",
 					"Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_targetSystem]) + 
-					".\nLand on Planet" + std::string(Common::Data::Game::GAME_PLANETS_NAMES[m_targetSystem][m_targetPlanet]) + ".");
+					".\nLand on Planet" + std::string(Common::Data::Game::GAME_PLANETS_NAMES[m_targetSystem][m_planetsPos[m_targetPlanet]-1]) + ".");
 				/// TODO -- Internationalization -- /// }End
 			}
 		}

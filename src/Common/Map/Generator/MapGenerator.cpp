@@ -713,6 +713,7 @@ namespace Map
 		entityInProgress->setAttribute(COMMON_SPEED, getDefaultValue(GEN_PLAYER_SPEED));
 		entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_PLAYER_ROTATION_SPEED));
 		entityInProgress->setAttribute(GRAPHIC_MODEL,  getDefaultValue(GEN_PLAYER_MODEL));
+		entityInProgress->setAttribute(GRAPHIC_SCALE, getDefaultValue(GEN_PLAYER_SCALE));
 		/*
 		entityInProgress->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_PLAYER_PHYSX_SHAPE));
 		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_PLAYER_PHYSX_RADIUS));

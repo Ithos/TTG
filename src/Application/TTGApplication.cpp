@@ -82,7 +82,7 @@ namespace Application
 		if(!addState("game_over", new CGameOverState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
 			return false;
 
-		if(!addState("game_finished", new CGameFinishedState(this,Common::Data::TMP_STATE,m_root,m_renderWindow)))
+		if(!addState("game_finished", new CGameFinishedState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
 			return false;
 
 		return true;

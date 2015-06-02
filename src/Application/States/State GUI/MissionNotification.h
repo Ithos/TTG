@@ -47,9 +47,13 @@ namespace Application
 
 		void showNote(bool mainMission=false);
 
+		void gameEnded(){m_gameEnded = true;}
+		void resetGame(){m_gameEnded = false;}
 	private:
 		CMissionNotification();
 		~CMissionNotification();
+
+		bool m_gameEnded;
 
 		static CMissionNotification* m_instance;
 		CEGUI::Window* m_menuWindow;

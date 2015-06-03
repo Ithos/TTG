@@ -19,6 +19,7 @@
 #include <array>
 #include <map>
 #include <string>
+#include <tuple>
 
 
 namespace Common
@@ -459,6 +460,13 @@ namespace Common
 				std::make_pair (GAME_PULSE_ENGINE[0],std::make_pair (35, 140)), // distance, cost
 				std::make_pair (GAME_TEST_ENGINE[0],std::make_pair (50, 200)),
 				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (85, 105))
+			};
+
+			const std::tuple<std::string, float, float, float> ENGINE_VEL_DATA[] = 
+			{
+				std::make_tuple(GAME_PULSE_ENGINE[0], 1.0,1.0,1.0),//max speed, acceleration, rotation speed
+				std::make_tuple(GAME_TEST_ENGINE[0], 1.0,1.5,1.25),
+				std::make_tuple(GAME_PLASMA_ENGINE[0], 2.0,1.5,1.5)
 			};
 
 			const int TOTAL_ENGINES = 3;

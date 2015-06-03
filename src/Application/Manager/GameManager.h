@@ -116,6 +116,7 @@ namespace Application
 		typedef std::pair<int,int> TEquippedEngineData;
 		int getEqEngineDist(){return m_eqEngineDat.first;};
 		int getEqEngineCons(){return m_eqEngineDat.second;};
+		const std::string& getEqEngine() {return m_eqEngine;};
 
 		void objectiveAquired();
 		unsigned int getObjectivesAquired() {return m_objectives;};
@@ -168,6 +169,7 @@ namespace Application
 		TEngineData m_engineDataMap;
 		
 		TEquippedEngineData m_eqEngineDat;
+		std::string m_eqEngine;
 
 		void changeEquippedEngine(const std::string& name);
 

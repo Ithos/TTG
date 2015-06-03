@@ -36,7 +36,8 @@ namespace Logic
                 : IComponent(), m_iniPos(.0f, .0f, .0f), m_endPos(.0f, .0f, .0f), m_lastTime(.0f),
                 m_pitch(0.0), m_yaw(0.0), m_roll(0.0), m_speed(.0f), m_trans(nullptr), m_maxSpeed(0.0f),
                 m_desaceleration(0.0), m_friction(0.0), m_rotSpeed(0.0), m_aceleration(0.0), m_nextPos(0.0, 0.0, 0.0),
-				m_iniRot(0.0, 0.0, 0.0), m_nextRot(.0f, .0f, .0f), m_maxRoll(0.0), m_rollSpeed(0.0), m_endTf(Matrix4()), m_onContact(false)
+				m_iniRot(0.0, 0.0, 0.0), m_nextRot(.0f, .0f, .0f), m_maxRoll(0.0), m_rollSpeed(0.0), m_endTf(Matrix4()), m_onContact(false),
+				m_enginePos(0)
             { }
 
             ~CMovement() {}
@@ -92,6 +93,8 @@ namespace Logic
             float       m_aceleration;
             float       m_maxSpeed;
             CTransform* m_trans;
+
+			int			m_enginePos;
 	    };
 
 	    REG_FACTORY(CMovement);

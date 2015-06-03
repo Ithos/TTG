@@ -26,7 +26,9 @@
 
 #include <Common\data\TTG_Types.h>
 #include <Common/Data/Spawn_Constants.h>
+#include <Common/Data/Game_Constants.h>
 #include <Common/Map/MapEntity.h>
+#include <Application/Manager/GameManager.h>
 
 using namespace Common::Data;
 
@@ -48,11 +50,20 @@ namespace Logic
             if (!m_trans)
                 log_error(LOG_MOV, "Error getting Transform, m_trans is null");
 
-            if (entityInfo->hasAttribute(COMMON_SPEED))
-                m_aceleration = entityInfo->getFloatAttribute(COMMON_SPEED);
+			for(unsigned int i = 0; i < Common::Data::Game::TOTAL_ENGINES; ++i){
+				if(Application::CGameManager::getInstance()->getEqEngine() == Common::Data::Game::GAME_ENGINES_LIST[i][0])
+					m_enginePos = i;
+			}
 
-            if (entityInfo->hasAttribute(COMMON_ROTATION_SPEED))
+            if (entityInfo->hasAttribute(COMMON_SPEED)){
+                m_aceleration = entityInfo->getFloatAttribute(COMMON_SPEED);
+				m_aceleration *= std::get<2>(Common::Data::Game::ENGINE_VEL_DATA[m_enginePos]);
+			}
+
+            if (entityInfo->hasAttribute(COMMON_ROTATION_SPEED)){
                 m_rotSpeed = entityInfo->getFloatAttribute(COMMON_ROTATION_SPEED);
+				m_rotSpeed *= std::get<3>(Common::Data::Game::ENGINE_VEL_DATA[m_enginePos]);
+			}
 
             if (entityInfo->hasAttribute(COMMON_MAXROLL))
                 m_maxRoll = entityInfo->getFloatAttribute(COMMON_MAXROLL);
@@ -63,11 +74,15 @@ namespace Logic
             if (entityInfo->hasAttribute(COMMON_FRICTION))
                 m_friction = entityInfo->getFloatAttribute(COMMON_FRICTION);
 
-            if (entityInfo->hasAttribute(COMMON_DESACELERATION))
+            if (entityInfo->hasAttribute(COMMON_DESACELERATION)){
                 m_desaceleration = entityInfo->getFloatAttribute(COMMON_DESACELERATION);
+				m_desaceleration *= std::get<2>(Common::Data::Game::ENGINE_VEL_DATA[m_enginePos]);
+			}
 
-            if (entityInfo->hasAttribute(COMMON_MAX_SPEED))
+            if (entityInfo->hasAttribute(COMMON_MAX_SPEED)){
                 m_maxSpeed = entityInfo->getFloatAttribute(COMMON_MAX_SPEED);
+				m_maxSpeed *= std::get<1>(Common::Data::Game::ENGINE_VEL_DATA[m_enginePos]);
+			}
 
             return true;
         }

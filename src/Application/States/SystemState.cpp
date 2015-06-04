@@ -286,7 +286,7 @@ namespace Application
 						else
 							CGameManager::getInstance()->setInhabitedPlanet(false);
 
-						CGameManager::getInstance()->setPlanet(str.substr(2,5));
+						CGameManager::getInstance()->setPlanet(str.substr(2,6));
 						Logic::CLogic::getInstance()->getScene()->getSceneManager()->getCamera("texture_camera")->detachFromParent();
 						m_CurrentPlanet->attachObject(Logic::CLogic::getInstance()->getScene()->getSceneManager()->getCamera("texture_camera"));
 						Logic::CLogic::getInstance()->getScene()->getSceneManager()->getCamera("texture_camera")->setAutoTracking(true,m_CurrentPlanet);
@@ -295,9 +295,41 @@ namespace Application
 							);
 						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetWindow/PlanetBoard"))->resetList();
 						std::string tmpstr(str.substr(6,1));
+						std::string additionalInfo("");
+						if(CGameManager::getInstance()->getSensorLevel() > 0){
+							std::string risk = str.substr(7,1);
+							if( risk == "0"){
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_NO_RISK);
+							}else if (risk == "1"){
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_LOW_RISK);
+							}else if (risk == "2"){
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_MEDIUM_RISK);
+							}else if (risk == "3"){
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_HIGH_RISK);
+							}else if (risk == "4"){
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_VERY_HIGH_RISK);
+							}
+
+							additionalInfo += "  ";
+
+						}
+						if(CGameManager::getInstance()->getSensorLevel() > 1){
+							if(CGameManager::getInstance()->isInhabitedPlanet())
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_INHABITED);
+							else
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_UNNOCUPIED);
+
+							additionalInfo += "  ";
+						}
+						if(CGameManager::getInstance()->getSensorLevel() > 2){
+							if(CGameManager::getInstance()->isTargetPlanet()){
+								additionalInfo += std::string(Common::Data::Game::GAME_PLANET_SIGNAL);
+								additionalInfo += "  ";
+							}
+						}
 						static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetWindow/PlanetBoard"))->addItem(new CEGUI::ListboxTextItem(
 							Common::Data::Game::GAME_PLANETS_NAMES[std::atoi(CGameManager::getInstance()->getSystem().c_str())][std::atoi(str.substr(6,1).c_str())]
-							+ std::string("\n") + str.substr(7)
+						+ std::string("\n") + additionalInfo + std::string("\n") + str.substr(8)
 							));
 						m_menuWindow->getChild("PlanetWindow/PlanetButton")->enable();
 						Common::Sound::CSound::getSingletonPtr()->playSound("planetSlected");

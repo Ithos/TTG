@@ -199,7 +199,7 @@ namespace Application
 
 			m_tmpTargetSystem = std::atoi(CGameManager::getInstance()->getSystem().c_str());
 			std::string str(CGameManager::getInstance()->getPlanet());
-			m_tmpPlanet = std::atoi(str.substr(str.length()-1,1).c_str());
+			m_tmpPlanet = std::atoi(str.substr(str.length()-2,1).c_str());
 
 			/// TODO -- Internationalization -- /// Begin{
 			m_tmpMission.second.first = "Visit an inhabited planet in another system.";
@@ -231,7 +231,7 @@ namespace Application
 		}else if(m_tmpMission.first == 4){
 			m_tmpTargetSystem = std::atoi(CGameManager::getInstance()->getSystem().c_str());
 			std::string str(CGameManager::getInstance()->getPlanet());
-			m_tmpPlanet = std::atoi(str.substr(str.length()-1,1).c_str());
+			m_tmpPlanet = std::atoi(str.substr(str.length()-2,1).c_str());
 
 			/// TODO -- Choose a random item -- ///
 			/// TODO -- Internationalization -- /// Begin{
@@ -268,7 +268,7 @@ namespace Application
 		}else if(m_tmpMission.first == 5){
 			m_tmpTargetSystem = std::atoi(CGameManager::getInstance()->getSystem().c_str());
 			std::string str(CGameManager::getInstance()->getPlanet());
-			m_tmpPlanet = std::atoi(str.substr(str.length()-1,1).c_str());
+			m_tmpPlanet = std::atoi(str.substr(str.length()-2,1).c_str());
 
 			std::uniform_int_distribution<int> quant(10,50);
 			m_tmpTotalTargets = quant(generator) * 10;
@@ -461,7 +461,7 @@ namespace Application
 		if(m_missionType == 1 && m_targetPlanet != -1 && CGameManager::getInstance()->getSystem() == std::to_string(m_targetSystem))
 		{
 			std::string str(CGameManager::getInstance()->getPlanet());
-			str = str.substr(str.length()-1,1);
+			str = str.substr(str.length()-2,1);
 			std::string tmp(std::to_string(m_planetsPos[m_targetPlanet]-1));
 			if( str == tmp ){
 				getReward();
@@ -478,14 +478,14 @@ namespace Application
 			abandonMission();
 		}else if(m_missionType == 4 && m_targetSystem == std::atoi(CGameManager::getInstance()->getSystem().c_str())){
 			std::string str(CGameManager::getInstance()->getPlanet());
-			str = str.substr(str.length()-1,1);
+			str = str.substr(str.length()-2,1);
 			if(m_targetPlanet == std::atoi(str.c_str()) && CGameManager::getInstance()->removeFromCargo(m_desiredItem)){
 				getReward();
 				abandonMission();
 			}
 		}else if(m_missionType == 5 && m_targetSystem == std::atoi(CGameManager::getInstance()->getSystem().c_str())){
 			std::string str(CGameManager::getInstance()->getPlanet());
-			str = str.substr(str.length()-1,1);
+			str = str.substr(str.length()-2,1);
 			if(m_targetPlanet == std::atoi(str.c_str()) && CGameManager::getInstance()->getPlayerResourceByName(Common::Data::Game::GAME_FUEL) >= m_targetsDefeated){
 				CGameManager::getInstance()->decreaseResourceByName(Common::Data::Game::GAME_FUEL,m_targetsDefeated);
 				getReward();

@@ -60,7 +60,7 @@ namespace Application
 	CGameManager::CGameManager():m_system(""), m_planet(""),m_totalLife(BASE_LIFE),m_life(BASE_LIFE),m_shield(BASE_SHIELD),
 		m_objectives(0),m_totalObjectives(NUM_TARGETS),m_tmpShield(BASE_SHIELD),m_energy(BASE_ENERGY),m_tmpEnergy(BASE_ENERGY),m_menuWindow(nullptr),
 		m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr),
-		m_shieldRegen(BASE_SHIELD_REGEN), m_energyRegen(BASE_ENERGY_REGEN), m_eqEngine("")
+		m_shieldRegen(BASE_SHIELD_REGEN), m_energyRegen(BASE_ENERGY_REGEN), m_sensorLevel(0)
 	{
 		m_instance = this;
 		m_activeMission.first = 0;
@@ -207,7 +207,6 @@ namespace Application
 		addCrewMemberByName(Common::Data::Game::GAME_MILITARY);
 		addCrewMemberByName(Common::Data::Game::GAME_ENGINEERS,2);
 		addCrewMemberByName(Common::Data::Game::GAME_SCIENTIFICS);
-
 		return true;
 	}
 
@@ -436,6 +435,24 @@ namespace Application
 				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
 				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->setText(tmpStr + " " 
 					+ std::to_string(m_shield));
+
+				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[1][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[1][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 1;
+
+				}else if(m_crewMembersMap[str] > 3 && m_crewMembersMap[str] <= 4){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[2][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[2][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 2;
+				}else if(m_crewMembersMap[str] > 4){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[3][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[3][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 3;
+				}
 			}
 
 			if(str == Common::Data::Game::GAME_SCIENTIFICS){
@@ -480,6 +497,18 @@ namespace Application
 		}
 
 		return false;
+	}
+
+	void CGameManager::setSensorGUIInfo()
+	{
+		std::string tmpText (static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/EquipmentBoard"))->
+						getItemFromIndex(4)->getText().c_str());
+		tmpText = tmpText.substr(0,tmpText.find(":")+1);
+		tmpText += " " + m_equipmentMap[Common::Data::Game::GAME_SENSORS].first;
+		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/EquipmentBoard"))
+			->getItemFromIndex(4)->setText(tmpText);
+		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/EquipmentBoard"))
+			->getItemFromIndex(4)->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,m_equipmentMap[Common::Data::Game::GAME_SENSORS].second);
 	}
 
 	typedef std::multimap<std::string,std::pair<std::string,std::string>> TCargo;
@@ -643,7 +672,6 @@ namespace Application
 	void CGameManager::changeEquippedEngine(const std::string& name)
 	{
 		m_eqEngineDat = m_engineDataMap[name];
-		m_eqEngine = name;
 	}
 
 	void CGameManager::objectiveAquired()

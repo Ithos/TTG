@@ -116,7 +116,6 @@ namespace Application
 		typedef std::pair<int,int> TEquippedEngineData;
 		int getEqEngineDist(){return m_eqEngineDat.first;};
 		int getEqEngineCons(){return m_eqEngineDat.second;};
-		const std::string& getEqEngine() {return m_eqEngine;};
 
 		void objectiveAquired();
 		unsigned int getObjectivesAquired() {return m_objectives;};
@@ -130,6 +129,8 @@ namespace Application
 
 		void setSystemVisited() {m_systemsVisited.insert(std::atoi(m_system.c_str()));}
 		bool isSystemVisited()	{return m_systemsVisited.find(std::atoi(m_system.c_str())) != m_systemsVisited.end();}
+
+		unsigned int getSensorLevel(){return m_sensorLevel;}
 
 		void showTargetMessage();
 		void hideTargetMessage();
@@ -169,7 +170,6 @@ namespace Application
 		TEngineData m_engineDataMap;
 		
 		TEquippedEngineData m_eqEngineDat;
-		std::string m_eqEngine;
 
 		void changeEquippedEngine(const std::string& name);
 
@@ -184,6 +184,7 @@ namespace Application
         unsigned m_objectives;
         unsigned m_totalObjectives;
         unsigned m_nameRepeatCounter;
+		unsigned int m_sensorLevel;
 
 		bool m_targetSystem, m_targetPlanet, m_inhabitedPlanet;
 
@@ -208,6 +209,8 @@ namespace Application
 		void setupAnimations();
 		bool onSelectionChanged(const CEGUI::EventArgs &e);
 		bool onEquipButtonClicked(const CEGUI::EventArgs &e);
+
+		void setSensorGUIInfo();
 	};
 }
 

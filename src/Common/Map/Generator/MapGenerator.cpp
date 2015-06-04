@@ -27,10 +27,12 @@
 #include <Common/Configure/Configure.h>
 #include <Common/Data/Spawn_Constants.h>
 #include <Common/Data/Game_Constants.h>
+#include <Application/Manager/MissionManager.h>
+#include <Application/Manager/GameManager.h>
 
 #include "MapGenerator.h"
 #include "../MapEntity.h"
-#include "../../../Application/Manager/MissionManager.h"
+
 
 using namespace Common::Data::Spawn;
 using namespace Common::Configuration;
@@ -479,10 +481,21 @@ namespace Map
 					tmpStr1 = GRAPHIC_EXTRA;
 					i == targetPlanet ? tmpStr2 = COMMON_TARGET : tmpStr2 = COMMON_NO_TARGET;
 					probability(generator) <= limit ? tmpStr2 += COMMON_INHABITED : tmpStr2 += COMMON_DESERTED;
+					int prob(probability(generator)),risk(0);
+					if(i == targetPlanet){
+						if(prob < 50 - 10 * Application::CGameManager::getInstance()->getObjectivesAquired()) risk=3;
+						else risk = 4;
+					}else{
+						if(prob > 15 - Application::CGameManager::getInstance()->getObjectivesAquired() * 2)risk=1;
+						if(prob > 45 - Application::CGameManager::getInstance()->getObjectivesAquired() * 2)risk=2;
+						if(prob > 70 - Application::CGameManager::getInstance()->getObjectivesAquired() * 2)risk=3;
+						if(prob > 90 - Application::CGameManager::getInstance()->getObjectivesAquired() * 2)risk=4;
+					}
 					tmpStr2 += std::to_string(sc)[0];
 					tmpStr2 += std::to_string(sc)[2];
 					tmpStr2 += "0"+std::to_string(model);
 					tmpStr2 += std::to_string(j-1);
+					tmpStr2 += std::to_string(risk);
 					tmpStr2 += Common::Data::Game::GAME_MOVPLANET_DESC[model][descDist(generator)];
 					entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
@@ -582,10 +595,14 @@ namespace Map
 		std::uniform_real_distribution<float> degDist2(0.0f,Common::Configuration::defaultValue<float>(GEN_STATIC_ASTEROID_ORI));
 		std::uniform_int_distribution<int> astDist2(0,Common::Configuration::defaultValue<int>(GEN_STATIC_ASTEROID_DIM));
 
-		std::string sc(descriptor.substr(descriptor.length()-5,1)+"."+descriptor.substr(descriptor.length()-4,1));
-		std::string md(descriptor.substr(descriptor.length()-3,2));
+		std::uniform_int_distribution<int> enemyDist(0,Common::Configuration::defaultValue<int>(GEN_WANDER_ENEMY_NUM));
+
+		std::string sc(descriptor.substr(descriptor.length()-6,1)+"."+descriptor.substr(descriptor.length()-5,1));
+		std::string md(descriptor.substr(descriptor.length()-4,2));
+		std::string rs(descriptor.substr(descriptor.length()-1,1));
 		float scale(std::atof(sc.c_str()));
 		int model(std::atoi(md.c_str()));
+		int risk(std::atoi(rs.c_str()));
 
 
 		std::vector<Ogre::Vector3> tmpPos;
@@ -833,7 +850,9 @@ namespace Map
 		std::uniform_int_distribution<int> enemy_distribution(
 					atof(getDefaultValue(GEN_ENEMY_NEG_BOUNDARY).c_str()),
 					atof(getDefaultValue(GEN_ENEMY_POS_BOUNDARY).c_str()));
-		for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {
+		/*for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {*/
+		int enemiesNum(enemyDist(generator)),div(5 - risk);
+		for (int i=0; !risk?0:i< Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div); ++i) {
 			char str[20];
 			std::string name = getDefaultValue(GEN_ENEMY_NAME);
 			sprintf(str,"%s%d",name.c_str(),i);

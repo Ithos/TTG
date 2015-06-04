@@ -237,7 +237,7 @@ namespace Application
 	void CEventGUI::setupHUD()
 	{
 		int i(m_mgrInstance->isInhabitedPlanet()?1:0), 
-			j(std::atoi(m_mgrInstance->getPlanet().substr(m_mgrInstance->getPlanet().length()-2,1).c_str()));
+			j(std::atoi(m_mgrInstance->getPlanet().substr(m_mgrInstance->getPlanet().length()-3,1).c_str()));
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("InnerButtonsContainer")->getChildElement("LogWindow")->
 			getChildElement("MessageBoard"))->addItem(new CEGUI::ListboxTextItem(CEGUI::String(
 				Common::Data::Game::GAME_PLANET_EVENT_INTRO[i*8+j]

@@ -50,8 +50,12 @@ namespace Logic
             if (!m_trans)
                 log_error(LOG_MOV, "Error getting Transform, m_trans is null");
 
+			assert(Application::CGameManager::getInstance()->getPlayerActiveEquipment().find(Common::Data::Game::GAME_ENGINE) != 
+					Application::CGameManager::getInstance()->getPlayerActiveEquipment().end() && "Engine not found.");
+				auto it = Application::CGameManager::getInstance()->getPlayerActiveEquipment().find(Common::Data::Game::GAME_ENGINE);
+
 			for(unsigned int i = 0; i < Common::Data::Game::TOTAL_ENGINES; ++i){
-				if(Application::CGameManager::getInstance()->getEqEngine() == Common::Data::Game::GAME_ENGINES_LIST[i][0])
+				if(it->first == Common::Data::Game::GAME_ENGINES_LIST[i][0])
 					m_enginePos = i;
 			}
 

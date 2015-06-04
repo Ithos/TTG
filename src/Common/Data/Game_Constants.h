@@ -81,6 +81,18 @@ namespace Common
 			//Shop
 			const char* const GAME_SHOP_REPAIR			= ">>Repair Hull";
 
+			//Planet description aditional information
+			const char* const GAME_PLANET_INHABITED			= "Inhabited";
+			const char* const GAME_PLANET_UNNOCUPIED		= "Unnocupied";
+
+			const char* const GAME_PLANET_NO_RISK			= ">>no risk<<";
+			const char* const GAME_PLANET_LOW_RISK			= ">>low risk<<";
+			const char* const GAME_PLANET_MEDIUM_RISK		= ">>medium risk<<";
+			const char* const GAME_PLANET_HIGH_RISK			= ">>high risk<<";
+			const char* const GAME_PLANET_VERY_HIGH_RISK	= ">>very high risk<<";
+
+			const char* const GAME_PLANET_SIGNAL			= "-->signal source detected<--";
+
 			// Galaxy System names
 			const char* const GAME_GALAXY_SYSTEM_NAME[] = {
 												"System0","System1","System2","System3",
@@ -489,10 +501,25 @@ namespace Common
 				"Radar", "Lvl 1 Sensor\nThis common sensor measures\nelectromagnetic echoes.\nIt detects some enemies and\nit`s also able to get some information\nfrom planets."
 			};
 
-			const int TOTAL_SENSORS = 1;
+			const char* const GAME_ION_SENSOR[2] = {
+				"Ion Trail Detector", "Lvl 2 Sensor\nThis device gives a rough\naproximation of the number of\nenemy ships in a given area\nby measuring the electromagnetic\nfield caused by spaceships\nion trails."
+			};
+
+			const char* const GAME_LIFE_SENSOR[2] = {
+				"Life Sensor", "Lvl 3 Sensor\nThis type of sensor can detect\nmost of lifeforms what makes it able\nto determine if a planet\nis inhabited or not."
+			};
+
+			const char* const GAME_TACHYON_SENSOR[2] = {
+				"Tachyon Resonator", "Lvl 4 Sensor\nAn advanced tachyon signal detector\nthat reacts to specific frequencies."
+			};
+
+			const int TOTAL_SENSORS = 4;
 
 			const std::array<const char* const*,TOTAL_SENSORS> GAME_SENSORS_LIST = {
-				GAME_RADAR
+				GAME_RADAR,
+				GAME_ION_SENSOR,
+				GAME_LIFE_SENSOR,
+				GAME_TACHYON_SENSOR
 			};
 
 			// Special equipment

@@ -568,7 +568,32 @@ namespace Common
 
 			const int REPAIR_HULL_COST = 100;
 
-			/// TODO -- shop costs -- ///
+			// Crew member hire cost & description
+			
+			const char* const GAME_SHOP_MILITARY[2] = {
+				"Weapon Expert", "Military trained weapon expert\nthat you can hire.\n+1 Military"
+			};
+
+			const char* const GAME_SHOP_ENGINEER[2] = {
+				"Mechanic", "A mechanichal engineer\nthat is seeking for a ship to work at.\n+1 Engineer"
+			};
+
+			const char* const GAME_SHOP_SCIENTIFIC[2] = {
+				"Rogue Investigator", "An intrepid scientist willing to travel\nthrough the galaxy in order\nto discover its secrets.\n+1 Scientific"
+			};
+
+			const std::pair<std::string,std::pair<int, int>> CREW_SHOP_COST[] =
+			{
+				std::make_pair (GAME_SHOP_MILITARY[0],std::make_pair (150, 10)), // base cost, variance/10
+				std::make_pair (GAME_SHOP_ENGINEER[0],std::make_pair (150, 10)),
+				std::make_pair (GAME_SHOP_SCIENTIFIC[0],std::make_pair (150, 10))
+			};
+
+			const std::array<const char* const*,3> GAME_CREW_SHOP_LIST = {
+				GAME_SHOP_MILITARY,
+				GAME_SHOP_ENGINEER,
+				GAME_SHOP_SCIENTIFIC
+			};
 
 			/// TODO -- Internationalization -- /// }End
 		}

@@ -207,6 +207,9 @@ namespace Application
 		addCrewMemberByName(Common::Data::Game::GAME_MILITARY);
 		addCrewMemberByName(Common::Data::Game::GAME_ENGINEERS,2);
 		addCrewMemberByName(Common::Data::Game::GAME_SCIENTIFICS);
+
+		subtractCrewMemberByName(Common::Data::Game::GAME_ENGINEERS);
+
 		return true;
 	}
 
@@ -484,6 +487,49 @@ namespace Application
 		if(m_crewMembersMap.count(str) > 0 && (m_crewMembersMap[str] - num) >= 0){
 
 			m_crewMembersMap[str] -= num;
+
+			if(str == Common::Data::Game::GAME_ENGINEERS){
+				m_shield = BASE_SHIELD + m_crewMembersMap[str]*SHIELD_INCREMENT;
+				m_tmpShield = m_shield;
+
+				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->getText().c_str());
+				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
+				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->setText(tmpStr + " " 
+					+ std::to_string(m_shield));
+				if(m_crewMembersMap[str] < 2 ){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[0][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[0][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 0;
+
+				}else if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[1][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[1][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 1;
+
+				}else if(m_crewMembersMap[str] > 3 && m_crewMembersMap[str] <= 4){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[2][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[2][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 2;
+				}else if(m_crewMembersMap[str] > 4){
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[3][0];
+					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[3][1];
+					setSensorGUIInfo();
+					m_sensorLevel = 3;
+				}
+			}
+
+			if(str == Common::Data::Game::GAME_SCIENTIFICS){
+				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
+				m_tmpEnergy = m_energy;
+
+				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
+				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
+				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
+					+ std::to_string(m_energy));
+			}
 
 			for(int i=1; i<static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemCount(); ++i){
 				std::string tmp(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemFromIndex(i)->getText().c_str());

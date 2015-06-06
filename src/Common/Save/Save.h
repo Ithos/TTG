@@ -19,8 +19,30 @@
 #ifndef __COMMON_SAVE_H
 #define __COMMON_SAVE_H
 
+#include <string>
+#include <sstream>
+#include <map>
+
 namespace Common { namespace Save
 {
+	template <typename R>
+	static R to(const std::string &str)
+	{
+		std::stringstream ss(str);
+		R ret;
+		ss >> ret;
+		return (ret);
+	}
+
+	template <typename T>
+	std::string to(const T& t)
+	{
+		return (std::to_string(t));
+	}
+
+	bool loadGame();
+	bool saveGame();
+
 	class CSave
 	{
 	};

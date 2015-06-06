@@ -61,7 +61,8 @@ namespace Map
 	private:
 
 		bool checkDist(const std::vector<Ogre::Vector3>& vec,const Ogre::Vector3& pos,float dist, int vecNum = -1);
-
+	
+	public:
 		typedef std::map<std::string,std::time_t> TSeedMap;
 
 		TSeedMap m_SeedMap;

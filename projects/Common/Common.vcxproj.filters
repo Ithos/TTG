@@ -195,6 +195,12 @@
     <ClInclude Include="..\..\src\Common\Language\Language.h">
       <Filter>Language</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Common\Language\Tags.h">
+      <Filter>Language</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Save\Tags.h">
+      <Filter>Save</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Common\Configure\Configure.cpp">

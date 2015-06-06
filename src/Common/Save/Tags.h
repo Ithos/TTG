@@ -16,14 +16,11 @@
 	along with Through the galaxy.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __COMMON_LANGUAGE_H
-#define __COMMON_LANGUAGE_H
+#ifndef __COMMON_SAVE_TAGS_H
+#define __COMMON_SAVE_TAGS_H
 
-namespace Common { namespace Language 
+namespace Common { namespace Save
 {
-	class CLanguage
-	{
-	};
-}}
 
+}}
 #endif

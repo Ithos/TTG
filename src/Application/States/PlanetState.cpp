@@ -107,11 +107,15 @@ namespace Application
 
 		Logic::CLogic::getInstance()->tick(msecs);
 
-		if(m_time < 0.5)
-			m_time+=msecs/100.0f;
+		if(m_time < 0.5f)
+			m_time+=msecs/1000.0f;
 		else{
-			m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
-			m_mgrInstance->increaseShieldState(m_mgrInstance->getShieldRegen() * m_time);
+
+			if(m_time < 1.0f){
+				m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
+				m_mgrInstance->increaseShieldState(m_mgrInstance->getShieldRegen() * m_time);
+			}
+
 			m_time = 0;
 		}
 

@@ -54,13 +54,11 @@ namespace Application
 	const int SHIELD_INCREMENT = 5;
 	const int ENERGY_INCREMENT = 5;
 
-	const int BASE_SHIELD_REGEN = 0;
-	const int BASE_ENERGY_REGEN = 10;
-
 	CGameManager::CGameManager():m_system(""), m_planet(""),m_totalLife(BASE_LIFE),m_life(BASE_LIFE),m_shield(BASE_SHIELD),
 		m_objectives(0),m_totalObjectives(NUM_TARGETS),m_tmpShield(BASE_SHIELD),m_energy(BASE_ENERGY),m_tmpEnergy(BASE_ENERGY),m_menuWindow(nullptr),
 		m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr),
-		m_shieldRegen(BASE_SHIELD_REGEN), m_energyRegen(BASE_ENERGY_REGEN), m_sensorLevel(0)
+		m_shieldRegen(BASE_SHIELD_REGEN), m_energyRegen(BASE_ENERGY_REGEN), m_sensorLevel(0), m_fuelConsumeProportion(1.0f),
+		m_mineralProportion(1.0f), m_distanceProportion(1.0f)
 	{
 		m_instance = this;
 		m_activeMission.first = 0;
@@ -208,7 +206,24 @@ namespace Application
 		addCrewMemberByName(Common::Data::Game::GAME_ENGINEERS,2);
 		addCrewMemberByName(Common::Data::Game::GAME_SCIENTIFICS);
 
-		subtractCrewMemberByName(Common::Data::Game::GAME_ENGINEERS);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][2]);
+		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][0],
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][2]);
 
 		return true;
 	}
@@ -365,6 +380,10 @@ namespace Application
 	{
 		if(m_stateMap.count(str) > 0){
 
+			if(str == Common::Data::Game::GAME_ORE){
+				num *= m_mineralProportion;
+			}
+
 			m_stateMap[str] += num;
 
 			for(int i=1; i<static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemCount(); ++i){
@@ -385,30 +404,16 @@ namespace Application
 	{
 		if(m_stateMap.count(str) > 0 && (m_stateMap[str] - num) >= 0){
 
-			if(num > m_stateMap[str])
-				m_stateMap[str] = 0;
-			else
-				m_stateMap[str] -= num;
-
-			if(str == Common::Data::Game::GAME_ENGINEERS){
-				m_shield = BASE_SHIELD + m_crewMembersMap[str]*SHIELD_INCREMENT;
-				m_tmpShield = m_shield;
-
-				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->getText().c_str());
-				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
-				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->setText(tmpStr + " " 
-					+ std::to_string(m_shield));
+			if(str == Common::Data::Game::GAME_FUEL){
+				num *= m_fuelConsumeProportion;
 			}
 
-			if(str == Common::Data::Game::GAME_SCIENTIFICS){
-				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
-				m_tmpEnergy = m_energy;
 
-				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
-				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
-				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
-					+ std::to_string(m_energy));
-			}
+				if(num > m_stateMap[str])
+					m_stateMap[str] = 0;
+				else
+					m_stateMap[str] -= num;
+
 
 			for(int i=1; i<static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemCount(); ++i){
 				std::string tmp(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemFromIndex(i)->getText().c_str());
@@ -440,6 +445,32 @@ namespace Application
 					+ std::to_string(m_shield));
 
 				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
+
+					m_distanceProportion = 1.1;
+
+				}else if(m_crewMembersMap[str] > 3 && m_crewMembersMap[str] <= 4){
+
+					m_distanceProportion = 1.2;
+
+				}else if(m_crewMembersMap[str] > 4){
+
+					m_distanceProportion = 1.3;
+
+				}
+
+				
+			}
+
+			if(str == Common::Data::Game::GAME_SCIENTIFICS){
+				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
+				m_tmpEnergy = m_energy;
+
+				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
+				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
+				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
+					+ std::to_string(m_energy));
+
+				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[1][0];
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[1][1];
 					setSensorGUIInfo();
@@ -458,14 +489,20 @@ namespace Application
 				}
 			}
 
-			if(str == Common::Data::Game::GAME_SCIENTIFICS){
-				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
-				m_tmpEnergy = m_energy;
+			if(str == Common::Data::Game::GAME_MILITARY){
+				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
 
-				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
-				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
-				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
-					+ std::to_string(m_energy));
+					m_energyRegen = 2 * BASE_ENERGY_REGEN;
+
+				}else if(m_crewMembersMap[str] > 3 && m_crewMembersMap[str] <= 4){
+
+					m_energyRegen = 3 * BASE_ENERGY_REGEN;
+
+				}else if(m_crewMembersMap[str] > 4){
+
+					m_energyRegen = 4 * BASE_ENERGY_REGEN;
+
+				}
 			}
 
 			for(int i=1; i<static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemCount(); ++i){
@@ -496,6 +533,32 @@ namespace Application
 				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
 				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->setText(tmpStr + " " 
 					+ std::to_string(m_shield));
+
+				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
+
+					m_distanceProportion = 1.1;
+
+				}else if(m_crewMembersMap[str] > 3 && m_crewMembersMap[str] <= 4){
+
+					m_distanceProportion = 1.2;
+
+				}else if(m_crewMembersMap[str] > 4){
+
+					m_distanceProportion = 1.3;
+
+				}
+				
+			}
+
+			if(str == Common::Data::Game::GAME_SCIENTIFICS){
+				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
+				m_tmpEnergy = m_energy;
+
+				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
+				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
+				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
+					+ std::to_string(m_energy));
+
 				if(m_crewMembersMap[str] < 2 ){
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[0][0];
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[0][1];
@@ -519,16 +582,6 @@ namespace Application
 					setSensorGUIInfo();
 					m_sensorLevel = 3;
 				}
-			}
-
-			if(str == Common::Data::Game::GAME_SCIENTIFICS){
-				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
-				m_tmpEnergy = m_energy;
-
-				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
-				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
-				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
-					+ std::to_string(m_energy));
 			}
 
 			for(int i=1; i<static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemCount(); ++i){
@@ -755,6 +808,8 @@ namespace Application
 		m_equipmentMap[Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0]] = std::pair<std::string,std::string>(
 			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2]);
 
+		m_shieldRegen += SHIELD_REGEN_INCREMENT;
+
 		m_crewMembersMap[Common::Data::Game::GAME_MILITARY] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_ENGINEERS] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_SCIENTIFICS] = 0;
@@ -801,6 +856,12 @@ namespace Application
 		m_totalLife = m_life = BASE_LIFE;
 		m_shield = m_tmpShield = BASE_SHIELD;
 		m_energy = m_tmpEnergy = BASE_ENERGY;
+		m_shieldRegen = BASE_SHIELD_REGEN;
+		m_energyRegen = BASE_ENERGY_REGEN;
+		m_sensorLevel = 0;
+		m_fuelConsumeProportion = 1.0f;
+		m_mineralProportion = 1.0f;
+		m_distanceProportion = 1.0f;
 		m_objectives = 0;
 		m_targetPlanet = false;
 		m_targetSystem = false;
@@ -890,6 +951,9 @@ namespace Application
 					item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,it->second.second);
 					static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("RightWindow/DescriptionBoard"))->resetList();
 					m_equipmentMap[it->first] = it->second;
+
+					checkSpecialItem(it->second.first);
+
 					m_cargoMap.erase(it);
 					static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/CargoBoard"))->getFirstSelectedItem()->destroy();
 					m_menuWindow->getChild("RightWindow/EquipButton")->disable();
@@ -904,6 +968,42 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->playSound("equipButton");
 
 		return true;
+	}
+
+	void CGameManager::checkSpecialItem(const std::string& str)
+	{
+		if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1]){
+			m_shieldRegen += SHIELD_REGEN_INCREMENT;
+			for(auto it = m_equipmentMap.begin(); it != m_equipmentMap.end(); ++it){
+				if(it->first == Common::Data::Game::GAME_SHIELD_ENHANCER){
+					m_shieldRegen += SHIELD_REGEN_INCREMENT * 2;
+					break;
+				}
+			}
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][1]){
+			if(m_shieldRegen != 0)
+				m_shieldRegen += SHIELD_REGEN_INCREMENT * 2;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][1]){
+			increaseTotalLife(5);
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][1]){
+			increaseTotalLife(10);
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][1]){
+			increaseTotalLife(15);
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][1]){
+			m_mineralProportion += 0.1;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][1]){
+			m_mineralProportion += 0.2;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][1]){
+			m_mineralProportion += 0.3;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][1]){
+			m_fuelConsumeProportion -= 0.05;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][1]){
+			m_fuelConsumeProportion -= 0.1;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][1]){
+			m_fuelConsumeProportion -= 0.15;
+		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[11][1]){
+
+		}
 	}
 
 	void CGameManager::showTargetMessage()

@@ -44,6 +44,16 @@ namespace Common
 			//Special equipment
 			const char* const GAME_REGENERATOR			= ">>Shield Energy Regenerator";
 			const char* const GAME_STEALTH				= ">>Stealth Module";
+			const char* const GAME_SHIELD_ENHANCER		= ">>Shield Regeneration Enhancer";
+			const char* const GAME_ARMOR_LIGHT			= ">>Light Hull Reinforcement";
+			const char* const GAME_ARMOR_MEDIUM			= ">>Medium Hull Reinforcement";
+			const char* const GAME_ARMOR_HEAVY			= ">>Heavy Hull Reinforcement";
+			const char* const GAME_SMALL_PROCESSOR		= ">>Small Mineral Processor";
+			const char* const GAME_MEDIUM_PROCESSOR		= ">>Medium Mineral Processor";
+			const char* const GAME_BIG_PROCESSOR		= ">>Big Mineral Processor";
+			const char* const GAME_SMALL_COMPRESSOR		= ">>Small Fuel Compressor";
+			const char* const GAME_MEDIUM_COMPRESSOR	= ">>Medium Fuel Compressor";
+			const char* const GAME_BIG_COMPRESSOR		= ">>Big Fuel Compressor";
 
 			//State
 			const char* const GAME_HULL				= ">>Hull State:";
@@ -531,16 +541,76 @@ namespace Common
 				GAME_STEALTH, "Stealth Module", "Special Device\nHides the ship from enemies sensors.\nIt has a high energy cost."
 			};
 
-			const int TOTAL_SPECIAL = 2;
+			const char* const GAME_ITEM_ENHANCER[3] = {
+				GAME_SHIELD_ENHANCER, "Shield Regeneration Enhancer", "Special Device\nA quantic amplificator\nthat used in combination with\na shield regenerator increases the shield regeneration\nspeed."
+			};
+
+			const char* const GAME_ITEM_ARMOR_LIGHT[3] = {
+				GAME_ARMOR_LIGHT, "Light Hull Reinforcement", "Special Device\nMetal plates used to reinforce\nthe weaker parts\nof the hull."
+			};
+
+			const char* const GAME_ITEM_ARMOR_MEDIUM[3] = {
+				GAME_ARMOR_MEDIUM, "Medium Hull Reinforcement", "Special Device\nCeramic cover for the hull\ndesigend to disperse heat."
+			};
+
+			const char* const GAME_ITEM_ARMOR_HEAVY[3] = {
+				GAME_ARMOR_HEAVY, "Heavy Hull Reinforcement", "Special Device\nHeavy titanium based\nreinforcement plates."
+			};
+
+			const char* const GAME_ITEM_PROCESSOR_SMALL[3] = {
+				GAME_SMALL_PROCESSOR, "Small Mineral Processor", "Special Device\nStandar mining machinery\nused by most colonial fortune-seekers.\n+5% Scrap"
+			};
+
+			const char* const GAME_ITEM_PROCESSOR_MEDIUM[3] = {
+				GAME_MEDIUM_PROCESSOR, "Medium Mineral Processor", "Special Device\nA chemical mineral refiner\nconsidered dangerous by most\nminers because it uses strong acids.\n+10% Scrap"
+			};
+
+			const char* const GAME_ITEM_PROCESSOR_BIG[3] = {
+				GAME_BIG_PROCESSOR, "Big Mineral Processor", "Special Device\nA furnace that melts both metal\nand mineral making them easier to purify.\n+15% Scrap"
+			};
+
+			const char* const GAME_ITEM_COMPRESSOR_SMALL[3] = {
+				GAME_SMALL_COMPRESSOR, "Fuel Compressor", "Special Device\nDark matter compressor\nused by many ships as a way to save\n some fuel.\n-5% Fuel Cost"
+			};
+
+			const char* const GAME_ITEM_COMPRESSOR_MEDIUM[3] = {
+				GAME_MEDIUM_COMPRESSOR, "Automated Fuel Feeder", "Special Device\nThis device optimizes the\nfuel feeding rate of the engine\nbased on the linear momentum of the ship.\n-10% Fuel Cost"
+			};
+
+			const char* const GAME_ITEM_COMPRESSOR_BIG[3] = {
+				GAME_BIG_COMPRESSOR, "Heat Cogenerator", "Special Device\nModified engine refrigeration system that\nuses the heat produced by the engine\nto pre-heat the fuel.\n-15% Fuel Cost"
+			};
+
+			const int TOTAL_SPECIAL = 12;
 
 			const std::pair<std::string,std::pair<int, int>> SPECIAL_EQUIPMENT_COST[] =
 			{
 				std::make_pair (GAME_ITEM_REGENERATOR[0],std::make_pair (200, 20)), // base cost, variance/10
+				std::make_pair (GAME_ITEM_ENHANCER[0],std::make_pair (100, 10)),
+				std::make_pair (GAME_ITEM_ARMOR_LIGHT[0],std::make_pair (100, 10)),
+				std::make_pair (GAME_ITEM_ARMOR_MEDIUM[0],std::make_pair (200, 20)),
+				std::make_pair (GAME_ITEM_ARMOR_HEAVY[0],std::make_pair (400, 10)),
+				std::make_pair (GAME_ITEM_PROCESSOR_SMALL[0],std::make_pair (70, 7)),
+				std::make_pair (GAME_ITEM_PROCESSOR_MEDIUM[0],std::make_pair (140, 14)),
+				std::make_pair (GAME_ITEM_PROCESSOR_BIG[0],std::make_pair (280, 28)),
+				std::make_pair (GAME_ITEM_COMPRESSOR_SMALL[0],std::make_pair (80, 11)),
+				std::make_pair (GAME_ITEM_COMPRESSOR_MEDIUM[0],std::make_pair (160, 22)),
+				std::make_pair (GAME_ITEM_COMPRESSOR_BIG[0],std::make_pair (360, 33)),
 				std::make_pair (GAME_ITEM_STEALTH[0],std::make_pair (300, 10))
 			};
 
 			const std::array<const char* const*,TOTAL_SPECIAL> GAME_SPECIAL_EQUIPMENT_LIST = {
 				GAME_ITEM_REGENERATOR,
+				GAME_ITEM_ENHANCER,
+				GAME_ITEM_ARMOR_LIGHT,
+				GAME_ITEM_ARMOR_MEDIUM,
+				GAME_ITEM_ARMOR_HEAVY,
+				GAME_ITEM_PROCESSOR_SMALL,
+				GAME_ITEM_PROCESSOR_MEDIUM,
+				GAME_ITEM_PROCESSOR_BIG,
+				GAME_ITEM_COMPRESSOR_SMALL,
+				GAME_ITEM_COMPRESSOR_MEDIUM,
+				GAME_ITEM_COMPRESSOR_BIG,
 				GAME_ITEM_STEALTH
 			};
 

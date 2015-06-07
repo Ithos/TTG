@@ -37,6 +37,13 @@ namespace CEGUI
 
 namespace Application
 {
+
+	const unsigned int BASE_SHIELD_REGEN = 0;
+	const unsigned int BASE_ENERGY_REGEN = 6;
+	const unsigned int SHIELD_REGEN_INCREMENT = 6;
+	const unsigned int ENERGY_REGEN_INCREMENT = 6;
+	const int MAX_INCREMENT_NUM = 5;
+
 	class CGameManager
 	{
 	public:
@@ -97,8 +104,8 @@ namespace Application
 		void decreaseShieldState(unsigned int num) { m_tmpShield = (num > m_tmpShield) ? 0 : m_tmpShield - num; }
 		void increaseShieldState(unsigned int num) { m_tmpShield += num;  if ( m_tmpShield > m_shield)  m_tmpShield = m_shield; }
 		unsigned int getShieldRegen() {return m_shieldRegen;}
-		void increaseShieldRegen(unsigned int num) {(m_shieldRegen<=30-num)?m_energyRegen+=num:m_energyRegen;}
-		void decreaseShieldRegen(unsigned int num) {(m_shieldRegen>=6+num)?m_energyRegen-=num:m_energyRegen;}
+		void increaseShieldRegen(unsigned int num) {(m_shieldRegen<=SHIELD_REGEN_INCREMENT*MAX_INCREMENT_NUM-num)?m_energyRegen+=num:m_energyRegen=SHIELD_REGEN_INCREMENT*MAX_INCREMENT_NUM;}
+		void decreaseShieldRegen(unsigned int num) {(m_shieldRegen>=BASE_SHIELD_REGEN + num)?m_energyRegen-=num:m_energyRegen=BASE_SHIELD_REGEN;}
 
 		unsigned int getEnergy(){return m_energy;}
 		void resetSceneEnergy() {m_tmpEnergy = m_energy;}
@@ -108,13 +115,13 @@ namespace Application
 		void decreaseEnergyState(unsigned int num){num>m_tmpEnergy ? m_tmpEnergy : m_tmpEnergy -= num;}
 		void increaseEnergyState(unsigned int num){m_tmpEnergy += num; m_tmpEnergy>m_energy ? m_tmpEnergy=m_energy : m_tmpEnergy;}
 		unsigned int getEnergyRegen() {return m_energyRegen;}
-		void increaseEnergyRegen(unsigned int num) {(m_energyRegen<=30-num)?m_energyRegen+=num:m_energyRegen;}
-		void decreaseEnergyRegen(unsigned int num) {(m_energyRegen>=6+num)?m_energyRegen-=num:m_energyRegen;}
+		void increaseEnergyRegen(unsigned int num) {(m_energyRegen<=ENERGY_REGEN_INCREMENT*MAX_INCREMENT_NUM-num)?m_energyRegen+=num:m_energyRegen=ENERGY_REGEN_INCREMENT*MAX_INCREMENT_NUM;}
+		void decreaseEnergyRegen(unsigned int num) {(m_energyRegen>=BASE_ENERGY_REGEN+num)?m_energyRegen-=num:m_energyRegen=BASE_ENERGY_REGEN;}
 
 		void addEngineData(const std::string& name, int maxDist, int cons);
 
 		typedef std::pair<int,int> TEquippedEngineData;
-		int getEqEngineDist(){return m_eqEngineDat.first;};
+		int getEqEngineDist(){return m_eqEngineDat.first * m_distanceProportion;};
 		int getEqEngineCons(){return m_eqEngineDat.second;};
 
 		void objectiveAquired();
@@ -131,6 +138,7 @@ namespace Application
 		bool isSystemVisited()	{return m_systemsVisited.find(std::atoi(m_system.c_str())) != m_systemsVisited.end();}
 
 		unsigned int getSensorLevel(){return m_sensorLevel;}
+		float getFuelConsuptionProportion(){return m_fuelConsumeProportion;}
 
 		void showTargetMessage();
 		void hideTargetMessage();
@@ -185,6 +193,9 @@ namespace Application
         unsigned m_totalObjectives;
         unsigned m_nameRepeatCounter;
 		unsigned int m_sensorLevel;
+		float m_fuelConsumeProportion;
+		float m_mineralProportion;
+		float m_distanceProportion;
 
 		bool m_targetSystem, m_targetPlanet, m_inhabitedPlanet;
 
@@ -211,6 +222,7 @@ namespace Application
 		bool onEquipButtonClicked(const CEGUI::EventArgs &e);
 
 		void setSensorGUIInfo();
+		void checkSpecialItem(const std::string& str);
 	};
 }
 

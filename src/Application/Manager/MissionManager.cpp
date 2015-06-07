@@ -132,26 +132,7 @@ namespace Application
 			m_tmpMission.second.second = "Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 			/// TODO -- Internationalization -- /// }End
 
-			/// TODO --Aditional constraints (maybe)--///
-
-			std::uniform_int_distribution<int> rewardDist(0,9);
-
-			if(rewardDist(generator)<=8){
-
-				/// TODO -- select random resource and random quantity based on the distance to the target system -- ///
-
-				m_tmpResourceReward.first = Common::Data::Game::GAME_ORE;
-				m_tmpResourceReward.second = 100;
-
-			}else{
-
-				/// TODO -- select a random item type and a random item, also create a set of items -- ///
-
-				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
-				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
-
-			}
+			generateReward(4);
 
 
 			return m_tmpMission;
@@ -172,26 +153,7 @@ namespace Application
 			m_tmpMission.second.second = "0/" + std::to_string(m_tmpTargets.first) + " enemies defeated.";
 			/// TODO -- Internationalization -- /// }End
 
-			/// TODO --Aditional constraints (maybe)--///
-
-			std::uniform_int_distribution<int> rewardDist(0,9);
-
-			if(rewardDist(generator)<=8){
-
-				/// TODO -- select random resource and random quantity based on the number of targets -- ///
-
-				m_tmpResourceReward.first = Common::Data::Game::GAME_ORE;
-				m_tmpResourceReward.second = 100;
-
-			}else{
-
-				/// TODO -- select a random item type and a random item, also create a set of items -- ///
-
-				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
-				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
-
-			}
+			generateReward(m_tmpTargets.second);
 
 			return m_tmpMission;
 		}
@@ -206,25 +168,7 @@ namespace Application
 			m_tmpMission.second.second = "Get away from " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 			/// TODO -- Internationalization -- /// }End
 
-			/// TODO --Aditional constraints (maybe)--///
-
-			std::uniform_int_distribution<int> rewardDist(0,9);
-
-			if(rewardDist(generator)<=8){
-
-				/// TODO -- select random resource and random quantity based on the dificulty of the mission -- ///
-
-				m_tmpResourceReward.first = Common::Data::Game::GAME_ORE;
-				m_tmpResourceReward.second = 100;
-
-			}else{
-
-				/// TODO -- select a random item type and a random item, also create a set of items -- ///
-
-				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
-				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
-			}
+			generateReward(3);
 
 			return m_tmpMission;
 
@@ -233,35 +177,18 @@ namespace Application
 			std::string str(CGameManager::getInstance()->getPlanet());
 			m_tmpPlanet = std::atoi(str.substr(str.length()-2,1).c_str());
 
-			/// TODO -- Choose a random item -- ///
-			/// TODO -- Internationalization -- /// Begin{
-			m_tmpDesiredItem = "Test Engine";
+			std::uniform_int_distribution<int> desiredItemDist(0,Common::Data::Game::TOTAL_ITEMS);
+			
+			m_tmpDesiredItem = Common::Data::Game::GAME_ITEM_LIST[desiredItemDist(generator)][0];
 
+			/// TODO -- Internationalization -- /// Begin{
 			m_tmpMission.second.first = "Bring me a " + m_tmpDesiredItem;
 			m_tmpMission.second.second = "Bring a " + m_tmpDesiredItem + " to planet" + Common::Data::Game::GAME_PLANETS_NAMES[m_tmpTargetSystem][m_tmpPlanet] + 
 				" in " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 
 			/// TODO -- Internationalization -- /// }End
 
-			/// TODO --Aditional constraints (maybe)--///
-
-			std::uniform_int_distribution<int> rewardDist(0,9);
-
-			if(rewardDist(generator)<=8){
-
-				/// TODO -- select random resource and random quantity based on the dificulty of the mission -- ///
-
-				m_tmpResourceReward.first = Common::Data::Game::GAME_ORE;
-				m_tmpResourceReward.second = 100;
-
-			}else{
-
-				/// TODO -- select a random item type and a random item, also create a set of items -- ///
-
-				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0];
-				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1];
-			}
+			generateReward(9);
 
 			return m_tmpMission;
 
@@ -280,27 +207,8 @@ namespace Application
 				" in " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 			/// TODO -- Internationalization -- /// }End
 
-
-			/// TODO --Aditional constraints (maybe)--///
-
-			std::uniform_int_distribution<int> rewardDist(0,9);
-
-			if(rewardDist(generator)<=8){
-
-				/// TODO -- select random resource and random quantity based on the dificulty of the mission -- ///
-
-				m_tmpResourceReward.first = Common::Data::Game::GAME_ORE;
-				m_tmpResourceReward.second = 100;
-
-			}else{
-
-				/// TODO -- select a random item type and a random item, also create a set of items -- ///
-
-				m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
-				m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[0][0]/*"Reward Item"*/;
-				m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[0][1]/*"Item\nTest item to be given as a reward\nfor completing missions."*/;
-			}
-
+			generateReward(m_tmpTotalTargets/100);
+			
 			return m_tmpMission;
 		}
 	}
@@ -549,5 +457,60 @@ namespace Application
 
 			return ret;
 		}
+	}
+
+	void CMissionManager::generateReward(unsigned int difficulty)
+	{
+		std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
+		std::default_random_engine generator(seed);
+		std::uniform_int_distribution<int> rewardDist(1,100);
+
+		if(difficulty > 9) difficulty = 9;
+		if(difficulty < 1) difficulty = 1;
+
+		if(rewardDist(generator)<= 100 - difficulty * 5){
+
+				m_tmpResourceReward.first = Common::Data::Game::GAME_ORE;
+				std::uniform_int_distribution<int> moneyDist(1 + difficulty * 2, 10 + difficulty * 5);
+				m_tmpResourceReward.second = moneyDist(generator) * 10;
+
+			}else{
+
+				std::uniform_int_distribution<int> itemDist(1,5);
+				int idx(itemDist(generator));
+				if(idx == 1){
+					std::uniform_int_distribution<int> weaponDist(1,1 + ((float)difficulty/9.0)*(Common::Data::Game::TOTAL_PRIMARY_WEAPONS - 2) );
+					int item(weaponDist(generator));
+					m_tmpItemReward.first = Common::Data::Game::GAME_PRIMARY_WEAPON;
+					m_tmpItemReward.second.first = Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[item][0];
+					m_tmpItemReward.second.second = Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[item][1];
+				}else if(idx == 2){
+					std::uniform_int_distribution<int> weaponDist(1,1 + ((float)difficulty/9.0)*(Common::Data::Game::TOTAL_SECONDARY_WEAPONS - 2) );
+					int item(weaponDist(generator));
+					m_tmpItemReward.first = Common::Data::Game::GAME_SECONDARY_WEAPON;
+					m_tmpItemReward.second.first = Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[item][0];
+					m_tmpItemReward.second.second = Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[item][1];
+				}else if(idx == 3){
+					std::uniform_int_distribution<int> engineDist(1,1 + ((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ENGINES - 2) );
+					int item(engineDist(generator));
+					m_tmpItemReward.first = Common::Data::Game::GAME_ENGINE;
+					m_tmpItemReward.second.first = Common::Data::Game::GAME_ENGINES_LIST[item][0];
+					m_tmpItemReward.second.second = Common::Data::Game::GAME_ENGINES_LIST[item][1];
+				}else if(idx == 4){
+					std::uniform_int_distribution<int> specialDeviceDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ENGINES - 1) );
+					int item(specialDeviceDist(generator));
+					m_tmpItemReward.first = Common::Data::Game::GAME_ITEM_LIST[item][0];
+					m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[item][1];
+					m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[item][2];
+				}else if(idx == 5){
+					std::uniform_int_distribution<int> gameItemDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ENGINES - 1) );
+					int item(gameItemDist(generator));
+					m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
+					m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[item][0];
+					m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[item][1];
+				}
+				
+
+			}
 	}
 }

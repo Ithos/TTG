@@ -88,6 +88,7 @@ namespace Application
 		~CMissionManager();
 
 		void getReward(bool window = true);
+		void generateReward(unsigned int difficulty);
 
 	};
 }

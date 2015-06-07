@@ -177,7 +177,7 @@ namespace Application
 			std::string str(CGameManager::getInstance()->getPlanet());
 			m_tmpPlanet = std::atoi(str.substr(str.length()-2,1).c_str());
 
-			std::uniform_int_distribution<int> desiredItemDist(0,Common::Data::Game::TOTAL_ITEMS);
+			std::uniform_int_distribution<int> desiredItemDist(0,Common::Data::Game::TOTAL_ITEMS - 1);
 			
 			m_tmpDesiredItem = Common::Data::Game::GAME_ITEM_LIST[desiredItemDist(generator)][0];
 

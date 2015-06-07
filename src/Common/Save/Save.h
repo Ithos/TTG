@@ -14,60 +14,38 @@
 	GNU General Public License for more details.
 	You should have received a copy of the GNU General Public License
 	along with Through the galaxy.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-
-#ifndef __MAP_MAPGENERATOR_H
-#define __MAP_MAPGENERATOR_H
+#ifndef __COMMON_SAVE_H
+#define __COMMON_SAVE_H
 
 #include <string>
-#include <vector>
-#include <list>
-#include <Map>
-#include <chrono>
-#include <ctime>
+#include <sstream>
+#include <map>
 
-namespace Map
+namespace Common { namespace Save
 {
-	class CMapEntity;
-}
-
-namespace Ogre
-{
-	class Vector3;
-}
-
-namespace Map
-{
-
-	class CMapGenerator
+	template <typename R>
+	static R to(const std::string &str)
 	{
-	public:
+		std::stringstream ss(str);
+		R ret;
+		ss >> ret;
+		return (ret);
+	}
 
-		CMapGenerator();
+	template <typename T>
+	std::string to(const T& t)
+	{
+		return (std::to_string(t));
+	}
 
-		~CMapGenerator();
+	bool loadGame();
+	bool saveGame();
 
-		typedef std::list<Map::CMapEntity*> TEntityList;
-
-		void resetMaps() {m_SeedMap.clear();}
-
-		TEntityList generateGalaxy(const std::string& descriptor);
-
-		TEntityList generateSystem(const std::string& descriptor);
-
-		TEntityList generatePlanet(const std::string& descriptor);
-
-	private:
-
-		bool checkDist(const std::vector<Ogre::Vector3>& vec,const Ogre::Vector3& pos,float dist, int vecNum = -1);
-	
-	public:
-		typedef std::map<std::string,std::time_t> TSeedMap;
-
-		TSeedMap m_SeedMap;
+	class CSave
+	{
 	};
-
-}
+}}
 
 #endif

@@ -34,6 +34,7 @@
 #include "Application\States\GameOverState.h"
 #include "Application\States\GameFinishedState.h"
 
+#include <Common/Save/Save.h>
 
 namespace Application
 {
@@ -85,12 +86,15 @@ namespace Application
 		if(!addState("game_finished", new CGameFinishedState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
 			return false;
 
+		Common::Save::loadGame();
+
 		return true;
 
 	}
 
 	void CTTGApplication::release()
 	{
+		Common::Save::saveGame();
 		releaseAllStates();
 		CMissionManager::release();
 		CGameManager::release();

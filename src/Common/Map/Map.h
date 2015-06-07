@@ -55,11 +55,11 @@ namespace Map
 		static CMap* m_instance;
 
 		TEntityList m_entityList;
-
+	public:
 		CMapGenerator m_mapGenerator;
 
 		CMapParser m_mapParser;
-
+	private:
 		CMap();
 		virtual ~CMap();
 	};

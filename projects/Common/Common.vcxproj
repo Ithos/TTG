@@ -88,6 +88,8 @@
     <ClInclude Include="..\..\src\Common\Data\Spawn_Constants.h" />
     <ClInclude Include="..\..\src\Common\Data\TTG_Types.h" />
     <ClInclude Include="..\..\src\Common\Input\Input.h" />
+    <ClInclude Include="..\..\src\Common\Language\Language.h" />
+    <ClInclude Include="..\..\src\Common\Language\Tags.h" />
     <ClInclude Include="..\..\src\Common\Log\log.h" />
     <ClInclude Include="..\..\src\Common\Lua\LuaManager.h" />
     <ClInclude Include="..\..\src\Common\Map\Generator\MapGenerator.h" />
@@ -99,6 +101,8 @@
     <ClInclude Include="..\..\src\Common\Physic\Conversions.h" />
     <ClInclude Include="..\..\src\Common\Physic\ErrorManager.h" />
     <ClInclude Include="..\..\src\Common\Physic\PhysicManager.h" />
+    <ClInclude Include="..\..\src\Common\Save\Save.h" />
+    <ClInclude Include="..\..\src\Common\Save\Tags.h" />
     <ClInclude Include="..\..\src\Common\Sound\Sound.h" />
     <ClInclude Include="..\..\src\Common\Util\Math.h" />
     <ClInclude Include="..\..\src\Common\Util\PxConversor.h" />
@@ -110,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Common\Configure\Configure.cpp" />
+    <ClCompile Include="..\..\src\Common\Language\Language.cpp" />
     <ClCompile Include="..\..\src\Common\Log\log.cpp" />
     <ClCompile Include="..\..\src\Common\Lua\LuaManager.cpp" />
     <ClCompile Include="..\..\src\Common\Map\Generator\MapGenerator.cpp" />
@@ -120,6 +125,7 @@
     <ClCompile Include="..\..\src\Common\Physic\CollisionManager.cpp" />
     <ClCompile Include="..\..\src\Common\Physic\ErrorManager.cpp" />
     <ClCompile Include="..\..\src\Common\Physic\PhysicManager.cpp" />
+    <ClCompile Include="..\..\src\Common\Save\Save.cpp" />
     <ClCompile Include="..\..\src\Common\Sound\Sound.cpp" />
     <ClCompile Include="..\..\src\Common\Util\XMLParser\XmlParser.cpp" />
   </ItemGroup>

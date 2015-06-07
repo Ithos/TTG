@@ -109,6 +109,12 @@
     <Filter Include="Particles\Sources">
       <UniqueIdentifier>{f2d508f1-eda3-4d6c-9773-f25d5f65fe61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Save">
+      <UniqueIdentifier>{d1f5e92c-d362-4b0b-a020-7d7fc8f3fb79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Language">
+      <UniqueIdentifier>{0eeb49de-7a68-4c0b-9414-ba5cdfd46c6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Common\Configure\Configure.h">
@@ -183,6 +189,18 @@
     <ClInclude Include="..\..\src\Common\Physic\Conversions.h">
       <Filter>Physic</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Common\Save\Save.h">
+      <Filter>Save</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Language\Language.h">
+      <Filter>Language</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Language\Tags.h">
+      <Filter>Language</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Common\Save\Tags.h">
+      <Filter>Save</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Common\Configure\Configure.cpp">
@@ -223,6 +241,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Common\Physic\CollisionManager.cpp">
       <Filter>Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Save\Save.cpp">
+      <Filter>Save</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Common\Language\Language.cpp">
+      <Filter>Language</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

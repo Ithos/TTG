@@ -14,60 +14,13 @@
 	GNU General Public License for more details.
 	You should have received a copy of the GNU General Public License
 	along with Through the galaxy.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
+#ifndef __COMMON_LANGUAGE_TAGS_H
+#define __COMMON_LANGUAGE_TAGS_H
 
-#ifndef __MAP_MAPGENERATOR_H
-#define __MAP_MAPGENERATOR_H
-
-#include <string>
-#include <vector>
-#include <list>
-#include <Map>
-#include <chrono>
-#include <ctime>
-
-namespace Map
-{
-	class CMapEntity;
-}
-
-namespace Ogre
-{
-	class Vector3;
-}
-
-namespace Map
+namespace Common { namespace Language
 {
 
-	class CMapGenerator
-	{
-	public:
-
-		CMapGenerator();
-
-		~CMapGenerator();
-
-		typedef std::list<Map::CMapEntity*> TEntityList;
-
-		void resetMaps() {m_SeedMap.clear();}
-
-		TEntityList generateGalaxy(const std::string& descriptor);
-
-		TEntityList generateSystem(const std::string& descriptor);
-
-		TEntityList generatePlanet(const std::string& descriptor);
-
-	private:
-
-		bool checkDist(const std::vector<Ogre::Vector3>& vec,const Ogre::Vector3& pos,float dist, int vecNum = -1);
-	
-	public:
-		typedef std::map<std::string,std::time_t> TSeedMap;
-
-		TSeedMap m_SeedMap;
-	};
-
-}
-
+}}
 #endif

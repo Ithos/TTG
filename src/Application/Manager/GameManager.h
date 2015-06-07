@@ -151,9 +151,11 @@ namespace Application
 
 		/// TODO -- Serialization/deserialization --- ///
 
-	private:
+		private:
 
 		static CGameManager* m_instance;
+
+		public:
 
 		std::string m_system;
 		std::string m_planet;
@@ -201,6 +203,8 @@ namespace Application
 
 		typedef std::set<int> TSystemsVisited;
 		TSystemsVisited m_systemsVisited;
+
+		private:
 
 		CGameManager();
 		~CGameManager();

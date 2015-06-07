@@ -34,7 +34,7 @@ namespace AI
 	public:
 		/*
 		Devuelve una entidad de percepción a partir de una cadena de texto que identifica su tipo.
-		@param type Tipo de entidad de percepción. Por ahora sólo admite "enemy" y "player"
+		@param type Tipo de entidad de percepción. Admite "enemy", "player" y "asteroid"
 		@param radius Radio de la entidad de percepción
 		@param userData Datos de usuario asociados a la entidad de percepción
 		@param listener Listener que será notificado cuando la entidad perciba una señal

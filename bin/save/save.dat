@@ -1,112 +1,140 @@
-20
-060323
+4
+030113
 2
 >>Fuel:
 ##
-360
+190
 ##
 >>Ore:
 ##
-200
+300
 ##
 5
 >>Engine:
 ##
 Ion Pulse Engine
 ##
-Engine
-As the most basic faster than light
-engine it provides a short range quantic jump
-and medium slower than light speed.
+EngineAs the most basic faster than lightengine it provides a short range quantic jumpand medium slower than light speed.
 ##
 >>Primary Weapon:
 ##
 Heavy Laser
 ##
-Primary Weapon
-Standar heavy laser gun,
-used as primary weapon for nearly any kind of spaceship.
+Primary WeaponStandar heavy laser gun,used as primary weapon for nearly any kind of spaceship.
 ##
 >>Secondary Weapon:
 ##
 Missile Launcher
 ##
-Secondary Weapon
-Powerfull but slightly slow.
-This missile launcher mounted on
-a turret takes a lot of energy to use.
+Secondary WeaponPowerfull but slightly slow.This missile launcher mounted ona turret takes a lot of energy to use.
 ##
 >>Sensors:
 ##
 Radar
 ##
-Lvl 1 Sensor
-This common sensor measures
-electromagnetic echoes.
-It detects some enemies and
-it`s also able to get some information
-from planets.
+Lvl 1 SensorThis common sensor measureselectromagnetic echoes.It detects some enemies andit`s also able to get some informationfrom planets.
 ##
 >>Shield Energy Regenerator
 ##
 Shield Energy Regenerator
 ##
-Special Device
-A quantic reverse
-enthropy device
-that slowly regenerates
-the shield energy over time.
+Special DeviceA quantic reverseenthropy devicethat slowly regeneratesthe shield energy over time.
 ##
 3
 >>Engineers:
 ##
-1
+2
 ##
 >>Military:
 ##
-1
+2
 ##
 >>Scientifics:
 ##
 1
 ##
-4
+13
+>>Big Fuel Compressor
+##
+Heat Cogenerator
+##
+Special DeviceModified engine refrigeration system thatuses the heat produced by the engineto pre-heat the fuel.-15% Fuel Cost
+##
+>>Big Mineral Processor
+##
+Big Mineral Processor
+##
+Special DeviceA furnace that melts both metaland mineral making them easier to purify.+15% Scrap
+##
 >>Engine:
 ##
 Test Engine
 ##
-Engine
-Test.
+EngineTest.
+##
+>>Heavy Hull Reinforcement
+##
+Heavy Hull Reinforcement
+##
+Special DeviceHeavy titanium basedreinforcement plates.
+##
+>>Light Hull Reinforcement
+##
+Light Hull Reinforcement
+##
+Special DeviceMetal plates used to reinforcethe weaker partsof the hull.
+##
+>>Medium Fuel Compressor
+##
+Automated Fuel Feeder
+##
+Special DeviceThis device optimizes thefuel feeding rate of the enginebased on the linear momentum of the ship.-10% Fuel Cost
+##
+>>Medium Hull Reinforcement
+##
+Medium Hull Reinforcement
+##
+Special DeviceCeramic cover for the hulldesigend to disperse heat.
+##
+>>Medium Mineral Processor
+##
+Medium Mineral Processor
+##
+Special DeviceA chemical mineral refinerconsidered dangerous by mostminers because it uses strong acids.+10% Scrap
 ##
 >>Primary Weapon:
 ##
 Tesla Cannon
 ##
-Primary Weapon
-This weapon fires a continuous lightning ray.
-Though it`s technology it`s
-quite old this weapon is
-still in use today.
+Primary WeaponThis weapon fires a continuous lightning ray.Though it`s technology it`squite old this weapon isstill in use today.
 ##
 >>Secondary Weapon:
 ##
 Static Mines
 ##
-Secondary Weapon
-Mines that are left behind the ship
-and attach to any spaceship that gets
-close enough.
+Secondary WeaponMines that are left behind the shipand attach to any spaceship that getsclose enough.
 ##
->>Stealth Module
+>>Shield Regeneration Enhancer
 ##
-Stealth Module
+Shield Regeneration Enhancer
 ##
-Special Device
-Hides the ship from enemies sensors.
-It has a high energy cost.
+Special DeviceA quantic amplificatorthat used in combination witha shield regenerator increases the shield regenerationspeed.
+##
+>>Small Fuel Compressor
+##
+Fuel Compressor
+##
+Special DeviceDark matter compressorused by many ships as a way to save some fuel.-5% Fuel Cost
+##
+>>Small Mineral Processor
+##
+Small Mineral Processor
+##
+Special DeviceStandar mining machineryused by most colonial fortune-seekers.+5% Scrap
 ##
 0
- 
+null_value
+##
 2
 Ion Pulse Engine
 ##
@@ -124,16 +152,19 @@ Test Engine
 140
 100
 100
+110
+110
+6
 105
 105
-0
-105
-105
-10
+12
 0
 4
 0
 0
+1
+1
+1.1
 0
 0
 0
@@ -141,9 +172,9 @@ Test Engine
 2
 0001
 ##
-14335888589493533
+3435973836
 ##
-0001_0020
+0001_0004
 ##
-14335888777744301
+3435973836
 ##

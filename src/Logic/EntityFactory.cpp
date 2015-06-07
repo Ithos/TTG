@@ -45,6 +45,7 @@
 #include "Entity/Components/Movement/PlanetRotation.h"
 #include "Entity/Components/AI/SteeringMovement.h"
 #include "Entity/Components/AI/StateMachineExecutor.h"
+#include "Entity/Components/AI/PerceptionComponent.h"
 #include "Entity/Components/System/OrbitMovement.h"
 #include "Entity/Components/Gameplay/Shield.h"
 

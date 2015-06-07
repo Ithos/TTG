@@ -51,6 +51,13 @@ namespace AI {
 	}
 
 
+	bool CAI::tick(unsigned int msecs)
+	{
+		m_pManager->update(msecs);
+		return true;
+	}
+
+
 	double CAI::correctAngle(double angle)
 	{
 		while (angle > Common::Util::Math::PI)

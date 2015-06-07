@@ -30,7 +30,7 @@ namespace AI
 
 		static bool init();
 		static void release();
-		bool tick(float secs);
+		bool tick(unsigned int msecs);
 		CPerceptionManager* getPerceptionManager() { return m_pManager; };
 		static double correctAngle(double angle);
 

@@ -31,9 +31,167 @@ namespace Common { namespace Save
 
 	const char* const FILE_NAME = "./save/save.dat";
 	const char* const SEPARATOR = "##";
+	const char* const _NULL = "null_value";
 	
+	std::string loadLines(std::ifstream& in)
+	{
+		string line ("");
+		string ret ("");
+
+		if(in){
+			do{
+				ret += line;
+				getline(in,line);
+			}while(in && line != SEPARATOR);
+		}
+		return (ret);
+	}
+
 	bool loadGame()
 	{
+		return (true);
+		ifstream in (FILE_NAME);
+
+		if(!in.is_open()){ return false; }
+
+		string line ("");
+
+		getline(in,Application::CGameManager::getInstance()->m_system);
+		getline(in,Application::CGameManager::getInstance()->m_planet);
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_stateMap.clear();
+		unsigned int num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+			string f (loadLines(in));
+			getline(in,line);
+			Application::CGameManager::getInstance()->m_stateMap.insert(pair<string,unsigned int>(f,to<unsigned int>(line)));
+			getline(in,line);
+		}
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_equipmentMap.clear();
+		num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+			string f (loadLines(in));
+			string sf(loadLines(in));
+			string ss(loadLines(in));
+			pair<string,string> second(sf,ss);
+			pair<string,pair<string,string>> p(f,second);
+			Application::CGameManager::getInstance()->m_equipmentMap.insert(p);
+		}
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_crewMembersMap.clear();
+		num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+			string f (loadLines(in));
+			getline(in,line);
+			Application::CGameManager::getInstance()->m_crewMembersMap.insert(pair<string,unsigned int>(f,to<unsigned int>(line)));
+			getline(in,line);
+		}
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_cargoMap.clear();
+		num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+			string f (loadLines(in));
+			string sf(loadLines(in));
+			string ss(loadLines(in));
+			pair<string,string> second(sf,ss);
+			pair<string,pair<string,string>> p(f,second);
+			Application::CGameManager::getInstance()->m_cargoMap.insert(p);
+		}
+
+		getline(in,line);
+		string s(loadLines(in));
+		Application::CGameManager::getInstance()->m_activeMission.first = to<unsigned int>(line);
+		string aux(_NULL);
+		if(!s.compare(aux))
+			Application::CGameManager::getInstance()->m_activeMission.second = "";
+		else
+			Application::CGameManager::getInstance()->m_activeMission.second = s;
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_engineDataMap.clear();
+		num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+			string f (loadLines(in));
+			int sf = 0;
+			int ss = 0;
+			getline(in,line);
+			sf = to<int>(line);
+			getline(in,line);
+			getline(in,line);
+			ss = to<int>(line);
+			getline(in,line);
+			pair<int,int> second(sf,ss);
+			pair<string,pair<int,int>> p(f,second);
+			Application::CGameManager::getInstance()->m_engineDataMap.insert(p);
+		}
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_eqEngineDat.first = to<int>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_eqEngineDat.second = to<int>(line);
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_life = to<int>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_totalLife = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_shield = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_tmpShield = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_shieldRegen = to<unsigned int>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_energy = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_tmpEnergy = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_energyRegen = to<unsigned int>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_objectives = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_totalObjectives = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_nameRepeatCounter = to<unsigned>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_sensorLevel = to<unsigned int>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_fuelConsumeProportion = to<float>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_mineralProportion = to<float>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_distanceProportion = to<float>(line);
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_targetSystem = to<bool>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_targetPlanet = to<bool>(line);
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_inhabitedPlanet = to<bool>(line);
+
+		getline(in,line);
+		Application::CGameManager::getInstance()->m_systemsVisited.clear();
+		num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+			getline(in,line);
+			Application::CGameManager::getInstance()->m_systemsVisited.insert(to<int>(line));
+		}
+
+		getline(in,line);
+		(Map::CMap::getInstance()->m_mapGenerator.m_SeedMap.clear());		
+		num = to<unsigned int>(line);
+		for(unsigned int i = 0; i < num; i++){
+				
+			string f(loadLines(in));
+			getline(in,line);
+			pair<string,time_t> p (f,to<unsigned int>(line));
+			Map::CMap::getInstance()->m_mapGenerator.m_SeedMap.insert(p);
+			getline(in,line);
+		}
 
 		return (true);
 	}
@@ -86,7 +244,11 @@ namespace Common { namespace Save
 		}
 
 		out << Application::CGameManager::getInstance()->m_activeMission.first << endl;
-		out << Application::CGameManager::getInstance()->m_activeMission.second << endl;
+		if(Application::CGameManager::getInstance()->m_activeMission.second != "")
+			out << Application::CGameManager::getInstance()->m_activeMission.second << endl;
+		else
+			out << _NULL << endl;
+		out << SEPARATOR << endl;
 
 		out << Application::CGameManager::getInstance()->m_engineDataMap.size() << endl;
 		for(map<string,pair<int,int>>::const_iterator it = Application::CGameManager::getInstance()->m_engineDataMap.begin();
@@ -114,6 +276,10 @@ namespace Common { namespace Save
 		out << Application::CGameManager::getInstance()->m_totalObjectives << endl;
 		out << Application::CGameManager::getInstance()->m_nameRepeatCounter << endl;
 		out << Application::CGameManager::getInstance()->m_sensorLevel << endl;
+		out << Application::CGameManager::getInstance()->m_fuelConsumeProportion << endl;
+		out << Application::CGameManager::getInstance()->m_mineralProportion << endl;
+		out << Application::CGameManager::getInstance()->m_distanceProportion << endl;
+
 		out << Application::CGameManager::getInstance()->m_targetSystem << endl;
 		out << Application::CGameManager::getInstance()->m_targetPlanet << endl;
 		out << Application::CGameManager::getInstance()->m_inhabitedPlanet << endl;

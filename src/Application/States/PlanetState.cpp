@@ -6,6 +6,8 @@
 
 #include "../../Common/Sound/Sound.h"
 
+#include "AI/AI.h"
+
 #include "../3DApplication.h"
 #include "../Manager/GameManager.h"
 #include "../../Common/Data/Game_Constants.h"
@@ -106,6 +108,8 @@ namespace Application
 		CApplicationState::tick(msecs);
 
 		Logic::CLogic::getInstance()->tick(msecs);
+
+		AI::CAI::getInstance()->tick(msecs);
 
 		if(m_time < 0.5f)
 			m_time+=msecs/1000.0f;

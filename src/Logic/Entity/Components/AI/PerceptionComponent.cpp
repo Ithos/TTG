@@ -30,6 +30,9 @@
 #include "Logic/Entity/Components/Movement/Transform.h"
 #include "Common/Data/TTG_Types.h"
 
+#include <log.h>
+#include <OgreStringConverter.h>
+
 namespace Logic 
 {
 	namespace Component
@@ -119,6 +122,9 @@ namespace Logic
 		void CPerceptionComponent::tick(unsigned int msecs)
 		{
 			IComponent::tick(msecs);
+
+			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
+			m_pEntity->setTransform(transf->getTransform());
 		}
 
 		/*
@@ -132,7 +138,14 @@ namespace Logic
 		{
 			CEntity* entity = (CEntity*) notification->getPerceivedEntity()->getUserData();
 			CTransform* transf = static_cast<CTransform*>(entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
-			std::cout << m_entity->getName() << " percibe a " << entity->getName() << " en " << transf->getPosition() << std::endl;
+//			std::cout << m_entity->getName() << " percibe a " << entity->getName() << " en " << transf->getPosition() << std::endl;
+
+			Ogre::String xx = Ogre::StringConverter::toString(transf->getPosition().x) + " ";
+			Ogre::String yy = Ogre::StringConverter::toString(transf->getPosition().y) + " ";
+			Ogre::String zz = Ogre::StringConverter::toString(transf->getPosition().z) + "\n";
+			Ogre::String str = xx+yy+zz;
+			std::string cadena = m_entity->getName()+" percibe a "+entity->getName()+" en "+str;
+			log_trace("MAIN",cadena.c_str());
 
 			// El gestor de percepción se desentiende de las notificaciones una vez que las 
 			// envía. Es responsabilidad del receptor eliminarlas.

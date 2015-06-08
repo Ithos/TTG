@@ -665,6 +665,12 @@ namespace Common
 				GAME_SHOP_SCIENTIFIC
 			};
 
+			const char* const GAME_CREW_TYPES[] = {
+				GAME_MILITARY,
+				GAME_ENGINEERS,
+				GAME_SCIENTIFICS
+			};
+
 			/// TODO -- Internationalization -- /// }End
 		}
 

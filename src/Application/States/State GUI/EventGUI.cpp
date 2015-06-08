@@ -370,10 +370,16 @@ namespace Application
 				if(item->getText() == ">>" + it->second.first){
 					if(cost <= m_mgrInstance->getPlayerResourceByName(Common::Data::Game::GAME_ORE)){
 						if(!m_mgrInstance->decreaseResourceByName(Common::Data::Game::GAME_ORE, cost)) return true;
-						m_mgrInstance->addToCargo(it->first,it->second.first,it->second.second);
-						if(it->first == Common::Data::Game::GAME_ENGINE)
-							m_mgrInstance->addEngineData(it->second.first,
-							m_engineDataMap[it->second.first].first, m_engineDataMap[it->second.first].second);
+
+						if(it->first != Common::Data::Game::GAME_MILITARY && it->first != Common::Data::Game::GAME_ENGINEERS && 
+							it->first != Common::Data::Game::GAME_SCIENTIFICS){
+							m_mgrInstance->addToCargo(it->first,it->second.first,it->second.second);
+							if(it->first == Common::Data::Game::GAME_ENGINE)
+								m_mgrInstance->addEngineData(it->second.first,
+								m_engineDataMap[it->second.first].first, m_engineDataMap[it->second.first].second);
+						}else{
+							m_mgrInstance->addCrewMemberByName(it->first);
+						}
 
 						m_shopMap.erase(it);
 						item->destroy();
@@ -507,6 +513,14 @@ namespace Application
 		std::default_random_engine generator(seed);
 		std::uniform_int_distribution<int> priceVariance(0,20);
 		std::uniform_int_distribution<int>::param_type price(0,20);
+		std::uniform_int_distribution<int> numItemDist(0,5);
+		std::uniform_int_distribution<int> typeItemDist(0,4);
+		std::uniform_int_distribution<int> primaryWeaponDist(1,Common::Data::Game::TOTAL_PRIMARY_WEAPONS - 1);
+		std::uniform_int_distribution<int> secondaryWeaponDist(1,Common::Data::Game::TOTAL_SECONDARY_WEAPONS - 1);
+		std::uniform_int_distribution<int> engineDist(1,Common::Data::Game::TOTAL_ENGINES - 1);
+		std::uniform_int_distribution<int> specialItemDist(0,Common::Data::Game::TOTAL_SPECIAL - 1);
+		std::uniform_int_distribution<int> crewDist(0,2);
+		std::uniform_int_distribution<int> coinToss(0,1);
 
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ResourcesBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_ORE) 
@@ -534,47 +548,101 @@ namespace Application
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
 			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::REPAIR_HULL_COST + (10 * priceVariance(generator)) )) );
 
-		/// TODO -- Read random items from file -- ///
-		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
-			createChild("TaharezLook/ListboxItem","Item1");
+		/// TODO -- Read random items from file -- //
 
-		item->setText(">>"+std::string(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0]));
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1]);
-		price._Max = Common::Data::Game::PRIMARY_WEAPON_COST[2].second.second;
-		priceVariance.param(price);
-		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::PRIMARY_WEAPON_COST[2].second.first + (10 * priceVariance(generator)) )) );
+		int itemNum(numItemDist(generator));
 
-		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_PRIMARY_WEAPON,
-			std::pair<std::string,std::string>(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1])));
+		for(int i = 0; i < itemNum; ++i){
 
-		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
-			createChild("TaharezLook/ListboxItem","Item2");
-		item->setText(">>"+ std::string(Common::Data::Game::GAME_ENGINES_LIST[2][0]));
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, std::string(Common::Data::Game::GAME_ENGINES_LIST[2][1]));
-		price._Max = Common::Data::Game::ENGINE_COST[2].second.second;
-		priceVariance.param(price);
-		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::ENGINE_COST[2].second.first + (10 * priceVariance(generator)) )) );
+			int itemType(typeItemDist(generator));
 
-		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_ENGINE,
-			std::pair<std::string,std::string>(Common::Data::Game::GAME_ENGINES_LIST[2][0],Common::Data::Game::GAME_ENGINES_LIST[2][1])));
+			item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
+				createChild("TaharezLook/ListboxItem","Item"+std::to_string(i));
 
-		m_engineDataMap[Common::Data::Game::ENGINE_DATA_MAP[2].first] = std::pair<int, int>(Common::Data::Game::ENGINE_DATA_MAP[2].second.first
-																							, Common::Data::Game::ENGINE_DATA_MAP[2].second.second);
+			if(itemType == 0){
 
-		item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->
-			createChild("TaharezLook/ListboxItem","Item3");
-		item->setText(">>" + std::string(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]));
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1]);
-		price._Max = Common::Data::Game::SECONDARY_WEAPON_COST[2].second.second;
-		priceVariance.param(price);
-		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
-			new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::SECONDARY_WEAPON_COST[2].second.first + (10 * priceVariance(generator)) )) );
+				int primaryWeapon(primaryWeaponDist(generator));
 
-		m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SECONDARY_WEAPON,
-			std::pair<std::string,std::string>(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1])));
+				if(primaryWeapon > ((Common::Data::Game::TOTAL_PRIMARY_WEAPONS - 1) * 2/3) && m_mgrInstance->getObjectivesAquired() < 2)
+					if(coinToss(generator))primaryWeapon -= Common::Data::Game::TOTAL_PRIMARY_WEAPONS/2;
 
+				item->setText(">>"+std::string(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[primaryWeapon][0]));
+				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[primaryWeapon][1]);
+				price._Max = Common::Data::Game::PRIMARY_WEAPON_COST[primaryWeapon].second.second;
+				priceVariance.param(price);
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::PRIMARY_WEAPON_COST[primaryWeapon].second.first + (10 * priceVariance(generator)) )) );
+
+				m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_PRIMARY_WEAPON,
+					std::pair<std::string,std::string>(Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[primaryWeapon][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[primaryWeapon][1])));
+
+			}else if(itemType == 1){
+
+				int secondaryWeapon(secondaryWeaponDist(generator));
+
+				if(secondaryWeapon > ((Common::Data::Game::TOTAL_SECONDARY_WEAPONS - 1) * 2/3) && m_mgrInstance->getObjectivesAquired() < 2)
+					if(coinToss(generator))secondaryWeapon -= Common::Data::Game::TOTAL_SECONDARY_WEAPONS/2;
+
+				item->setText(">>"+std::string(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[secondaryWeapon][0]));
+				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[secondaryWeapon][1]);
+				price._Max = Common::Data::Game::SECONDARY_WEAPON_COST[secondaryWeapon].second.second;
+				priceVariance.param(price);
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::SECONDARY_WEAPON_COST[secondaryWeapon].second.first + (10 * priceVariance(generator)) )) );
+
+				m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SECONDARY_WEAPON,
+					std::pair<std::string,std::string>(Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[secondaryWeapon][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[secondaryWeapon][1])));
+
+			}else if(itemType == 2){
+
+				int engine(engineDist(generator));
+
+				if(engine > ((Common::Data::Game::TOTAL_ENGINES - 1) * 2/3) && m_mgrInstance->getObjectivesAquired() < 2)
+					if(coinToss(generator))engine -= Common::Data::Game::TOTAL_ENGINES/2;
+
+				item->setText(">>"+std::string(Common::Data::Game::GAME_ENGINES_LIST[engine][0]));
+				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_ENGINES_LIST[engine][1]);
+				price._Max = Common::Data::Game::ENGINE_COST[engine].second.second;
+				priceVariance.param(price);
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::ENGINE_COST[engine].second.first + (10 * priceVariance(generator)) )) );
+
+				m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SECONDARY_WEAPON,
+					std::pair<std::string,std::string>(Common::Data::Game::GAME_ENGINES_LIST[engine][0],Common::Data::Game::GAME_ENGINES_LIST[engine][1])));
+
+			}else if(itemType == 3){
+
+				int specialItem(specialItemDist(generator));
+
+				item->setText(">>"+std::string(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[specialItem][1]));
+				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[specialItem][2]);
+				price._Max = Common::Data::Game::SPECIAL_EQUIPMENT_COST[specialItem].second.second;
+				priceVariance.param(price);
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::SPECIAL_EQUIPMENT_COST[specialItem].second.first + (10 * priceVariance(generator)) )) );
+
+				m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[specialItem][0],
+					std::pair<std::string,std::string>(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[specialItem][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[specialItem][2])));
+
+			}else if(itemType == 4){
+
+				int crewMember(crewDist(generator));
+
+				item->setText(">>"+std::string(Common::Data::Game::GAME_CREW_SHOP_LIST[crewMember][0]));
+				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_CREW_SHOP_LIST[crewMember][1]);
+				price._Max = Common::Data::Game::CREW_SHOP_COST[crewMember].second.second;
+				priceVariance.param(price);
+				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/CostBoard"))->addItem(
+					new CEGUI::ListboxTextItem(std::to_string(Common::Data::Game::CREW_SHOP_COST[crewMember].second.first + (10 * priceVariance(generator)) )) );
+
+				m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_CREW_TYPES[crewMember],
+					std::pair<std::string,std::string>(Common::Data::Game::GAME_CREW_SHOP_LIST[crewMember][0],Common::Data::Game::GAME_CREW_SHOP_LIST[crewMember][1])));
+
+			}
+
+		}
+
+		
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChildElement("DocksPage/ShopWindow/ItemsBoard"))->endInitialisation();
 	}
 	

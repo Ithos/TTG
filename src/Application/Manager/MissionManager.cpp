@@ -497,13 +497,13 @@ namespace Application
 					m_tmpItemReward.second.first = Common::Data::Game::GAME_ENGINES_LIST[item][0];
 					m_tmpItemReward.second.second = Common::Data::Game::GAME_ENGINES_LIST[item][1];
 				}else if(idx == 4){
-					std::uniform_int_distribution<int> specialDeviceDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ENGINES - 1) );
+					std::uniform_int_distribution<int> specialDeviceDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_SPECIAL - 1) );
 					int item(specialDeviceDist(generator));
 					m_tmpItemReward.first = Common::Data::Game::GAME_ITEM_LIST[item][0];
 					m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[item][1];
 					m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[item][2];
 				}else if(idx == 5){
-					std::uniform_int_distribution<int> gameItemDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ENGINES - 1) );
+					std::uniform_int_distribution<int> gameItemDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ITEMS - 1) );
 					int item(gameItemDist(generator));
 					m_tmpItemReward.first = Common::Data::Game::GAME_ITEM;
 					m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[item][0];

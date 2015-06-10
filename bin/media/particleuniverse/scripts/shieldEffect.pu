@@ -1,0 +1,101 @@
+system shieldEffect
+{
+    technique 
+    {
+        visual_particle_quota                   50
+        emitted_emitter_quota                   30
+        material                                PUMediaPack/Flare_03
+        default_particle_width                  100
+        default_particle_height                 100
+        default_particle_depth                  100
+        spatial_hashing_cell_dimension          100
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Circle CircleEmitter
+        {
+            emission_rate                       50
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             5
+                max                             20
+            }
+            velocity                            0.15
+            all_particle_dimensions             dyn_random
+            {
+                min                             5
+                max                             10
+            }
+            keep_local                          true
+            direction                           0 0 0
+            colour                              0.7 0.8 1 1
+            radius                              50
+        }
+        affector                                Vortex 
+        {
+            rotation_axis                       0 1 0
+            rotation_speed                      dyn_random
+            {
+                min                             3
+                max                             7
+            }
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.8  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+    technique 
+    {
+        visual_particle_quota                   10
+        emitted_emitter_quota                   10
+        material                                PUMediaPack/Flare_03
+        default_particle_width                  100
+        default_particle_height                 100
+        default_particle_depth                  100
+        spatial_hashing_cell_dimension          100
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Circle CircleEmitter
+        {
+            emission_rate                       10
+            angle                               360
+            time_to_live                        dyn_random
+            {
+                min                             5
+                max                             20
+            }
+            velocity                            0.15
+            all_particle_dimensions             dyn_random
+            {
+                min                             5
+                max                             10
+            }
+            keep_local                          true
+            direction                           0 0 0
+            colour                              0.7 0.8 1 1
+            radius                              50
+        }
+        affector                                Vortex 
+        {
+            rotation_axis                       0 0 1
+            rotation_speed                      dyn_random
+            {
+                min                             3
+                max                             7
+            }
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.8  1 1 1 1
+            time_colour                         1    0 0 0 0
+            colour_operation                    multiply
+        }
+    }
+}

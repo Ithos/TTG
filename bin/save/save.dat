@@ -1,44 +1,61 @@
-4
-030113
+1
+
 2
 >>Fuel:
 ##
-190
+500
 ##
 >>Ore:
 ##
-300
+200
 ##
 5
 >>Engine:
 ##
 Ion Pulse Engine
 ##
-EngineAs the most basic faster than lightengine it provides a short range quantic jumpand medium slower than light speed.
+Engine
+As the most basic faster than light
+engine it provides a short range quantic jump
+and medium slower than light speed.
 ##
 >>Primary Weapon:
 ##
 Heavy Laser
 ##
-Primary WeaponStandar heavy laser gun,used as primary weapon for nearly any kind of spaceship.
+Primary Weapon
+Standar heavy laser gun,
+used as primary weapon for nearly any kind of spaceship.
 ##
 >>Secondary Weapon:
 ##
 Missile Launcher
 ##
-Secondary WeaponPowerfull but slightly slow.This missile launcher mounted ona turret takes a lot of energy to use.
+Secondary Weapon
+Powerfull but slightly slow.
+This missile launcher mounted on
+a turret takes a lot of energy to use.
 ##
 >>Sensors:
 ##
 Radar
 ##
-Lvl 1 SensorThis common sensor measureselectromagnetic echoes.It detects some enemies andit`s also able to get some informationfrom planets.
+Lvl 1 Sensor
+This common sensor measures
+electromagnetic echoes.
+It detects some enemies and
+it`s also able to get some information
+from planets.
 ##
 >>Shield Energy Regenerator
 ##
 Shield Energy Regenerator
 ##
-Special DeviceA quantic reverseenthropy devicethat slowly regeneratesthe shield energy over time.
+Special Device
+A quantic reverse
+enthropy device
+that slowly regenerates
+the shield energy over time.
 ##
 3
 >>Engineers:
@@ -47,7 +64,7 @@ Special DeviceA quantic reverseenthropy devicethat slowly regeneratesthe shield 
 ##
 >>Military:
 ##
-2
+1
 ##
 >>Scientifics:
 ##
@@ -58,82 +75,123 @@ Special DeviceA quantic reverseenthropy devicethat slowly regeneratesthe shield 
 ##
 Heat Cogenerator
 ##
-Special DeviceModified engine refrigeration system thatuses the heat produced by the engineto pre-heat the fuel.-15% Fuel Cost
+Special Device
+Modified engine refrigeration system that
+uses the heat produced by the engine
+to pre-heat the fuel.
+-15% Fuel Cost
 ##
 >>Big Mineral Processor
 ##
 Big Mineral Processor
 ##
-Special DeviceA furnace that melts both metaland mineral making them easier to purify.+15% Scrap
+Special Device
+A furnace that melts both metal
+and mineral making them easier to purify.
++15% Scrap
 ##
 >>Engine:
 ##
 Test Engine
 ##
-EngineTest.
+Engine
+Test.
 ##
 >>Heavy Hull Reinforcement
 ##
 Heavy Hull Reinforcement
 ##
-Special DeviceHeavy titanium basedreinforcement plates.
+Special Device
+Heavy titanium based
+reinforcement plates.
 ##
 >>Light Hull Reinforcement
 ##
 Light Hull Reinforcement
 ##
-Special DeviceMetal plates used to reinforcethe weaker partsof the hull.
+Special Device
+Metal plates used to reinforce
+the weaker parts
+of the hull.
 ##
 >>Medium Fuel Compressor
 ##
 Automated Fuel Feeder
 ##
-Special DeviceThis device optimizes thefuel feeding rate of the enginebased on the linear momentum of the ship.-10% Fuel Cost
+Special Device
+This device optimizes the
+fuel feeding rate of the engine
+based on the linear momentum of the ship.
+-10% Fuel Cost
 ##
 >>Medium Hull Reinforcement
 ##
 Medium Hull Reinforcement
 ##
-Special DeviceCeramic cover for the hulldesigend to disperse heat.
+Special Device
+Ceramic cover for the hull
+desigend to disperse heat.
 ##
 >>Medium Mineral Processor
 ##
 Medium Mineral Processor
 ##
-Special DeviceA chemical mineral refinerconsidered dangerous by mostminers because it uses strong acids.+10% Scrap
+Special Device
+A chemical mineral refiner
+considered dangerous by most
+miners because it uses strong acids.
++10% Scrap
 ##
 >>Primary Weapon:
 ##
 Tesla Cannon
 ##
-Primary WeaponThis weapon fires a continuous lightning ray.Though it`s technology it`squite old this weapon isstill in use today.
+Primary Weapon
+This weapon fires a continuous lightning ray.
+Though it`s technology it`s
+quite old this weapon is
+still in use today.
 ##
 >>Secondary Weapon:
 ##
 Static Mines
 ##
-Secondary WeaponMines that are left behind the shipand attach to any spaceship that getsclose enough.
+Secondary Weapon
+Mines that are left behind the ship
+and attach to any spaceship that gets
+close enough.
 ##
 >>Shield Regeneration Enhancer
 ##
 Shield Regeneration Enhancer
 ##
-Special DeviceA quantic amplificatorthat used in combination witha shield regenerator increases the shield regenerationspeed.
+Special Device
+A quantic amplificator
+that used in combination with
+a shield regenerator increases the shield regeneration
+speed.
 ##
 >>Small Fuel Compressor
 ##
 Fuel Compressor
 ##
-Special DeviceDark matter compressorused by many ships as a way to save some fuel.-5% Fuel Cost
+Special Device
+Dark matter compressor
+used by many ships as a way to save
+ some fuel.
+-5% Fuel Cost
 ##
 >>Small Mineral Processor
 ##
 Small Mineral Processor
 ##
-Special DeviceStandar mining machineryused by most colonial fortune-seekers.+5% Scrap
+Special Device
+Standar mining machinery
+used by most colonial fortune-seekers.
++5% Scrap
 ##
 0
-null_value
+ 
 ##
 2
 Ion Pulse Engine
@@ -157,7 +215,7 @@ Test Engine
 6
 105
 105
-12
+6
 0
 4
 0
@@ -169,12 +227,8 @@ Test Engine
 0
 0
 0
-2
+1
 0001
 ##
-3435973836
-##
-0001_0004
-##
-3435973836
+14340210854880707
 ##

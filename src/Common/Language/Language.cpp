@@ -18,7 +18,58 @@
 
 #include "Language.h"
 
+#include <fstream>
+#include <map>
+
 namespace Common { namespace Language
 {
 
+	const char* const LNG_CONG_FILE = "./conf/lng.conf";
+	const char* const LNG_PATH = "./lng/";
+
+	static std::string LANGUAGE ("en");
+
+	static std::map<std::string,std::string> languageM;
+
+	std::string getString(const std::string& tag)
+	{
+		if(languageM.find(tag) != languageM.end()){
+			std::string ret (languageM.find(tag)->second);
+			return (ret);
+		}
+
+		return ("");
+	}
+
+	void loadLng(std::ifstream& in)
+	{
+		languageM.clear();
+
+		while(in){
+			std::string tag ("");
+			std::string val ("");
+
+			getline(in,tag);
+			getline(in,val);
+
+			languageM.insert(std::pair<std::string,std::string>(tag,val));
+		}
+
+	}
+
+	bool changeLanguage(const std::string& lng)
+	{
+		std::string path (LNG_PATH);
+		path += lng;
+
+		std::ifstream in (path);
+		
+		if(!in) return (false);
+
+		loadLng(in);
+
+		in.close();
+
+		return (true);
+	}
 }}

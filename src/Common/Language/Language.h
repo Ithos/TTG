@@ -19,8 +19,14 @@
 #ifndef __COMMON_LANGUAGE_H
 #define __COMMON_LANGUAGE_H
 
+#include <string>
+
 namespace Common { namespace Language 
 {
+	std::string getString(const std::string& tag);
+
+	bool changeLanguage(const std::string& lng);
+
 	class CLanguage
 	{
 	};

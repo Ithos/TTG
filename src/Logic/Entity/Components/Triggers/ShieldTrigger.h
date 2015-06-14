@@ -26,22 +26,35 @@ namespace Ogre
     class SceneNode;
 }
 
+namespace Common 
+{ 
+    namespace Particles 
+    {
+        class CParticleManager;
+    }
+}
+
 namespace Logic
 {
+    class CScene;
+
 	namespace Component
 	{
 		class CTransform;
+        class CShield;
+
         class CShieldTrigger : public CPhysicEntity        
         {
             DEC_FACTORY(CShieldTrigger)
 			
         public:
-            CShieldTrigger() : m_parent(nullptr), m_trans(nullptr) 
-            {
-                ++m_numTriggers;
-            }
+            CShieldTrigger() :
+                m_parent(nullptr), m_trans(nullptr), m_particleMngr(nullptr), m_activateShield(true), m_secsNoShield(0),
+                m_timeOut(0), m_sceneNode(nullptr), m_nameChildNode(""), m_compShield(nullptr), m_scene(nullptr), 
+                m_msecsToReload(0), m_timeOutReload(0), m_firstTime(true), m_timesChangeQuota(0)
+            { }
 
-            ~CShieldTrigger() { m_parent =  nullptr; }
+            ~CShieldTrigger();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 
@@ -55,8 +68,17 @@ namespace Logic
             CEntity*         m_parent;
             CTransform*      m_trans;
             Ogre::SceneNode* m_sceneNode;
-            static int       m_numTriggers;
             std::string      m_nameChildNode;
+            Common::Particles::CParticleManager* m_particleMngr;
+            unsigned         m_secsNoShield;
+            unsigned         m_timeOut;
+            bool             m_activateShield;
+            CShield*         m_compShield;
+            CScene*          m_scene;
+            unsigned         m_msecsToReload;
+            unsigned         m_timeOutReload;
+            unsigned         m_timesChangeQuota;
+            bool             m_firstTime;
         };
 
         REG_FACTORY(CShieldTrigger)

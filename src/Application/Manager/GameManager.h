@@ -95,18 +95,10 @@ namespace Application
 		void increaseTotalLife(unsigned int num);
 		void decreaseTotalLife(unsigned int num);
 
-		unsigned int getShield() { return m_shield; }
-        unsigned* getShieldREF() { return &m_tmpShield; }
-		void resetSceneShield() {m_tmpShield = m_shield;}
-		void increaseShield(unsigned int num);
-		void decreaseShield(unsigned int num);
-		unsigned int getShieldState(){return m_tmpShield;}
-		void decreaseShieldState(unsigned int num) { m_tmpShield = (num > m_tmpShield) ? 0 : m_tmpShield - num; }
-		void increaseShieldState(unsigned int num) { m_tmpShield += num;  if ( m_tmpShield > m_shield)  m_tmpShield = m_shield; }
-		unsigned int getShieldRegen() {return m_shieldRegen;}
-		void increaseShieldRegen(unsigned int num) {(m_shieldRegen<=SHIELD_REGEN_INCREMENT*MAX_INCREMENT_NUM-num)?m_energyRegen+=num:m_energyRegen=SHIELD_REGEN_INCREMENT*MAX_INCREMENT_NUM;}
-		void decreaseShieldRegen(unsigned int num) {(m_shieldRegen>=BASE_SHIELD_REGEN + num)?m_energyRegen-=num:m_energyRegen=BASE_SHIELD_REGEN;}
+        // SHield
+		void resetShield()  { m_curShield = m_maxShield; }
 
+        // Energy
 		unsigned int getEnergy(){return m_energy;}
 		void resetSceneEnergy() {m_tmpEnergy = m_energy;}
 		void increaseEnergy(unsigned int num);
@@ -185,9 +177,9 @@ namespace Application
 
 		int m_life;
         unsigned m_totalLife; // ??
-        unsigned m_shield;
-        unsigned m_tmpShield;
-		unsigned int m_shieldRegen;
+        unsigned m_maxShield;
+        unsigned m_curShield;
+        unsigned m_shieldRegen;
         unsigned m_energy;
         unsigned m_tmpEnergy;
 		unsigned int m_energyRegen;

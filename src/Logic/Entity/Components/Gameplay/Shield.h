@@ -29,7 +29,9 @@ namespace Logic
         {
             DEC_FACTORY(CShield);
         public:
-            CShield() : IComponent(), m_resistance(0.0f), m_value(nullptr) { }
+            CShield() : IComponent(), m_resistance(0.0f), m_value(nullptr), m_regenVal(nullptr) 
+            { }
+
             ~CShield();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
@@ -42,11 +44,27 @@ namespace Logic
             */
             void decreaseShield(const unsigned& damage, const unsigned& factor = 1);
 
+            void increaseShield(const unsigned& value) { *m_value += value; }
+            void regenShield() { *m_value += (*m_maxShield * 0.01 * (*m_regenVal)); }
+
+            void destroyShield() { *m_value = 0; }
+
+            unsigned getValue() const { return *m_value; }
+
+            const unsigned& getMaxShield() { return *m_maxShield; }
+
+            bool isFull() { return (*m_value == *m_maxShield); }
+
+            bool m_player;
+
         private:
             float     m_resistance; // percentage of damage absorbed. Must be between 0..1
             unsigned* m_value; //"life" of the shield
-            bool      m_player;
+            unsigned* m_maxShield; // min value 100
+            unsigned* m_regenVal;
             CEntity*  m_subEntity;
+
+            void createShield(CEntity*, CScene*);
         };
 
         REG_FACTORY(CShield);

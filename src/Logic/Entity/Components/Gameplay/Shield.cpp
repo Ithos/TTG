@@ -35,8 +35,14 @@ namespace Logic
 
         CShield::~CShield()
         {
-            if (!m_player)
+            if (!m_player) {
                 delete m_value;
+                delete m_maxShield;
+                delete m_regenVal;
+            }
+
+            if (m_subEntity)
+                CEntityFactory::getInstance()->deleteEntityEx(m_subEntity);
         }
 
         bool CShield::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
@@ -45,42 +51,32 @@ namespace Logic
 		        return false;
 
             if (entity->isPlayer()) {
-                m_player = true;
-                m_value = Application::CGameManager::getInstance()->getShieldREF();
+                m_player    = true;
+                m_value     = &Application::CGameManager::getInstance()->m_curShield;
+                m_maxShield = &Application::CGameManager::getInstance()->m_maxShield;
+                m_regenVal  = &Application::CGameManager::getInstance()->m_shieldRegen; 
             }
             else {
-                m_player = false;
-                m_value = new unsigned int();
+                m_player    = false;
+                m_value     = new unsigned int();
+                m_maxShield = new unsigned int();
+                m_regenVal  = new unsigned int();
+            }
             
+			// get by config resistance value
+            if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD) && !m_player) {
+                *m_maxShield = *m_value = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD);
+                *m_regenVal = 1;
+            }
 
-				// get by config resistance value
-				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD)) 
-					*m_value = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD);
+			if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS))
+				m_resistance = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS);
+            else
+                m_resistance = 1.0;
 
-				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS))
-					m_resistance = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS);
-			}
+            createShield(entity, scene);           
 
-            Map::CMapEntity eInfo("Shield");
-
-            using namespace Common::Data::Spawn;
-		    using namespace Common::Configuration;
-            //-- attributes...
-            eInfo.setType(getDefaultValue(GEN_SHIELD_TYPE));
-            eInfo.setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_SHIELD_TRIGGER_ENTITY));
-            eInfo.setAttribute("physic_type", "kinematic");
-            eInfo.setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_SHIELD_TRIGGER_RADIUS));
-            eInfo.setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_SHIELD_TRIGGER_ISTRIGGER));
-            eInfo.setAttribute("physic_shape", "sphere");
-            eInfo.setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_SHIELD_GRAPHIC_MODEL));
-            eInfo.setAttribute("physic_mass", "1");
-
-            m_subEntity = Logic::CEntityFactory::getInstance()->createEntity(&eInfo, nullptr);
-            // spawn components
-            m_subEntity->spawnEx(entity, scene, &eInfo);
-            m_subEntity->activate();
-
-         /*   ParticleUniverse::ParticleSystemManager* pManager = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
+            /*ParticleUniverse::ParticleSystemManager* pManager = ParticleUniverse::ParticleSystemManager::getSingletonPtr();
             m_particleSys = pManager->createParticleSystem("shield", "electroShield", scene->getSceneManager());
             scene->getSceneManager()->getSceneNode("Player_node")->attachObject(m_particleSys);
             m_particleSys->setScaleVelocity(10);
@@ -91,8 +87,11 @@ namespace Logic
 
         void CShield::tick(unsigned int msecs)
         {
+            if (*m_value > *m_maxShield)
+                *m_value = *m_maxShield;
            m_subEntity->tick(msecs);
         }
+
 
         /*
           factor could be a penetration or something like that
@@ -108,12 +107,38 @@ namespace Logic
             else if (*m_value > 0) {
                 unsigned dmg = ((factor * m_resistance) * damage);
                 if (*m_value > dmg)
-                    (*m_value) -= dmg;
+                    *m_value -= dmg;
                 else
                     *m_value = 0;
             }
-            else
+            else {
                 *m_value = 0;
+            }
         }
-    }
+
+        void CShield::createShield(CEntity* entity, CScene* scene) 
+        {
+            using namespace Common::Data::Spawn;
+		    using namespace Common::Configuration;
+
+            Map::CMapEntity eInfo("Shield");
+            //-- attributes...
+            eInfo.setType(getDefaultValue(GEN_SHIELD_TYPE));
+            eInfo.setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_SHIELD_TRIGGER_ENTITY));
+            eInfo.setAttribute("physic_type", "kinematic");
+            eInfo.setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_SHIELD_TRIGGER_RADIUS));
+            eInfo.setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_SHIELD_TRIGGER_ISTRIGGER));
+            eInfo.setAttribute("physic_shape", "sphere");
+            eInfo.setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_SHIELD_GRAPHIC_MODEL));
+            eInfo.setAttribute("physic_mass", "1");
+            eInfo.setAttribute(SHIELD_TIMEOUT, getDefaultValue(GEN_SHIELD_TIMEOUT));
+            eInfo.setAttribute(SHIELD_RELOADTIME, getDefaultValue(GEN_SHIELD_RELOADTIME));
+
+            m_subEntity = Logic::CEntityFactory::getInstance()->createEntity(&eInfo, nullptr);
+            // spawn components
+            m_subEntity->spawnEx(entity, scene, &eInfo);
+            m_subEntity->activate();
+        
+        }
+    } // component
 }

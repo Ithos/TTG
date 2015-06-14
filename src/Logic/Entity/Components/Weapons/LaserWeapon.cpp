@@ -73,6 +73,8 @@ namespace Logic
             m_ogreNode->setPosition(pos);
         }*/
 
+#pragma warning (push)
+#pragma warning (disable:4244)
         void CLaserWeapon::shoot(const ::Vector3& src, const ::Vector3& dir)
         {
             if (m_trigger)
@@ -97,7 +99,7 @@ namespace Logic
                     int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
-                    m_particles->laserShot(src, dir, distance);
+                    m_particles->laserShot(src - (50 * dir), dir, distance);
 
                     if ( *life > 0) {
                         *life = (*life <= m_damage)? 0 : *life - m_damage;
@@ -120,6 +122,7 @@ namespace Logic
             }
 
         } // shoot
+#pragma warning (pop)
 
     } // Component
 } 

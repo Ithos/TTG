@@ -37,6 +37,8 @@ using namespace Common::Particles;
 
 namespace Logic
 {
+    class CScene; 
+
 	namespace Component
 	{
         class CTransform;
@@ -81,11 +83,13 @@ namespace Logic
             bool        m_shooted;
             bool        m_stillActive;
             CParticleManager*          m_particles;
+            CScene*                    m_scene;
             //Ogre::RibbonTrail*         m_rt;
             static Ogre::SceneNode*    m_node;
             static Ogre::SceneManager* m_sceneMgr;
             static Ogre::BillboardSet* m_set;
             Ogre::Billboard*           m_bb;
+            
         };
 
         REG_FACTORY(CMissileTrigger)

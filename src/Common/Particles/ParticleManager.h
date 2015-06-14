@@ -71,6 +71,12 @@ namespace Common
             void startHit(const Vector3& pos);
             void releaseHits();
 
+            /******** Shield **********/
+            void initShield(Ogre::SceneNode* = nullptr);
+            void startShield();
+            void changeQuota(unsigned value, unsigned max);
+            void releaseShield();
+
             /*--------- Shoots --------*/
             void initShoots();
             void addShootType(Weapons_t);
@@ -100,8 +106,12 @@ namespace Common
             vPU m_hits;
             vPU m_stars;
             std::map<Weapons_t, vPU> m_shoots;
+            ParticleUniverse::ParticleSystem* m_shield;
 
             std::string m_galaxyParticles[NUM_PART_TYPES_GALAXY];
+
+            // shield 
+            Ogre::SceneNode* m_shieldNode;
 
             // laser
             std::vector<Ogre::SceneNode*>   m_node1; // node for creating ribbontrail

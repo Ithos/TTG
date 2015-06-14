@@ -48,7 +48,7 @@ namespace Application
 
 		m_guiInstance = CPlanetGUI::getInstance();
 
-		m_mgrInstance->resetSceneShield();
+		m_mgrInstance->resetShield();
 		m_mgrInstance->resetSceneEnergy();
 
 		//Music
@@ -115,9 +115,8 @@ namespace Application
 			m_time+=msecs/1000.0f;
 		else{
 
-			if(m_time < 1.0f){
+			if (m_time < 1.0f){
 				m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
-				m_mgrInstance->increaseShieldState(m_mgrInstance->getShieldRegen() * m_time);
 			}
 
 			m_time = 0;

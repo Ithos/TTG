@@ -1,11 +1,11 @@
 1
-
+050323
 2
 >>Fuel:
 ##
 500
 ##
->>Ore:
+>>Scrap:
 ##
 200
 ##
@@ -18,6 +18,9 @@ Engine
 As the most basic faster than light
 engine it provides a short range quantic jump
 and medium slower than light speed.
+Jump Distance:35
+Fuel Cost:140
+Max speed: 1.0 -- Acceleration: 1.0 -- Rotation speed: 1.0
 ##
 >>Primary Weapon:
 ##
@@ -92,10 +95,15 @@ and mineral making them easier to purify.
 ##
 >>Engine:
 ##
-Test Engine
+Electromagnetic Resonance Engine
 ##
 Engine
-Test.
+This engine is composed by an electromagnetic resonator
+wich creates a diferential force by creating
+a constructive interference between several electromagnetic waves.
+Jump Distance:50
+Fuel Cost:200
+Max speed: 1.0 -- Acceleration: 1.5 -- Rotation speed: 1.25
 ##
 >>Heavy Hull Reinforcement
 ##
@@ -194,21 +202,21 @@ used by most colonial fortune-seekers.
  
 ##
 2
+Electromagnetic Resonance Engine
+##
+50
+##
+200
+##
 Ion Pulse Engine
 ##
 35
 ##
 140
 ##
-Test Engine
-##
-50
-##
-200
-##
 35
 140
-100
+0
 100
 110
 110
@@ -227,8 +235,12 @@ Test Engine
 0
 0
 0
-1
+2
 0001
 ##
-14340210854880707
+14342952098415461
+##
+0001_0001
+##
+14342952215742172
 ##

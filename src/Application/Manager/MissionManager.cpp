@@ -127,7 +127,7 @@ namespace Application
 			}while(m_tmpTargetSystem == tmpSystem);
 
 			/// TODO -- Internationalization -- /// Begin{
-			m_tmpMission.second.first = "Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.first = "Delivery Mission";
 			/// TODO --Description--///
 			m_tmpMission.second.second = "Go to " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 			/// TODO -- Internationalization -- /// }End
@@ -147,10 +147,10 @@ namespace Application
 			m_tmpTargets.first = enemyTypeDist(generator);
 			m_tmpTargets.second = numTargetsDist(generator);
 			/// TODO -- Internationalization -- /// Begin{
-			m_tmpMission.second.first = "Defeat " + std::to_string(m_tmpTargets.second) + " type " + std::to_string(m_tmpTargets.first) + " enemies.";
+			m_tmpMission.second.first = "0/" + std::to_string(m_tmpTargets.first) + " enemies defeated.";
 
 			/// TODO --Description--///
-			m_tmpMission.second.second = "0/" + std::to_string(m_tmpTargets.first) + " enemies defeated.";
+			m_tmpMission.second.second = "Defeat " + std::to_string(m_tmpTargets.second) + " type " + std::to_string(m_tmpTargets.first) + " enemies.";
 			/// TODO -- Internationalization -- /// }End
 
 			generateReward(m_tmpTargets.second);
@@ -164,8 +164,8 @@ namespace Application
 			m_tmpPlanet = std::atoi(str.substr(str.length()-2,1).c_str());
 
 			/// TODO -- Internationalization -- /// Begin{
-			m_tmpMission.second.first = "Visit an inhabited planet in another system.";
-			m_tmpMission.second.second = "Get away from " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.first = "Get away from " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
+			m_tmpMission.second.second = "Visit an inhabited planet in another system.";
 			/// TODO -- Internationalization -- /// }End
 
 			generateReward(3);
@@ -182,8 +182,8 @@ namespace Application
 			m_tmpDesiredItem = Common::Data::Game::GAME_ITEM_LIST[desiredItemDist(generator)][0];
 
 			/// TODO -- Internationalization -- /// Begin{
-			m_tmpMission.second.first = "Bring me a " + m_tmpDesiredItem;
-			m_tmpMission.second.second = "Bring a " + m_tmpDesiredItem + " to planet" + Common::Data::Game::GAME_PLANETS_NAMES[m_tmpTargetSystem][m_tmpPlanet] + 
+			m_tmpMission.second.first = "Fetch Mission";
+			m_tmpMission.second.second = "Bring a " + m_tmpDesiredItem + " to planet " + Common::Data::Game::GAME_PLANETS_NAMES[m_tmpTargetSystem][m_tmpPlanet] + 
 				" in " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 
 			/// TODO -- Internationalization -- /// }End
@@ -201,8 +201,8 @@ namespace Application
 			m_tmpTotalTargets = quant(generator) * 10;
 
 			/// TODO -- Internationalization -- /// Begin{
-			m_tmpMission.second.first = "Bring me " + std::to_string(m_tmpTotalTargets) + " fuel units.";
-			m_tmpMission.second.second = "Bring " + std::to_string(m_tmpTotalTargets) + " fuel units to planet" + 
+			m_tmpMission.second.first = "Fuel Mission";
+			m_tmpMission.second.second = "Bring " + std::to_string(m_tmpTotalTargets) + " fuel units to planet " + 
 				Common::Data::Game::GAME_PLANETS_NAMES[m_tmpTargetSystem][m_tmpPlanet] + 
 				" in " + std::string(Common::Data::Game::GAME_GALAXY_SYSTEM_NAME[m_tmpTargetSystem]);
 			/// TODO -- Internationalization -- /// }End

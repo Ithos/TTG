@@ -19,7 +19,7 @@
 #include "LaserWeapon.h"
 #include "../Movement/Transform.h"
 #include "../Graphic/Graphics.h"
-
+#include "Application/Manager/GameManager.h"
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
@@ -43,7 +43,7 @@ namespace Logic
         const char* const RIBBON_NAME = "ribbontrail_";
 
         CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
-            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player)
+            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr)
         { 
              m_type = LASER;
 
@@ -54,6 +54,13 @@ namespace Logic
 
              if (entityInfo->hasAttribute(LASER_RANGE))
                  m_range = (unsigned) entityInfo->getIntAttribute(LASER_RANGE);
+
+             if (entityInfo->hasAttribute(LASER_COST))
+                 m_cost = entityInfo->getIntAttribute(LASER_COST);
+
+             if (m_player->isPlayer()) {
+                 m_energy = &Application::CGameManager::getInstance()->m_curEnergy;
+             }
 
              // Particles code ----
              m_particles = Common::Particles::CParticleManager::getInstance();
@@ -86,6 +93,18 @@ namespace Logic
             using namespace Logic::Component;
 			
        //     m_particles->startShoot(LASER, src, dir, 2);
+
+            if (m_player->isPlayer()) {
+                if (*m_energy > 0) {
+                    unsigned aux = *m_energy - m_cost;
+                    if (aux >= 0)
+                        *m_energy = aux;
+                    else
+                        *m_energy = 0;
+                }
+                else
+                    return; // if dont have energy, cannot shoot
+            }
 
             CEntity* hitEntity = nullptr;
             m_ray.setOrigin(src);

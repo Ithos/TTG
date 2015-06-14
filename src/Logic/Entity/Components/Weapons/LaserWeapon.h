@@ -87,6 +87,8 @@ namespace Logic
            CPhysicManager*      m_phyMngr;
            Ogre::Ray            m_ray;
            CEntity*             m_player;
+           unsigned             m_cost;
+           unsigned*            m_energy;
         };
     }
 }

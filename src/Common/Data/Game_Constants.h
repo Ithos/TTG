@@ -1017,7 +1017,7 @@ namespace Common
 			};
 
 			const char* const GAME_USELESS_ICE[2] = {
-				"Unactive Beacon", "Item\n.One of the many beacons that were launched\nduring the first colonization wave.\nIt's damaged and ist information\nhas been lost."
+				"Unactive Beacon", "Item\n.One of the beacons that were launched\nduring the second colonization.\nIt's damaged and ist information\nhas been lost."
 			};
 
 			const char* const GAME_USELESS_BARREN[2] = {

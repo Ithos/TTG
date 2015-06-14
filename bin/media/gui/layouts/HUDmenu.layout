@@ -148,7 +148,7 @@
         <!--FuelTag-->
         <Window type="TaharezLook/ListboxItem" name="OreTag" >
           <Property name="Font" value="Jura-10" />
-          <Property name="Text" value=">>Ore:" />
+          <Property name="Text" value=">>Scrap:" />
         </Window>
         <!--OreTag-->
       </Window>

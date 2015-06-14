@@ -232,57 +232,57 @@ namespace Application
 	{
 		//Equipment
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/EquipmentBoard"))->getItemFromIndex(0)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_EQUIPMENT);
+			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_EQUIPMENT_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/EquipmentBoard"))->getItemFromIndex(5)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_OTHERS);
+			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_OTHERS_DESCRIPTION);
 
 		//State
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(0)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_SHIP_STATE);
+			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_SHIP_STATE_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(1)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HULL);
+			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_HULL_STATE_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_SHIELD);
+			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_SHIELD_STATE_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_ENERGY);
+			Common::Data::Game::GAME_HUD_DESCRIPTION,Common::Data::Game::GAME_HUD_ENERGY_STATE_DESCRIPTION);
 
 		//Crew
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemFromIndex(0)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_CREW);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_CREW_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemFromIndex(1)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_MILITARY);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_MILITARY_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemFromIndex(2)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_ENGINEERS);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_ENGINEERS_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/CrewBoard"))->getItemFromIndex(3)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_SCIENTIFICS);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_SCIENTIFICS_DESCRIPTION);
 
 		//Resources
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemFromIndex(0)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_RESOURCES);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_RESOURCES_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemFromIndex(1)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_FUEL);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_FUEL_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemFromIndex(2)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_ORE);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_SCRAP_DESCRIPTION);
 
 		//Cargo
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/CargoBoard"))->getItemFromIndex(0)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_CARGO);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_CARGO_DESCRIPTION);
 
 		//Info
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(0)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_INFO);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_INFO_DESCRIPTION);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(1)->setUserString(
-			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_NOTES);
+			Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_HUD_NOTES_DESCRIPTION);
 
 	}
 

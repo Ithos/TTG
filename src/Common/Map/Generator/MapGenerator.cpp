@@ -277,7 +277,7 @@ namespace Map
 		//Several distributions are declared here
 		std::default_random_engine generator(static_cast<unsigned>(seed));
 		std::uniform_int_distribution<int> planetDist(3,10);
-		std::uniform_int_distribution<int> descDist(0,7);
+		std::uniform_int_distribution<int> descDist(0,Common::Data::Game::MAX_DESCTYPE_TEXT);
 
         std::set<int> nums;
 		std::uniform_real_distribution<float> angleDist(0.0,2*Common::Util::Math::PI);
@@ -491,12 +491,16 @@ namespace Map
 						if(prob > 70 - Application::CGameManager::getInstance()->getObjectivesAquired() * 2)risk=3;
 						if(prob > 90 - Application::CGameManager::getInstance()->getObjectivesAquired() * 2)risk=4;
 					}
+					int desc;
+					do{
+						desc = descDist(generator);
+					}while(desc == 3 && risk == 0);
 					tmpStr2 += std::to_string(sc)[0];
 					tmpStr2 += std::to_string(sc)[2];
 					tmpStr2 += "0"+std::to_string(model);
 					tmpStr2 += std::to_string(j-1);
 					tmpStr2 += std::to_string(risk);
-					tmpStr2 += Common::Data::Game::GAME_MOVPLANET_DESC[model][descDist(generator)];
+					tmpStr2 += Common::Data::Game::GAME_MOVPLANET_DESC[model][desc];
 					entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
 					tmpStr1 = Common::Configuration::getDefaultValue(GEN_MOVPLANET_CENTER_NODE_NAME);

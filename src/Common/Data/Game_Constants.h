@@ -32,7 +32,7 @@ namespace Common
 			//Resources
 			const char* const GAME_FUEL	= ">>Fuel:";
 			const char* const GAME_TIME	= ">>Time:";
-			const char* const GAME_ORE	= ">>Ore:";
+			const char* const GAME_ORE	= ">>Scrap:";
 
 			//Equipment
 			const char* const GAME_ITEM					= ">>Item:";
@@ -103,117 +103,123 @@ namespace Common
 
 			const char* const GAME_PLANET_SIGNAL			= "-->signal source detected<--";
 
+			// HUD description text
+
+			const char* const GAME_HUD_EQUIPMENT_DESCRIPTION		= "Equipment of the ship.\nYou can change them by selecting\nan item from the cargo\nand clicking on Equip.";
+			const char* const GAME_HUD_OTHERS_DESCRIPTION			= "Special equipment.\nItems that provide special habilities.";
+			const char* const GAME_HUD_SHIP_STATE_DESCRIPTION		= "Current state of the ship.";
+			const char* const GAME_HUD_HULL_STATE_DESCRIPTION		= "Current hull resistance state and total hull resistance.";
+			const char* const GAME_HUD_SHIELD_STATE_DESCRIPTION		= "Total shield resistance.";
+			const char* const GAME_HUD_ENERGY_STATE_DESCRIPTION		= "Total energy available.";
+			const char* const GAME_HUD_CREW_DESCRIPTION				= "Other people working in the ship.";
+			const char* const GAME_HUD_MILITARY_DESCRIPTION			= "Weapon experts with military experience.\nIncrease the damage of the weapons\nand the velocity of\nenergy regeneration.";
+			const char* const GAME_HUD_ENGINEERS_DESCRIPTION		= "Mechanichs able to repair the ship.\nIncrease the resistance of the shield\nand the engine transport distance.";
+			const char* const GAME_HUD_SCIENTIFICS_DESCRIPTION		= "Investigators exploring the universe.\nIncrease the energy for the weapons\nand the level of the sensors.";
+			const char* const GAME_HUD_RESOURCES_DESCRIPTION		= "The amount of resources in the ship.";
+			const char* const GAME_HUD_FUEL_DESCRIPTION				= "The amount of fuel in the ship.\nIt's consumed by the engine when the ship\ntleports between solar systems.";
+			const char* const GAME_HUD_SCRAP_DESCRIPTION			= "Valuable minerals and other objects\nused as currency by explorers and outcasts.";
+			const char* const GAME_HUD_CARGO_DESCRIPTION			= "Items carried in the cargo compartment.\nSome of them may be installed\non the ship.";
+			const char* const GAME_HUD_NOTES_DESCRIPTION			= "Additional information.";
+			const char* const GAME_HUD_INFO_DESCRIPTION				= "Information provided by the ship's AI.";
+
+
 			// Galaxy System names
 			const char* const GAME_GALAXY_SYSTEM_NAME[] = {
-												"System0","System1","System2","System3",
-												"System4","System5","System6","System7",
-												"System8","System9","System10","System11",
-												"System12","System13","System14","System15",
-												"System16","System17","System18","System19",
-												"System20","System21","System22","System23",
-												"System24","System25","System26","System27",
-												"System28","System29","System30","System31",
-												"System32","System33","System34","System35",
-												"System36","System37","System38","System39"
+												"Sirrah","Cih","Canopus","Navi",
+												"Kurhah","Garnet","Deneb_Kaitos","Mira",
+												"Tso_Hea","Gienah","Algorab","Minkar",
+												"Acrux","Gacrux","CanopusII","Edasich",
+												"Dziban","Acamar","Castor","Al_Na'ir",
+												"Al_Dhanab","Kornephoros","Ukdah","Cor_Koraelis",
+												"Zozma","Ras_Elased","Tsze_Tseang","Vega",
+												"Sulafat","Yed","Zed","Hiades",
+												"Betelgeuse","Rigel","Saiph","Fomalhaut",
+												"Sirius","Arcturus","Aldebaran","Tseen_Ke"
 											};
 
 			// Planet descriptions
 			const char* const GAME_MOVPLANET_DESCTYPE1[] = {
-												"Desert planet 1",
-												"Desert planet 2",
-												"Desert planet 3",
-												"Desert planet 4",
-												"Desert planet 5",
-												"Desert planet 6",
-												"Desert planet 7",
-												"Desert planet 8",
-												"Desert planet 9",
-												"Desert planet 10"
+												"Sensors indicate little to no humidity in this planet.",
+												"This planet seems to be formed mainly by silicium.",
+												"This planet reflects lots of radiation coming from the star.",
+												"Lectures suggest some spaceship activity around the planet.",
+												"A preliminary examination shows that wild life in this planet is scarce.",
+												"The atmosphere of the planet shows some signs of terraformation.",												
+												"Little to no vegetation has been detected on the planet.",
+												"Some parts of the planet show the signs of the use of planetary weapons in the past."
 											};
 			const char* const GAME_MOVPLANET_DESCTYPE2[] = {
-													"Lava planet 1",
-													"Lava planet 2",
-													"Lava planet 3",
-													"Lava planet 4",
-													"Lava planet 5",
-													"Lava planet 6",
-													"Lava planet 7",
-													"Lava planet 8",
-													"Lava planet 9",
-													"Lava planet 10"
+													"The volcanic activity of this planet seems to be high.",
+													"Lectures shows that this planet formed just about a million years ago.",
+													"Sensors indicate that the core of this planet emits great amounts of energy.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"An expectrum analyses suggests the presence of a great amount of molten materials.",													
+													"No relevant wildlife has been detected on the planet.",
+													"Images from the planet show clouds of ashes running through the surface of the planet.",
+													"The database contains information about some old stations on the planet."
 												};
 			const char* const GAME_MOVPLANET_DESCTYPE3[] = {
-													"Red planet 1",
-													"Red planet 2",
-													"Red planet 3",
-													"Red planet 4",
-													"Red planet 5",
-													"Red planet 6",
-													"Red planet 7",
-													"Red planet 8",
-													"Red planet 9",
-													"Red planet 10"
+													"The atmosphere of the planet shows some signs of terraformation.",
+													"The planet seems to contain great amounts of metals.",
+													"A surface analysis indicates the presence of cavities under the surface of the planet.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"A small amount of wildlife has been detected on the planet.",
+													"The database contains information about some old mining stations on the planet.",													
+													"Sensors indicate deposits of magnetic materials somewhere in the planet.",
+													"Some parts of the planet show the signs of the use of planetary weapons in the past."
 												};
 			const char* const GAME_MOVPLANET_DESCTYPE4[] = {
-													"Earth-like planet 1",
-													"Earth-like planet 2",
-													"Earth-like planet 3",
-													"Earth-like planet 4",
-													"Earth-like planet 5",
-													"Earth-like planet 6",
-													"Earth-like planet 7",
-													"Earth-like planet 8",
-													"Earth-like planet 9",
-													"Earth-like planet 10"
+													"Great amounts of wildlife have been detected on the planet.",
+													"The atmosphere of the planet shows signs of succesfull terraformation.",
+													"Some parts of the planet seem to be covered by vegetation.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"Sensors indicate significant humidity in this planet.",
+													"The planet shows some signs of colonization.",
+													"Conditions on this planet seem similar to those in erath.",
+													"Several signals have been received coming from the planet,\nwhich may indicate the presence of inteligent lifeforms."
 												};
 			const char* const GAME_MOVPLANET_DESCTYPE5[] = {
-													"Ocean planet 1",
-													"Ocean planet 2",
-													"Ocean planet 3",
-													"Ocean planet 4",
-													"Ocean planet 5",
-													"Ocean planet 6",
-													"Ocean planet 7",
-													"Ocean planet 8",
-													"Ocean planet 9",
-													"Ocean planet 10"
+													"Great amounts of water have been detected on this planet.",
+													"The database contains information about some old investigation stations on the planet.",
+													"Great amounts of wildlife have been detected on the planet.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"The atmosphere of the planet shows some signs of terraformation.",													
+													"Sensors cannot detect any significant amount of minerals on the surface of the planet.",
+													"Water vapor clouds can be detected running through the atmorphere of the planet.",
+													"Some data collectig probes have been detected in the planet."
 												};
 			const char* const GAME_MOVPLANET_DESCTYPE6[] = {
-													"Gas planet 1",
-													"Gas planet 2",
-													"Gas planet 3",
-													"Gas planet 4",
-													"Gas planet 5",
-													"Gas planet 6",
-													"Gas planet 7",
-													"Gas planet 8",
-													"Gas planet 9",
-													"Gas planet 10"
+													"The thick atmosphere of the planet makes any analysis of its surface\nnearly impossible.",
+													"More than 60% of the planet's volume ir formed by different types of gases.",
+													"No wildlife has been detected on the planet.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"The central part of the atmosphere seems to have been artificially modified.",
+													"Clouds of different gases move quickly through the atmosphere forming storms.",
+													"All water in this planet seems to exist in the form of vapor.",
+													"Automated gas extraction drones have been detected in the planet."
 												};
 			const char* const GAME_MOVPLANET_DESCTYPE7[] = {
-													"Ice planet 1",
-													"Ice planet 2",
-													"Ice planet 3",
-													"Ice planet 4",
-													"Ice planet 5",
-													"Ice planet 6",
-													"Ice planet 7",
-													"Ice planet 8",
-													"Ice planet 9",
-													"Ice planet 10"
+													"Great amounts of water have been detected on this planet.",
+													"The atmosphere of the planet seems to be formed by gases that\ndo not accumulate much solar radiation.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"No wildlife has been detected on the planet.",
+													"All water in this planet seems to exist in the form of ice\ndue to low temperatures.",
+													"The surface of the planet seems to be covered by frozen materials.",
+													"Automated mining drones have been detected in the planet.",
+													"A surface analysis indicates the presence of cavities under the surface of the planet."
 												};
 			const char* const GAME_MOVPLANET_DESCTYPE8[] = {
-													"Barren planet 1",
-													"Barren planet 2",
-													"Barren planet 3",
-													"Barren planet 4",
-													"Barren planet 5",
-													"Barren planet 6",
-													"Barren planet 7",
-													"Barren planet 8",
-													"Barren planet 9",
-													"Barren planet 10"
+													"Sensors cannot detect any atmosphere in this planet.",
+													"Impacts of asteroids can be seen on the surface of the planet.",
+													"Automated mining drones have been detected in the planet.",
+													"Lectures suggest some spaceship activity around the planet.",
+													"The database contains information about some old mining stations on the planet.",
+													"A surface analysis indicates the presence of cavities under the surface of the planet.",
+													"Many valuable materials have been detected on the surface of the planet.",
+													"Some parts of the planet show the signs of the use of planetary weapons in the past."
 												};
+
+			const int MAX_DESCTYPE_TEXT = 7;
 
 			const std::array<const char* const*,8> GAME_MOVPLANET_DESC = {
 													GAME_MOVPLANET_DESCTYPE1,
@@ -227,173 +233,484 @@ namespace Common
 											};
 
 			// Planet presentations
-			const char* const GAME_PLANET_EVENT_INTRO[] = {"Unoccupied Desert planet.","Unoccupied Lava planet.","Unoccupied Red planet.","Unoccupied Earth-like planet.",
-														"Unoccupied Ocean planet.","Unoccupied Gas planet.","Unoccupied Ice planet.","Unoccupied Barren planet.",
-														"Inhabited Desert planet.","Inhabited Lava planet.","Inhabited Red planet.","Inhabited Earth-like planet.",
-														"Inhabited Ocean planet.","Inhabited Gas planet.","Inhabited Ice planet.","Inhabited Barren planet."
+			const char* const GAME_PLANET_EVENT_INTRO[] = {"Earth-like planet with a much drier condition.\nDespite the almost total lack of water,\ndesert planets have large habitable zones and can be highly life-sustaining.\nThe first earthling nomads thought of desert planets,\ntogether with ocean ones, as primary colonizing targets,\ndue to their terraformation posibilities.",
+															"Type of planet formed mostly or entirely with molten minerals.\nLava planets are usually found orbiting extremely close to their system star.\nBecause of the extremely high temperatures and harsh conditions,\nno many settlers have ventured into stablishing a colony\nor even mining these kind of planets.",
+															"Called red planets because of it's caracteristic color,\nwhich is caused by the accumulaiton of rust on it's surface.\nThese kind of planets contain high amounts of metals\nwhich are used in the construction of spaceships.\nThe abundance of mining attracts many who\nare in search of a way to make ends meet.",
+															"Due to the enviromental similarities between Earth and\nthese kind of planets, they are often referred as\n\"Earth-like planets\" or \"Earth analogue\".\nEarth-like planets are planets which were succesfully terraformed during\nthe first days of the colonization,\nthis provided a chance for early travelers to stablish self-sufficient stable colonies,\nwhich were key for the colonization of harsher planets.",
+															"Ocean planets are very similar to Earth-like ones,\nbut with its surface totally covered by water.\nThis kind of planets have lots of different lifeforms which attract\ninvestigators willing to uncover their mysteries.\nAlthough theoretically easier to colonize than, say desert planets,\nthe oceans vast deepness makes mineral resources mining harder,\nand may create a devastating greenhouse effect and variable climatology.",
+															"Planets formed mainly by gases are difficult to colonize\nbecause the process that modifies the atmosphere\nis quite slow.\nNevertheless since this planets are the main source of various\ngases some gas \"mines\" have been stablished.",
+															"Ice planets have hostile low-temperature enviroments,\nspecially in the surface, which rarely surpasses 80K degrees,\ndepending on their composition.\nTheoretically, ice planets could host life in subsurface oceans,\nbut not many colonies have wasted resources on stablishing life-support\nor mining stations due to the surface hostility.",
+															"Rocky planet with a thin to non-existant atmosphere,\nwhich makes it very difficult to colonize.\nAfter human colonies developed an artificial self-sustain system,\nsome barren planets have been colonized with closed-enviroment stations.\nUsually, only mineral-rich or strategically well situated planets are worth colonizing.",
+															"Though colonies in desert planets used to be common\nthe fight over resources and the hars conditions\nof this kind of planets have made them almos dissapear.\nNowadays the only big settlements which can be found\nare mining stations controlled by local warlords.",
+															"Any settlement attempt in this kind of planet is extremely difficult.\nThere are though some stations that try to take advantage\nof the molten metals by creating factories on this planets.",
+															"Most big cities found on this planets were originally\nmining stations, that's why many of them have big mining facilities\nat it's center.\nThe people working on the mines tend to live near those facilities while\nthe richest people of the city live in the outer ring.",
+															"The most succesfull and technological colonial cities\nare found in succesfully terramorfed planets\nmostly because this planets were the first to be colonized.\nNormally this planets only have one megalopolis\nwhile the rest of the planet is covered by vegetation.",
+															"Though this planets do not normally have big settelments,\ndue to the absence of soil, some big investigation facilities can be found.\nOcean planets have attracted the attention of scientist\ndue to the variety of the lifeforms that can be found in its oceans.",
+															"Built as gas extracting stations the settlements stablished in gaseous planets\nthey grew as independent state cities due to their hability\nto hide themselves at will under the thick atmosphere of the planet\nfinally becoming common hiding places for many independent explorers.",
+															"Though not many of this planets were initially colonized\nsome refugee camps were stablished under the surface during the second colonization\nwhich were later turned into actual cities.",
+															"Initial stations stablished in this planets were mining facilities,\nbut during the second colonization many of them turned into military bases,\ndue to the strategic value of this planets and in order to protect\nthe asteroids containing the most valuable materials."
 													};
+
+			//Events
+
+
+			//Nothing found
+			const char* const GAME_DESERT_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"Several fierce sand storms have made impossible any kind of investigation on this planet.",
+				"The only relevant signal was caused by some ruins buried under the sand\nbut sadly nothing usefull was found there."
+			};
+
+			const char* const GAME_LAVA_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"The magamatic nature of the planet has caused an overheating of the sensors.",
+				"Toxic fumes and eruptions have made impossible to land on the planet."
+			};
+
+			const char* const GAME_RED_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"Interferences caused by the magnetic minerals of the planet have prevented any exploration.",
+				"Strong winds and lightning storms have made the landing impossible."
+			};
+
+			const char* const GAME_EARTH_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"The dense vegentation has prevented the sensors from detecting any signal.",
+				"A failiure in the sensoring system has mistaken a granitic structure for\na valuble mineral deposit."
+			};
+
+			const char* const GAME_OCEAN_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"No solid land was detected so the landing was aborted.",
+				"The only promising signals detected were too far underwater for the ship to investigate."
+			};
+
+			const char* const GAME_GAS_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"The atmosphere contains too high concentration of toxic gases for anyone to explore.",
+				"An specturm analysis of the gases composing the atmosphere of the planet has been unconclusive."
+			};
+
+			const char* const GAME_ICE_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"Several ice storms have prevented any attempts of landing in the planet.",
+				"Ice growing on the sensors has blocked any signal."
+			};
+
+			const char* const GAME_BARREN_EVENT_NOTHING[] = {
+				"After searching for several hours the sensors haven't detected anything useful.",
+				"A meteor shower has prevented any exploration on the planet.",
+				"Interferences due to cosmic radiation have blocked any signal coming from the planet."
+			};
+
+			const int MAX_EVENT_NOTHING = 2;
+
+			const std::array<const char* const*,8> GAME_EVENT_NOTHING_TEXT = {
+				GAME_DESERT_EVENT_NOTHING,
+				GAME_LAVA_EVENT_NOTHING,
+				GAME_RED_EVENT_NOTHING,
+				GAME_EARTH_EVENT_NOTHING,
+				GAME_OCEAN_EVENT_NOTHING,
+				GAME_GAS_EVENT_NOTHING,
+				GAME_ICE_EVENT_NOTHING,
+				GAME_BARREN_EVENT_NOTHING
+			};
+
+			//Something valuable found
+
+			const char* const GAME_DESERT_EVENT_VALUABLE[] = {
+				"After analizing the surface a reserve of rare minerals has been found.",
+				"An old buried investigation station has been found. Some items are still\nfunctional and can be sold.",
+				"A deposit of titanium and technecium sand has been found."
+			};
+
+			const char* const GAME_LAVA_EVENT_VALUABLE[] = {
+				"The sensors have found a crashed spaceship whose materials can be reused.",
+				"The temperature lectures indicates the presence of a pool of molten metal.",
+				"An eruption has released some valuble gases."
+			};
+
+			const char* const GAME_RED_EVENT_VALUABLE[] = {
+				"After analizing the surface a reserve of rare minerals has been found.",
+				"Lectures indicate great amounts of iron under the surface.",
+				"There is an abandoned mining station on the planet which still has some stuff in it."
+			};
+
+			const char* const GAME_EARTH_EVENT_VALUABLE[] = {
+				"After analizing the surface a reserve of rare minerals has been found.",
+				"Various kinds of metal ore can be found under the mountain formations.",
+				"The ruins of an old city contains several metal devices which can be melted."
+			};
+
+			const char* const GAME_OCEAN_EVENT_VALUABLE[] = {
+				"The sensors have found a crashed spaceship whose materials can be reused.",
+				"An analysis of the whater has shown the presence of valuble types of salt dissolved in it.",
+				"The remainings of an abandoned investigation sation have provided some materials that can be sold."
+			};
+
+			const char* const GAME_GAS_EVENT_VALUABLE[] = {
+				"The sensors have found a crashed spaceship whose materials can be reused.",
+				"The gases that form the atmosphere of this planet can be filtered in order to obtain some valuable gases.",
+				"The atmosphere contains some valuable solid particles in suspension that can be obtained."
+			};
+
+			const char* const GAME_ICE_EVENT_VALUABLE[] = {
+				"The sensors have found a crashed spaceship whose materials can be reused.",
+				"Buried in the ice there are some mineral deposits that can be exploited.",
+				"The remainings of an artificial satelite found on the surface of the planet can be scavenged."
+			};
+
+			const char* const GAME_BARREN_EVENT_VALUABLE[] = {
+				"The sensors have found a crashed spaceship whose materials can be reused.",
+				"Some of the asteroids floating close aroud the planet contain valuable minerals.",
+				"After analizing the surface a reserve of rare minerals has been found."
+			};
+
+			const int MAX_EVENT_VALUABLE = 2;
+
+			const std::array<const char* const*,8> GAME_EVENT_VALUABLE_TEXT = {
+				GAME_DESERT_EVENT_VALUABLE,
+				GAME_LAVA_EVENT_VALUABLE,
+				GAME_RED_EVENT_VALUABLE,
+				GAME_EARTH_EVENT_VALUABLE,
+				GAME_OCEAN_EVENT_VALUABLE,
+				GAME_GAS_EVENT_VALUABLE,
+				GAME_ICE_EVENT_VALUABLE,
+				GAME_BARREN_EVENT_VALUABLE
+			};
+
+			// New Crew-Member
+
+			const char* const GAME_EVENT_CREW_TEXT[] = {
+				"You found a lost mercenary who agrees to work for you in echange for getting out of the planet.",
+				"In a lost mining station there is a mechanic that agrees to join your crew.",
+				"While extracting minerals from the planet the ship has detected a great magnetic anomaly.",
+				""
+			};
+
+			//Ship crashed
+
+			const char* const GAME_DESERT_EVENT_CRASH[] = {
+				"A failure in the stabilizers has caused the ship to crash.",
+				"The hull refrigeration system overheated causing some damage on the hull.",
+				"The ship got caught in a sand storm."
+			};
+
+			const char* const GAME_LAVA_EVENT_CRASH[] = {
+				"The hull refrigeration system overheated causing some damage on the hull.",
+				"The ship was hit by a spray of magma.",
+				"An eruption released acid gases near the ship."
+			};
+
+			const char* const GAME_RED_EVENT_CRASH[] = {
+				"A failure in the stabilizers has caused the ship to crash.",
+				"The ship was hit by a lightning during a storm.",
+				"Magnetic disturbances damaged several electronic systems in the ship."
+			};
+
+			const char* const GAME_EARTH_EVENT_CRASH[] = {
+				"A failure in the stabilizers has caused the ship to crash.",
+				"The intense wind has caused the ship to crash against the vegetation.",
+				"The high humidity of the atmosphere cause the engine to malfunction."
+			};
+
+			const char* const GAME_OCEAN_EVENT_CRASH[] = {
+				"The high humidity of the atmosphere cause the engine to malfunction.",
+				"A failure in the stabilizers has caused the ship to crash.",
+				"The ship was hit by a lightning during a storm."
+			};
+
+			const char* const GAME_GAS_EVENT_CRASH[] = {
+				"The ship was hit by a lightning during a storm.",
+				"An accumulation of inflammable gases exploded.",
+				"The lower atmosphere of this planet is composed by acid gases."
+			};
+
+			const char* const GAME_ICE_EVENT_CRASH[] = {
+				"The refrigeration system froze, causing some damage to the hull.",
+				"The ice plate on which the ship had landed collapsed.",
+				"The ship got caught in an ice storm."
+			};
+
+			const char* const GAME_BARREN_EVENT_CRASH[] = {
+				"The refrigeration system froze, causing some damage to the hull.",
+				"The ship was hit by several asteroids during a meteor shower.",
+				"Magnetic disturbances damaged several electronic systems in the ship."
+			};
+
+			const int MAX_EVENT_CRASH = 2;
+
+			const std::array<const char* const*,8> GAME_EVENT_CRASH_TEXT = {
+				GAME_DESERT_EVENT_CRASH,
+				GAME_LAVA_EVENT_CRASH,
+				GAME_RED_EVENT_CRASH,
+				GAME_EARTH_EVENT_CRASH,
+				GAME_OCEAN_EVENT_CRASH,
+				GAME_GAS_EVENT_CRASH,
+				GAME_ICE_EVENT_CRASH,
+				GAME_BARREN_EVENT_CRASH
+			};
+
+			// Item Event Text
+
+			const char* const GAME_EVENT_ITEM_TEXT[] = {
+				"Wile examining a magnetic signal from some buried ruins you discover an statue.",
+				"One of the lava pools that the ship analizes contains some rare cristals.",
+				"Magnetic disturbances damaged several electronic systems in the ship.",
+				"Hidden under dense vegetation an old device has been found.",
+				"During an examination of the water the sensors have detected some rare type of algae.",
+				"There are signals of a huge ship floating in the lower atmosphere of the planet.\nNo life has been detected but maybe there is something interesting inside.",
+				"The tachyon sensors react to a device buried under the ice.",
+				"An old mining station still contains some supplies."
+			};
+
+			// Item Event Text
+
+			const char* const GAME_EVENT_DEATH_TEXT[] = {
+				"Desert planets are famous for their tricky quicksands and sudden sand storms.",
+				"If there is an adjective that cannot be applied to lava planets that is \"safe\".",
+				"Many red planets have experienced very aggresive mining, which makes the surface sometimes unstable.",
+				"There are many dangers lurking in a planet sized jungle.",
+				"Sudden and violent storms are not uncommon in this kind of planets.",
+				"Some gas planets have toxic atmospheres, which meke them very dangerous.",
+				"The unstable and slippy surface of the planet can sometimes take its toll.",
+				"Meteor showers and space suits malfuctions are the most common dangers in planets without a thick atmosphere."
+			};
+
+			// Gather resources text
+
+			const char* const GAME_DESERT_EVENT_FUEL[] = {
+				"Fusion elements have been sithesized from the materials found in the planet.",
+				"Fusion elements can usually be found under the sand.",
+				"The dark matter contained in the sand can be obtained by compressing and processing it."
+			};
+
+			const char* const GAME_LAVA_EVENT_FUEL[] = {
+				"A meteorite containing dark matter has been found.",
+				"The lava contains high concentrations of dark matter.",
+				"An abandoned station still had some fuel."
+			};
+
+			const char* const GAME_RED_EVENT_FUEL[] = {
+				"An abandoned mining station still had some fuel.",
+				"The metals of the planet can be processed and turned into fuel.",
+				"You found a mine of fusion material."
+			};
+
+			const char* const GAME_EARTH_EVENT_FUEL[] = {
+				"The water of the planet can be processed in order to obtain fusion materials.",
+				"The biomass of the planet can be a source of primary materials for the dark matter reactor.",
+				"Some dark matter has been processed from the atmosphere of the planet."
+			};
+
+			const char* const GAME_OCEAN_EVENT_FUEL[] = {
+				"The water of the planet can be processed in order to obtain fusion materials.",
+				"The biomass of the planet can be a source of primary materials for the dark matter reactor.",
+				"Some dark matter has been processed from the atmosphere of the planet."
+			};
+
+			const char* const GAME_GAS_EVENT_FUEL[] = {
+				"Some dark matter has been processed from the atmosphere of the planet.",
+				"It's easy to obtain fusable hidrogen from the atmosphere of the planet.",
+				"The secondary fusion reactor may have troubles fusing heavy gases,\nbut they can be used as low quality fuel."
+			};
+
+			const char* const GAME_ICE_EVENT_FUEL[] = {
+				"Ice planets sometimes hide dar matter under their frozen surface.",
+				"The ice can be processed the same way as water in order to obtain\nhidrogen for the secondary reactor.",
+				"A meteorite containing dark matter has been found."
+			};
+
+			const char* const GAME_BARREN_EVENT_FUEL[] = {
+				"A meteorite containing dark matter has been found.",
+				"Due to their absence of atmosphere this kind of planets are a good place\nto find asteroids containing minerals that can be used as fuel.",
+				"An abandoned station still had some fuel."
+			};
+
+			const int MAX_EVENT_FUEL = 2;
+
+			const std::array<const char* const*,8> GAME_EVENT_FUEL_TEXT = {
+				GAME_DESERT_EVENT_FUEL,
+				GAME_LAVA_EVENT_FUEL,
+				GAME_RED_EVENT_FUEL,
+				GAME_EARTH_EVENT_FUEL,
+				GAME_OCEAN_EVENT_FUEL,
+				GAME_GAS_EVENT_FUEL,
+				GAME_ICE_EVENT_FUEL,
+				GAME_BARREN_EVENT_FUEL
+			};
+
+			// Mission Text
+
+			const char* const GAME_MISSION_AQUIRED_TEXT[] = {
+				"A random person sits near you\nin a pub and says:\n\"I've heard you have a ship. ¿Are you intrested in taking a job?\"",
+				"\"We have had some problems with pirates lately,\nand it would be nice if they'd dissapear, ¿Are you in?\"",
+				"\"I just need to get out of the system\nquietly.\"",
+				"Some investigators are willing\nto buy any iteresting item without\nquestioning its origins.",
+				"\"I need some fuel for my ship,\nand i`m willing to pay extra if no questions are asked.\""
+			};
 
 			// --Planets Names--
 
 			//Planets by system
 			const char* const GAME_PLANETS_SYSTEM0[] = {
-				"Planet_0__0_","Planet_0__1_","Planet_0__2_","Planet_0__3_","Planet_0__4_","Planet_0__5_","Planet_0__6_","Planet_0__7_","Planet_0__8_","Planet_0__9_" 
+				"Sirrah_0_","Sirrah_1_","Sirrah_2_","Sirrah_3_","Sirrah_4_","Sirrah_5_","Sirrah_6_","Sirrah_7_","Sirrah_8_","Sirrah_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM1[] = {
-				"Planet_1__0_","Planet_1__1_","Planet_1__2_","Planet_1__3_","Planet_1__4_","Planet_1__5_","Planet_1__6_","Planet_1__7_","Planet_1__8_","Planet_1__9_" 
+				"Cih_0_","Cih_1_","Cih_2_","Cih_3_","Cih_4_","Cih_5_","Syprah","Cih_7_","Cih_8_","Cih_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM2[] = {
-				"Planet_2__0_","Planet_2__1_","Planet_2__2_","Planet_2__3_","Planet_2__4_","Planet_2__5_","Planet_2__6_","Planet_2__7_","Planet_2__8_","Planet_2__9_" 
+				"Canopus_0_","Canopus_1_","Uylea","Canopus_3_","Canopus_4_","Canopus_5_","Canopus_6_","Canopus_7_","Canopus_8_","Canopus_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM3[] = {
-				"Planet_3__0_","Planet_3__1_","Planet_3__2_","Planet_3__3_","Planet_3__4_","Planet_3__5_","Planet_3__6_","Planet_3__7_","Planet_3__8_","Planet_3__9_" 
+				"Navi_0_","Navi_1_","Navi_2_","Navi_3_","Navi_4_","Navi_5_","Navi_6_","Navi_7_","Navi_8_","Navi_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM4[] = {
-				"Planet_4__0_","Planet_4__1_","Planet_4__2_","Planet_4__3_","Planet_4__4_","Planet_4__5_","Planet_4__6_","Planet_4__7_","Planet_4__8_","Planet_4__9_" 
+				"Kurhah_0_","Kurhah_1_","Kurhah_2_","Kurhah_3_","Kurhah_4_","Kurhah_5_","Kurhah_6_","Kurhah_7_","Kurhah_8_","Kurhah_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM5[] = {
-				"Planet_5__0_","Planet_5__1_","Planet_5__2_","Planet_5__3_","Planet_5__4_","Planet_5__5_","Planet_5__6_","Planet_5__7_","Planet_5__8_","Planet_5__9_" 
+				"Garnet_0_","Garnet_1_","Iosconoe","Garnet_3_","Garnet_4_","Garnet_5_","Garnet_6_","Garnet_7_","Garnet_8_","Garnet_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM6[] = {
-				"Planet_6__0_","Planet_6__1_","Planet_6__2_","Planet_6__3_","Planet_6__4_","Planet_6__5_","Planet_6__6_","Planet_6__7_","Planet_6__8_","Planet_6__9_" 
+				"Deneb_Kaitos_0_","Deneb_Kaitos_1_","Deneb_Kaitos_2_","Deneb_Kaitos_3_","Deneb_Kaitos_4_","Deneb_Kaitos_5_","Osmone","Deneb_Kaitos_7_","Deneb_Kaitos_8_","Deneb_Kaitos_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM7[] = {
-				"Planet_7__0_","Planet_7__1_","Planet_7__2_","Planet_7__3_","Planet_7__4_","Planet_7__5_","Planet_7__6_","Planet_7__7_","Planet_7__8_","Planet_7__9_" 
+				"Mira_0_","Mira_1_","Mira_2_","Mira_3_","Mira_4_","Mira_5_","Mira_6_","Mira_7_","Mira_8_","Mira_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM8[] = {
-				"Planet_8__0_","Planet_8__1_","Planet_8__2_","Planet_8__3_","Planet_8__4_","Planet_8__5_","Planet_8__6_","Planet_8__7_","Planet_8__8_","Planet_8__9_" 
+				"Tso_Hea_0_","Tso_Hea_1_","Tso_Hea_2_","Tso_Hea_3_","Tso_Hea_4_","Tso_Hea_5_","Tso_Hea_6_","Tso_Hea_7_","Tso_Hea_8_","Tso_Hea_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM9[] = {
-				"Planet_9__0_","Planet_9__1_","Planet_9__2_","Planet_9__3_","Planet_9__4_","Planet_9__5_","Planet_9__6_","Planet_9__7_","Planet_9__8_","Planet_9__9_" 
+				"Gienah_0_","Gienah_1_","Gienah_2_","Prun","Gienah_4_","Gienah_5_","Gienah_6_","Gienah_7_","Gienah_8_","Gienah_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM10[] = {
-				"Planet_10__0_","Planet_10__1_","Planet_10__2_","Planet_10__3_","Planet_10__4_","Planet_10__5_","Planet_10__6_","Planet_10__7_","Planet_10__8_","Planet_10__9_" 
+				"Algorab_0_","Algorab_1_","Algorab_2_","Algorab_3_","Algorab_4_","Algorab_5_","Algorab_6_","Algorab_7_","Algorab_8_","Algorab_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM11[] = {
-				"Planet_11__0_","Planet_11__1_","Planet_11__2_","Planet_11__3_","Planet_11__4_","Planet_11__5_","Planet_11__6_","Planet_11__7_","Planet_11__8_","Planet_11__9_" 
+				"Minkar_0_","Minkar_1_","Minkar_2_","Minkar_3_","Minkar_4_","Minkar_5_","Minkar_6_","Minkar_7_","Minkar_8_","Minkar_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM12[] = {
-				"Planet_12__0_","Planet_12__1_","Planet_12__2_","Planet_12__3_","Planet_12__4_","Planet_12__5_","Planet_12__6_","Planet_12__7_","Planet_12__8_","Planet_12__9_" 
+				"Acrux_0_","Acrux_1_","Acrux_2_","Acrux_3_","Acrux_4_","Acrux_5_","Acrux_6_","Acrux_7_","Acrux_8_","Acrux_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM13[] = {
-				"Planet_13__0_","Planet_13__1_","Planet_13__2_","Planet_13__3_","Planet_13__4_","Planet_13__5_","Planet_13__6_","Planet_13__7_","Planet_13__8_","Planet_13__9_" 
+				"Gacrux_0_","Gacrux_1_","Gacrux_2_","Gacrux_3_","Gacrux_4_","Gacrux_5_","Gacrux_6_","Gacrux_7_","Gacrux_8_","Gacrux_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM14[] = {
-				"Planet_14__0_","Planet_14__1_","Planet_14__2_","Planet_14__3_","Planet_14__4_","Planet_14__5_","Planet_14__6_","Planet_14__7_","Planet_14__8_","Planet_14__9_" 
+				"CanopusII_0_","CanopusII_1_","CanopusII_2_","CanopusII_3_","CanopusII_4_","CanopusII_5_","CanopusII_6_","Chenon","CanopusII_8_","CanopusII_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM15[] = {
-				"Planet_15__0_","Planet_15__1_","Planet_15__2_","Planet_15__3_","Planet_15__4_","Planet_15__5_","Planet_15__6_","Planet_15__7_","Planet_15__8_","Planet_15__9_" 
+				"Edasich_0_","Edasich_1_","Edasich_2_","Edasich_3_","Edasich_4_","Edasich_5_","Edasich_6_","Edasich_7_","Edasich_8_","Edasich_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM16[] = {
-				"Planet_16__0_","Planet_16__1_","Planet_16__2_","Planet_16__3_","Planet_16__4_","Planet_16__5_","Planet_16__6_","Planet_16__7_","Planet_16__8_","Planet_16__9_" 
+				"Edasich_0_","Edasich_1_","Youwei","Edasich_3_","Edasich_4_","Edasich_5_","Edasich_6_","Edasich_7_","Edasich_8_","Edasich_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM17[] = {
-				"Planet_17__0_","Planet_17__1_","Planet_17__2_","Planet_17__3_","Planet_17__4_","Planet_17__5_","Planet_17__6_","Planet_17__7_","Planet_17__8_","Planet_17__9_" 
+				"Acamar_0_","Acamar_1_","Acamar_2_","Acamar_3_","Acamar_4_","Acamar_5_","Acamar_6_","Acamar_7_","Acamar_8_","Acamar_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM18[] = {
-				"Planet_18__0_","Planet_18__1_","Planet_18__2_","Planet_18__3_","Planet_18__4_","Planet_18__5_","Planet_18__6_","Planet_18__7_","Planet_18__8_","Planet_18__9_" 
+				"Castor_0_","Castor_1_","Castor_2_","Castor_3_","Castor_4_","Castor_5_","Castor_6_","Castor_7_","Castor_8_","Castor_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM19[] = {
-				"Planet_19__0_","Planet_19__1_","Planet_19__2_","Planet_19__3_","Planet_19__4_","Planet_19__5_","Planet_19__6_","Planet_19__7_","Planet_19__8_","Planet_19__9_" 
+				"Al_Na'ir_0_","Al_Na'ir_1_","Al_Na'ir_2_","Al_Na'ir_3_","Al_Na'ir_4_","Al_Niyat","Al_Na'ir_6_","Al_Na'ir_7_","Al_Na'ir_8_","Al_Na'ir_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM20[] = {
-				"Planet_20__0_","Planet_20__1_","Planet_20__2_","Planet_20__3_","Planet_20__4_","Planet_20__5_","Planet_20__6_","Planet_20__7_","Planet_20__8_","Planet_20__9_" 
+				"Al_Dhanab_0_","Al_Dhanab_1_","Al_Dhanab_2_","Al_Dhanab_3_","Al_Dhanab_4_","Al_Dhanab_5_","Al_Dhanab_6_","Al_Dhanab_7_","Al_Dhanab_8_","Al_Dhanab_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM21[] = {
-				"Planet_21__0_","Planet_21__1_","Planet_21__2_","Planet_21__3_","Planet_21__4_","Planet_21__5_","Planet_21__6_","Planet_21__7_","Planet_21__8_","Planet_21__9_" 
+				"Kornephoros_0_","Kornephoros_1_","Kornephoros_2_","Kornephoros_3_","Kornephoros_4_","Kornephoros_5_","Kornephoros_6_","Kornephoros_7_","Kornephoros_8_","Kornephoros_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM22[] = {
-				"Planet_22__0_","Planet_22__1_","Planet_22__2_","Planet_22__3_","Planet_22__4_","Planet_22__5_","Planet_22__6_","Planet_22__7_","Planet_22__8_","Planet_22__9_" 
+				"Ukdah_0_","Ukdah_1_","Ukdah_2_","Ukdah_3_","Ukdah_4_","Ukdah_5_","Rhodesh","Ukdah_7_","Ukdah_8_","Ukdah_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM23[] = {
-				"Planet_23__0_","Planet_23__1_","Planet_23__2_","Planet_23__3_","Planet_23__4_","Planet_23__5_","Planet_23__6_","Planet_23__7_","Planet_23__8_","Planet_23__9_" 
+				"Cor_Koraelis_0_","Cor_Koraelis_1_","Cor_Koraelis_2_","Cor_Koraelis_3_","Cor_Koraelis_4_","Cor_Koraelis_5_","Cor_Koraelis_6_","Cor_Koraelis_7_","Koerus","Cor_Koraelis_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM24[] = {
-				"Planet_24__0_","Planet_24__1_","Planet_24__2_","Planet_24__3_","Planet_24__4_","Planet_24__5_","Planet_24__6_","Planet_24__7_","Planet_24__8_","Planet_24__9_" 
+				"Zozma_0_","Ilorus","Zozma_2_","Zozma_3_","Zozma_4_","Zozma_5_","Zozma_6_","Zozma_7_","Zozma_8_","Zozma_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM25[] = {
-				"Planet_25__0_","Planet_25__1_","Planet_25__2_","Planet_25__3_","Planet_25__4_","Planet_25__5_","Planet_25__6_","Planet_25__7_","Planet_25__8_","Planet_25__9_" 
+				"Ras_Elased_0_","Ras_Elased_1_","Ras_Elased_2_","Ras_Elased_3_","Ras_Elased_4_","Secutania","Ras_Elased_6_","Ras_Elased_7_","Ras_Elased_8_","Ras_Elased_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM26[] = {
-				"Planet_26__0_","Planet_26__1_","Planet_26__2_","Planet_26__3_","Planet_26__4_","Planet_26__5_","Planet_26__6_","Planet_26__7_","Planet_26__8_","Planet_26__9_" 
+				"Tsze_Tseang_0_","Tsze_Tseang_1_","Tsze_Tseang_2_","Kuma","Tsze_Tseang_4_","Tsze_Tseang_5_","Tsze_Tseang_6_","Tsze_Tseang_7_","Tsze_Tseang_8_","Tsze_Tseang_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM27[] = {
-				"Planet_27__0_","Planet_27__1_","Planet_27__2_","Planet_27__3_","Planet_27__4_","Planet_27__5_","Planet_27__6_","Planet_27__7_","Planet_27__8_","Planet_27__9_" 
+				"Vega_0_","Vega_1_","Vega_2_","Vega_3_","Vega_4_","Vega_5_","Vega_6_","Aquila","Vega_8_","Vega_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM28[] = {
-				"Planet_28__0_","Planet_28__1_","Planet_28__2_","Planet_28__3_","Planet_28__4_","Planet_28__5_","Planet_28__6_","Planet_28__7_","Planet_28__8_","Planet_28__9_" 
+				"Sulafat_0_","Sulafat_1_","Sulafat_2_","Sulafat_3_","Sulafat_4_","Sulafat_5_","Sulafat_6_","Ashurn","Sulafat_8_","Sulafat_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM29[] = {
-				"Planet_29__0_","Planet_29__1_","Planet_29__2_","Planet_29__3_","Planet_29__4_","Planet_29__5_","Planet_29__6_","Planet_29__7_","Planet_29__8_","Planet_29__9_" 
+				"Yed_0_","Yed_1_","Yed_2_","Yed_3_","Yesmanu","Yed_5_","Yed_6_","Yed_7_","Yed_8_","Yed_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM30[] = {
-				"Planet_30__0_","Planet_30__1_","Planet_30__2_","Planet_30__3_","Planet_30__4_","Planet_30__5_","Planet_30__6_","Planet_30__7_","Planet_30__8_","Planet_30__9_" 
+				"Zed_0_","Zed_1_","Zed_2_","Zed_3_","Zed_4_","Zed_5_","Zed_6_","Zed_7_","Zed_8_","Zed_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM31[] = {
-				"Planet_31__0_","Planet_31__1_","Planet_31__2_","Planet_31__3_","Planet_31__4_","Planet_31__5_","Planet_31__6_","Planet_31__7_","Planet_31__8_","Planet_31__9_" 
+				"Hastur","Hiades_1_","Hiades_2_","Hiades_3_","Hiades_4_","Hiades_5_","Hiades_6_","Carcossa","Hiades_8_","Hiades_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM32[] = {
-				"Planet_32__0_","Planet_32__1_","Planet_32__2_","Planet_32__3_","Planet_32__4_","Planet_32__5_","Planet_32__6_","Planet_32__7_","Planet_32__8_","Planet_32__9_" 
+				"Betelgeuse_0_","Betelgeuse_1_","Betelgeuse_2_","Betelgeuse_3_","Betelgeuse_4_","Azathoth","Betelgeuse_6_","Betelgeuse_7_","Nyarlathoteph","Betelgeuse_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM33[] = {
-				"Planet_33__0_","Planet_33__1_","Planet_33__2_","Planet_33__3_","Planet_33__4_","Planet_33__5_","Planet_33__6_","Planet_33__7_","Planet_33__8_","Planet_33__9_" 
+				"Rigel_0_","Rigel_1_","Rigel_2_","Rigel_3_","Rigel_4_","Rigel_5_","Rigel_6_","Rigel_7_","Rigel_8_","Rigel_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM34[] = {
-				"Planet_34__0_","Planet_34__1_","Planet_34__2_","Planet_34__3_","Planet_34__4_","Planet_34__5_","Planet_34__6_","Planet_34__7_","Planet_34__8_","Planet_34__9_" 
+				"Saiph_0_","Telara","Saiph_2_","Saiph_3_","Saiph_4_","Saiph_5_","Saiph_6_","Saiph_7_","Saiph_8_","Saiph_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM35[] = {
-				"Planet_35__0_","Planet_35__1_","Planet_35__2_","Planet_35__3_","Planet_35__4_","Planet_35__5_","Planet_35__6_","Planet_35__7_","Planet_35__8_","Planet_35__9_" 
+				"Fomalhaut_0_","Fomalhaut_1_","Fomalhaut_2_","Fomalhaut_3_","Fomalhaut_4_","Fomalhaut_5_","Fomalhaut_6_","Fomalhaut_7_","Fomalhaut_8_","Yuggoth" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM36[] = {
-				"Planet_36__0_","Planet_36__1_","Planet_36__2_","Planet_36__3_","Planet_36__4_","Planet_36__5_","Planet_36__6_","Planet_36__7_","Planet_36__8_","Planet_36__9_" 
+				"Sirius_0_","Sirius_1_","Mere","Sirius_3_","Sirius_4_","Sirius_5_","Sirius_6_","Sirius_7_","Sirius_8_","Sirius_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM37[] = {
-				"Planet_37__0_","Planet_37__1_","Planet_37__2_","Planet_37__3_","Planet_37__4_","Planet_37__5_","Planet_37__6_","Planet_37__7_","Planet_37__8_","Planet_37__9_" 
+				"Arcturus_0_","Arcturus_1_","Arcturus_2_","Arcturus_3_","Arcturus_4_","Arcturus_5_","Arcturus_6_","Arcturus_7_","Arcturus_8_","Arcturus_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM38[] = {
-				"Planet_38__0_","Planet_38__1_","Planet_38__2_","Planet_38__3_","Planet_38__4_","Planet_38__5_","Planet_38__6_","Planet_38__7_","Planet_38__8_","Planet_38__9_" 
+				"Aldebaran_0_","Aldebaran_1_","Aldebaran_2_","Aldebaran_3_","Aldebaran_4_","Aldebaran_5_","Hali","Aldebaran_7_","Aldebaran_8_","Aldebaran_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM39[] = {
-				"Planet_39__0_","Planet_39__1_","Planet_39__2_","Planet_39__3_","Planet_39__4_","Planet_39__5_","Planet_39__6_","Planet_39__7_","Planet_39__8_","Planet_39__9_" 
+				"Tseen_Ke_0_","Tseen_Ke_1_","Tseen_Ke_2_","Thonoe","Tseen_Ke_4_","Tseen_Ke_5_","Tseen_Ke_6_","Tseen_Ke_7_","Tseen_Ke_8_","Tseen_Ke_9_" 
 			};
 
 			const std::array<const char* const*,40> GAME_PLANETS_NAMES = {
@@ -466,43 +783,99 @@ namespace Common
 
 			// Engines
 			const char* const GAME_PULSE_ENGINE[2] = {
-				"Ion Pulse Engine", "Engine\nAs the most basic faster than light\nengine it provides a short range quantic jump\nand medium slower than light speed."
+				"Ion Pulse Engine", "Engine\nAs the most basic faster than light\nengine it provides a short range quantic jump\nand medium slower than light speed.\nJump Distance:35\nFuel Cost:140\nMax speed: 1.0 -- Acceleration: 1.0 -- Rotation speed: 1.0"
 			};
 
-			const char* const GAME_TEST_ENGINE[2] = {
-				"Test Engine", "Engine\nTest."
+			const char* const GAME_RESONANCE_ENGINE[2] = {
+				"Electromagnetic Resonance Engine", "Engine\nThis engine is composed by an electromagnetic resonator\nwich creates a diferential force by creating\na constructive interference between several electromagnetic waves.\nJump Distance:50\nFuel Cost:200\nMax speed: 1.0 -- Acceleration: 1.5 -- Rotation speed: 1.25"
+			};
+
+			const char* const GAME_SPATIAL_ENGINE[2] = {
+				"Point Zero Engine", "Engine\nAn engine that uses the expansion\nof the space as a source of impulse.\nIt's very efficient, but its slower than light capabilities are not great.\nJump Distance:60\nFuel Cost:100\nMax speed: 0.75 -- Acceleration: 1.0 -- Rotation speed: 0.75"
+			};
+
+			const char* const GAME_REPULSION_ENGINE[2] = {
+				"Repulsion Engine", "Engine\nThe most used engine in cargo ships.\nIts jump distance its quite high, but its fuel consume too.\nJump Distance:85\nFuel Cost:300\nMax speed: 0.75 -- Acceleration: 1.0 -- Rotation speed: 1.5"
+			};
+
+			const char* const GAME_GRAVITY_ENGINE[2] = {
+				"Gravity Engine", "Engine\nThis engine was used during the colonization.\nIt uses gravitational waves to curve the space.\nJump Distance:65\nFuel Cost:150\nMax speed: 1.5 -- Acceleration: 1.0 -- Rotation speed: 1.5"
+			};
+
+			const char* const GAME_SOLAR_ENGINE[2] = {
+				"Solar Wind Wing", "Engine\nNormally considered just a expensive toy\nthis \"engine\" captures ions theat escape from stars\nrather than generating any kind of impulse.\nJump Distance:45\nFuel Cost:90\nMax speed: 1.75 -- Acceleration: 1.75 -- Rotation speed: 1.5"
+			};
+
+			const char* const GAME_COPOSITE_ENGINE[2] = {
+				"Composite Engine", "Engine\nA resonance engine combined with an old fashioned\ngas combustion engine to solve its\nslower than light speed issues.\nJump Distance:60\nFuel Cost:100\nMax speed: 1.25 -- Acceleration: 1.25 -- Rotation speed: 1.0"
+			};
+
+			const char* const GAME_WORMHOLE_ENGINE[2] = {
+				"Wormhole Engine", "Engine\nThought to be just a rumour this engine appeared\nin some ships some years ago.\nIt's said that it's the result of some\nillegal teleportation experiments.\nJump Distance:70\nFuel Cost:250\nMax speed: 2.0 -- Acceleration: 1.0 -- Rotation speed: 1.0"
+			};
+
+			const char* const GAME_GAMMA_ENGINE[2] = {
+				"Gamma Ray Engine", "Engine\nInspired by the gamma rays created by the black holes\nthis engine creates two gamma ray streams.\nJump Distance:55\nFuel Cost:150\nMax speed: 1.75 -- Acceleration: 2.0 -- Rotation speed: 1.75"
 			};
 
 			const char* const GAME_PLASMA_ENGINE[2] = {
-				"Plasma Stream Engine", "Engine\nA top notch engine that\nis both efficient and powerful."
+				"Plasma Stream Engine", "Engine\nA top notch engine that\nis both efficient and powerful.\nJump Distance:85\nFuel Cost:105\nMax speed: 2.0 -- Acceleration: 1.5 -- Rotation speed: 1.5"
 			};
 
 			const std::pair<std::string,std::pair<int, int>> ENGINE_DATA_MAP[] =
 			{
 				std::make_pair (GAME_PULSE_ENGINE[0],std::make_pair (35, 140)), // distance, cost
-				std::make_pair (GAME_TEST_ENGINE[0],std::make_pair (50, 200)),
+				std::make_pair (GAME_RESONANCE_ENGINE[0],std::make_pair (50, 200)),
+				std::make_pair (GAME_SPATIAL_ENGINE[0],std::make_pair (60, 100)),
+				std::make_pair (GAME_REPULSION_ENGINE[0],std::make_pair (85, 300)),
+				std::make_pair (GAME_GRAVITY_ENGINE[0],std::make_pair (65, 150)),
+				std::make_pair (GAME_SOLAR_ENGINE[0],std::make_pair (45, 90)),
+				std::make_pair (GAME_COPOSITE_ENGINE[0],std::make_pair (60, 100)),
+				std::make_pair (GAME_WORMHOLE_ENGINE[0],std::make_pair (70, 250)),
+				std::make_pair (GAME_GAMMA_ENGINE[0],std::make_pair (55, 150)),
 				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (85, 105))
 			};
 
 			const std::tuple<std::string, float, float, float> ENGINE_VEL_DATA[] = 
 			{
 				std::make_tuple(GAME_PULSE_ENGINE[0], 1.0,1.0,1.0),//max speed, acceleration, rotation speed
-				std::make_tuple(GAME_TEST_ENGINE[0], 1.0,1.5,1.25),
+				std::make_tuple(GAME_RESONANCE_ENGINE[0], 1.0,1.5,1.25),
+				std::make_tuple(GAME_SPATIAL_ENGINE[0], 0.75,1.0,0.75),
+				std::make_tuple(GAME_REPULSION_ENGINE[0], 0.75,1.0,1.5),
+				std::make_tuple(GAME_GRAVITY_ENGINE[0], 0.75,1.0,1.5),
+				std::make_tuple(GAME_SOLAR_ENGINE[0], 1.75,1.75,1.5),
+				std::make_tuple(GAME_COPOSITE_ENGINE[0], 1.25,1.25,1.0),
+				std::make_tuple(GAME_WORMHOLE_ENGINE[0], 2.0,1.0,1.0),
+				std::make_tuple(GAME_GAMMA_ENGINE[0], 1.75,2.0,1.75),
 				std::make_tuple(GAME_PLASMA_ENGINE[0], 2.0,1.5,1.5)
 			};
 
-			const int TOTAL_ENGINES = 3;
+			const int TOTAL_ENGINES = 10;
 
 			const std::pair<std::string,std::pair<int, int>> ENGINE_COST[] =
 			{
 				std::make_pair (GAME_PULSE_ENGINE[0],std::make_pair (30, 6)), // base cost, variance/10
-				std::make_pair (GAME_TEST_ENGINE[0],std::make_pair (800, 200)),
-				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (300, 50))
+				std::make_pair (GAME_RESONANCE_ENGINE[0],std::make_pair (100, 20)),
+				std::make_pair (GAME_SPATIAL_ENGINE[0],std::make_pair (150, 35)),
+				std::make_pair(GAME_REPULSION_ENGINE[0], std::make_pair (250, 10)),
+				std::make_pair(GAME_GRAVITY_ENGINE[0], std::make_pair (230, 40)),
+				std::make_pair(GAME_SOLAR_ENGINE[0], std::make_pair (300, 20)),
+				std::make_pair(GAME_COPOSITE_ENGINE[0], std::make_pair (260, 50)),
+				std::make_pair(GAME_WORMHOLE_ENGINE[0], std::make_pair (360, 30)),
+				std::make_pair(GAME_GAMMA_ENGINE[0], std::make_pair (420, 30)),
+				std::make_pair (GAME_PLASMA_ENGINE[0],std::make_pair (400, 70))
 			};
 
 			const std::array<const char* const*,TOTAL_ENGINES> GAME_ENGINES_LIST = {
 				GAME_PULSE_ENGINE,
-				GAME_TEST_ENGINE,
+				GAME_RESONANCE_ENGINE,
+				GAME_SPATIAL_ENGINE,
+				GAME_REPULSION_ENGINE,
+				GAME_GRAVITY_ENGINE,
+				GAME_SOLAR_ENGINE,
+				GAME_COPOSITE_ENGINE,
+				GAME_WORMHOLE_ENGINE,
+				GAME_GAMMA_ENGINE,
 				GAME_PLASMA_ENGINE
 			};
 
@@ -616,24 +989,66 @@ namespace Common
 
 			// Items
 			const char* const GAME_REWARD[2] = {
-				"Reward Item", "Item\nTest item to be given as a reward\nfor completing missions."
+				"Multipass", "Item\nAn electronic keycard\nwhich gives acces to various locations."
 			};
 
-			const char* const GAME_USELESS[2] = {
-				"Useless Item", "Item\nUseless item found in a planet."
+			const char* const GAME_USELESS_DESERT[2] = {
+				"Sandstone Totem", "Item\nAn ancient totem\ncarved in sandstone\nfound in a desert planet.\nSeems that belonged\nto an ancient civilization."
 			};
 
-			const int TOTAL_ITEMS = 2;
+			const char* const GAME_USELESS_LAVA[2] = {
+				"Volcanic Cristal", "Item\n.A strange cristal\nfound in a volcanic planet.\nIts different faces reflect the\nlight in different indescribable colors."
+			};
+
+			const char* const GAME_USELESS_RED[2] = {
+				"Magnetic Stone", "Item\n.A big stone that creates a powerfull\nmagnetic field.\nIn order to manipulate it\nhas to be magnetically isolated."
+			};
+
+			const char* const GAME_USELESS_EARTH[2] = {
+				"Terraforming Capsule", "Item\n.An old spacial probe equipped\nmodify the atmosphere of a planet.\nMany of these were used in order\nto make planets suitable for\ncolonizers."
+			};
+
+			const char* const GAME_USELESS_OCEAN[2] = {
+				"Regenerating Algae", "Item\n.A rare type of algae\nwhich has the ability to regenerate itself.\nOne of the multiple species that\nlive in the ocean planets."
+			};
+
+			const char* const GAME_USELESS_GAS[2] = {
+				"Crio-Stasis Chamber", "Item\n.A crio-stasis module\nprobably used during the first colonization."
+			};
+
+			const char* const GAME_USELESS_ICE[2] = {
+				"Unactive Beacon", "Item\n.One of the beacons that were launched\nduring the second colonization.\nIt's damaged and ist information\nhas been lost."
+			};
+
+			const char* const GAME_USELESS_BARREN[2] = {
+				"Mining Robot", "Item\n.An old mining robot.\nIt's really dated but its still functional."
+			};
+
+			const int TOTAL_ITEMS = 9;
 
 			const std::pair<std::string,std::pair<int, int>> ITEM_COST[] =
 			{
 				std::make_pair (GAME_REWARD[0],std::make_pair (-1, -1)), // base cost, variance/10
-				std::make_pair (GAME_USELESS[0],std::make_pair (-1, -1))
+				std::make_pair (GAME_USELESS_DESERT[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_LAVA[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_RED[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_EARTH[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_OCEAN[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_GAS[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_ICE[0],std::make_pair (-1, -1)),
+				std::make_pair (GAME_USELESS_BARREN[0],std::make_pair (-1, -1))
 			};
 
 			const std::array<const char* const*,TOTAL_ITEMS> GAME_ITEM_LIST = {
 				GAME_REWARD,
-				GAME_USELESS
+				GAME_USELESS_DESERT,
+				GAME_USELESS_LAVA,
+				GAME_USELESS_RED,
+				GAME_USELESS_EARTH,
+				GAME_USELESS_OCEAN,
+				GAME_USELESS_GAS,
+				GAME_USELESS_ICE,
+				GAME_USELESS_BARREN
 			};
 
 			const int REPAIR_HULL_COST = 100;

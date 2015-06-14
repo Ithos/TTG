@@ -148,7 +148,7 @@ namespace Application
 	{
 		/// TODO -- Internationalization -- /// Begin{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
-			CEGUI::String("Add an introduction here..."))
+			CEGUI::String(">>Encrypted Message<<        >>Written by:XXXXX<<\nThe job consists in investigating 4 encrypted tachyon\nsignals which are supposed to be emmitted by active emrgency beacons.\nAlso, you should know that there is\nsome people very interested in keeping those beacons lost,\nso you should be carefull.\n>>End Message<<"))
 			);
 		/// TODO -- Internationalization -- /// }End
 	}

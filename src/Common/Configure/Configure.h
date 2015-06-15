@@ -222,11 +222,13 @@ const char* const GEN_ENEMY_SHIELD            = "enemy_shield"; // 100, 200, ...
 const char* const GEN_ENEMY_SHIELD_RESISTANCE = "enemy_shield_resistance"; // [0..1]
 
 // Shield
-const char* const GEN_SHIELD_TYPE             = "shield_type";
-const char* const GEN_SHIELD_TRIGGER_ENTITY   = "shield_trigger_entity";
-const char* const GEN_SHIELD_TRIGGER_RADIUS   = "shield_trigger_radius";
+const char* const GEN_SHIELD_TYPE              = "shield_type";
+const char* const GEN_SHIELD_TRIGGER_ENTITY    = "shield_trigger_entity";
+const char* const GEN_SHIELD_TRIGGER_RADIUS    = "shield_trigger_radius";
 const char* const GEN_SHIELD_TRIGGER_ISTRIGGER = "shield_trigger_istrigger";
 const char* const GEN_SHIELD_GRAPHIC_MODEL     = "shield_model";
+const char* const GEN_SHIELD_TIMEOUT           = "shield_trigger_wattingTime";
+const char* const GEN_SHIELD_RELOADTIME        = "shield_trigger_reloadTime";
 
 // weapons
 const char* const GEN_LASER_RANGE  = "laser_range";

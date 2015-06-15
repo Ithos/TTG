@@ -35,7 +35,7 @@ namespace Common
         const char* const LASER_NAME   = "laserTrail_";
 
         CParticleManager::CParticleManager() 
-            : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0),
+            : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0), m_shieldNode(nullptr),
               m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(10), m_iRt(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
@@ -154,13 +154,48 @@ namespace Common
                 (*it)->start();
         }
 
-
         void CParticleManager::releaseStars()
         {
             for (auto it = m_stars.begin(); it != m_stars.end(); ++it)
                 m_sceneMgr->destroyParticleSystem((*it)->getName());
 
             m_stars.clear();
+        }
+
+        /*------------------ shield -------------------------*/
+        void CParticleManager::initShield(Ogre::SceneNode* node)
+        {
+            m_shield = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "shieldEffect", m_sceneMgr);
+            if (node)
+                m_shieldNode = node;
+        }
+        
+        void CParticleManager::startShield()
+        {
+            if (m_shieldNode) {
+                m_shieldNode->attachObject(m_shield);
+                m_shield->start();
+            }
+        }
+
+        void CParticleManager::changeQuota(unsigned value, unsigned max)
+        {
+            if (value > 0.00000f)  {
+                ParticleSystem* pTmp = m_shield;
+                initShield();
+                m_shield->getTechnique(0)->setVisualParticleQuota((m_shield->getTechnique(0)->getVisualParticleQuota() * value) / max);
+                m_shield->getTechnique(1)->setVisualParticleQuota((m_shield->getTechnique(1)->getVisualParticleQuota() * value) / max);
+                startShield();
+                pTmp->stop();
+                m_sceneMgr->destroyParticleSystem(pTmp->getName());
+            }
+            else
+                m_shield->stop();
+        }
+          
+        void CParticleManager::releaseShield()
+        {
+            m_sceneMgr->destroyParticleSystem(m_shield->getName());
         }
 
         /*----------------- shoots -------------------- */

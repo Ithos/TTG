@@ -17,6 +17,11 @@
 */
 
 #include "PhysicContact.h"
+#include "../../Entity.h"
+#include <Common\data\TTG_Types.h>
+#include "../Gameplay/Life.h"
+
+using namespace Common::Data;
 
 namespace Logic { namespace Component {
 
@@ -25,8 +30,9 @@ namespace Logic { namespace Component {
 	{
         //TODO player contact
 		CPhysicEntity::onContact(otherComponent);
-        /*getEntity()-> player
-        otherComponent->getEntity(); con la que choca*/
+
+        *(static_cast<CLife*>(getEntity()->getComponentByName(LIFE_COMP))->m_life) -= 10;
+        //otherComponent->getEntity(); con la que choca*/
 	}
 
 	IMP_FACTORY(CEnemyPhysic);

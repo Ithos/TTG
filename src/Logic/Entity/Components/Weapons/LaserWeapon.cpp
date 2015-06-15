@@ -19,7 +19,7 @@
 #include "LaserWeapon.h"
 #include "../Movement/Transform.h"
 #include "../Graphic/Graphics.h"
-
+#include "Application/Manager/GameManager.h"
 #include <OgreSceneManager.h>
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
@@ -43,7 +43,7 @@ namespace Logic
         const char* const RIBBON_NAME = "ribbontrail_";
 
         CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
-            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player)
+            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr)
         { 
              m_type = LASER;
 
@@ -54,6 +54,13 @@ namespace Logic
 
              if (entityInfo->hasAttribute(LASER_RANGE))
                  m_range = (unsigned) entityInfo->getIntAttribute(LASER_RANGE);
+
+             if (entityInfo->hasAttribute(LASER_COST))
+                 m_cost = entityInfo->getIntAttribute(LASER_COST);
+
+             if (m_player->isPlayer()) {
+                 m_energy = &Application::CGameManager::getInstance()->m_curEnergy;
+             }
 
              // Particles code ----
              m_particles = Common::Particles::CParticleManager::getInstance();
@@ -73,6 +80,8 @@ namespace Logic
             m_ogreNode->setPosition(pos);
         }*/
 
+#pragma warning (push)
+#pragma warning (disable:4244)
         void CLaserWeapon::shoot(const ::Vector3& src, const ::Vector3& dir)
         {
             if (m_trigger)
@@ -84,6 +93,18 @@ namespace Logic
             using namespace Logic::Component;
 			
        //     m_particles->startShoot(LASER, src, dir, 2);
+
+            if (m_player->isPlayer()) {
+                if (*m_energy > 0) {
+                    unsigned aux = *m_energy - m_cost;
+                    if (aux >= 0)
+                        *m_energy = aux;
+                    else
+                        *m_energy = 0;
+                }
+                else
+                    return; // if dont have energy, cannot shoot
+            }
 
             CEntity* hitEntity = nullptr;
             m_ray.setOrigin(src);
@@ -97,7 +118,7 @@ namespace Logic
                     int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
-                    m_particles->laserShot(src, dir, distance);
+                    m_particles->laserShot(src - (50 * dir), dir, distance);
 
                     if ( *life > 0) {
                         *life = (*life <= m_damage)? 0 : *life - m_damage;
@@ -120,6 +141,7 @@ namespace Logic
             }
 
         } // shoot
+#pragma warning (pop)
 
     } // Component
 } 

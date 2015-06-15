@@ -58,6 +58,7 @@ namespace Logic
                 m_entity      = thisEnt;
                 m_parent      = entity;			
                 m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
+                m_scene       = scene;
             
                 if (entityInfo->hasAttribute(MISSILE_SPEED))
                     m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
@@ -114,7 +115,7 @@ namespace Logic
 
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
-                // for moving a ribbontrail move this node for make a trail.
+                // for moving a billboard move this node for make a trail.
                 m_bb->setPosition(m_pos);
             }
             else {
@@ -137,13 +138,13 @@ namespace Logic
                     return;
                 m_shooted = false;
                // m_entity->deactivate();
-                int* life = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
+                int* life   = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
                     *life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);
                         
                     if (*life  <= 0) {
-                        hitEnt->deactivate();
+                        m_scene->deactivateEntity(hitEnt);
                         m_particles->startNextExplosion(pos);
                     }
                     else {
@@ -157,7 +158,7 @@ namespace Logic
             }
             else if (type == "PlanetLimitTrigger") {
                 m_shooted = false;
-                //m_entity->deactivate();
+                m_scene->deactivateEntity(hitEnt);
                 if (m_bb) {
                     delete m_bb;
                     m_bb =  nullptr;

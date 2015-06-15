@@ -118,6 +118,9 @@ namespace Common
             const char* const MISSILE_SHIELD_PEMETRATION = "missile_shield_penetration";
             const char* const MISSILE_SPEED  = "missile_speed";
             const char* const MISSILE_AMMO   = "missile_ammo";
+            // SHIELD
+            const char* const SHIELD_TIMEOUT = "timeout";
+            const char* const SHIELD_RELOADTIME = "reloadtime";
 		}
 	}
 }

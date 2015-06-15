@@ -140,15 +140,11 @@ namespace Common { namespace Save
 		getline(in,line);
 		Application::CGameManager::getInstance()->m_totalLife = to<unsigned>(line);
 		getline(in,line);
-		Application::CGameManager::getInstance()->m_shield = to<unsigned>(line);
+        Application::CGameManager::getInstance()->m_maxShield = to<unsigned>(line);
 		getline(in,line);
-		Application::CGameManager::getInstance()->m_tmpShield = to<unsigned>(line);
-		getline(in,line);
-		Application::CGameManager::getInstance()->m_shieldRegen = to<unsigned int>(line);
+        Application::CGameManager::getInstance()->m_shieldRegen = to<unsigned>(line);
 		getline(in,line);
 		Application::CGameManager::getInstance()->m_energy = to<unsigned>(line);
-		getline(in,line);
-		Application::CGameManager::getInstance()->m_tmpEnergy = to<unsigned>(line);
 		getline(in,line);
 		Application::CGameManager::getInstance()->m_energyRegen = to<unsigned int>(line);
 		getline(in,line);
@@ -263,14 +259,11 @@ namespace Common { namespace Save
 
 		out << Application::CGameManager::getInstance()->m_eqEngineDat.first << endl;
 		out << Application::CGameManager::getInstance()->m_eqEngineDat.second << endl;
-
 		out << Application::CGameManager::getInstance()->m_life << endl;
 		out << Application::CGameManager::getInstance()->m_totalLife << endl;
-		out << Application::CGameManager::getInstance()->m_shield << endl;
-		out << Application::CGameManager::getInstance()->m_tmpShield << endl;
-		out << Application::CGameManager::getInstance()->m_shieldRegen << endl;
+		out << Application::CGameManager::getInstance()->m_maxShield << endl;
+        out << Application::CGameManager::getInstance()->m_shieldRegen << endl;
 		out << Application::CGameManager::getInstance()->m_energy << endl;
-		out << Application::CGameManager::getInstance()->m_tmpEnergy << endl;
 		out << Application::CGameManager::getInstance()->m_energyRegen << endl;
 		out << Application::CGameManager::getInstance()->m_objectives << endl;
 		out << Application::CGameManager::getInstance()->m_totalObjectives << endl;

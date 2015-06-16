@@ -760,6 +760,7 @@ namespace Map
         // Weapons
         entityInProgress->setAttribute(LASER_DAMAGE, getDefaultValue(GEN_LASER_DAMAGE));
         entityInProgress->setAttribute(LASER_RANGE,  getDefaultValue(GEN_LASER_RANGE));
+        entityInProgress->setAttribute(LASER_COST,   getDefaultValue(GEN_LASER_COST));
 
 		//(Player) Example of multiple soundbank and event loading
 		/*tmpStr1 = "property0";

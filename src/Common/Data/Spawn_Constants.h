@@ -113,6 +113,8 @@ namespace Common
             // Weapons
             const char* const LASER_RANGE    = "laser_range";
             const char* const LASER_DAMAGE   = "laser_damage";
+            const char* const LASER_COST     = "laser_cost";
+            //-----
             const char* const MISSILE_RANGE  = "missile_range";
             const char* const MISSILE_DAMAGE = "missile_damage";
             const char* const MISSILE_SHIELD_PEMETRATION = "missile_shield_penetration";

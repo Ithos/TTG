@@ -233,6 +233,7 @@ const char* const GEN_SHIELD_RELOADTIME        = "shield_trigger_reloadTime";
 // weapons
 const char* const GEN_LASER_RANGE  = "laser_range";
 const char* const GEN_LASER_DAMAGE = "laser_damage";
+const char* const GEN_LASER_COST   =  "laser_energy_cost";
 const char* const GEN_MISSILE_LINEAR_TYPE              = "missile_linear_type";
 const char* const GEN_MISSILE_LINEAR_TRIGGER_ENTITY    = "missile_linear_trigger_entity";
 const char* const GEN_MISSILE_LINEAR_TRIGGER_RADIUS    = "missile_linear_trigger_radius";

@@ -55,8 +55,8 @@ namespace Application
 	const int ENERGY_INCREMENT = 5;
 
     CGameManager::CGameManager():m_system(""), m_planet(""),m_totalLife(BASE_LIFE),m_life(BASE_LIFE), m_maxShield(BASE_SHIELD),
-        m_objectives(0),m_totalObjectives(NUM_TARGETS), m_curShield(BASE_SHIELD), m_energy(0),m_tmpEnergy(BASE_ENERGY),m_menuWindow(nullptr),
-		m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr),
+        m_objectives(0),m_totalObjectives(NUM_TARGETS), m_curShield(BASE_SHIELD), m_maxEnergy(0), m_curEnergy(BASE_ENERGY),
+        m_menuWindow(nullptr), m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr),
 		m_shieldRegen(1), m_energyRegen(BASE_ENERGY_REGEN), m_sensorLevel(0), m_fuelConsumeProportion(1.0f),
         m_mineralProportion(1.0f), m_distanceProportion(1.0f)
 	{
@@ -140,7 +140,7 @@ namespace Application
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(1)->appendText(" " + std::to_string(m_life) + "/" +std::to_string(m_totalLife));
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(2)->appendText(" " + std::to_string(m_curShield));
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->appendText(" " + std::to_string(m_energy));
+		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->appendText(" " + std::to_string(m_maxEnergy));
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->endInitialisation();
 
 		for(auto it = m_crewMembersMap.begin(); it != m_crewMembersMap.end(); ++it){
@@ -455,13 +455,13 @@ namespace Application
 				}				
 			}
             else if(str == Common::Data::Game::GAME_SCIENTIFICS){
-				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
-				m_tmpEnergy = m_energy;
+				m_maxEnergy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
+                resetEnergy();
 
 				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
 				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
 				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
-					+ std::to_string(m_energy));
+					+ std::to_string(m_maxEnergy));
 
 				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[1][0];
@@ -541,13 +541,13 @@ namespace Application
 			}
 
 			if(str == Common::Data::Game::GAME_SCIENTIFICS){
-				m_energy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
-				m_tmpEnergy = m_energy;
+				m_maxEnergy = BASE_ENERGY + m_crewMembersMap[str]*ENERGY_INCREMENT;
+                resetEnergy();
 
 				std::string tmpStr(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
 				tmpStr = tmpStr.substr(0,tmpStr.find(":")+1);
 				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(tmpStr + " " 
-					+ std::to_string(m_energy));
+					+ std::to_string(m_maxEnergy));
 
 				if(m_crewMembersMap[str] < 2 ){
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].first = Common::Data::Game::GAME_SENSORS_LIST[0][0];
@@ -731,25 +731,25 @@ namespace Application
 
 	void CGameManager::increaseEnergy(unsigned int num)
 	{
-		m_energy += num;
+        m_maxEnergy += num;
 
 		std::string str(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
 		str = str.substr(0,str.find(":")+1);
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(str + " " 
-			+ std::to_string(m_energy));
+			+ std::to_string(m_maxEnergy));
 	}
 	
 	void CGameManager::decreaseEnergy(unsigned int num)
 	{
-		if(num > m_energy)
-			m_energy = 0;
+		if(num > m_maxEnergy)
+			m_maxEnergy = 0;
 		else
-			m_energy -= num;
+			m_maxEnergy -= num;
 
 		std::string str(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->getText().c_str());
 		str = str.substr(0,str.find(":")+1);
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(3)->setText(str + " " 
-			+ std::to_string(m_energy));
+			+ std::to_string(m_maxEnergy));
 	}
 
 	typedef std::map<std::string,std::pair<int, int>> TEngineData;
@@ -844,7 +844,7 @@ namespace Application
 		m_menuWindow->destroy();
 		m_totalLife = m_life = BASE_LIFE;
         m_maxShield = m_curShield = BASE_SHIELD;
-		m_energy = m_tmpEnergy = BASE_ENERGY;
+        m_maxEnergy = m_curEnergy = BASE_ENERGY;
 		m_energyRegen = 1;
 		m_sensorLevel = 0;
 		m_fuelConsumeProportion = 1.0f;

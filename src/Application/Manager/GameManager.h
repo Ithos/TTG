@@ -99,13 +99,9 @@ namespace Application
 		void resetShield()  { m_curShield = m_maxShield; }
 
         // Energy
-		unsigned int getEnergy(){return m_energy;}
-		void resetSceneEnergy() {m_tmpEnergy = m_energy;}
+		void resetEnergy() {m_curEnergy = m_maxEnergy;}
 		void increaseEnergy(unsigned int num);
 		void decreaseEnergy(unsigned int num);
-		unsigned int getEnergyState(){return m_tmpEnergy;}
-		void decreaseEnergyState(unsigned int num){num>m_tmpEnergy ? m_tmpEnergy : m_tmpEnergy -= num;}
-		void increaseEnergyState(unsigned int num){m_tmpEnergy += num; m_tmpEnergy>m_energy ? m_tmpEnergy=m_energy : m_tmpEnergy;}
 		unsigned int getEnergyRegen() {return m_energyRegen;}
 		void increaseEnergyRegen(unsigned int num) {(m_energyRegen<=ENERGY_REGEN_INCREMENT*MAX_INCREMENT_NUM-num)?m_energyRegen+=num:m_energyRegen=ENERGY_REGEN_INCREMENT*MAX_INCREMENT_NUM;}
 		void decreaseEnergyRegen(unsigned int num) {(m_energyRegen>=BASE_ENERGY_REGEN+num)?m_energyRegen-=num:m_energyRegen=BASE_ENERGY_REGEN;}
@@ -180,8 +176,8 @@ namespace Application
         unsigned m_maxShield;
         unsigned m_curShield;
         unsigned m_shieldRegen;
-        unsigned m_energy;
-        unsigned m_tmpEnergy;
+        unsigned m_maxEnergy;
+        unsigned m_curEnergy;
 		unsigned int m_energyRegen;
         unsigned m_objectives;
         unsigned m_totalObjectives;

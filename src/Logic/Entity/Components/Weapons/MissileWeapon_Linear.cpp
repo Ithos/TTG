@@ -103,14 +103,16 @@ namespace Logic
                     m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
                     m_subEntity[m_iMissile]->activate();
                     static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+
                     if (m_iMissile < MAX_MISSILES-1 )
                         ++m_iMissile;
                     else
                         m_iMissile = 0;
+
                     --m_ammo;
                 }
                 else {
-                    // sound empty weapon
+                    // sound empty weapon for example
                 }
             }
         }

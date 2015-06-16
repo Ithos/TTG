@@ -88,8 +88,8 @@ namespace Common
 
         void CParticleManager::releaseHits()
         {
-            for (auto it = m_hits.begin(); it != m_hits.end(); ++it)
-                m_sceneMgr->destroyParticleSystem((*it)->getName());
+            for (auto it = m_hits.begin(), end = m_hits.end() ; it != end; ++it)
+                m_mgr->destroyParticleSystem(*it, m_sceneMgr);
 
             m_hits.clear();
             m_iHits = 0;
@@ -116,7 +116,7 @@ namespace Common
         void CParticleManager::releaseExplosions()
         {
             for (auto it = m_explosions.begin(); it != m_explosions.end(); ++it)
-                m_sceneMgr->destroyParticleSystem((*it)->getName());
+                m_mgr->destroyParticleSystem(*it, m_sceneMgr);
 
             m_explosions.clear();
             m_iExplosion = 0;

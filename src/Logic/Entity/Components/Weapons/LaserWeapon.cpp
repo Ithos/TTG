@@ -71,8 +71,10 @@ namespace Logic
 
         CLaserWeapon::~CLaserWeapon()
         { 
-            m_particles->releaseShoots(LASER);
-            m_particles = nullptr; 
+         /*   m_particles->releaseShoots(LASER);
+            Common::Particles::CParticleManager::getInstance()->releaseHits();
+            Common::Particles::CParticleManager::getInstance()->releaseExplosions();
+            m_particles = nullptr; */
         }
         
        /* inline void CLaserWeapon::setPosition(const ::Vector3& pos) 
@@ -118,7 +120,7 @@ namespace Logic
                     /*int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;*/
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
-                    m_particles->laserShot(src - (50 * dir), dir, distance);
+                    m_particles->laserShot(src - (81 * dir), dir, distance);
 
                    /* if ( *life > 0) {*/
                         /**life = (*life <= m_damage)? 0 : *life - m_damage;*/
@@ -133,11 +135,11 @@ namespace Logic
                    /* }*/
                 } // hit asteroid or enemy
                 else {
-                    m_particles->laserShot(src-(dir*10), dir, m_range);
+                    m_particles->laserShot(src - (81 * dir), dir, m_range);
                 }
             }
             else { //no hit
-                m_particles->laserShot(src-(dir*10), dir, m_range);
+                m_particles->laserShot(src - (81 * dir), dir, m_range);
             }
 
         } // shoot

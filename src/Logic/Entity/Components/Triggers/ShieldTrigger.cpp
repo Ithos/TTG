@@ -139,8 +139,12 @@ namespace Logic
 				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }
-            else if (ent->getType() == "Missile_Linear") {
-                m_compShield->decreaseShield(10);
+            else if (ent->getType() == "Missile_Linear" && !m_compShield->m_player) {
+                unsigned valAux = m_compShield->getValue();
+                // if current
+                unsigned currVal = m_compShield->getValue();
+                if ((int)(valAux * 0.1) < (int)(currVal * 0.1))
+                    m_particleMngr->changeQuota(currVal, m_compShield->getMaxShield());
             }
         }
 

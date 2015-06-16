@@ -115,9 +115,9 @@ namespace Application
 			m_time+=msecs/1000.0f;
 		else{
 
-			if (m_time < 1.0f){
-				m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
-			}
+			  if (m_time < 1.0f)
+                m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
+
 
 			m_time = 0;
 		}

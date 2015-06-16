@@ -71,5 +71,17 @@ namespace Logic
             
             return true;
         }
+
+		bool CLife::decreaseLife(unsigned int num)
+		{
+			if(m_player)
+				Application::CGameManager::getInstance()->decreaseLife(num);
+			else{
+				if(*m_life >= num)*m_life -= num;
+				else *m_life = 0;
+			}
+
+			return *m_life <= 0;
+		}
     }
 }

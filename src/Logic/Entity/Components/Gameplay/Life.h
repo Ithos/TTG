@@ -32,9 +32,11 @@ namespace Logic
             ~CLife();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
-
-            int* m_life;
+			bool decreaseLife(unsigned int num); //return life<=0
+           
             bool m_player;
+		private:
+			 int* m_life;
         };
 
         REG_FACTORY(CLife)

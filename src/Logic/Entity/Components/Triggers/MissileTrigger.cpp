@@ -138,19 +138,19 @@ namespace Logic
                     return;
                 m_shooted = false;
                // m_entity->deactivate();
-                int* life   = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
+                /*int* life   = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;*/
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
-                if ( *life > 0) {
-                    *life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);
+                /*if ( *life > 0) {*/
+                    /**life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);*/
                         
-                    if (*life  <= 0) {
+				if (static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                         m_scene->deactivateEntity(hitEnt);
                         m_particles->startNextExplosion(pos);
                     }
                     else {
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                     }
-                }
+                /*}*/
                 if (m_bb) {
                     delete m_bb;
                     m_bb =  nullptr;

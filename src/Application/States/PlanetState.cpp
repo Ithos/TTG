@@ -49,7 +49,7 @@ namespace Application
 		m_guiInstance = CPlanetGUI::getInstance();
 
 		m_mgrInstance->resetShield();
-		m_mgrInstance->resetSceneEnergy();
+		m_mgrInstance->resetEnergy();
 
 		//Music
 		Common::Sound::CSound::getSingletonPtr()->addMusic("TTG_exploracion.wav","PlanetMusic",true);

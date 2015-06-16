@@ -95,13 +95,17 @@ namespace Application
 		void increaseTotalLife(unsigned int num);
 		void decreaseTotalLife(unsigned int num);
 
-        // SHield
+        // Shield
 		void resetShield()  { m_curShield = m_maxShield; }
 
         // Energy
+		unsigned int getEnergy(){return m_maxEnergy;}
 		void resetEnergy() {m_curEnergy = m_maxEnergy;}
 		void increaseEnergy(unsigned int num);
 		void decreaseEnergy(unsigned int num);
+		unsigned int getEnergyState(){return m_curEnergy;}
+		void decreaseEnergyState(unsigned int num){num>m_curEnergy ? m_curEnergy : m_curEnergy -= num;}
+		void increaseEnergyState(unsigned int num){m_curEnergy += num; m_curEnergy>m_maxEnergy ? m_curEnergy=m_maxEnergy : m_curEnergy;}
 		unsigned int getEnergyRegen() {return m_energyRegen;}
 		void increaseEnergyRegen(unsigned int num) {(m_energyRegen<=ENERGY_REGEN_INCREMENT*MAX_INCREMENT_NUM-num)?m_energyRegen+=num:m_energyRegen=ENERGY_REGEN_INCREMENT*MAX_INCREMENT_NUM;}
 		void decreaseEnergyRegen(unsigned int num) {(m_energyRegen>=BASE_ENERGY_REGEN+num)?m_energyRegen-=num:m_energyRegen=BASE_ENERGY_REGEN;}

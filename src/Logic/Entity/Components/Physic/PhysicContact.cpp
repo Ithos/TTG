@@ -31,7 +31,7 @@ namespace Logic { namespace Component {
         //TODO player contact
 		CPhysicEntity::onContact(otherComponent);
 
-        *(static_cast<CLife*>(getEntity()->getComponentByName(LIFE_COMP))->m_life) -= 10;
+		static_cast<CLife*>(getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(10);
         //otherComponent->getEntity(); con la que choca*/
 	}
 

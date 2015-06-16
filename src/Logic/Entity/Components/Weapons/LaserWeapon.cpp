@@ -115,22 +115,22 @@ namespace Logic
             if (hitEntity) {
                 std::string type = hitEntity->getType();
                 if (type == "Asteroid" || type == "Enemy") {
-                    int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;
+                    /*int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;*/
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
                     m_particles->laserShot(src - (50 * dir), dir, distance);
 
-                    if ( *life > 0) {
-                        *life = (*life <= m_damage)? 0 : *life - m_damage;
+                   /* if ( *life > 0) {*/
+                        /**life = (*life <= m_damage)? 0 : *life - m_damage;*/
                         
-                        if (*life  <= 0) {
+					if (static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->decreaseLife(m_damage)) {
                             m_scene->deactivateEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
                         }
                         else {
                             m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                         }
-                    }
+                   /* }*/
                 } // hit asteroid or enemy
                 else {
                     m_particles->laserShot(src-(dir*10), dir, m_range);

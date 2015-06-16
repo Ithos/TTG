@@ -119,20 +119,24 @@ namespace Logic
             CEntity* ent = hitEnt->getEntity();
 			if ( (ent->getType() == "Asteroid") && (m_compShield->getValue() > 0) ) {
                 m_compShield->destroyShield();
-                *static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->m_life = 0;
-                Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
-                m_particleMngr->startNextExplosion(pos);
-                m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
-                m_scene->deactivateEntity(ent);
+                /**static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->m_life = 0;*/
+				if(static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseLife(50)){
+					Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
+					m_particleMngr->startNextExplosion(pos);
+					m_scene->deactivateEntity(ent);
+				}
+				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }
             else if ( (ent->getType() == "Enemy") && (m_compShield->getValue() > 0) ) {
                 m_compShield->destroyShield();
-                *static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->m_life = 0;
-                Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
-                m_particleMngr->startNextExplosion(pos);
-                m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
-                m_scene->deactivateEntity(ent);
+                /**static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->m_life = 0;*/
+				if(static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseLife(50)){
+					Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
+					m_particleMngr->startNextExplosion(pos);
+					m_scene->deactivateEntity(ent);
+				}
+				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }
             else if (ent->getType() == "Missile_Linear") {

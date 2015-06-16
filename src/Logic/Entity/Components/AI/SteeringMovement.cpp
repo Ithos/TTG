@@ -147,7 +147,7 @@ namespace Logic
 				}
 	
 				// Calculamos la rotación
-				if(m_fixedTime >= 0.3f){
+				if(m_fixedTime >= 0.1f){
 					m_yaw->move(m_currentProperties);
 					m_fixedTime = 0.0f;
 				}else{
@@ -160,7 +160,10 @@ namespace Logic
 				movement->move(m_currentProperties.linearSpeed);
 
 				// Aplicar la rotación
-				movement->rotate((float)m_currentProperties.angularSpeed * 5.1 );
+				float angConst( 0.9/(msecs * 0.01));//5.1
+				
+
+				movement->rotate((float)m_currentProperties.angularSpeed * angConst);
 
 				// Acelerar
 				m_currentProperties.linearSpeed += m_currentProperties.linearAccel;

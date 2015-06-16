@@ -105,17 +105,18 @@ namespace Logic
 
 	CScene::~CScene()
 	{
+
 		removeAllEntities();
 
 		Common::Physic::CPhysicManager::getInstance()->destroyScene();
 
-		destroyOgreScene();
-
-        if (m_name == "planet") {
+        if (m_type ==  Common::Data::SceneType::BATTLE) {
             Common::Particles::CParticleManager::getInstance()->releaseHits();
             Common::Particles::CParticleManager::getInstance()->releaseExplosions();
             Common::Particles::CParticleManager::getInstance()->releaseShoots();
         }
+
+		destroyOgreScene();
 	}
 
 	CScene* CScene::createSceneFromFile(const std::string &filename,

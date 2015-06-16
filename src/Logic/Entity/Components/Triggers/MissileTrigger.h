@@ -42,6 +42,8 @@ namespace Logic
 	namespace Component
 	{
         class CTransform;
+        class CShield;
+        class CLife;
 
         class CMissileTrigger : public CPhysicEntity
         {
@@ -49,7 +51,7 @@ namespace Logic
         public:
             CMissileTrigger() 
                 : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
-                m_particles(nullptr), m_bb(nullptr), m_stillActive(false)
+                m_particles(nullptr), m_bb(nullptr), m_stillActive(false), m_isPlayer(false), m_playerLife(nullptr)
             {  }
 
             ~CMissileTrigger();
@@ -89,7 +91,8 @@ namespace Logic
             static Ogre::SceneManager* m_sceneMgr;
             static Ogre::BillboardSet* m_set;
             Ogre::Billboard*           m_bb;
-            
+            bool                       m_isPlayer;
+            CLife*                     m_playerLife;
         };
 
         REG_FACTORY(CMissileTrigger)

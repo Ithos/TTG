@@ -26,6 +26,7 @@
 #include <PxPhysicsAPI.h>
 #include <Common/Physic/PhysicManager.h>
 #include "../Gameplay/Life.h"
+#include "../Gameplay/Shield.h"
 #include "common/Particles/ParticleManager.h"
 
 #include <Logic/Scene/Scene.h>
@@ -59,6 +60,7 @@ namespace Logic
                 m_parent      = entity;			
                 m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
                 m_scene       = scene;
+                m_isPlayer    = m_parent->isPlayer();
             
                 if (entityInfo->hasAttribute(MISSILE_SPEED))
                     m_speed = entityInfo->getFloatAttribute(MISSILE_SPEED);
@@ -96,7 +98,6 @@ namespace Logic
         CMissileTrigger::~CMissileTrigger()
         {
             if (m_node) {
-                m_node->detachAllObjects();
                 if (m_set) {
                     m_sceneMgr->destroyBillboardSet(m_set);
                     m_set = nullptr;
@@ -133,11 +134,12 @@ namespace Logic
 
             CEntity* hitEnt = hitComp->getEntity();
             std::string type = hitComp->getEntity()->getType();
-            if (  type == "Enemy" || type == "Asteroid") {
-                if (!hitEnt->isActivated())
-                    return;
-                m_shooted = false;
-               // m_entity->deactivate();
+            if (type == "Asteroid") {
+                if (!hitEnt->isActivated()) return;
+
+                if (m_isPlayer)
+                    m_shooted = false;
+
                 int* life   = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;
                 Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if ( *life > 0) {
@@ -151,17 +153,63 @@ namespace Logic
                         //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                     }
                 }
-                if (m_bb) {
-                    delete m_bb;
-                    m_bb =  nullptr;
+
+                if (m_bb) { 
+                    m_set->removeBillboard(m_bb); 
+                    m_bb = nullptr; 
+                }
+            }
+            // hit with enemy shooting the player
+            else if (type == "Enemy" && m_isPlayer) {
+                if (!hitEnt->isActivated()) return;
+               
+                // else if enemy impact with other enemy is friendly fire and we havent
+                m_shooted = false;
+                // if is the player-> destroy tha mothafucking ship
+                *static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life = 0;
+                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+                m_scene->deactivateEntity(hitEnt);
+                m_particles->startNextExplosion(pos);
+
+                if (m_bb) { 
+                    m_set->removeBillboard(m_bb); 
+                    m_bb = nullptr; 
+                }
+            }
+            // only missiles fired by enemies
+            else if (type == "Player" && !m_isPlayer) {
+                if (!m_playerLife)
+                    m_playerLife = static_cast<CLife*>(hitEnt->getComponentByName(LIFE_COMP)); 
+
+                // if hit with player-> that means that player has no shield
+                int* life   = m_playerLife->m_life;
+                if ( *life > 0) {
+                    *life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);
+                        
+                    if (*life  <= 0) {
+                        m_scene->deactivateEntity(hitEnt);
+                        Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+                        m_particles->startNextExplosion(pos);
+                    }
+                    else {
+                        //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+                    }
+                }
+
+                if (m_bb) { 
+                    m_set->removeBillboard(m_bb); 
+                    m_bb = nullptr; 
                 }
             }
             else if (type == "PlanetLimitTrigger") {
-                m_shooted = false;
+                if (m_isPlayer)
+                    m_shooted = false;
+
                 m_scene->deactivateEntity(hitEnt);
-                if (m_bb) {
-                    delete m_bb;
-                    m_bb =  nullptr;
+
+                if (m_bb) { 
+                    m_set->removeBillboard(m_bb); 
+                    m_bb = nullptr; 
                 }
             }
         }

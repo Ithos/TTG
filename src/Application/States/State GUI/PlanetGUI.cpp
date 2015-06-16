@@ -157,7 +157,7 @@ namespace Application
             setProgress((float)m_mgrInstance->m_curShield/(float)m_mgrInstance->m_maxShield);
 
 		static_cast<CEGUI::ProgressBar*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/Energy"))->
-			setProgress((float)m_mgrInstance->getEnergyState()/(float)m_mgrInstance->getEnergy());
+            setProgress((float)m_mgrInstance->m_curEnergy/(float)m_mgrInstance->m_maxEnergy);
 
 		// Uncomment this to show the FPS count
 

@@ -49,7 +49,7 @@ namespace Application
 		m_guiInstance = CPlanetGUI::getInstance();
 
 		m_mgrInstance->resetShield();
-		m_mgrInstance->resetSceneEnergy();
+		m_mgrInstance->resetEnergy();
 
 		//Music
 		Common::Sound::CSound::getSingletonPtr()->addMusic("TTG_exploracion.wav","PlanetMusic",true);
@@ -115,8 +115,8 @@ namespace Application
 			m_time+=msecs/1000.0f;
 		else{
 
-			if (m_time < 1.0f){
-				m_mgrInstance->increaseEnergyState(m_mgrInstance->getEnergyRegen() * m_time);
+			if (m_time < 1.0f) {
+                m_mgrInstance->m_curEnergy += (m_mgrInstance->m_energyRegen * m_time);
 			}
 
 			m_time = 0;

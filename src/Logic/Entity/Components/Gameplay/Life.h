@@ -28,11 +28,13 @@ namespace Logic
         class CLife : public IComponent
         {
             DEC_FACTORY(CLife);
+        public:
             CLife();
             ~CLife();
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 			bool decreaseLife(unsigned int num); //return life<=0
+            void decreaseAllLife() { decreaseLife(*m_life); }
            
             bool m_player;
 		private:

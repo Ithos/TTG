@@ -139,7 +139,7 @@ namespace Logic
                 }
             }
             else { //no hit
-                m_particles->laserShot(src - (81 * dir), dir, m_range);
+                  m_particles->laserShot(src - (81 * dir), dir, m_range);
             }
 
         } // shoot

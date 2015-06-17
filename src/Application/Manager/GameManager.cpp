@@ -843,7 +843,7 @@ namespace Application
 		m_totalLife = m_life = BASE_LIFE;
         m_maxShield = m_curShield = BASE_SHIELD;
         m_maxEnergy = m_curEnergy = BASE_ENERGY;
-		m_energyRegen = 1;
+		m_energyRegen = BASE_ENERGY_REGEN;
 		m_sensorLevel = 0;
 		m_fuelConsumeProportion = 1.0f;
 		m_mineralProportion = 1.0f;

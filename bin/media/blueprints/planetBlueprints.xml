@@ -10,7 +10,8 @@
     <component name="CMinimapHighlight" number="5" priority="0" />
     <component name="CWeapons" number="6" priority="1" />
     <component name="CLife" number="7" priority="0" />
-   <component name="CShield" number="8" priority="1" />
+    <component name="CShield" number="8" priority="1" />
+    <component name="CPerceptionComponent" number="9" priority="1" />
   </entity>
   <entity type="Enemy">
     <component name="CTransform" number="0" priority="0" />
@@ -21,7 +22,9 @@
     <component name="CInterpolation" number="4" priority="1" />
     <component name="CStateMachineExecutor" number="5" priority="1" />
     <component name="CMinimapHighlight" number="6" priority="0" />
-    <component name="CLife" number="7" priority="0" />
+    <component name="CWeapons" number="7" priority="1" />
+    <component name="CLife" number="8" priority="0" />
+    <component name="CPerceptionComponent" number="9" priority="1" />
   </entity>
   <entity type="Camera">
     <component name="CTransform" number="0" priority="0" />

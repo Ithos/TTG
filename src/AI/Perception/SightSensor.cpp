@@ -68,9 +68,9 @@ namespace AI
 			return NULL;
 
 		// 4.2. A continuación se comprueba si la distancia euclídea es mayor que la distancia máxima.
-		float distMagnitude = distance.length();
-		if (distMagnitude > m_maxDistance)
-			return NULL;
+//		float distMagnitude = distance.length();
+//		if (distMagnitude > m_maxDistance)
+//			return NULL;
 
 		// 5. Comprobamos si la señal se encuentra dentro del ángulo de amplitud del cono de visión.
 		// Tenemos que calcular el ángulo que se forma entre la dirección hacia la que apunta la entidad (su orientación) y
@@ -80,13 +80,13 @@ namespace AI
 		// Y sacamos la diferencia 
 		// Nos aseguramos de que el ángulo es menor que PI (nos tenemos que quedar con la parte pequeña de la diferencia)
 		// Sacamos la orientación de la entidad 
-		float yaw = Common::Util::Math::getYaw(transform);					// Esta parte es para calcular el cono de visión,
-		Ogre::Radian angle = Ogre::Math::ATan2(-distance.x, -distance.z);	// quizás para naves no hace falta porque ven en 360º
-		float finalAngle = abs(yaw - angle.valueRadians());
-		if (finalAngle > Ogre::Math::PI)
-			finalAngle = Ogre::Math::TWO_PI - finalAngle;
-		if (finalAngle > m_alpha)
-			return NULL;
+//		float yaw = Common::Util::Math::getYaw(transform);					// Esta parte es para calcular el cono de visión,
+//		Ogre::Radian angle = Ogre::Math::ATan2(-distance.x, -distance.z);	// quizás para naves no hace falta porque ven en 360º
+//		float finalAngle = abs(yaw - angle.valueRadians());
+//		if (finalAngle > Ogre::Math::PI)
+//			finalAngle = Ogre::Math::TWO_PI - finalAngle;
+//		if (finalAngle > m_alpha)
+//			return NULL;
 	
 		// 6. Comprobamos si no existe ningún objeto físico entre el sensor y la señal. Para eso usamos un rayo físico.
 		// Necesitamos

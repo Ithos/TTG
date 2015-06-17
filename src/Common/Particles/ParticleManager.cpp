@@ -267,6 +267,12 @@ namespace Common
                     m_shoots.erase(type);
                 }
             }
+
+			for (unsigned i = 0; i < MAX_TRAILS; ++i) {
+                m_rt[i] = nullptr;
+                m_node1[i] = nullptr;
+                m_node2[i] = nullptr;
+            }
         }
 
         void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range)

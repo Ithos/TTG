@@ -97,7 +97,7 @@ namespace Logic
        //     m_particles->startShoot(LASER, src, dir, 2);
 
             if (m_player->isPlayer()) {
-                if (*m_energy > 0) {
+                if (*m_energy > m_cost) {
                     unsigned aux = *m_energy - m_cost;
                     if (aux >= 0)
                         *m_energy = aux;

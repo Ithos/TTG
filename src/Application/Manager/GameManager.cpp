@@ -668,14 +668,12 @@ namespace Application
 
 	void CGameManager::decreaseLife(unsigned int num)
 	{
-		if(num > m_life)
-		{
+		if (num >= m_life) {
 			m_life = 0;
 			CPlanetGUI::getInstance()->shipDestroyed();
-
-		}else{
-			m_life -= num;
 		}
+        else 
+			m_life -= num;
 
 		std::string str(static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("LeftWindow/StateBoard"))->getItemFromIndex(1)->getText().c_str());
 		str = str.substr(0,str.find(":")+1);

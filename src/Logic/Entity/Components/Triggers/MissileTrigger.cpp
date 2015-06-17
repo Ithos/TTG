@@ -112,8 +112,6 @@ namespace Logic
             if (!m_shooted)
                 return;
 
-            // if (m_pos - initalPos > m_range) destroy();
-
            if (!moveFunc) {
                 m_pos = m_pos + (m_dir * m_speed * msecs);
                 // for moving a billboard move this node for make a trail.
@@ -140,13 +138,9 @@ namespace Logic
 
                 if (m_isPlayer)
                     m_shooted = false;
-
-                /*int* life   = static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life;*/
-                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
-                /*if ( *life > 0) {*/
-                    /**life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);*/
-                        
+   
 				if (static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+                        Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();  
                         m_scene->deactivateEntity(hitEnt);
                         m_particles->startNextExplosion(pos);
                     }
@@ -166,12 +160,10 @@ namespace Logic
                 // else if enemy impact with other enemy is friendly fire and we havent
                 m_shooted = false;
                 // if is the player-> destroy tha mothafucking ship
-                /**static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->m_life = 0;*/
-				if(static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(500)){
-					Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
-					m_scene->deactivateEntity(hitEnt);
-					m_particles->startNextExplosion(pos);
-				}
+                static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseAllLife();
+				Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+				m_scene->deactivateEntity(hitEnt);
+				m_particles->startNextExplosion(pos);
 
                 if (m_bb) { 
                     m_set->removeBillboard(m_bb); 
@@ -184,19 +176,14 @@ namespace Logic
                     m_playerLife = static_cast<CLife*>(hitEnt->getComponentByName(LIFE_COMP)); 
 
                 // if hit with player-> that means that player has no shield
-                /*int* life   = m_playerLife->m_life;
-                if ( *life > 0) {
-                    *life = (*life <= m_damage)? 0 : *life - static_cast<int>(m_damage);*/
-                        
-					if (m_playerLife->decreaseLife(m_damage)) {
-                        m_scene->deactivateEntity(hitEnt);
-                        Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
-                        m_particles->startNextExplosion(pos);
-                    }
-                    else {
-                        //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
-                    }
-               /* }*/
+				if (m_playerLife->decreaseLife(m_damage)) {
+                    m_scene->deactivateEntity(hitEnt);
+                    Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+                    m_particles->startNextExplosion(pos);
+                }
+                else {
+                    //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+                }
 
                 if (m_bb) { 
                     m_set->removeBillboard(m_bb); 

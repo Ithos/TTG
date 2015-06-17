@@ -56,7 +56,7 @@ namespace Logic
 			
 				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_LIFE)) {
 
-					*m_life = (unsigned) entityInfo->getIntAttribute(Common::Data::Spawn::COMMON_LIFE);
+					*m_life = static_cast<unsigned>(entityInfo->getIntAttribute(Common::Data::Spawn::COMMON_LIFE));
 
 					if (entity->getType() == "Asteroid") {
 						// smaller size, less life
@@ -74,11 +74,11 @@ namespace Logic
 
 		bool CLife::decreaseLife(unsigned int num)
 		{
-			if(m_player)
+			if (m_player)
 				Application::CGameManager::getInstance()->decreaseLife(num);
-			else{
-				if(*m_life >= num)*m_life -= num;
-				else *m_life = 0;
+			else {
+				if (*m_life > num)  *m_life -= num;
+				else                 *m_life = 0;
 			}
 
 			return *m_life <= 0;

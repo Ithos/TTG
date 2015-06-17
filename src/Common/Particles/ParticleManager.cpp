@@ -256,10 +256,33 @@ namespace Common
                     it->second.clear();
                 }
 
+                if (m_node1[0]) {
+                    for (unsigned i = 0; i < MAX_TRAILS; ++i) {
+                        m_sceneMgr->destroySceneNode(m_node1[i]);
+                        m_sceneMgr->destroySceneNode(m_node2[i]);
+                        if (m_rt[i])
+                            m_sceneMgr->destroyRibbonTrail(m_rt[i]);
+
+                        m_node1[i] = m_node2[i] = nullptr;
+                        m_rt[i] =  nullptr;
+                    }
+                }
+
                 m_shoots.clear();
             }
             else {
-                if (m_shoots.count(type) > 0) {
+                if (type == LASER) {
+                    for (unsigned i = 0; i < MAX_TRAILS; ++i) {
+                        m_sceneMgr->destroySceneNode(m_node1[i]);
+                        m_sceneMgr->destroySceneNode(m_node2[i]);
+                        if (m_rt[i])
+                            m_sceneMgr->destroyRibbonTrail(m_rt[i]);
+
+                        m_node1[i] = m_node2[i] = nullptr;
+                        m_rt[i] =  nullptr;
+                    }
+                }
+                else if (m_shoots.count(type) > 0) {
                     for (auto it = m_shoots[type].begin(); it != m_shoots[type].end(); ++it)
                         m_sceneMgr->destroyParticleSystem((*it)->getName());
 

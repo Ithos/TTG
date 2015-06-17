@@ -117,29 +117,26 @@ namespace Logic
             if (!m_activateShield) return;
 
             CEntity* ent = hitEnt->getEntity();
-			if ( (ent->getType() == "Asteroid") && (m_compShield->getValue() > 0) ) {
+            std::string type = ent->getType();
+			if ( (type == "Asteroid") && (m_compShield->getValue() > 0) ) {
                 m_compShield->destroyShield();
-                /**static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->m_life = 0;*/
-				if(static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseLife(50)){
-					Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
-					m_particleMngr->startNextExplosion(pos);
-					m_scene->deactivateEntity(ent);
-				}
+                static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseAllLife();
+				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
+				m_particleMngr->startNextExplosion(pos);
+				m_scene->deactivateEntity(ent);
 				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }
-            else if ( (ent->getType() == "Enemy") && (m_compShield->getValue() > 0) ) {
+            else if ( (type == "Enemy") && (m_compShield->getValue() > 0) ) {
                 m_compShield->destroyShield();
-                /**static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->m_life = 0;*/
-				if(static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseLife(50)){
-					Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
-					m_particleMngr->startNextExplosion(pos);
-					m_scene->deactivateEntity(ent);
-				}
+                static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseAllLife();
+				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
+				m_particleMngr->startNextExplosion(pos);
+				m_scene->deactivateEntity(ent);
 				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }
-            else if (ent->getType() == "Missile_Linear" && !m_compShield->m_player) {
+            else if (type == "Missile_Linear" && !m_compShield->m_player) {
                 unsigned valAux = m_compShield->getValue();
                 // if current
                 unsigned currVal = m_compShield->getValue();

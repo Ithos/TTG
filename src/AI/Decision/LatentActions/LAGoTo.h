@@ -21,6 +21,7 @@
 
 #include "LatentAction.h"
 #include "Logic/Entity/Entity.h"
+#include "Logic/Entity/Components/Weapons/PlayerWeapons.h"
 #include "Common/Util/Math.h"
 
 namespace AI 
@@ -84,10 +85,11 @@ namespace AI
 		*/
 		virtual LAStatus OnAbort();
 
-	private:
-
+		unsigned seed;
 		Vector3 m_target;
 		float m_tolerance;
+		Logic::Component::CWeapons* m_weapons;
+
 	};
 
 
@@ -116,6 +118,36 @@ namespace AI
 		(LatentAction::Completed), se invocará al OnStop().
 		*/
 		virtual LAStatus OnStart();
+
+	};
+
+
+
+	/*
+	Acción latente que lleva la entidad a un destino aleatorio mientras dispara
+	*/
+	class CLAShoottingGoTo : public CLAGoToRandom
+	{
+	public:
+		/*
+		Constructor.
+		*/
+		CLAShoottingGoTo(Logic::CEntity* entity, float tolerance) : CLAGoToRandom(entity,tolerance), m_frequency(0) {};
+
+		/*
+		Destructor.
+		*/
+		~CLAShoottingGoTo() {};
+
+	protected:
+		/*
+		Método invocado cíclicamente para que se continúe con la ejecución de la acción.
+		@return Estado de la acción tras la ejecución del método; permite indicar si la acción ha
+		terminado o se ha suspendido, o si sigue en ejecución.
+		*/
+		virtual LAStatus OnRun();
+
+		int m_frequency;
 
 	};
 

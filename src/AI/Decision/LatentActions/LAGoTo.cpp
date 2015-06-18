@@ -43,6 +43,7 @@ namespace AI
 			static_cast<Logic::Component::CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
 		Logic::Component::CTransform* transform =
 			static_cast<Logic::Component::CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
+		m_weapons = static_cast<Logic::Component::CWeapons*>(m_entity->getComponentByName(Common::Data::WEAPONS_COMP));
 
 		unsigned seed = Application::CBaseApplication::getInstance()->getApptime() + transform->getPosition().x;
 		std::default_random_engine generator(seed);
@@ -103,6 +104,30 @@ namespace AI
 		steering->setTarget(this->getTarget());
 
 		return RUNNING;
+	}
+
+	/*
+	Método invocado cíclicamente para que se continúe con la ejecución de la acción.
+	@return Estado de la acción tras la ejecución del método; permite indicar si la acción ha
+	terminado o se ha suspendido, o si sigue en ejecución.
+	*/
+	CLatentAction::LAStatus CLAShoottingGoTo::OnRun()
+	{
+		Logic::Component::CTransform* transf =
+			static_cast<Logic::Component::CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
+
+		std::default_random_engine generator(seed);
+		std::uniform_int_distribution<int> distribution(0,100);
+//		if (distribution(generator) < 50)
+		if (m_frequency >=1000)
+		{
+			m_weapons->shootSecondaryWeapon();
+			m_frequency = 0;
+		}
+
+		m_frequency++;
+
+		return (transf->getPosition().positionEquals(m_target, m_tolerance)) ? SUCCESS : RUNNING;
 	}
 
 }

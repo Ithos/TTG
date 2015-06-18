@@ -769,6 +769,8 @@ namespace Map
         entityInProgress->setAttribute(LASERBEAM_INTERVAL, getDefaultValue(GEN_LASERBEAM_INTERVAL));
 
 
+		entityInProgress->setAttribute("perception_entity_type","player");
+
 		//(Player) Example of multiple soundbank and event loading
 		/*tmpStr1 = "property0";
 		tmpStr2 = "distance";
@@ -900,6 +902,11 @@ namespace Map
 			entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
 			entityInProgress->setAttribute(AI_BEHAVIOR,getDefaultValue(GEN_ENEMY_BEHAVIOR));
 
+			entityInProgress->setAttribute("perception_entity_type","enemy");
+
+			entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
+			entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
+
 			entityList.push_back(entityInProgress);
 		}
 
@@ -933,6 +940,11 @@ namespace Map
 		entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
 		entityInProgress->setAttribute(AI_BEHAVIOR,"dummy");
 
+		entityInProgress->setAttribute("perception_entity_type","enemy");
+		
+		entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
+		entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
+
 		entityList.push_back(entityInProgress);
 
 		//Steering Enemy
@@ -943,7 +955,8 @@ namespace Map
 		entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
 		entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
 		entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
-		entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
+		//entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
+		entityInProgress->setAttribute(COMMON_POSITION, "{1000, -300, 1000}");
 		entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
 		entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
 		entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
@@ -963,6 +976,11 @@ namespace Map
 		entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
         entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
 		entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
+
+		entityInProgress->setAttribute("perception_entity_type","enemy");
+
+		entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
+		entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
         
 		//(Enemy) Example of sound loading
 		/*tmpStr1 = "loop0";
@@ -1032,7 +1050,7 @@ namespace Map
 		entityList.push_back(entityInProgress);
 
 		//Texture Camera
-#ifndef _DEBUG
+//#ifndef _DEBUG
 		entityInProgress = new CMapEntity(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYNAME));
 		entityInProgress->setType(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYTYPE));
 
@@ -1047,7 +1065,7 @@ namespace Map
 		entityInProgress->setAttribute(CAMERA_ACCEL,				getDefaultValue(GEN_CAMERA_ACCEL_CONST));
 
 		entityList.push_back(entityInProgress);
-#endif
+//#endif
 		//Skybox
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_SKYBOX_NAME));
 

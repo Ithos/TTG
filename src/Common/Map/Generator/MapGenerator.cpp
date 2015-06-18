@@ -758,9 +758,16 @@ namespace Map
         entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, getDefaultValue(GEN_PLAYER_SEC_WEAPON));
 
         // Weapons
+        //-- laser
         entityInProgress->setAttribute(LASER_DAMAGE, getDefaultValue(GEN_LASER_DAMAGE));
         entityInProgress->setAttribute(LASER_RANGE,  getDefaultValue(GEN_LASER_RANGE));
         entityInProgress->setAttribute(LASER_COST,   getDefaultValue(GEN_LASER_COST));
+        //-- laser beam
+        entityInProgress->setAttribute(LASERBEAM_DAMAGE,   getDefaultValue(GEN_LASERBEAM_DAMAGE));
+        entityInProgress->setAttribute(LASERBEAM_RANGE,    getDefaultValue(GEN_LASERBEAM_RANGE));
+        entityInProgress->setAttribute(LASERBEAM_COST,     getDefaultValue(GEN_LASERBEAM_COST));
+        entityInProgress->setAttribute(LASERBEAM_INTERVAL, getDefaultValue(GEN_LASERBEAM_INTERVAL));
+
 
 		//(Player) Example of multiple soundbank and event loading
 		/*tmpStr1 = "property0";

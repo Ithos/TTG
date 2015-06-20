@@ -34,6 +34,13 @@
 #include "Logic/Entity/Components/Gameplay/Life.h"
 #include "Logic/Scene/Scene.h"
 
+<<<<<<< HEAD
+=======
+#include "log.h"
+
+#include "../Physic/IPhysic.h"
+
+>>>>>>> 9e06a1cb8da53123b1f1e3eb9df3a988a70c7c3d
 namespace Logic
 {
 	namespace Component
@@ -101,7 +108,7 @@ namespace Logic
             m_ray.setOrigin(src);
             m_ray.setDirection(dir);
 
-            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group                       
+            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                       
 
             if (hitEntity) {
                 std::string type = hitEntity->getType();

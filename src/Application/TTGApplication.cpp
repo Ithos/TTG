@@ -86,7 +86,7 @@ namespace Application
 		if(!addState("game_finished", new CGameFinishedState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
 			return false;
 
-		Common::Save::loadGame();
+		//Common::Save::loadGame();
 
 		return true;
 
@@ -94,7 +94,7 @@ namespace Application
 
 	void CTTGApplication::release()
 	{
-		Common::Save::saveGame();
+		//Common::Save::saveGame();
 		releaseAllStates();
 		CMissionManager::release();
 		CGameManager::release();

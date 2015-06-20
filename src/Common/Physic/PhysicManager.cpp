@@ -461,20 +461,20 @@ namespace Physic
 		PxVec3 origin = Vector3ToPxVec3(ray.getOrigin());
 		PxVec3 unitDir = Vector3ToPxVec3(ray.getDirection());
 		PxReal maxDistance = maxDist;
-		PxRaycastHit hit;                 
-		const PxSceneQueryFlags outputFlags;
+		
+		const PxU32 buffersize = 256;
+		PxRaycastHit hitBuff[buffersize];
+		PxRaycastBuffer buff(hitBuff,buffersize);
 
-		PxRaycastHit hits[64];
-		bool blockingHit;
-		PxI32 nHits = m_scene->raycastMultiple(origin, unitDir, maxDistance, outputFlags, hits, 64, blockingHit); 
-	
-		for (int i=0; i<nHits; i++) {
-			PxRigidActor *actor = hits[i].shape->getActor();
-			if (PxGetGroup(*actor) == group) {
-				IPhysic *component = (IPhysic *) actor->userData;
-				if (component) {
-					return component->getEntity();
-				}
+		PxQueryFilterData filter (PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC);
+
+		bool hit = m_scene->raycast(origin,unitDir,maxDistance, buff, PxHitFlag::eDEFAULT);
+
+		if(hit){
+			for(PxU32 i = 0; i < buff.nbTouches; i++){
+				PxRigidActor *actor = buff.touches[i].actor;
+				IPhysic * component = (IPhysic *) actor->userData;
+				if(component && component->m_group == group) return component->getEntity();
 			}
 		}
 

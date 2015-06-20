@@ -134,15 +134,14 @@ namespace Logic
                 m_controller    = static_cast<Logic::CMovement*>(m_target->getComponentByName(MOVEMENT_COMP));
             }
             Vector3 targetpoint = m_interpolation->getRenderTransform().getTrans();
-         //   float factor = Common::Util::Math::easeOutElastic(1, 1, 1);
 
             /*m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_controller->getSpeed()*300+10));*/
+            unsigned secs = msecs*0.001;
+			m_cameraDist += m_cameraVel * secs ;
+			if(m_cameraDist < m_minDist)
+                m_cameraDist = m_minDist;
 
-			m_cameraDist += m_cameraVel * msecs*0.001;
-			if(m_cameraDist < m_minDist) m_cameraDist = m_minDist;
-
-			m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
-
+            m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
 			m_camera->lookAt(targetpoint);
 
 			float targetDist(m_controller->getSpeed() * m_distConstant + m_minDist);
@@ -152,7 +151,7 @@ namespace Logic
 
 			float err(m_cameraDist - targetDist);
 
-			m_cameraVel -= m_accelConst*err*msecs*0.001;
+			m_cameraVel -= m_accelConst * (m_cameraDist - targetDist) * secs;
 
 			if(m_cameraDist >= targetDist - 10 && m_cameraDist <= targetDist + 10)
 				m_cameraVel = 0;

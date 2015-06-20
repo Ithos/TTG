@@ -121,6 +121,7 @@
     <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\SceneEndTrigger.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\SceneLimitTrigger.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\ShieldTrigger.h" />
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\LaserBeamWeapon.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\LaserWeapon.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\MissileWeapon.h" />
     <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\MissileWeapon_Linear.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\SceneEndTrigger.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\SceneLimitTrigger.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\ShieldTrigger.cpp" />
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\LaserBeamWeapon.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\LaserWeapon.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\MissileWeapon_Linear.cpp" />
     <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\PlayerWeapons.cpp" />

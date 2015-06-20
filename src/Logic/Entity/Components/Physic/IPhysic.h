@@ -28,7 +28,9 @@ namespace physx
 
 enum PGROUPS 
 {
-	DEFAULT = 0
+	DEFAULT = 0,
+	SCENE = 1,
+	DAMAGEABLE = 2
 };
 
 namespace Logic { namespace Component {
@@ -40,6 +42,8 @@ namespace Logic { namespace Component {
 		virtual void onOverlapEnd(IPhysic* otherComponent) = 0;
 		virtual void onContact(IPhysic* otherComponent) = 0;
 		virtual void onContactEnd(IPhysic* otherComponent) = 0;
+
+		int m_group;
 	};
 }}
 

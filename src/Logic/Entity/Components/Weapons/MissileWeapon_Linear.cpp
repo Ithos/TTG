@@ -23,6 +23,8 @@
 #include "Common/Data/Spawn_Constants.h"
 #include "Logic/EntityFactory.h"
 
+#include <Application/Manager/GameManager.h>
+
 using namespace Common::Data;
 
 namespace Logic
@@ -30,6 +32,8 @@ namespace Logic
 	namespace Component
 	{
         const int MAX_MISSILES = 20;
+
+		const unsigned int BASIC_MISSILE_COST = 80;
 
         CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0)
         {
@@ -64,6 +68,8 @@ namespace Logic
 
             if (m_ammo > m_maxCharger)
                 m_ammo = m_maxCharger;
+
+			m_cost = BASIC_MISSILE_COST;
         }
 
         CMissileWeapon_Linear::~CMissileWeapon_Linear()
@@ -80,6 +86,8 @@ namespace Logic
                 CEntityFactory::getInstance()->deleteEntityEx(m_subEntity[m_subEntity.size()-1]);
                 m_subEntity.pop_back();
             }
+
+			m_cost = BASIC_MISSILE_COST;
         }
 
         void CMissileWeapon_Linear::tick(unsigned int msecs)
@@ -98,7 +106,7 @@ namespace Logic
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
             if (!m_trigger) {
-                if (m_ammo != 0) {
+				if (Application::CGameManager::getInstance()->getEnergyState() >= m_cost) {//m_ammo != 0
                     m_trigger = true;
                     m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
                     m_subEntity[m_iMissile]->activate();
@@ -109,7 +117,8 @@ namespace Logic
                     else
                         m_iMissile = 0;
 
-                    --m_ammo;
+                    /*--m_ammo;*/
+					Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
                 }
                 else {
                     // sound empty weapon for example

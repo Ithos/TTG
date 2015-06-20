@@ -258,8 +258,10 @@ namespace Common
 
                 if (m_node1[0]) {
                     for (unsigned i = 0; i < MAX_TRAILS; ++i) {
-                        m_sceneMgr->destroySceneNode(m_node1[i]);
-                        m_sceneMgr->destroySceneNode(m_node2[i]);
+						if(m_node1[i])
+							m_sceneMgr->destroySceneNode(m_node1[i]);
+						if(m_node2[i])
+							m_sceneMgr->destroySceneNode(m_node2[i]);
                         if (m_rt[i])
                             m_sceneMgr->destroyRibbonTrail(m_rt[i]);
 
@@ -273,8 +275,10 @@ namespace Common
             else {
                 if (type == LASER) {
                     for (unsigned i = 0; i < MAX_TRAILS; ++i) {
-                        m_sceneMgr->destroySceneNode(m_node1[i]);
-                        m_sceneMgr->destroySceneNode(m_node2[i]);
+						if(m_node1[i])
+							m_sceneMgr->destroySceneNode(m_node1[i]);
+						if(m_node2[i])
+							m_sceneMgr->destroySceneNode(m_node2[i]);
                         if (m_rt[i])
                             m_sceneMgr->destroyRibbonTrail(m_rt[i]);
 
@@ -290,6 +294,8 @@ namespace Common
                     m_shoots.erase(type);
                 }
             }
+
+
         }
 
         void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range)

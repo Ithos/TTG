@@ -64,7 +64,7 @@ namespace AI
 		Vector3 sensorPosition = transform.getTrans();
 		Vector3 signalPosition = signal->getPerceptionEntity()->getTransform().getTrans();
 		Vector3 distance = signalPosition - sensorPosition;
-		if (abs(distance.x) > m_maxDistance || abs(distance.y) > m_maxDistance || abs(distance.z) > m_maxDistance)
+		if (distance.length() > m_maxDistance)//abs(distance.x) > m_maxDistance || abs(distance.y) > m_maxDistance || abs(distance.z) > m_maxDistance
 			return NULL;
 
 		// 4.2. A continuación se comprueba si la distancia euclídea es mayor que la distancia máxima.

@@ -42,6 +42,7 @@ namespace Logic
             std::map<unsigned, Map::CMapEntity*> m_mapInfo;
             CEntity* m_parent;
             CScene*  m_scene;
+			unsigned int m_cost;
         };
     }
 }

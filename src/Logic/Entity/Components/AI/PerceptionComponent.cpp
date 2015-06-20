@@ -89,6 +89,8 @@ namespace Logic
 		*/
 		bool CPerceptionComponent::activate()
 		{
+			if(!IComponent::activate() == true)
+				return false;
 			// Obtenemos la matriz de transformación inicial de la entidad asociada y se la
 			// pasamos a la entidad de percepción
 			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
@@ -109,6 +111,7 @@ namespace Logic
 		*/
 		void CPerceptionComponent::deactivate()
 		{
+			IComponent::deactivate();
 			// Desregistramos la entidad de percepción en el gestor
 			AI::CAI::getInstance()->getPerceptionManager()->unregisterEntity(m_pEntity);
 		}

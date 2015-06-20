@@ -243,6 +243,10 @@ const char* const GEN_MISSILE_LINEAR_RANGE             = "missile_linear_range";
 const char* const GEN_MISSILE_LINEAR_SPEED             = "missile_linear_speed";
 const char* const GEN_MISSILE_LINEAR_AMMO              = "missile_linear_ammo";
 const char* const GEN_MISSILE_LINEAR_MAXCHARGER        = "missile_linear_maxCharger";
+const char* const GEN_LASERBEAM_DAMAGE   = "laserbeam_damage";
+const char* const GEN_LASERBEAM_RANGE    = "laserbeam_range";
+const char* const GEN_LASERBEAM_COST     = "laserbeam_energy_cost";
+const char* const GEN_LASERBEAM_INTERVAL = "laserbeam_energy_interval";
 
 // Camera
 const char* const GEN_CAMERA_NAME				= "camera_name";

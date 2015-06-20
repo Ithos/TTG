@@ -64,6 +64,7 @@ namespace Common
             ALL = -1, 
             LASER = 0, 
             MISSILE_LINEAR,
+            LASER_BEAM,
             END
         };
 

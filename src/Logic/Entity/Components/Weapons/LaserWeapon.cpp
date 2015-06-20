@@ -36,6 +36,8 @@
 
 #include "log.h"
 
+#include "../Physic/IPhysic.h"
+
 namespace Logic
 {
 	namespace Component
@@ -112,7 +114,7 @@ namespace Logic
             m_ray.setOrigin(src);
             m_ray.setDirection(dir);
 
-            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group                       
+            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                       
 
             if (hitEntity) {
                 std::string type = hitEntity->getType();

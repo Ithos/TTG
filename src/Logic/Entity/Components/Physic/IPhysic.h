@@ -28,7 +28,9 @@ namespace physx
 
 enum PGROUPS 
 {
-	DEFAULT = 0
+	DEFAULT = 0,
+	SCENE = 1,
+	DAMAGEABLE = 2
 };
 
 namespace Logic { namespace Component {

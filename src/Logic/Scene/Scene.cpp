@@ -152,6 +152,9 @@ namespace Logic
 			}
 		}
 		
+		Common::Physic::CPhysicManager::getInstance()->setGroupCollisions(0,1,true);
+		Common::Physic::CPhysicManager::getInstance()->setGroupCollisions(0,2,true);
+		Common::Physic::CPhysicManager::getInstance()->setGroupCollisions(1,2,true);
 
 		log_trace(LOG_CSCENE,"Scene created...\n");
 		return scene;

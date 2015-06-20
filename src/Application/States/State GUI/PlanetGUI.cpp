@@ -262,6 +262,29 @@ namespace Application
 		}
 	}
 
+	void CPlanetGUI::updateMission()
+	{
+		CGameManager::TActiveEquipment equipment = m_mgrInstance->getPlayerActiveEquipment();
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->resetList();
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->addItem(
+			new CEGUI::ListboxTextItem(Common::Data::Game::GAME_ENGINE));
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->addItem(
+			new CEGUI::ListboxTextItem(equipment[Common::Data::Game::GAME_ENGINE].first));
+
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->addItem(
+			new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_SENSORS)));
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->addItem(
+			new CEGUI::ListboxTextItem(equipment[Common::Data::Game::GAME_SENSORS].first));
+
+		if(CGameManager::getInstance()->getMission().first != 0){
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->addItem(
+				new CEGUI::ListboxTextItem(Common::Data::Game::GAME_HUD_NOTES));
+			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/SecondaryWindow"))->addItem(
+				new CEGUI::ListboxTextItem(CGameManager::getInstance()->getMission().second));
+		}
+	}
+
 	void CPlanetGUI::deactivateGUI()
 	{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("PlanetHUD/InfoBoard/PrimaryWindow"))->resetList();

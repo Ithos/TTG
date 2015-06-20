@@ -1,5 +1,5 @@
 1
-020103
+060243
 2
 >>Fuel:
 ##
@@ -7,7 +7,7 @@
 ##
 >>Scrap:
 ##
-200
+690
 ##
 5
 >>Engine:
@@ -73,7 +73,7 @@ the shield energy over time.
 ##
 1
 ##
-13
+14
 >>Big Fuel Compressor
 ##
 Heat Cogenerator
@@ -112,6 +112,16 @@ Heavy Hull Reinforcement
 Special Device
 Heavy titanium based
 reinforcement plates.
+##
+>>Item:
+##
+Magnetic Stone
+##
+Item.
+A big stone that creates a powerfull
+magnetic field.
+In order to manipulate it
+has to be magnetically isolated.
 ##
 >>Light Hull Reinforcement
 ##
@@ -198,8 +208,8 @@ Standar mining machinery
 used by most colonial fortune-seekers.
 +5% Scrap
 ##
-0
- 
+2
+1/4 enemies defeated.
 ##
 2
 Electromagnetic Resonance Engine
@@ -216,7 +226,7 @@ Ion Pulse Engine
 ##
 35
 140
-100
+80
 100
 110
 1
@@ -236,9 +246,9 @@ Ion Pulse Engine
 2
 0001
 ##
-14348049098252755
+14348246763848580
 ##
 0001_0001
 ##
-14348049202248703
+14348246923337702
 ##

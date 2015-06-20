@@ -661,7 +661,7 @@ namespace Application
 		/// TODO -- Internationalization -- /// }End
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
 			std::string(Common::Data::Game::GAME_MISSION_AQUIRED_TEXT[mission.first - 1]) + "\n" + mission.second.second));
-		/// TODO -- Internationalization -- /// Begin{1
+		/// TODO -- Internationalization -- /// Begin{
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("CityPage/LogWindow/MessageBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String("--- Reward ---")));
 		/// TODO -- Internationalization -- /// }End

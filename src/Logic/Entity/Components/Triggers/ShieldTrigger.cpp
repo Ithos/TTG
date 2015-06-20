@@ -124,6 +124,7 @@ namespace Logic
 				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
+				m_scene->deleteEntity(ent);
 				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }
@@ -133,6 +134,7 @@ namespace Logic
 				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
+				m_scene->deleteEntity(ent);
 				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
                 m_activateShield = false;
             }

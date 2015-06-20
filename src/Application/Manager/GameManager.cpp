@@ -647,8 +647,9 @@ namespace Application
 		m_activeMission = std::pair<unsigned int, std::string>(id, str);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(2)->setText(str);
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(2)->
-			setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,desc);
+		if(desc != "--//NO_CHANGES//--")
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(2)->
+				setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,desc);
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
 	}

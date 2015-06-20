@@ -29,6 +29,8 @@
 #include "../../Common/Data/Game_Constants.h"
 #include <Common/Configure/Configure.h>
 
+#include "../States/State GUI/PlanetGUI.h"
+
 namespace Application
 {
 	const char* const LOG_CMISSIONMGR = "Application::CMissionManager";
@@ -147,10 +149,14 @@ namespace Application
 			m_tmpTargets.first = enemyTypeDist(generator);
 			m_tmpTargets.second = numTargetsDist(generator);
 			/// TODO -- Internationalization -- /// Begin{
-			m_tmpMission.second.first = "0/" + std::to_string(m_tmpTargets.first) + " enemies defeated.";
+			m_tmpMission.second.first = "0/" + std::to_string(m_tmpTargets.second) + " enemies defeated.";
 
 			/// TODO --Description--///
-			m_tmpMission.second.second = "Defeat " + std::to_string(m_tmpTargets.second) + " type " + std::to_string(m_tmpTargets.first) + " enemies.";
+
+			std::string enemTypeStr(m_tmpTargets.first == 1 ? "Phantom" : "Cruiser");
+
+
+			m_tmpMission.second.second = "Defeat " + std::to_string(m_tmpTargets.second)+ " " + enemTypeStr + " enemies.";
 			/// TODO -- Internationalization -- /// }End
 
 			generateReward(m_tmpTargets.second);
@@ -407,9 +413,10 @@ namespace Application
 		if(m_missionType == 2 && type == m_targets.first){
 			++m_targetsDefeated;
 			/// TODO -- Internationalization -- /// Begin{
-			CGameManager::getInstance()->setMission(CGameManager::getInstance()->getMission().first,CGameManager::getInstance()->getMission().second,
-				std::to_string(m_targetsDefeated) + "/" + std::to_string(m_targets.second) + " enemies defeated.");
+			CGameManager::getInstance()->setMission(CGameManager::getInstance()->getMission().first,std::to_string(m_targetsDefeated) + "/" + std::to_string(m_targets.second) + " enemies defeated.",
+				"--//NO_CHANGES//--");
 			/// TODO -- Internationalization -- /// }End
+			CPlanetGUI::getInstance()->updateMission();
 			if(m_targetsDefeated >= m_targets.second){
 				getReward();
 				abandonMission();
@@ -499,9 +506,9 @@ namespace Application
 				}else if(idx == 4){
 					std::uniform_int_distribution<int> specialDeviceDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_SPECIAL - 1) );
 					int item(specialDeviceDist(generator));
-					m_tmpItemReward.first = Common::Data::Game::GAME_ITEM_LIST[item][0];
-					m_tmpItemReward.second.first = Common::Data::Game::GAME_ITEM_LIST[item][1];
-					m_tmpItemReward.second.second = Common::Data::Game::GAME_ITEM_LIST[item][2];
+					m_tmpItemReward.first = Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[item][0];
+					m_tmpItemReward.second.first = Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[item][1];
+					m_tmpItemReward.second.second = Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[item][2];
 				}else if(idx == 5){
 					std::uniform_int_distribution<int> gameItemDist(0,((float)difficulty/9.0)*(Common::Data::Game::TOTAL_ITEMS - 1) );
 					int item(gameItemDist(generator));

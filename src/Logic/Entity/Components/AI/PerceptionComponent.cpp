@@ -28,6 +28,7 @@
 #include "AI/Perception/PerceptionEntityFactory.h"
 
 #include "Logic/Entity/Components/Movement/Transform.h"
+#include "Logic/Entity/Components/AI/SteeringMovement.h"
 #include "Common/Data/TTG_Types.h"
 
 #include <log.h>
@@ -89,7 +90,7 @@ namespace Logic
 		*/
 		bool CPerceptionComponent::activate()
 		{
-			if(!IComponent::activate() == true)
+			if(!IComponent::activate())
 				return false;
 			// Obtenemos la matriz de transformación inicial de la entidad asociada y se la
 			// pasamos a la entidad de percepción
@@ -141,14 +142,19 @@ namespace Logic
 		{
 			CEntity* entity = (CEntity*) notification->getPerceivedEntity()->getUserData();
 			CTransform* transf = static_cast<CTransform*>(entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
-//			std::cout << m_entity->getName() << " percibe a " << entity->getName() << " en " << transf->getPosition() << std::endl;
 
-			Ogre::String xx = Ogre::StringConverter::toString(transf->getPosition().x) + " ";
-			Ogre::String yy = Ogre::StringConverter::toString(transf->getPosition().y) + " ";
-			Ogre::String zz = Ogre::StringConverter::toString(transf->getPosition().z) + "\n";
-			Ogre::String str = xx+yy+zz;
-			std::string cadena = m_entity->getName()+" percibe a "+entity->getName()+" en "+str;
-			log_trace("MAIN",cadena.c_str());
+			if (entity->isPlayer() && !playerSeen) {
+				CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
+				steering->setPlayerAsTarget();
+				playerSeen = true;
+
+				Ogre::String xx = Ogre::StringConverter::toString(transf->getPosition().x) + " ";
+				Ogre::String yy = Ogre::StringConverter::toString(transf->getPosition().y) + " ";
+				Ogre::String zz = Ogre::StringConverter::toString(transf->getPosition().z) + "\n";
+				Ogre::String str = xx+yy+zz;
+				std::string cadena = m_entity->getName()+" percibe a "+entity->getName()+" en "+str;
+				log_trace("MAIN",cadena.c_str());
+			}
 
 			// El gestor de percepción se desentiende de las notificaciones una vez que las 
 			// envía. Es responsabilidad del receptor eliminarlas.

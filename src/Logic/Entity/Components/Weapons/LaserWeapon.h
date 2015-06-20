@@ -73,8 +73,8 @@ namespace Logic
             /**
                 Set parameters for a weapon.
             */
-            void setWeapon( const float& damage, const float& cadence, 
-                            const float& range, const float& speed, int charger );
+            void setWeapon( const float& damage, const float& cadence, const float& range, const float& speed, 
+                int charger, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
             //void setPosition(const Vector3& pos);
 

@@ -226,6 +226,9 @@
     <ClInclude Include="..\..\src\Logic\Entity\Components\AI\PerceptionComponent.h">
       <Filter>Entity\Components\AI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\LaserBeamWeapon.h">
+      <Filter>Entity\Components\Weapons\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Logic\Entity\Messages\Message.cpp">
@@ -266,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Logic\Entity\Components\Graphic\GraphicPrimitive.cpp">
       <Filter>Entity\Components\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Logic\Entity\Components\Component.cpp">
-      <Filter>Entity\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Logic\Entity\Components\Graphic\Graphics.cpp">
       <Filter>Entity\Components\Graphic</Filter>
@@ -357,6 +357,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Logic\Entity\Components\AI\PerceptionComponent.cpp">
       <Filter>Entity\Components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Component.cpp">
+      <Filter>Entity\Components\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\LaserBeamWeapon.cpp">
+      <Filter>Entity\Components\Weapons\Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -651,6 +651,7 @@ namespace Map
 			entityInProgress->setAttribute("physic_type", "dynamic");
 			entityInProgress->setAttribute("physic_mass", "10");
 			entityInProgress->setAttribute("physic_shape", "sphere");
+			entityInProgress->setAttribute("physic_group","2");
 
 			int mod = astDist(generator);
 
@@ -745,6 +746,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_type", "kinematic");
 		entityInProgress->setAttribute("physic_shape", "sphere");
 		entityInProgress->setAttribute("physic_mass", "10");
+		entityInProgress->setAttribute("physic_group","2");
 		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_PLAYER_PHYSX_RADIUS));
         entityInProgress->setAttribute(COMMON_MAXROLL,   getDefaultValue(GEN_PLAYER_MAXROLL));
         entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_PLAYER_ROLL_SPEED));
@@ -758,9 +760,16 @@ namespace Map
         entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, getDefaultValue(GEN_PLAYER_SEC_WEAPON));
 
         // Weapons
+        //-- laser
         entityInProgress->setAttribute(LASER_DAMAGE, getDefaultValue(GEN_LASER_DAMAGE));
         entityInProgress->setAttribute(LASER_RANGE,  getDefaultValue(GEN_LASER_RANGE));
         entityInProgress->setAttribute(LASER_COST,   getDefaultValue(GEN_LASER_COST));
+        //-- laser beam
+        entityInProgress->setAttribute(LASERBEAM_DAMAGE,   getDefaultValue(GEN_LASERBEAM_DAMAGE));
+        entityInProgress->setAttribute(LASERBEAM_RANGE,    getDefaultValue(GEN_LASERBEAM_RANGE));
+        entityInProgress->setAttribute(LASERBEAM_COST,     getDefaultValue(GEN_LASERBEAM_COST));
+        entityInProgress->setAttribute(LASERBEAM_INTERVAL, getDefaultValue(GEN_LASERBEAM_INTERVAL));
+
 
 		entityInProgress->setAttribute("perception_entity_type","player");
 
@@ -886,6 +895,7 @@ namespace Map
 			entityInProgress->setAttribute("physic_type", "dynamic");
 			entityInProgress->setAttribute("physic_shape", "sphere");
 			entityInProgress->setAttribute("physic_mass", "10");
+			entityInProgress->setAttribute("physic_group","2");
 			entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 			entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
 			entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
@@ -924,6 +934,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_type", "dynamic");
 		entityInProgress->setAttribute("physic_shape", "sphere");
 		entityInProgress->setAttribute("physic_mass", "10");
+		entityInProgress->setAttribute("physic_group","2");
 		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
 		entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
@@ -962,6 +973,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_type", "dynamic");
 		entityInProgress->setAttribute("physic_shape", "sphere");
 		entityInProgress->setAttribute("physic_mass", "10");
+		entityInProgress->setAttribute("physic_group","2");
 		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
 		entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
@@ -1145,6 +1157,7 @@ namespace Map
 		entityInProgress->setAttribute(PHYSIC_RADIUS,std::to_string(std::atof(Common::Configuration::getDefaultValue(GEN_PLANET_TRIGGER_RADIUS).c_str()) * 
 			Common::Configuration::defaultValue<float>(GEN_PLANET_SCALE_MULT)));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		/*
 		tmpStr1 = PHYSIC_ENTITY;
 		tmpStr2 = Common::Configuration::getDefaultValue(GEN_PLANET_TRIGGER_ENTITY);
@@ -1194,6 +1207,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_LIMIT_TRIGGER1_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 
 		entityList.push_back(entityInProgress);
 		//
@@ -1227,6 +1241,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_LIMIT_TRIGGER2_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		//
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_PLANET_LIMIT_TRIGGER3_NAME));
@@ -1259,6 +1274,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_LIMIT_TRIGGER3_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		//
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_PLANET_LIMIT_TRIGGER4_NAME));
@@ -1291,6 +1307,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_LIMIT_TRIGGER4_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		
 		// Scene End Triggers
@@ -1325,6 +1342,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER1_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		//
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER2_NAME));
@@ -1357,6 +1375,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER2_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		//
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER3_NAME));
@@ -1389,6 +1408,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER3_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		//
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER4_NAME));
@@ -1421,6 +1441,7 @@ namespace Map
 		entityInProgress->setAttribute("physic_shape","box");
 		entityInProgress->setAttribute("physic_dimensions",Common::Configuration::getDefaultValue(GEN_PLANET_END_TRIGGER4_DIMENSIONS));
 		entityInProgress->setAttribute("physic_trigger","true");
+		entityInProgress->setAttribute("physic_group","1");
 		entityList.push_back(entityInProgress);
 		
 		return entityList;

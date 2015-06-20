@@ -21,6 +21,7 @@
 
 #include "..\Component.h"
 #include <vector>
+#include <Common/data/TTG_Types.h>
 
 namespace Logic
 {
@@ -43,8 +44,8 @@ namespace Logic
             const int& getNumPrimaryWeapon()   const { return m_primary;   }
             const int& getNumSecondaryWeapon() const { return m_secondary; }
 
-            void setNumPrimaryWeapo(int n)    { m_primary   = n; }
-            void setNumSecondaryWeapon(int n) { m_secondary = n; }
+            void setPrimaryWeapon(Common::Data::Weapons_t weapon);
+            void setSecondaryWeapon(Common::Data::Weapons_t weapon);
 
             void shootPrimaryWeapon()   { shoot(m_primary);   }
             void shootSecondaryWeapon() { shoot(m_secondary); }

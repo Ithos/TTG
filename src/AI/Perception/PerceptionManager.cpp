@@ -38,8 +38,10 @@ namespace AI
 		for (std::list<CPerceptionEntity*>::iterator it = m_entities.begin(); it != m_entities.end(); it++)
 		{
 			if (entity == (*it))
+			{
 				m_entities.erase(it);
-			break;
+				break;
+			}
 		}
 	}
 

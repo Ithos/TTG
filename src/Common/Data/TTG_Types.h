@@ -99,6 +99,7 @@ namespace Common
         const char* const SHIELD_COMP           = "CShield";
         const char* const SHIELD_TRIGGER        = "CShieldTrigger";
         const char* const MISSILE_TRIGGER       = "CMissileTrigger";
+		const char* const STATE_MACHINE_COMP    = "CStateMachineExecutor";
 
 		//Physic
 		const char* const PHYSIC_CONTROLLER_COMP = "CPhysicController";

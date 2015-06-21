@@ -33,10 +33,9 @@
 #include "Logic/Entity/Entity.h"
 #include "Logic/Entity/Components/Gameplay/Life.h"
 #include "Logic/Scene/Scene.h"
-
 #include "log.h"
-
 #include "../Physic/IPhysic.h"
+
 namespace Logic
 {
 	namespace Component
@@ -113,8 +112,9 @@ namespace Logic
                     float distance = src.distance(m_currPos);
                     m_particles->laserShot(src, dir, distance);
                         
-                    if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
-                            m_scene->deactivateEntity(hitEntity);
+					if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+							m_scene->deactivateEntity(hitEntity);
+							m_scene->deleteEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
                         }
                         else {

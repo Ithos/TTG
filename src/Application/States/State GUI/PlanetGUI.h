@@ -70,6 +70,7 @@ namespace Application
 		bool onLandClicked(const CEGUI::EventArgs& e);
 
 		void shipDestroyed();
+		void updateMission();
 	private:
 		static CPlanetGUI* m_instance;
 

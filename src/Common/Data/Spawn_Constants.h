@@ -127,6 +127,8 @@ namespace Common
             // SHIELD
             const char* const SHIELD_TIMEOUT = "timeout";
             const char* const SHIELD_RELOADTIME = "reloadtime";
+			// Mission
+			const char* const MISSION_ENEMY_TYPE = "mission_enemy_type";
 		}
 	}
 }

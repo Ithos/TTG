@@ -989,39 +989,39 @@ namespace Common
 
 			// Items
 			const char* const GAME_REWARD[2] = {
-				"Multipass", "Item\nAn electronic keycard\nwhich gives acces to various locations."
+				"Multipass", "Item.\nAn electronic keycard\nwhich gives acces to various locations."
 			};
 
 			const char* const GAME_USELESS_DESERT[2] = {
-				"Sandstone Totem", "Item\nAn ancient totem\ncarved in sandstone\nfound in a desert planet.\nSeems that belonged\nto an ancient civilization."
+				"Sandstone Totem", "Item.\nAn ancient totem\ncarved in sandstone\nfound in a desert planet.\nSeems that belonged\nto an ancient civilization."
 			};
 
 			const char* const GAME_USELESS_LAVA[2] = {
-				"Volcanic Cristal", "Item\n.A strange cristal\nfound in a volcanic planet.\nIts different faces reflect the\nlight in different indescribable colors."
+				"Volcanic Cristal", "Item.\nA strange cristal\nfound in a volcanic planet.\nIts different faces reflect the\nlight in different indescribable colors."
 			};
 
 			const char* const GAME_USELESS_RED[2] = {
-				"Magnetic Stone", "Item\n.A big stone that creates a powerfull\nmagnetic field.\nIn order to manipulate it\nhas to be magnetically isolated."
+				"Magnetic Stone", "Item.\nA big stone that creates a powerfull\nmagnetic field.\nIn order to manipulate it\nhas to be magnetically isolated."
 			};
 
 			const char* const GAME_USELESS_EARTH[2] = {
-				"Terraforming Capsule", "Item\n.An old spacial probe equipped\nmodify the atmosphere of a planet.\nMany of these were used in order\nto make planets suitable for\ncolonizers."
+				"Terraforming Capsule", "Item.\nAn old spacial probe equipped\nmodify the atmosphere of a planet.\nMany of these were used in order\nto make planets suitable for\ncolonizers."
 			};
 
 			const char* const GAME_USELESS_OCEAN[2] = {
-				"Regenerating Algae", "Item\n.A rare type of algae\nwhich has the ability to regenerate itself.\nOne of the multiple species that\nlive in the ocean planets."
+				"Regenerating Algae", "Item.\nA rare type of algae\nwhich has the ability to regenerate itself.\nOne of the multiple species that\nlive in the ocean planets."
 			};
 
 			const char* const GAME_USELESS_GAS[2] = {
-				"Crio-Stasis Chamber", "Item\n.A crio-stasis module\nprobably used during the first colonization."
+				"Crio-Stasis Chamber", "Item.\nA crio-stasis module\nprobably used during the first colonization."
 			};
 
 			const char* const GAME_USELESS_ICE[2] = {
-				"Unactive Beacon", "Item\n.One of the beacons that were launched\nduring the second colonization.\nIt's damaged and ist information\nhas been lost."
+				"Unactive Beacon", "Item.\nOne of the beacons that were launched\nduring the second colonization.\nIt's damaged and ist information\nhas been lost."
 			};
 
 			const char* const GAME_USELESS_BARREN[2] = {
-				"Mining Robot", "Item\n.An old mining robot.\nIt's really dated but its still functional."
+				"Mining Robot", "Item.\nAn old mining robot.\nIt's really dated but its still functional."
 			};
 
 			const int TOTAL_ITEMS = 9;

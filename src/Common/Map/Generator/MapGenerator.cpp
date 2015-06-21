@@ -867,6 +867,7 @@ namespace Map
 					atof(getDefaultValue(GEN_ENEMY_NEG_BOUNDARY).c_str()),
 					atof(getDefaultValue(GEN_ENEMY_POS_BOUNDARY).c_str()));
 		/*for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {*/
+		unsigned int enemNumType(neg(generator));
 		int enemiesNum(enemyDist(generator)),div(5 - risk);
 		for (int i=0; !risk?0:i< Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div); ++i) {
 			char str[20];
@@ -886,7 +887,7 @@ namespace Map
 			entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
 			entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
 			entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-			entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL));
+			entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(std::string(GEN_ENEMY_MODEL) + std::to_string(enemNumType)));
 			//entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
 			//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 			//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
@@ -910,10 +911,13 @@ namespace Map
 			entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
 			entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
 
+			entityInProgress->setAttribute(MISSION_ENEMY_TYPE, std::to_string(enemNumType + 1));
+
 			entityList.push_back(entityInProgress);
 		}
 
 		//Dummy Enemy
+
 		entityInProgress = new CMapEntity("DummyEnemy"/*+'0'*/);//The commented 0 is for sound events
 
 		entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
@@ -925,7 +929,7 @@ namespace Map
 		entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
 		entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
 		entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-		entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL));
+		entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
 		//entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
 		//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
@@ -951,7 +955,8 @@ namespace Map
 
 		entityList.push_back(entityInProgress);
 
-		//Steering Enemy
+		////Steering Enemy
+
 		entityInProgress = new CMapEntity("SteeringEnemy"/*+'0'*/);//The commented 0 is for sound events
 
 		entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
@@ -964,7 +969,7 @@ namespace Map
 		entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
 		entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
 		entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-		entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL));
+		entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
 		//entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
 		//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
 		//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
@@ -987,56 +992,57 @@ namespace Map
 		entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
 		entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
         
-		//(Enemy) Example of sound loading
-		/*tmpStr1 = "loop0";
-		tmpStr2 = "true";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		////(Enemy) Example of sound loading
+		///*tmpStr1 = "loop0";
+		//tmpStr2 = "true";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "loop1";
-		tmpStr2 = "true";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "loop1";
+		//tmpStr2 = "true";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "autoPlay0";
-		tmpStr2 = "true";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "autoPlay0";
+		//tmpStr2 = "true";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "autoPlay1";
-		tmpStr2 = "true";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "autoPlay1";
+		//tmpStr2 = "true";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "minDist0";
-		tmpStr2 = "40.0";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "minDist0";
+		//tmpStr2 = "40.0";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "maxDist0";
-		tmpStr2 = "600.0";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "maxDist0";
+		//tmpStr2 = "600.0";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "minDist1";
-		tmpStr2 = "40.0";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "minDist1";
+		//tmpStr2 = "40.0";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "maxDist1";
-		tmpStr2 = "600.0";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "maxDist1";
+		//tmpStr2 = "600.0";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "soundFile0";
-		tmpStr2 = "SoundIntro1.wav";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "soundFile0";
+		//tmpStr2 = "SoundIntro1.wav";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "soundFile1";
-		tmpStr2 = "SoundIntro2.wav";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "soundFile1";
+		//tmpStr2 = "SoundIntro2.wav";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "soundName0";
-		tmpStr2 = "EnemySound";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//tmpStr1 = "soundName0";
+		//tmpStr2 = "EnemySound";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		tmpStr1 = "soundName1";
-		tmpStr2 = "EnemySecSound";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
+		//tmpStr1 = "soundName1";
+		//tmpStr2 = "EnemySecSound";
+		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
 
 		entityList.push_back(entityInProgress);
+
 
 		//Camera
         entityInProgress = new CMapEntity(getDefaultValue(GEN_CAMERA_NAME));

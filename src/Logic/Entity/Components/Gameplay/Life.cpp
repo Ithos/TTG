@@ -19,6 +19,7 @@
 #include "Life.h"
 
 #include <Application/Manager/GameManager.h>
+#include <Application/Manager/MissionManager.h>
 
 #include <Logic/Entity/Entity.h>
 #include <Common/Data/Spawn_Constants.h>
@@ -32,7 +33,7 @@ namespace Logic
 	{
         IMP_FACTORY(CLife)
 
-        CLife::CLife() : IComponent(), m_life(0)
+        CLife::CLife() : IComponent(), m_life(0), m_enemType(0)
         { }
 
         CLife::~CLife()
@@ -68,9 +69,20 @@ namespace Logic
 					}
 				}
 			}
+			if (entityInfo->hasAttribute(Common::Data::Spawn::MISSION_ENEMY_TYPE) && entity->getType() == "Enemy"){
+				m_enemType = static_cast<unsigned int>(entityInfo->getIntAttribute(Common::Data::Spawn::MISSION_ENEMY_TYPE));
+			}
             
             return true;
         }
+
+		void CLife::deactivate()
+		{
+			IComponent::deactivate();
+			if(*m_life <= 0){
+				Application::CMissionManager::getInstance()->enemyDefeated(m_enemType);
+			}
+		}
 
 		bool CLife::decreaseLife(unsigned int num)
 		{

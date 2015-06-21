@@ -141,7 +141,8 @@ namespace Logic
    
 				if (static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                         Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();  
-                        m_scene->deactivateEntity(hitEnt);
+						m_scene->deactivateEntity(hitEnt);
+						m_scene->deleteEntity(hitEnt);
                         m_particles->startNextExplosion(pos);
                     }
                     else {
@@ -160,10 +161,12 @@ namespace Logic
                 // else if enemy impact with other enemy is friendly fire and we havent
                 m_shooted = false;
                 // if is the player-> destroy tha mothafucking ship
-                static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseAllLife();
-				Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
-				m_scene->deactivateEntity(hitEnt);
-				m_particles->startNextExplosion(pos);
+				if(static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)){
+					Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+					m_scene->deactivateEntity(hitEnt);
+					m_scene->deleteEntity(hitEnt);
+					m_particles->startNextExplosion(pos);
+				}
 
                 if (m_bb) { 
                     m_set->removeBillboard(m_bb); 
@@ -178,6 +181,7 @@ namespace Logic
                 // if hit with player-> that means that player has no shield
 				if (m_playerLife->decreaseLife(m_damage)) {
                     m_scene->deactivateEntity(hitEnt);
+					m_scene->deleteEntity(hitEnt);
                     Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                     m_particles->startNextExplosion(pos);
                 }

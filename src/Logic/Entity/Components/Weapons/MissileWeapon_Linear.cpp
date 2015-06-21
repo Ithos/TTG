@@ -105,24 +105,31 @@ namespace Logic
 
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
-            if (!m_trigger) {
-				if (Application::CGameManager::getInstance()->getEnergyState() >= m_cost) {//m_ammo != 0
-                    m_trigger = true;
-                    m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
-                    m_subEntity[m_iMissile]->activate();
-                    static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+			if (!m_trigger || !m_parent->isPlayer()) {
+				if (m_parent->isPlayer()) {
+					if (Application::CGameManager::getInstance()->getEnergyState() >= m_cost) {//m_ammo != 0
+						m_trigger = true;
+						m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+						m_subEntity[m_iMissile]->activate();
+						static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
 
-                    if (m_iMissile < MAX_MISSILES-1 )
-                        ++m_iMissile;
-                    else
-                        m_iMissile = 0;
+						if (m_iMissile < MAX_MISSILES-1 )
+							++m_iMissile;
+						else
+							m_iMissile = 0;
 
-                    /*--m_ammo;*/
-					Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
-                }
-                else {
-                    // sound empty weapon for example
-                }
+						/*--m_ammo;*/
+						Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
+					}
+					else {
+						// sound empty weapon for example
+					}
+				}
+				else {
+//					m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+//					m_subEntity[m_iMissile]->activate();
+// Esta línea peta	static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+				}
             }
         }
 

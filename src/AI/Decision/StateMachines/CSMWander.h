@@ -34,7 +34,7 @@ namespace AI
 		y deja la máquina de estado lista para ser ejecutada.
 		*/
 		CSMWander(Logic::CEntity* entity) : CStateMachine(entity) {
-			int routeTo = this->addNode(new CLAShoottingGoTo(entity,50));
+			int routeTo = this->addNode(new CLAGoToRandom(entity,50));
 			int wait = this->addNode(new CLAWait(3000));
 			this->addEdge(routeTo, wait, new CConditionSuccess());
 			this->addEdge(routeTo, routeTo, new CConditionFail());

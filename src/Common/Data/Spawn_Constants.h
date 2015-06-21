@@ -114,6 +114,10 @@ namespace Common
             const char* const LASER_RANGE    = "laser_range";
             const char* const LASER_DAMAGE   = "laser_damage";
             const char* const LASER_COST     = "laser_cost";
+            const char* const LASERBEAM_RANGE    = "lasserbeam_ran";
+            const char* const LASERBEAM_DAMAGE   = "laserbeam_dam";
+            const char* const LASERBEAM_COST     = "laserbeam_cost";
+            const char* const LASERBEAM_INTERVAL = "laserbeam_interval";
             //-----
             const char* const MISSILE_RANGE  = "missile_range";
             const char* const MISSILE_DAMAGE = "missile_damage";

@@ -93,6 +93,8 @@ PxRigidStatic* CPhysicEntity::createPlane(const Map::CMapEntity *entityInfo)
 	int group = 0;
 	if(entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
+
+	m_group = group;
  
 	return m_physicMng->createPlane(point,normal,group,this);
 }
@@ -114,6 +116,8 @@ PxRigidActor* CPhysicEntity::createRigid(const Map::CMapEntity *entityInfo)
 	int group = 0;
 	if(entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
+
+	m_group = group;
 
 	if (physicType == "static") {
 		if (physicShape == "box") {
@@ -156,6 +160,8 @@ PxRigidActor* CPhysicEntity::createFromFile(const Map::CMapEntity *entityInfo)
 	int group = 0;
 	if (entityInfo->hasAttribute("physic_group"))
 		group = entityInfo->getIntAttribute("physic_group");
+
+	m_group = group;
 
 	return m_physicMng->createFromFile(file,group,this);
 }

@@ -18,13 +18,13 @@
 
 #include "PlayerWeapons.h"
 #include "LaserWeapon.h"
+#include "LaserBeamWeapon.h"
 #include "MissileWeapon_Linear.h"
 #include "../Movement/Transform.h"
 #include <log.h>
 
 #include <Common/Map/MapEntity.h>
 #include <Logic/Scene/Scene.h>
-#include <Common/data/TTG_Types.h>
 #include <Common/Data/Spawn_Constants.h>
 
 namespace Logic 
@@ -52,12 +52,15 @@ namespace Logic
 
             m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
             m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
+            m_weapons.push_back(new CLaserBeam(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
 
             if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
                 m_primary = getWeapon(entityInfo->getStringAttribute(COMMON_PRIMARY_WEAPON));
 
             if (entityInfo->hasAttribute(COMMON_SECONDARY_WEAPON))
                 m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON));
+
+            m_primary = 2; // laser beam
 
             return true;
         }
@@ -68,6 +71,22 @@ namespace Logic
                 delete (*it);
             
             m_weapons.clear();
+        }
+
+        void CWeapons::setPrimaryWeapon(Common::Data::Weapons_t weapon)
+        {
+            for (unsigned i = 0; i < m_weapons.size(); ++i) {
+                if (weapon == m_weapons[i]->m_type)
+                    m_primary = i;
+            }
+        }
+
+        void CWeapons::setSecondaryWeapon(Common::Data::Weapons_t weapon)
+        {
+            for (unsigned i = 0; i < m_weapons.size(); ++i) {
+                if (weapon == m_weapons[i]->m_type)
+                    m_secondary = i;
+            }
         }
 
         void CWeapons::tick(unsigned int msecs)

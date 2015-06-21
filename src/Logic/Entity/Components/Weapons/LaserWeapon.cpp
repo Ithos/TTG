@@ -36,6 +36,8 @@
 
 #include "log.h"
 
+#include "../Physic/IPhysic.h"
+
 namespace Logic
 {
 	namespace Component
@@ -70,17 +72,8 @@ namespace Logic
         }
 
         CLaserWeapon::~CLaserWeapon()
-        { 
-         /*   m_particles->releaseShoots(LASER);
-            Common::Particles::CParticleManager::getInstance()->releaseHits();
-            Common::Particles::CParticleManager::getInstance()->releaseExplosions();
-            m_particles = nullptr; */
-        }
-        
-       /* inline void CLaserWeapon::setPosition(const ::Vector3& pos) 
         {
-            m_ogreNode->setPosition(pos);
-        }*/
+        }
 
 #pragma warning (push)
 #pragma warning (disable:4244)
@@ -112,20 +105,17 @@ namespace Logic
             m_ray.setOrigin(src);
             m_ray.setDirection(dir);
 
-            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group                       
+            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                       
 
             if (hitEntity) {
                 std::string type = hitEntity->getType();
                 if (type == "Asteroid" || type == "Enemy") {
-                    /*int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;*/
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
                     m_particles->laserShot(src - (81 * dir), dir, distance);
-
-                   /* if ( *life > 0) {*/
-                        /**life = (*life <= m_damage)? 0 : *life - m_damage;*/
                         
-					if (static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->decreaseLife(m_damage)) {
+
+					if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
 							m_scene->deactivateEntity(hitEntity);
 							m_scene->deleteEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
@@ -145,6 +135,17 @@ namespace Logic
 
         } // shoot
 #pragma warning (pop)
+
+        void CLaserWeapon::setWeapon(const float& damage, const float& cadence, const float& range, const float& speed, int charger, Common::Data::Weapons_t type)
+        {
+            m_damage  = damage;
+            m_cadence = cadence;
+            m_range   = range;
+            m_speed   = speed;
+            m_maxCharger = charger;
+            if (type != END)
+                m_type = type;
+        }
 
     } // Component
 } 

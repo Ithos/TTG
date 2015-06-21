@@ -60,8 +60,6 @@ namespace Logic
             if (entityInfo->hasAttribute(COMMON_SECONDARY_WEAPON))
                 m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON));
 
-            m_primary = 2; // laser beam
-
             return true;
         }
 
@@ -97,13 +95,15 @@ namespace Logic
 
         void CWeapons::shoot(int index)
         {
-            Vector3 pos;
+            Vector3 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
             using namespace Common::Data;
             log_trace(LOG_PWEAPON, "Shoot with secondary weapon\n");
             switch (m_weapons[index]->m_type)
             {
             case LASER:
-                pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+                m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
+                break;
+            case LASER_BEAM:
                 m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
                 break;
             case MISSILE_LINEAR:

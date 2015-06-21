@@ -16,7 +16,7 @@
 	along with Through the galaxy.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "LaserWeapon.h"
+#include "LaserBeamWeapon.h"
 #include "../Movement/Transform.h"
 #include "../Graphic/Graphics.h"
 #include "Application/Manager/GameManager.h"
@@ -34,34 +34,33 @@
 #include "Logic/Entity/Components/Gameplay/Life.h"
 #include "Logic/Scene/Scene.h"
 
-#include "log.h"
-
-#include "../Physic/IPhysic.h"
 namespace Logic
 {
 	namespace Component
 	{
         const char* const RIBBON_NAME = "ribbontrail_";
 
-        CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
-            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr)
+        CLaserBeam::CLaserBeam(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
+            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr), m_interval(1), m_auxInterval(0)
         { 
-             m_type = LASER;
+             m_type = LASER_BEAM;
 
              using namespace Common::Data::Spawn;
 
-             if (entityInfo->hasAttribute(LASER_DAMAGE))
-                 m_damage = entityInfo->getFloatAttribute(LASER_DAMAGE);
+             if (entityInfo->hasAttribute(LASERBEAM_DAMAGE))
+                 m_damage = entityInfo->getFloatAttribute(LASERBEAM_DAMAGE);
 
-             if (entityInfo->hasAttribute(LASER_RANGE))
-                 m_range = (unsigned) entityInfo->getIntAttribute(LASER_RANGE);
+             if (entityInfo->hasAttribute(LASERBEAM_RANGE))
+                 m_range = (unsigned) entityInfo->getIntAttribute(LASERBEAM_RANGE);
 
-             if (entityInfo->hasAttribute(LASER_COST))
-                 m_cost = entityInfo->getIntAttribute(LASER_COST);
+             if (entityInfo->hasAttribute(LASERBEAM_COST))
+                 m_cost = entityInfo->getIntAttribute(LASERBEAM_COST);
 
-             if (m_player->isPlayer()) {
+             if (entityInfo->hasAttribute(LASERBEAM_INTERVAL))
+                 m_interval = entityInfo->getIntAttribute(LASERBEAM_INTERVAL);
+
+             if (m_player->isPlayer()) 
                  m_energy = &Application::CGameManager::getInstance()->m_curEnergy;
-             }
 
              // Particles code ----
              m_particles = Common::Particles::CParticleManager::getInstance();
@@ -70,23 +69,21 @@ namespace Logic
              m_phyMngr = Common::Physic::CPhysicManager::getInstance();
         }
 
-        CLaserWeapon::~CLaserWeapon()
+        CLaserBeam::~CLaserBeam()
         {
         }
 
-#pragma warning (push)
-#pragma warning (disable:4244)
-        void CLaserWeapon::shoot(const ::Vector3& src, const ::Vector3& dir)
+        void CLaserBeam::shoot(const Vector3& src, const Vector3& dir)
         {
-            if (m_trigger)
+            /*if (m_auxInterval < m_interval) {
+                ++m_auxInterval;
                 return;
-            else
-                m_trigger = true;
+            }
+            
+            m_auxInterval = 0;*/
 
             using namespace Common::Data;
             using namespace Logic::Component;
-			
-       //     m_particles->startShoot(LASER, src, dir, 2);
 
             if (m_player->isPlayer()) {
                 if (*m_energy > m_cost) {
@@ -104,14 +101,15 @@ namespace Logic
             m_ray.setOrigin(src);
             m_ray.setDirection(dir);
 
-            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                       
+            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group                       
 
             if (hitEntity) {
                 std::string type = hitEntity->getType();
                 if (type == "Asteroid" || type == "Enemy") {
+                    /*int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;*/
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
-                    m_particles->laserShot(src, dir, distance);
+                    m_particles->laserShot(src - (81 * dir), dir, distance);
                         
                     if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                             m_scene->deactivateEntity(hitEntity);
@@ -129,11 +127,9 @@ namespace Logic
             else { //no hit
                   m_particles->laserShot(src - (81 * dir), dir, m_range);
             }
+        }
 
-        } // shoot
-#pragma warning (pop)
-
-        void CLaserWeapon::setWeapon(const float& damage, const float& cadence, const float& range, const float& speed, int charger, Common::Data::Weapons_t type)
+        void CLaserBeam::setWeapon(const float& damage, const float& cadence, const float& range, const float& speed, int charger, Common::Data::Weapons_t type)
         {
             m_damage  = damage;
             m_cadence = cadence;
@@ -144,5 +140,5 @@ namespace Logic
                 m_type = type;
         }
 
-    } // Component
-} 
+    } //Component
+}

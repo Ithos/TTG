@@ -31,6 +31,8 @@
 #include "Logic/Entity/Components/AI/SteeringMovement.h"
 #include "Common/Data/TTG_Types.h"
 
+#include <Application/States/State GUI/PlanetGUI.h>
+
 #include <log.h>
 #include <OgreStringConverter.h>
 
@@ -113,6 +115,10 @@ namespace Logic
 		void CPerceptionComponent::deactivate()
 		{
 			IComponent::deactivate();
+
+			if(playerSeen)
+				Application::CPlanetGUI::getInstance()->releaseLock();
+
 			// Desregistramos la entidad de percepción en el gestor
 			AI::CAI::getInstance()->getPerceptionManager()->unregisterEntity(m_pEntity);
 		}
@@ -148,12 +154,14 @@ namespace Logic
 				steering->setPlayerAsTarget();
 				playerSeen = true;
 
-				Ogre::String xx = Ogre::StringConverter::toString(transf->getPosition().x) + " ";
+				Application::CPlanetGUI::getInstance()->addLock();
+
+				/*Ogre::String xx = Ogre::StringConverter::toString(transf->getPosition().x) + " ";
 				Ogre::String yy = Ogre::StringConverter::toString(transf->getPosition().y) + " ";
 				Ogre::String zz = Ogre::StringConverter::toString(transf->getPosition().z) + "\n";
 				Ogre::String str = xx+yy+zz;
 				std::string cadena = m_entity->getName()+" percibe a "+entity->getName()+" en "+str;
-				log_trace("MAIN",cadena.c_str());
+				log_trace("MAIN",cadena.c_str());*/
 			}
 
 			// El gestor de percepción se desentiende de las notificaciones una vez que las 

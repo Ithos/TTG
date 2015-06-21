@@ -918,130 +918,130 @@ namespace Map
 
 		//Dummy Enemy
 
-		entityInProgress = new CMapEntity("DummyEnemy"/*+'0'*/);//The commented 0 is for sound events
+		//entityInProgress = new CMapEntity("DummyEnemy"/*+'0'*/);//The commented 0 is for sound events
 
-		entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
+		//entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
 
-		entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
-		entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
-		entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
-		entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
-		entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
-		entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
-		entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-		entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
-		//entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
-		//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
-		//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
-		entityInProgress->setAttribute("physic_entity", "rigid");
-		entityInProgress->setAttribute("physic_type", "dynamic");
-		entityInProgress->setAttribute("physic_shape", "sphere");
-		entityInProgress->setAttribute("physic_mass", "10");
-		entityInProgress->setAttribute("physic_group","2");
-		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
-		entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
-		entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
-		entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
-        entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
-		entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
-		entityInProgress->setAttribute(AI_BEHAVIOR,"dummy");
-
-		entityInProgress->setAttribute("perception_entity_type","enemy");
-		
-		entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
-		entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
-
-		entityList.push_back(entityInProgress);
-
-		////Steering Enemy
-
-		entityInProgress = new CMapEntity("SteeringEnemy"/*+'0'*/);//The commented 0 is for sound events
-
-		entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
-
-		entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
-		entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
-		entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
+		//entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
+		//entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
+		//entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
 		//entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
-		entityInProgress->setAttribute(COMMON_POSITION, "{1000, -300, 1000}");
-		entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
-		entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
-		entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-		entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
-		//entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
-		//entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		//entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
-		//entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
-		entityInProgress->setAttribute("physic_entity", "rigid");
-		entityInProgress->setAttribute("physic_type", "dynamic");
-		entityInProgress->setAttribute("physic_shape", "sphere");
-		entityInProgress->setAttribute("physic_mass", "10");
-		entityInProgress->setAttribute("physic_group","2");
-		entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
-		entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
-		entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
-		entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
-        entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
-		entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
+		//entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
+		//entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
+		//entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
+		//entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
+		////entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
+		////entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
+		////entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
+		////entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
+		//entityInProgress->setAttribute("physic_entity", "rigid");
+		//entityInProgress->setAttribute("physic_type", "dynamic");
+		//entityInProgress->setAttribute("physic_shape", "sphere");
+		//entityInProgress->setAttribute("physic_mass", "10");
+		//entityInProgress->setAttribute("physic_group","2");
+		//entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
+		//entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
+		//entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
+		//entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
+		//entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
+  //      entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
+		//entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
+		//entityInProgress->setAttribute(AI_BEHAVIOR,"dummy");
 
-		entityInProgress->setAttribute("perception_entity_type","enemy");
+		//entityInProgress->setAttribute("perception_entity_type","enemy");
+		//
+		//entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
+		//entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
 
-		entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
-		entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
-        
-		////(Enemy) Example of sound loading
-		///*tmpStr1 = "loop0";
-		//tmpStr2 = "true";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//entityList.push_back(entityInProgress);
 
-		//tmpStr1 = "loop1";
-		//tmpStr2 = "true";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//////Steering Enemy
 
-		//tmpStr1 = "autoPlay0";
-		//tmpStr2 = "true";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//entityInProgress = new CMapEntity("SteeringEnemy"/*+'0'*/);//The commented 0 is for sound events
 
-		//tmpStr1 = "autoPlay1";
-		//tmpStr2 = "true";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
 
-		//tmpStr1 = "minDist0";
-		//tmpStr2 = "40.0";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
+		//entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
+		//entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
+		////entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
+		//entityInProgress->setAttribute(COMMON_POSITION, "{1000, -300, 1000}");
+		//entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
+		//entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
+		//entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
+		//entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
+		////entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
+		////entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
+		////entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
+		////entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
+		//entityInProgress->setAttribute("physic_entity", "rigid");
+		//entityInProgress->setAttribute("physic_type", "dynamic");
+		//entityInProgress->setAttribute("physic_shape", "sphere");
+		//entityInProgress->setAttribute("physic_mass", "10");
+		//entityInProgress->setAttribute("physic_group","2");
+		//entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
+		//entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
+		//entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
+		//entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
+		//entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
+  //      entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
+		//entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
 
-		//tmpStr1 = "maxDist0";
-		//tmpStr2 = "600.0";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//entityInProgress->setAttribute("perception_entity_type","enemy");
 
-		//tmpStr1 = "minDist1";
-		//tmpStr2 = "40.0";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		//entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
+		//entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
+  //      
+		//////(Enemy) Example of sound loading
+		/////*tmpStr1 = "loop0";
+		////tmpStr2 = "true";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		//tmpStr1 = "maxDist1";
-		//tmpStr2 = "600.0";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		////tmpStr1 = "loop1";
+		////tmpStr2 = "true";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		//tmpStr1 = "soundFile0";
-		//tmpStr2 = "SoundIntro1.wav";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		////tmpStr1 = "autoPlay0";
+		////tmpStr2 = "true";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		//tmpStr1 = "soundFile1";
-		//tmpStr2 = "SoundIntro2.wav";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		////tmpStr1 = "autoPlay1";
+		////tmpStr2 = "true";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		//tmpStr1 = "soundName0";
-		//tmpStr2 = "EnemySound";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+		////tmpStr1 = "minDist0";
+		////tmpStr2 = "40.0";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		//tmpStr1 = "soundName1";
-		//tmpStr2 = "EnemySecSound";
-		//entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
+		////tmpStr1 = "maxDist0";
+		////tmpStr2 = "600.0";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
 
-		entityList.push_back(entityInProgress);
+		////tmpStr1 = "minDist1";
+		////tmpStr2 = "40.0";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+
+		////tmpStr1 = "maxDist1";
+		////tmpStr2 = "600.0";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+
+		////tmpStr1 = "soundFile0";
+		////tmpStr2 = "SoundIntro1.wav";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+
+		////tmpStr1 = "soundFile1";
+		////tmpStr2 = "SoundIntro2.wav";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+
+		////tmpStr1 = "soundName0";
+		////tmpStr2 = "EnemySound";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
+
+		////tmpStr1 = "soundName1";
+		////tmpStr2 = "EnemySecSound";
+		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
+
+		//entityList.push_back(entityInProgress);
 
 
 		//Camera

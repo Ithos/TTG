@@ -351,6 +351,9 @@ namespace Application
 		if(m_backLockCount > 0 && !m_menuWindow->getChild("PlanetHUD/PlanetButton")->isDisabled())
 			m_menuWindow->getChild("PlanetHUD/PlanetButton")->disable();
 
+		if(m_backLockCount > 0 && !m_menuWindow->getChild("PlanetHUD/DetectionBoard")->isVisible())
+			m_menuWindow->getChild("PlanetHUD/DetectionBoard")->setVisible(true);
+
 	}
 
 	void CPlanetGUI::disableAccess()
@@ -368,6 +371,9 @@ namespace Application
 
 		if(m_backLockCount == 0 && m_menuWindow->getChild("PlanetHUD/PlanetButton")->isDisabled())
 			m_menuWindow->getChild("PlanetHUD/PlanetButton")->enable();
+
+		if(m_backLockCount == 0 && m_menuWindow->getChild("PlanetHUD/DetectionBoard")->isVisible())
+			m_menuWindow->getChild("PlanetHUD/DetectionBoard")->setVisible(false);
 	}
 
 	void CPlanetGUI::activateEnterButton()

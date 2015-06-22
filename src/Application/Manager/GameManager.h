@@ -103,7 +103,7 @@ namespace Application
 		void resetEnergy() {m_curEnergy = m_maxEnergy;}
 		void increaseEnergy(unsigned int num);
 		void decreaseEnergy(unsigned int num);
-		unsigned int getEnergyState(){return m_curEnergy;}
+		const unsigned& getEnergyState() { return m_curEnergy; }
 		void decreaseEnergyState(unsigned int num){num>m_curEnergy ? m_curEnergy : m_curEnergy -= num;}
 		void increaseEnergyState(unsigned int num){m_curEnergy += num; m_curEnergy>m_maxEnergy ? m_curEnergy=m_maxEnergy : m_curEnergy;}
 		unsigned int getEnergyRegen() {return m_energyRegen;}

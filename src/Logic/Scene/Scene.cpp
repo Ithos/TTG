@@ -205,8 +205,6 @@ namespace Logic
 	void CScene::tick(unsigned int msecs)
 	{
 		Common::Physic::CPhysicManager::getInstance()->tick(msecs);
-
-
 		TEntityMap::const_iterator it(m_entities.begin());
 		TEntityMap::const_iterator end(m_entities.end());
 		for(; it != end; ++it){

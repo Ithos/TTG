@@ -32,8 +32,7 @@ namespace Logic
 	namespace Component
 	{
         const int MAX_MISSILES = 20;
-
-		const unsigned int BASIC_MISSILE_COST = 80;
+		const unsigned BASIC_MISSILE_COST = 50;
 
         CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0)
         {
@@ -126,9 +125,14 @@ namespace Logic
 					}
 				}
 				else {
-//					m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
-//					m_subEntity[m_iMissile]->activate();
-// Esta línea peta	static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+					m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+					m_subEntity[m_iMissile]->activate();
+                	static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+
+                    if (m_iMissile < MAX_MISSILES-1 )
+							++m_iMissile;
+					else
+						m_iMissile = 0;
 				}
             }
         }

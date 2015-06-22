@@ -1,4 +1,4 @@
-material LightRibbonTrail
+material LightRibbonTrail_blue
 {
 	technique
 	{
@@ -10,7 +10,45 @@ material LightRibbonTrail
 
 			texture_unit
 			{
-				texture misssile_trail.png 1d
+				texture trail_blue.png 1d
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+//----------------------
+material LightRibbonTrail_red
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_write off
+
+			texture_unit
+			{
+				texture trail_red.png 1d
+				tex_address_mode clamp
+			}
+		}
+	}
+}
+//-----------------------------------------------
+material LightRibbonTrail_green
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend add
+			depth_write off
+
+			texture_unit
+			{
+				texture trail_green.png 1d
 				tex_address_mode clamp
 			}
 		}

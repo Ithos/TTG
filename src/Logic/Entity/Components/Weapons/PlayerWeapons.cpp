@@ -80,24 +80,24 @@ namespace Logic
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(10.0f, 1.0f, 5, 400, 1.0f, -1);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0]){
-
-					/// TODO ///
+					setPrimaryWeapon(LASER_BEAM);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(1.0f, 1.0f, 600, 1.0f, -1, 1);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[3][0]){
 					setPrimaryWeapon(LASER);
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(60.0f, 1.0f, 40, 1000, 1.0f, -1);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0]){
-
-					/// TODO ///
+					setPrimaryWeapon(LASER_BEAM);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(10.0f, 1.0f, 300, 1.0f, -1, 2);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[5][0]){
 					setPrimaryWeapon(LASER);
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f, 1.0f, 40, 600, 1.0f, -1, true);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[6][0]){
-
-					/// TODO ///
+					setPrimaryWeapon(LASER_BEAM);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(45.0f, 1.0f, 1000, 1.0f, -1, 10);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][0]){
 					setPrimaryWeapon(LASER);
@@ -132,7 +132,7 @@ namespace Logic
 				}
 			}
 
-			setPrimaryWeapon(LASER_BEAM);
+			//setPrimaryWeapon(LASER_BEAM);
 
             return true;
         }

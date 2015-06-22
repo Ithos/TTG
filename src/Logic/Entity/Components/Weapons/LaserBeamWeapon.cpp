@@ -87,7 +87,7 @@ namespace Logic
             using namespace Logic::Component;
 
             if (m_player->isPlayer()) {
-                if (*m_energy > m_cost) {
+                if (*m_energy >= m_cost) {
                     unsigned aux = *m_energy - m_cost;
                     if (aux >= 0)
                         *m_energy = aux;
@@ -111,9 +111,13 @@ namespace Logic
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
                     m_particles->laserShot(src, dir, distance, LASER_RED);
+					if(distance >= 800.0f){
+							m_particles->laserShot(src, dir, distance/1.75, LASER_RED);
+					}
                         
                     if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                             m_scene->deactivateEntity(hitEntity);
+							m_scene->deleteEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
                         }
                         else {
@@ -123,20 +127,28 @@ namespace Logic
                 } // hit asteroid or enemy
                 else {
                     m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
+					if(m_range >= 800.0f){
+							 m_particles->laserShot(src - (81 * dir), dir, m_range/1.75, LASER_GREEN);
+					}
                 }
             }
             else { //no hit
                 m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
+				if(m_range >= 800.0f){
+							 m_particles->laserShot(src - (81 * dir), dir, m_range/1.75, LASER_GREEN);
+					}
             }
+
         }
 
-        void CLaserBeam::setWeapon(const float& damage, const float& cadence, const float& range, const float& speed, int charger, Common::Data::Weapons_t type)
+        void CLaserBeam::setWeapon(const float& damage, const float& cadence, const float& range, const float& speed, int charger, int cost, Common::Data::Weapons_t type)
         {
             m_damage  = damage;
             m_cadence = cadence;
             m_range   = range;
             m_speed   = speed;
             m_maxCharger = charger;
+			m_cost = cost;
             if (type != END)
                 m_type = type;
         }

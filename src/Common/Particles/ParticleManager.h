@@ -40,6 +40,8 @@ namespace Common
     {
         const int NUM_PART_TYPES_GALAXY = 5;
 
+        typedef enum ribbonTrail_t { LASER_BLUE, LASER_RED, LASER_GREEN };
+
         /**
             Contain the management of generic particle effects shaed for several entities, like
             explosions, hits, star effect, etc.
@@ -83,7 +85,7 @@ namespace Common
             void startShoot(Weapons_t type, const Vector3& src, const Vector3& dir, float = 0.0f, Ogre::Node* = nullptr);
             void releaseShoots(Weapons_t = ALL);
 
-            void laserShot(const Vector3& init, const Vector3& dir, const float& range);
+            void laserShot(const Vector3& init, const Vector3& dir, const float& range, ribbonTrail_t trail = LASER_BLUE);
 
             /********** Stars **********/
             void addStar(star_t , Ogre::SceneNode* = nullptr);
@@ -132,6 +134,8 @@ namespace Common
             const unsigned int MAX_TRAILS;
 
             static CParticleManager* m_instance;
+
+            static std::string getRibbontrailName(ribbonTrail_t t);
         };
     }
 

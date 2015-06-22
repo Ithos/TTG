@@ -73,8 +73,8 @@ namespace Logic
             /**
                 Set parameters for a weapon.
             */
-            void setWeapon( const float& damage, const float& cadence, const float& range, const float& speed, 
-                int charger, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
+			void setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
+                int charger, bool triple = false, float beamDist=20.0f, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
             //void setPosition(const Vector3& pos);
 
@@ -89,6 +89,8 @@ namespace Logic
            CEntity*             m_player;
            unsigned             m_cost;
            unsigned*            m_energy;
+		   bool					m_triple;
+		   float				m_beamDist;
         };
     }
 }

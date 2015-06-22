@@ -36,6 +36,12 @@ namespace Logic
 
             void reload(int);
 
+			/**
+                Set parameters for a weapon.
+            */
+			void setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
+                int charger, bool triple = false, float beamDist=20.0f, bool rotate = false, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
+
         private:
             unsigned  m_iMissile;
             float     m_speed;
@@ -43,6 +49,8 @@ namespace Logic
             CEntity* m_parent;
             CScene*  m_scene;
 			unsigned int m_cost;
+			bool	m_triple, m_rotate;
+			float	m_beamDist;
         };
     }
 }

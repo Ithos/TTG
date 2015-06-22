@@ -35,7 +35,7 @@ namespace Logic
 
 		const unsigned int BASIC_MISSILE_COST = 80;
 
-        CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0)
+		CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0), m_triple(false), m_beamDist(20.0f), m_rotate(false)
         {
             m_type = MISSILE_LINEAR;
 
@@ -108,9 +108,11 @@ namespace Logic
             if (!m_trigger) {
 				if (Application::CGameManager::getInstance()->getEnergyState() >= m_cost) {//m_ammo != 0
                     m_trigger = true;
+					Vector3 tmpSrc(src);
+					if(m_speed <= 0)tmpSrc -= dir * 40.0;
                     m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
                     m_subEntity[m_iMissile]->activate();
-                    static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
+                    static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, dir);
 
                     if (m_iMissile < MAX_MISSILES-1 )
                         ++m_iMissile;
@@ -119,12 +121,96 @@ namespace Logic
 
                     /*--m_ammo;*/
 					Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
+
+					if(m_triple){
+
+						tmpSrc += dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * m_beamDist;
+
+						Vector3 tmpDir(dir);
+
+						if(m_rotate){
+							if(m_speed <= 0)
+								tmpDir = dir.normalisedCopy() * 0.5 - dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+							else
+								tmpDir = dir.normalisedCopy() * 0.5 + dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+						}
+
+						m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+						m_subEntity[m_iMissile]->activate();
+						static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, tmpDir);
+
+						if (m_iMissile < MAX_MISSILES-1 )
+							++m_iMissile;
+						else
+							m_iMissile = 0;
+
+						tmpSrc = src;
+						if(m_speed <= 0)tmpSrc -= dir * 40.0;
+						tmpSrc -= dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * m_beamDist;
+
+						if(m_rotate){
+							if(m_speed <= 0)
+								tmpDir = dir.normalisedCopy() * 0.5 + dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+							else
+								tmpDir = dir.normalisedCopy() * 0.5 - dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+						}
+
+						m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+						m_subEntity[m_iMissile]->activate();
+						static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, tmpDir);
+
+						if (m_iMissile < MAX_MISSILES-1 )
+							++m_iMissile;
+						else
+							m_iMissile = 0;
+
+					}
                 }
                 else {
                     // sound empty weapon for example
                 }
             }
         }
+
+		void CMissileWeapon_Linear::setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
+                int charger, bool triple, float beamDist, bool rotate, Common::Data::Weapons_t type)
+		{
+			m_damage  = damage;
+            m_cadence = cadence;
+			m_cost	  = cost;
+            m_range   = range;
+            m_speed   = speed;
+            m_maxCharger = charger;
+			m_triple  = triple;
+			m_beamDist = beamDist;
+			m_rotate = rotate;
+            if (type != END)
+                m_type = type;
+
+			m_subEntity.clear();
+
+			using namespace Common::Data::Spawn;
+		    using namespace Common::Configuration;
+
+			 //init pool of missiles (
+            for ( int i = 0; i < MAX_MISSILES; ++i) {
+                m_mapInfo[i] = new Map::CMapEntity("Missile_linear" + std::to_string(i));
+                m_mapInfo[i]->setType(getDefaultValue(GEN_MISSILE_LINEAR_TYPE));
+                m_mapInfo[i]->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ENTITY));
+                m_mapInfo[i]->setAttribute("physic_type", "kinematic");
+                m_mapInfo[i]->setAttribute("physic_shape", "sphere");
+                m_mapInfo[i]->setAttribute("physic_mass",  "1");
+                m_mapInfo[i]->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_RADIUS));
+                m_mapInfo[i]->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_MISSILE_LINEAR_TRIGGER_ISTRIGGER));
+				m_mapInfo[i]->setAttribute(MISSILE_SPEED,  std::to_string(m_speed));
+                m_mapInfo[i]->setAttribute(MISSILE_DAMAGE, std::to_string(m_damage));
+                m_mapInfo[i]->setAttribute(MISSILE_RANGE,  std::to_string(m_range));
+                
+                CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
+                m_subEntity.push_back(ent);
+                static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
+            }
+		}
 
     }
 }

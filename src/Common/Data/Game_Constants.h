@@ -730,27 +730,57 @@ namespace Common
 				"Heavy Laser", "Primary Weapon\nStandar heavy laser gun,\nused as primary weapon for nearly any kind of spaceship."
 			}; 
 
+			const char* const GAME_REPEATER_LASER[2] = {
+				"Laser Repeater", "Primary Weapon\nA smaller version of the heavy laser\nnormally used in light ships. It's composed by several small laser cannons\nwhich make it able to shoot very quickly."
+			};
+
 			const char* const GAME_TESLA_CANNON[2] = {
 				"Tesla Cannon","Primary Weapon\nThis weapon fires a continuous lightning ray.\nThough it`s technology it`s\nquite old this weapon is\nstill in use today."
+			};
+
+			const char* const GAME_LASER_CANNON[2] = {
+				"Laser Cannon","Primary Weapon\nCommonly used in heavy ships\nthis weapon is a bigger version of the standar\nlaser seapons."
 			};
 
 			const char* const GAME_ENERGY_BEAM[2] = {
 				"Energy Beam", "Primary Weapon\nA short ranged but powerful and quick weapon."
 			};
 
-			const int TOTAL_PRIMARY_WEAPONS = 3;
+			const char* const GAME_TRIPLE_LASER[2] = {
+				"Triple Death", "Primary Weapon\nThree heavy lasers sichronized that fire as one.\nCommonly mounted on heavy turrets they are used\nas defense in many military buildings.\nThe weapon nickname became popular during\nthe second colonization."
+			};
+
+			const char* const GAME_OMEGA_BEAM[2] = {
+				"Gravity Lance", "Primary Weapon\nWeapon used by military ships to destroy\nheavy ships and space stations.\nIt fires a gravitational beam capable to create great implosions."
+			};
+
+			const char* const GAME_GAMMA_CANNON[2] = {
+				"Gamma Cannon", "Primary Weapon\nA cannon recovered from an old colonizer ship.\nOriginally used as a way to destroy asteroids,\nsome of them have been modified and used as actual weapons."
+			};
+
+			const int TOTAL_PRIMARY_WEAPONS = 8;
 
 			const std::pair<std::string,std::pair<int, int>> PRIMARY_WEAPON_COST[] =
 			{
 				std::make_pair (GAME_HEAVY_LASER[0],std::make_pair (50, 10)), // base cost, variance/10
-				std::make_pair (GAME_TESLA_CANNON[0],std::make_pair (80, 20)),
-				std::make_pair (GAME_ENERGY_BEAM[0],std::make_pair (200, 35))
+				std::make_pair (GAME_REPEATER_LASER[0],std::make_pair (80, 20)),
+				std::make_pair (GAME_TESLA_CANNON[0],std::make_pair (100, 25)),
+				std::make_pair (GAME_LASER_CANNON[0],std::make_pair (150, 30)),
+				std::make_pair (GAME_ENERGY_BEAM[0],std::make_pair (200, 35)),
+				std::make_pair (GAME_TRIPLE_LASER[0],std::make_pair (350, 40)),
+				std::make_pair (GAME_OMEGA_BEAM[0],std::make_pair (350, 70)),
+				std::make_pair (GAME_GAMMA_CANNON[0],std::make_pair (400, 70))
 			};
 
 			const std::array<const char* const*,TOTAL_PRIMARY_WEAPONS> GAME_PRIMARY_WEAPONS_LIST = {
 				GAME_HEAVY_LASER,
+				GAME_REPEATER_LASER,
 				GAME_TESLA_CANNON,
-				GAME_ENERGY_BEAM
+				GAME_LASER_CANNON,
+				GAME_ENERGY_BEAM,
+				GAME_TRIPLE_LASER,
+				GAME_OMEGA_BEAM,
+				GAME_GAMMA_CANNON
 			};
 
 			// Secondary Weapons
@@ -766,19 +796,37 @@ namespace Common
 				"EMP Bombs", "Secondary Weapon\nThese bombs damage electronic devices\nand sensors in a wide area."
 			};
 
-			const int TOTAL_SECONDARY_WEAPONS = 3;
+			const char* const GAME_MULTI_MISSILE[2] = {
+				"Multi Missiles", "Secondary Weapon\nSeveral small rocket launchers modified to\nfire at the same time in differen directions."
+			};
+
+			const char* const GAME_MULTI_MINES[2] = {
+				"Multi Mines", "Secondary Weapon\The mine counterpart for the multi missiles.\nIt fires several small mines in differen directions."
+			};
+
+			const char* const GAME_SUPER_MISSILE[2] = {
+				"Super Missile", "Secondary Weapon\nA big rocket launcher which fires\nheavier and faster missiles."
+			};
+
+			const int TOTAL_SECONDARY_WEAPONS = 6;
 
 			const std::pair<std::string,std::pair<int, int>> SECONDARY_WEAPON_COST[] =
 			{
 				std::make_pair (GAME_MISSILE_LAUNCHER[0],std::make_pair (40, 15)), // base cost, variance/10
 				std::make_pair (GAME_STATIC_MINES[0],std::make_pair (60, 20)),
-				std::make_pair (GAME_EMP[0],std::make_pair (200, 10))
+				std::make_pair (GAME_EMP[0],std::make_pair (200, 10)),
+				std::make_pair (GAME_MULTI_MISSILE[0],std::make_pair (250, 20)),
+				std::make_pair (GAME_MULTI_MINES[0],std::make_pair (250, 20)),
+				std::make_pair (GAME_SUPER_MISSILE[0],std::make_pair (300, 25))
 			};
 
 			const std::array<const char* const*,TOTAL_SECONDARY_WEAPONS> GAME_SECONDARY_WEAPONS_LIST = {
 				GAME_MISSILE_LAUNCHER,
 				GAME_STATIC_MINES,
-				GAME_EMP
+				GAME_EMP,
+				GAME_MULTI_MISSILE,
+				GAME_MULTI_MINES,
+				GAME_SUPER_MISSILE
 			};
 
 			// Engines

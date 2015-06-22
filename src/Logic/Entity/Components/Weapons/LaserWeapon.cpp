@@ -43,7 +43,8 @@ namespace Logic
         const char* const RIBBON_NAME = "ribbontrail_";
 
         CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
-            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr)
+            : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr), m_triple(false),
+			  m_beamDist(20.0f)
         { 
              m_type = LASER;
 
@@ -111,6 +112,9 @@ namespace Logic
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
                     m_particles->laserShot(src, dir, distance);
+					if(distance >= 800.0f){
+						m_particles->laserShot(src, dir, distance/2);
+					}
                         
 					if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
 							m_scene->deactivateEntity(hitEntity);
@@ -124,22 +128,123 @@ namespace Logic
                 } // hit asteroid or enemy
                 else {
                     m_particles->laserShot(src - (81 * dir), dir, m_range);
+					if(m_range >= 800.0f){
+						m_particles->laserShot(src - (81 * dir), dir, m_range/2);
+					}
                 }
             }
             else { //no hit
                   m_particles->laserShot(src - (81 * dir), dir, m_range);
+				  if(m_range >= 800.0f){
+						m_particles->laserShot(src - (81 * dir), dir, m_range/2);
+					}
             }
+
+			if(m_triple){
+
+				Vector3 nSrc(src);
+
+				nSrc -= dir.normalisedCopy().crossProduct(Vector3(0.0f, -1.0f,0.0f)) * m_beamDist;
+
+				CEntity* hitEntity = nullptr;
+				m_ray.setOrigin(nSrc);
+				m_ray.setDirection(dir);
+
+				hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                       
+
+				if (hitEntity) {
+					std::string type = hitEntity->getType();
+					if (type == "Asteroid" || type == "Enemy") {
+						m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
+						float distance = nSrc.distance(m_currPos);
+						m_particles->laserShot(nSrc, dir, distance);
+						if(distance >= 800.0f){
+							m_particles->laserShot(nSrc, dir, distance/2);
+						}
+                        
+						if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+								m_scene->deactivateEntity(hitEntity);
+								m_scene->deleteEntity(hitEntity);
+								m_particles->startNextExplosion(m_currPos);
+							}
+							else {
+								m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+							}
+					   /* }*/
+					} // hit asteroid or enemy
+					else {
+						m_particles->laserShot(nSrc - (81 * dir), dir, m_range);
+						if(m_range >= 800.0f){
+							m_particles->laserShot(nSrc - (81 * dir), dir, m_range/2);
+						}
+					}
+				}
+				else { //no hit
+					  m_particles->laserShot(nSrc - (81 * dir), dir, m_range);
+					  if(m_range >= 800.0f){
+							m_particles->laserShot(nSrc - (81 * dir), dir, m_range/2);
+						}
+				}
+
+				nSrc = src;
+
+				 nSrc += dir.normalisedCopy().crossProduct(Vector3(0.0f, -1.0f,0.0f)) * m_beamDist;
+
+				hitEntity = nullptr;
+				m_ray.setOrigin(nSrc);
+				m_ray.setDirection(dir);
+
+				hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                       
+
+				if (hitEntity) {
+					std::string type = hitEntity->getType();
+					if (type == "Asteroid" || type == "Enemy") {
+						m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
+						float distance = nSrc.distance(m_currPos);
+						m_particles->laserShot(nSrc, dir, distance);
+						if(distance >= 800.0f){
+							m_particles->laserShot(nSrc, dir, distance/2);
+						}
+                        
+						if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+								m_scene->deactivateEntity(hitEntity);
+								m_scene->deleteEntity(hitEntity);
+								m_particles->startNextExplosion(m_currPos);
+							}
+							else {
+								m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+							}
+					   /* }*/
+					} // hit asteroid or enemy
+					else {
+						m_particles->laserShot(nSrc - (81 * dir), dir, m_range);
+						if(m_range >= 800.0f){
+							m_particles->laserShot(nSrc - (81 * dir), dir, m_range/2);
+						}
+					}
+				}
+				else { //no hit
+					  m_particles->laserShot(nSrc - (81 * dir), dir, m_range);
+					  if(m_range >= 800.0f){
+							m_particles->laserShot(nSrc - (81 * dir), dir, m_range/2);
+						}
+				}
+
+			}
 
         } // shoot
 #pragma warning (pop)
 
-        void CLaserWeapon::setWeapon(const float& damage, const float& cadence, const float& range, const float& speed, int charger, Common::Data::Weapons_t type)
+        void CLaserWeapon::setWeapon(const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, int charger, bool triple, float beamDist, Common::Data::Weapons_t type)
         {
             m_damage  = damage;
             m_cadence = cadence;
+			m_cost	  = cost;
             m_range   = range;
             m_speed   = speed;
             m_maxCharger = charger;
+			m_triple  = triple;
+			m_beamDist = beamDist;
             if (type != END)
                 m_type = type;
         }

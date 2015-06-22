@@ -805,12 +805,12 @@ namespace Application
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][1])));
+			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][1])));
 
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][1])));
+			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][1])));
 
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(

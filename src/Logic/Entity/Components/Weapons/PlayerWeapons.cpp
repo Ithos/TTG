@@ -54,11 +54,17 @@ namespace Logic
             m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
             m_weapons.push_back(new CLaserBeam(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
 
-            if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
+      /*      if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
                 m_primary = getWeapon(entityInfo->getStringAttribute(COMMON_PRIMARY_WEAPON));
 
             if (entityInfo->hasAttribute(COMMON_SECONDARY_WEAPON))
-                m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON));
+                m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON)); */
+
+            // by default laser and missile
+            m_primary   = 0;
+            m_secondary = 1;
+
+            setPrimaryWeapon(LASER_BEAM);
 
             return true;
         }
@@ -73,18 +79,12 @@ namespace Logic
 
         void CWeapons::setPrimaryWeapon(Common::Data::Weapons_t weapon)
         {
-            for (unsigned i = 0; i < m_weapons.size(); ++i) {
-                if (weapon == m_weapons[i]->m_type)
-                    m_primary = i;
-            }
+            m_primary = getWeapon(weapon);
         }
 
         void CWeapons::setSecondaryWeapon(Common::Data::Weapons_t weapon)
         {
-            for (unsigned i = 0; i < m_weapons.size(); ++i) {
-                if (weapon == m_weapons[i]->m_type)
-                    m_secondary = i;
-            }
+            m_secondary = getWeapon(weapon);
         }
 
         void CWeapons::tick(unsigned int msecs)
@@ -127,14 +127,11 @@ namespace Logic
             }
         }
 
-        unsigned CWeapons::getWeapon(const std::string& weapon)
+        unsigned CWeapons::getWeapon(Common::Data::Weapons_t weapon)
         {
-            if (weapon == "laser")
-                return 0;
-            else if (weapon == "missile_linear")
-                return 1;
-            else
-                return 0;
+            for (unsigned i = 0; i < m_weapons.size(); ++i)
+                if (m_weapons[i]->m_type == weapon)
+                    return i;
         }
     }
 }

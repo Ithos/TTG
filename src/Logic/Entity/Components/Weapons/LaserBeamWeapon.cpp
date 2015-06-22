@@ -33,6 +33,7 @@
 #include "Logic/Entity/Entity.h"
 #include "Logic/Entity/Components/Gameplay/Life.h"
 #include "Logic/Scene/Scene.h"
+#include "../Physic/IPhysic.h"
 
 namespace Logic
 {
@@ -101,7 +102,7 @@ namespace Logic
             m_ray.setOrigin(src);
             m_ray.setDirection(dir);
 
-            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, 0); // DEFAULT group                       
+            hitEntity = m_phyMngr->raycastClosest(m_ray, m_range, PGROUPS::DAMAGEABLE); // DEFAULT group                                           
 
             if (hitEntity) {
                 std::string type = hitEntity->getType();
@@ -109,7 +110,7 @@ namespace Logic
                     /*int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;*/
                     m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
                     float distance = src.distance(m_currPos);
-                    m_particles->laserShot(src - (81 * dir), dir, distance);
+                    m_particles->laserShot(src, dir, distance, LASER_RED);
                         
                     if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                             m_scene->deactivateEntity(hitEntity);
@@ -121,11 +122,11 @@ namespace Logic
                    /* }*/
                 } // hit asteroid or enemy
                 else {
-                    m_particles->laserShot(src - (81 * dir), dir, m_range);
+                    m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
                 }
             }
             else { //no hit
-                  m_particles->laserShot(src - (81 * dir), dir, m_range);
+                m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
             }
         }
 

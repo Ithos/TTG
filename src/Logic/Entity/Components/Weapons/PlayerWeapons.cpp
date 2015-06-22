@@ -56,11 +56,15 @@ namespace Logic
             m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
             m_weapons.push_back(new CLaserBeam(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
 
-            if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
+      /*      if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
                 m_primary = getWeapon(entityInfo->getStringAttribute(COMMON_PRIMARY_WEAPON));
 
             if (entityInfo->hasAttribute(COMMON_SECONDARY_WEAPON))
-                m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON));
+                m_secondary = getWeapon(entityInfo->getStringAttribute(COMMON_SECONDARY_WEAPON)); */
+
+            // by default laser and missile
+            m_primary   = 0;
+            m_secondary = 1;
 
 			if(entity->isPlayer()){
 
@@ -68,11 +72,11 @@ namespace Logic
 				std::string secondaryWeapon(Application::CGameManager::getInstance()->getPlayerActiveEquipment().find(Common::Data::Game::GAME_SECONDARY_WEAPON)->second.first);
 
 				if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[0][0]){
-					m_primary = getWeapon("laser"); // Laser weapon
+					setPrimaryWeapon(LASER); // Laser weapon
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f, 1.0f, 25, 600, 1.0f, -1);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][0]){
-					m_primary = getWeapon("laser");
+					setPrimaryWeapon(LASER);
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(10.0f, 1.0f, 5, 400, 1.0f, -1);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0]){
@@ -80,7 +84,7 @@ namespace Logic
 					/// TODO ///
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[3][0]){
-					m_primary = getWeapon("laser");
+					setPrimaryWeapon(LASER);
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(60.0f, 1.0f, 40, 1000, 1.0f, -1);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0]){
@@ -88,7 +92,7 @@ namespace Logic
 					/// TODO ///
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[5][0]){
-					m_primary = getWeapon("laser");
+					setPrimaryWeapon(LASER);
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f, 1.0f, 40, 600, 1.0f, -1, true);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[6][0]){
@@ -96,17 +100,19 @@ namespace Logic
 					/// TODO ///
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][0]){
-					m_primary = getWeapon("laser");
+					setPrimaryWeapon(LASER);
 					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(50.0f, 1.0f, 70, 1000, 1.0f, -1, true, 5.0f);
 
 				}
 
+
+				//Secondary weapon
 				if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[0][0]){
-					m_secondary = getWeapon("missile_linear");
+					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f, 1.0f, 70, 1000, 0.6f, -1);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0]){
-					m_secondary = getWeapon("missile_linear");
+					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f, 1.0f, 40, 1000, -0.1f, -1);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]){
@@ -114,17 +120,19 @@ namespace Logic
 					/// TODO ///
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[3][0]){
-					m_secondary = getWeapon("missile_linear");
+					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f, 1.0f, 50, 1000, 0.3f, -1, true, 20.0f, true);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[4][0]){
-					m_secondary = getWeapon("missile_linear");
+					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(60.0f, 1.0f, 40, 1000, -0.1f, -1, true, 20.0f, true);
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][0]){
-					m_secondary = getWeapon("missile_linear");
+					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f, 1.0f, 100, 1000, 1.0f, -1, true, 5.0f);
 				}
 			}
+
+			setPrimaryWeapon(LASER_BEAM);
 
             return true;
         }
@@ -139,18 +147,12 @@ namespace Logic
 
         void CWeapons::setPrimaryWeapon(Common::Data::Weapons_t weapon)
         {
-            for (unsigned i = 0; i < m_weapons.size(); ++i) {
-                if (weapon == m_weapons[i]->m_type)
-                    m_primary = i;
-            }
+            m_primary = getWeapon(weapon);
         }
 
         void CWeapons::setSecondaryWeapon(Common::Data::Weapons_t weapon)
         {
-            for (unsigned i = 0; i < m_weapons.size(); ++i) {
-                if (weapon == m_weapons[i]->m_type)
-                    m_secondary = i;
-            }
+            m_secondary = getWeapon(weapon);
         }
 
         void CWeapons::tick(unsigned int msecs)
@@ -193,14 +195,11 @@ namespace Logic
             }
         }
 
-        unsigned CWeapons::getWeapon(const std::string& weapon)
+        unsigned CWeapons::getWeapon(Common::Data::Weapons_t weapon)
         {
-            if (weapon == "laser")
-                return 0;
-            else if (weapon == "missile_linear")
-                return 1;
-            else
-                return 0;
+            for (unsigned i = 0; i < m_weapons.size(); ++i)
+                if (m_weapons[i]->m_type == weapon)
+                    return i;
         }
     }
 }

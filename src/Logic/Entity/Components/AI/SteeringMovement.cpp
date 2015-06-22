@@ -75,6 +75,8 @@ namespace Logic
 				m_maxLinearSpeed, m_maxAngularSpeed, m_maxLinearAccel, m_maxAngularAccel); 
 			m_yaw->setEntity(entity);
 
+			m_weapons = static_cast<Logic::Component::CWeapons*>(m_entity->getComponentByName(Common::Data::WEAPONS_COMP));
+
 			// Creación del comportamiento para esquivar 
 			// OJO: todo esto está muy cableado. En condiciones normales habría que decidir junto a la percepción
 			// qué entidades hay que esquivar
@@ -176,6 +178,15 @@ namespace Logic
 				if (m_currentProperties.angularSpeed > m_maxAngularSpeed) 
 					m_currentProperties.angularSpeed = Ogre::Math::Sign((float)m_currentProperties.angularSpeed) * m_maxAngularSpeed;
 			}
+
+			if (m_frequency >=100)
+			{
+				m_weapons->shootSecondaryWeapon();
+				m_frequency = 0;
+			}
+
+			m_frequency++;
+
 		}
 
 

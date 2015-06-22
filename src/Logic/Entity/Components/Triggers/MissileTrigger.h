@@ -51,7 +51,7 @@ namespace Logic
         public:
             CMissileTrigger() 
                 : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
-                m_particles(nullptr), m_bb(nullptr), m_stillActive(false), m_isPlayer(false), m_playerLife(nullptr)
+                m_particles(nullptr), m_bb(nullptr), m_stillActive(false), m_isPlayer(false), m_playerLife(nullptr), m_playerShield(nullptr)
             {  }
 
             ~CMissileTrigger();
@@ -93,6 +93,7 @@ namespace Logic
             Ogre::Billboard*           m_bb;
             bool                       m_isPlayer;
             CLife*                     m_playerLife;
+            CShield*                   m_playerShield;
         };
 
         REG_FACTORY(CMissileTrigger)

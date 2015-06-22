@@ -125,8 +125,7 @@ namespace Logic
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
-				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
-                m_activateShield = false;
+				destroyShield();
             }
             else if ( (type == "Enemy") && (m_compShield->getValue() > 0) ) {
                 m_compShield->destroyShield();
@@ -135,20 +134,18 @@ namespace Logic
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
-				m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
-                m_activateShield = false;
-            }
-            else if (type == "Missile_Linear" && !m_compShield->m_player) {
-                unsigned valAux = m_compShield->getValue();
-                // if current
-                unsigned currVal = m_compShield->getValue();
-                if ((int)(valAux * 0.1) < (int)(currVal * 0.1))
-                    m_particleMngr->changeQuota(currVal, m_compShield->getMaxShield());
+			    destroyShield();
             }
         }
 
 		void CShieldTrigger::onOverlapEnd(IPhysic* otherComponent)
         {
+        }
+
+        void CShieldTrigger::destroyShield()
+        {
+            m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
+            m_activateShield = false;
         }
 
     }

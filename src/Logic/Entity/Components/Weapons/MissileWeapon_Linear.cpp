@@ -32,8 +32,7 @@ namespace Logic
 	namespace Component
 	{
         const int MAX_MISSILES = 20;
-
-		const unsigned int BASIC_MISSILE_COST = 80;
+		const unsigned BASIC_MISSILE_COST = 50;
 
 		CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0), m_triple(false), m_beamDist(20.0f), m_rotate(false)
         {
@@ -105,70 +104,81 @@ namespace Logic
 
         void CMissileWeapon_Linear::shoot(const Vector3& src, const Vector3& dir)
         {
-            if (!m_trigger) {
-				if (Application::CGameManager::getInstance()->getEnergyState() >= m_cost) {//m_ammo != 0
-                    m_trigger = true;
-					Vector3 tmpSrc(src);
-					if(m_speed <= 0)tmpSrc -= dir * 40.0;
-                    m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
-                    m_subEntity[m_iMissile]->activate();
-                    static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, dir);
+            if (!m_trigger || !m_parent->isPlayer()) {
+				if (m_parent->isPlayer()) {
+					if (Application::CGameManager::getInstance()->getEnergyState() >= m_cost) {//m_ammo != 0
+						m_trigger = true;
+						Vector3 tmpSrc(src);
+						if(m_speed <= 0)tmpSrc -= dir * 40.0;
+						m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+						m_subEntity[m_iMissile]->activate();
+						static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, dir);
+
+						if (m_iMissile < MAX_MISSILES-1 )
+							++m_iMissile;
+						else
+							m_iMissile = 0;
+
+						/*--m_ammo;*/
+						Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
+
+						if(m_triple){
+
+							tmpSrc += dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * m_beamDist;
+
+							Vector3 tmpDir(dir);
+
+							if(m_rotate){
+								if(m_speed <= 0)
+									tmpDir = dir.normalisedCopy() * 0.5 - dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+								else
+									tmpDir = dir.normalisedCopy() * 0.5 + dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+							}
+
+							m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+							m_subEntity[m_iMissile]->activate();
+							static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, tmpDir);
+
+							if (m_iMissile < MAX_MISSILES-1 )
+								++m_iMissile;
+							else
+								m_iMissile = 0;
+
+							tmpSrc = src;
+							if(m_speed <= 0)tmpSrc -= dir * 40.0;
+							tmpSrc -= dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * m_beamDist;
+
+							if(m_rotate){
+								if(m_speed <= 0)
+									tmpDir = dir.normalisedCopy() * 0.5 + dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+								else
+									tmpDir = dir.normalisedCopy() * 0.5 - dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
+							}
+
+							m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+							m_subEntity[m_iMissile]->activate();
+							static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, tmpDir);
+
+							if (m_iMissile < MAX_MISSILES-1 )
+								++m_iMissile;
+							else
+								m_iMissile = 0;
+
+						}
+					}
+					else {
+						// sound empty weapon for example
+					}
+				}else {
+					m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
+					m_subEntity[m_iMissile]->activate();
+                	static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
 
                     if (m_iMissile < MAX_MISSILES-1 )
-                        ++m_iMissile;
-                    else
-                        m_iMissile = 0;
-
-                    /*--m_ammo;*/
-					Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
-
-					if(m_triple){
-
-						tmpSrc += dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * m_beamDist;
-
-						Vector3 tmpDir(dir);
-
-						if(m_rotate){
-							if(m_speed <= 0)
-								tmpDir = dir.normalisedCopy() * 0.5 - dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
-							else
-								tmpDir = dir.normalisedCopy() * 0.5 + dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
-						}
-
-						m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
-						m_subEntity[m_iMissile]->activate();
-						static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, tmpDir);
-
-						if (m_iMissile < MAX_MISSILES-1 )
 							++m_iMissile;
-						else
-							m_iMissile = 0;
-
-						tmpSrc = src;
-						if(m_speed <= 0)tmpSrc -= dir * 40.0;
-						tmpSrc -= dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * m_beamDist;
-
-						if(m_rotate){
-							if(m_speed <= 0)
-								tmpDir = dir.normalisedCopy() * 0.5 + dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
-							else
-								tmpDir = dir.normalisedCopy() * 0.5 - dir.normalisedCopy().crossProduct(Vector3(0.0f, 1.0, 0.0)) * 0.5;
-						}
-
-						m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
-						m_subEntity[m_iMissile]->activate();
-						static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(tmpSrc, tmpDir);
-
-						if (m_iMissile < MAX_MISSILES-1 )
-							++m_iMissile;
-						else
-							m_iMissile = 0;
-
-					}
-                }
-                else {
-                    // sound empty weapon for example
-                }
+					else
+						m_iMissile = 0;
+				}
             }
         }
 

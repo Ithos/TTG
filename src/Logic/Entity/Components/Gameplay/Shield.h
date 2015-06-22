@@ -54,7 +54,7 @@ namespace Logic
             const unsigned& getMaxShield() { return *m_maxShield; }
 
             bool isFull()    { return (*m_value == *m_maxShield); }
-            bool hasShield() { return m_value > 0; }
+            bool hasShield() { return *m_value > 0; }
 
             bool m_player;
 

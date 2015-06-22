@@ -76,8 +76,6 @@ namespace Logic
 			void setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
                 int charger, bool triple = false, float beamDist=20.0f, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
-            //void setPosition(const Vector3& pos);
-
         private:
 		   Ogre::SceneManager*  m_sceneMngr;
            physx::PxScene*      m_pxScene;

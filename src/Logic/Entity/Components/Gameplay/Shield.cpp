@@ -26,6 +26,7 @@
 #include "Logic/Entity/Entity.h"
 #include "Application/Manager/GameManager.h"
 #include "Common/Configure/Configure.h"
+#include "../Triggers/ShieldTrigger.h"
 
 namespace Logic
 {
@@ -108,11 +109,14 @@ namespace Logic
                 unsigned dmg = ((factor * m_resistance) * damage);
                 if (*m_value > dmg)
                     *m_value -= dmg;
-                else
+                else {
                     *m_value = 0;
+                    static_cast<CShieldTrigger*>(m_subEntity->getComponentByName("CShieldTrigger"))->destroyShield();
+                }
             }
             else {
                 *m_value = 0;
+                static_cast<CShieldTrigger*>(m_subEntity->getComponentByName("CShieldTrigger"))->destroyShield();
             }
         }
 

@@ -36,7 +36,7 @@ namespace Common
 
         CParticleManager::CParticleManager() 
             : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0), m_shieldNode(nullptr),
-              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(10), m_iRt(0)
+              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
                 m_galaxyParticles[i] = STAR_GALAXY + std::to_string(i);
@@ -294,11 +294,9 @@ namespace Common
                     m_shoots.erase(type);
                 }
             }
-
-
         }
 
-        void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range)
+        void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range, ribbonTrail_t trail)
         {
             if (m_node1[m_iRt]) {
                 m_node1[m_iRt]->detachAllObjects();
@@ -311,13 +309,13 @@ namespace Common
 
             m_node1[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
             m_node2[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
-            m_rt[m_iRt] = static_cast<Ogre::RibbonTrail*>(m_sceneMgr->createMovableObject(buildName(LASER_NAME, m_index++).c_str() , "RibbonTrail"));
-            m_rt[m_iRt]->setMaterialName("LightRibbonTrail");
+            m_rt[m_iRt] = static_cast<Ogre::RibbonTrail*>(m_sceneMgr->createMovableObject(buildName(LASER_NAME, m_index++).c_str(), "RibbonTrail"));
+            m_rt[m_iRt]->setMaterialName(getRibbontrailName(trail));
             m_rt[m_iRt]->setTrailLength(500);
             m_rt[m_iRt]->setMaxChainElements(500);
-      //      m_rt[m_iRt]->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
-            m_rt[m_iRt]->setColourChange(0, 1, 1, 1, 0.5);
-            m_rt[m_iRt]->setInitialWidth(0, 10);
+          //  m_rt[m_iRt]->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
+            m_rt[m_iRt]->setColourChange(0, 1, 1, 1, 1);
+            m_rt[m_iRt]->setInitialWidth(0, 5);
             m_rt[m_iRt]->setWidthChange(0, 3);
             m_rt[m_iRt]->addNode(m_node1[m_iRt]); // node to move
             m_node2[m_iRt]->attachObject(m_rt[m_iRt]);
@@ -328,6 +326,16 @@ namespace Common
                 ++m_iRt;            
             else 
                 m_iRt = 0;             
+        }
+
+        std::string CParticleManager::getRibbontrailName(ribbonTrail_t t)
+        {
+            switch (t)
+            {
+            case LASER_BLUE:  return "LightRibbonTrail_blue";
+            case LASER_GREEN: return "LightRibbonTrail_green";
+            case LASER_RED:   return "LightRibbonTrail_red";
+            }
         }
 
     } // Particles

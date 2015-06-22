@@ -65,7 +65,7 @@ namespace Logic
             CTransform*           m_trans;
             int                   m_shipRadius;
 
-            unsigned getWeapon(const std::string&);
+            unsigned getWeapon(Common::Data::Weapons_t weapon);
             void releaseTrigger(int weapon);
             void shoot(int index);
 		};

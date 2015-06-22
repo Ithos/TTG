@@ -64,6 +64,8 @@ namespace Logic
 
 			void onOverlapEnd(IPhysic* otherComponent);
 
+            void destroyShield();
+
         private:
             CEntity*         m_parent;
             CTransform*      m_trans;

@@ -28,6 +28,7 @@
 #include "../Gameplay/Life.h"
 #include "../Gameplay/Shield.h"
 #include "common/Particles/ParticleManager.h"
+#include "../Cameras/Camera.h"
 
 #include <Logic/Scene/Scene.h>
 #include "OGRE\OgreRibbonTrail.h"
@@ -182,6 +183,7 @@ namespace Logic
 
                 if (m_playerShield->hasShield()) {
                     m_playerShield->decreaseShield(m_damage);
+ 
                 }  
                 // if hit with player-> that means that player has no shield
                 else if (m_playerLife->decreaseLife(m_damage)) {

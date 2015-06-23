@@ -34,6 +34,7 @@ namespace Logic
 {
 	namespace Component
 	{
+        static const unsigned MAX_AMPLITUDE = 4;
         class CInterpolation;
         class CMovement;
 
@@ -42,11 +43,10 @@ namespace Logic
 			DEC_FACTORY(CCamera);
 
 		public:
-            CCamera() 
-                :  IComponent(), m_camera(nullptr), m_height(490), m_interpolation(nullptr),
-                   m_controller(nullptr), m_viewPort(nullptr), m_camName(""), m_nodeName(""),
-					m_camNear(1.0f), m_camFar(10000.0f), m_FOV(60.0f), m_cameraVel(0), m_cameraDist(0),
-					m_distConstant(700), m_minDist(10), m_accelConst(1.0)
+            CCamera() : 
+                IComponent(), m_camera(nullptr), m_height(490), m_interpolation(nullptr), m_controller(nullptr), 
+                m_viewPort(nullptr), m_camName(""), m_nodeName(""), m_camNear(1.0f), m_camFar(10000.0f),
+                m_FOV(60.0f), m_cameraVel(0), m_cameraDist(0), m_distConstant(700), m_minDist(10), m_accelConst(1.0)
 			{ }
 			
             ~CCamera();
@@ -57,8 +57,23 @@ namespace Logic
 
 			void tick(unsigned int msecs);
 
-            void shake() {}
+            static void shake() { m_shake = true; }
+            void resetShake()
+            {
+                m_timeShaking = 0;
+                m_amplitude   = 2.0f;
+                m_valShake    = 0.0f;
+                m_shake       = false;
+            }
 
+            void resetAndIncrementShake()
+            {
+                if (m_amplitude < MAX_AMPLITUDE)
+                    m_amplitude += 1;
+                resetShake();
+            }
+
+            bool isShaking() { return m_shake; }
 
 		protected:
 			/**
@@ -87,6 +102,10 @@ namespace Logic
             float m_camFar;
             float m_FOV;
             float m_friction; // temporal, luego se quitara por otra cosa
+            static bool m_shake;
+            static unsigned m_timeShaking;
+            static float m_amplitude;
+            static float m_valShake;
 
             Ogre::SceneNode* m_camNode;
 

@@ -609,119 +609,6 @@ namespace Map
 		int risk(std::atoi(rs.c_str()));
 
 
-		std::vector<Ogre::Vector3> tmpPos;
-
-		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_ASTEROID_MIN_NUM) + numAsteroids(generator); ++i)
-		{
-			char str[16];
-			std::string name = Common::Configuration::getDefaultValue(GEN_ASTEROID_TYPE);
-			sprintf(str,"%s%d",name.c_str(),i);
-
-			entityInProgress = new CMapEntity(str);
-
-			tmpStr1 = name;
-			entityInProgress->setType(tmpStr1.c_str());
-
-			Ogre::Vector3 pos(0.0f,0.0f,0.0f);
-
-			do{
-				pos.x = neg(generator)?posDist(generator):-posDist(generator);
-				pos.y = defaultValue<int>(GEN_ASTEROID_Y_AXIS_POS);
-				pos.z =	neg(generator)?posDist(generator):-posDist(generator);
-			} while(!checkDist(tmpPos,pos,10.0f));
-
-			tmpPos.push_back(pos);
-
-			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ASTEROID_GRAPHIC_STATIC).c_str());
-
-			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
-			entityInProgress->setAttribute(COMMON_POSITION, tmpStr2.c_str());
-
-			pos.x = neg(generator)? degDist(generator) : -degDist(generator);
-            pos.y = neg(generator)? degDist(generator) : -degDist(generator);
-			pos.z =	neg(generator)? degDist(generator) : -degDist(generator);
-
-			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
-			entityInProgress->setAttribute(COMMON_ORIENTATION,tmpStr2.c_str());
-			/*
-			tmpStr2 = Common::Configuration::getDefaultValue(GEN_ASTEROID_PHYSX_SHAPE);
-			entityInProgress->setAttribute(PHYSIC_ENTITY, tmpStr2.c_str());
-			*/
-			entityInProgress->setAttribute("physic_entity", "rigid");
-			entityInProgress->setAttribute("physic_type", "dynamic");
-			entityInProgress->setAttribute("physic_mass", "10");
-			entityInProgress->setAttribute("physic_shape", "sphere");
-			entityInProgress->setAttribute("physic_group","2");
-
-			int mod = astDist(generator);
-
-			std::string aux = GEN_ASTEROID_PHYSX_RADIUS;
-			aux += std::to_string(mod);
-			tmpStr2 = Common::Configuration::getDefaultValue(aux);
-			entityInProgress->setAttribute(PHYSIC_RADIUS, tmpStr2.c_str());
-
-			aux = GEN_ASTEROID_MODEL + std::to_string(mod);
-			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
-
-			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_ASTEROID_VISIBILITY_MASK).c_str());
-
-			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
-			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
-            entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ASTEROID_LIFE));
-
-			entityList.push_back(entityInProgress);
-        }
-
-		//Static Asteroids
-
-		tmpPos.clear();
-
-		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_STATIC_ASTEROID_MIN_NUM) + numAsteroids2(generator); ++i)
-		{
-			char str[32];
-			std::string name = Common::Configuration::getDefaultValue(GEN_STATIC_ASTEROID_TYPE);
-			sprintf(str,"%s%d",name.c_str(),i);
-
-			entityInProgress = new CMapEntity(str);
-
-			tmpStr1 = name;
-			entityInProgress->setType(tmpStr1.c_str());
-
-			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_STATIC_ASTEROID_GRAPHIC_STATIC));
-
-			Ogre::Vector3 pos(0.0f,0.0f,0.0f);
-
-			do{
-				pos.x = neg(generator)?posDist2(generator):-posDist2(generator);
-				pos.y = defaultValue<int>(GEN_STATIC_ASTEROID_Y_AXIS_POS);
-				pos.z =	neg(generator)?posDist2(generator):-posDist2(generator);
-			} while(!checkDist(tmpPos,pos,10.0f));
-
-			tmpPos.push_back(pos);
-
-			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
-			entityInProgress->setAttribute(COMMON_POSITION, tmpStr2.c_str());
-
-			pos.x = neg(generator)? degDist2(generator) : -degDist2(generator);
-            pos.y = neg(generator)? degDist2(generator) : -degDist2(generator);
-			pos.z =	neg(generator)? degDist2(generator) : -degDist2(generator);
-
-			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
-			entityInProgress->setAttribute(COMMON_ORIENTATION,tmpStr2.c_str());
-
-			int mod = astDist2(generator);
-
-			std::string aux = GEN_STATIC_ASTEROID_MODEL + std::to_string(mod);
-			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
-
-			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_STATIC_ASTEROID_VISIBILITY_MASK).c_str());
-
-			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_STATIC_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
-			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
-
-			entityList.push_back(entityInProgress);
-		}
-
 		//Player
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_PLAYER_NAME));
 
@@ -859,6 +746,125 @@ namespace Map
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
 
 		entityList.push_back(entityInProgress);
+
+		Vector3 pPos(entityInProgress->getVector3Attribute(COMMON_POSITION));
+
+
+		/// Asteroids
+
+		std::vector<Ogre::Vector3> tmpPos;
+		tmpPos.push_back(pPos);
+
+		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_ASTEROID_MIN_NUM) + numAsteroids(generator); ++i)
+		{
+			char str[16];
+			std::string name = Common::Configuration::getDefaultValue(GEN_ASTEROID_TYPE);
+			sprintf(str,"%s%d",name.c_str(),i);
+
+			entityInProgress = new CMapEntity(str);
+
+			tmpStr1 = name;
+			entityInProgress->setType(tmpStr1.c_str());
+
+			Ogre::Vector3 pos(0.0f,0.0f,0.0f);
+
+			do{
+				pos.x = neg(generator)?posDist(generator):-posDist(generator);
+				pos.y = defaultValue<int>(GEN_ASTEROID_Y_AXIS_POS);
+				pos.z =	neg(generator)?posDist(generator):-posDist(generator);
+			} while(!checkDist(tmpPos,pos,10.0f));
+
+			tmpPos.push_back(pos);
+
+			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ASTEROID_GRAPHIC_STATIC).c_str());
+
+			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
+			entityInProgress->setAttribute(COMMON_POSITION, tmpStr2.c_str());
+
+			pos.x = neg(generator)? degDist(generator) : -degDist(generator);
+            pos.y = neg(generator)? degDist(generator) : -degDist(generator);
+			pos.z =	neg(generator)? degDist(generator) : -degDist(generator);
+
+			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
+			entityInProgress->setAttribute(COMMON_ORIENTATION,tmpStr2.c_str());
+			/*
+			tmpStr2 = Common::Configuration::getDefaultValue(GEN_ASTEROID_PHYSX_SHAPE);
+			entityInProgress->setAttribute(PHYSIC_ENTITY, tmpStr2.c_str());
+			*/
+			entityInProgress->setAttribute("physic_entity", "rigid");
+			entityInProgress->setAttribute("physic_type", "dynamic");
+			entityInProgress->setAttribute("physic_mass", "10");
+			entityInProgress->setAttribute("physic_shape", "sphere");
+			entityInProgress->setAttribute("physic_group","2");
+
+			int mod = astDist(generator);
+
+			std::string aux = GEN_ASTEROID_PHYSX_RADIUS;
+			aux += std::to_string(mod);
+			tmpStr2 = Common::Configuration::getDefaultValue(aux);
+			entityInProgress->setAttribute(PHYSIC_RADIUS, tmpStr2.c_str());
+
+			aux = GEN_ASTEROID_MODEL + std::to_string(mod);
+			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
+
+			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_ASTEROID_VISIBILITY_MASK).c_str());
+
+			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
+			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
+            entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ASTEROID_LIFE));
+
+			entityList.push_back(entityInProgress);
+        }
+
+		//Static Asteroids
+
+		tmpPos.clear();
+
+		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_STATIC_ASTEROID_MIN_NUM) + numAsteroids2(generator); ++i)
+		{
+			char str[32];
+			std::string name = Common::Configuration::getDefaultValue(GEN_STATIC_ASTEROID_TYPE);
+			sprintf(str,"%s%d",name.c_str(),i);
+
+			entityInProgress = new CMapEntity(str);
+
+			tmpStr1 = name;
+			entityInProgress->setType(tmpStr1.c_str());
+
+			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_STATIC_ASTEROID_GRAPHIC_STATIC));
+
+			Ogre::Vector3 pos(0.0f,0.0f,0.0f);
+
+			do{
+				pos.x = neg(generator)?posDist2(generator):-posDist2(generator);
+				pos.y = defaultValue<int>(GEN_STATIC_ASTEROID_Y_AXIS_POS);
+				pos.z =	neg(generator)?posDist2(generator):-posDist2(generator);
+			} while(!checkDist(tmpPos,pos,10.0f));
+
+			tmpPos.push_back(pos);
+
+			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
+			entityInProgress->setAttribute(COMMON_POSITION, tmpStr2.c_str());
+
+			pos.x = neg(generator)? degDist2(generator) : -degDist2(generator);
+            pos.y = neg(generator)? degDist2(generator) : -degDist2(generator);
+			pos.z =	neg(generator)? degDist2(generator) : -degDist2(generator);
+
+			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
+			entityInProgress->setAttribute(COMMON_ORIENTATION,tmpStr2.c_str());
+
+			int mod = astDist2(generator);
+
+			std::string aux = GEN_STATIC_ASTEROID_MODEL + std::to_string(mod);
+			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
+
+			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_STATIC_ASTEROID_VISIBILITY_MASK).c_str());
+
+			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_STATIC_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
+			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
+
+			entityList.push_back(entityInProgress);
+		}
 
 		//Wanderer Enemies
 		unsigned enemy_seed = std::chrono::system_clock::now().time_since_epoch().count();

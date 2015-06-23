@@ -28,8 +28,9 @@ namespace Logic
         class CShield : public IComponent
         {
             DEC_FACTORY(CShield);
+
         public:
-            CShield() : IComponent(), m_resistance(0.0f), m_value(nullptr), m_regenVal(nullptr) 
+            CShield() : IComponent(), m_resistance(0.0f), m_value(nullptr), m_regenVal(nullptr), m_time(0.0f)
             { }
 
             ~CShield();
@@ -45,7 +46,7 @@ namespace Logic
             void decreaseShield(const unsigned& damage, const unsigned& factor = 1);
 
             void increaseShield(const unsigned& value) { *m_value += value; }
-            void regenShield() { *m_value += (*m_maxShield * 0.01 * (*m_regenVal)); }
+            void regenShield(unsigned int msecs);
 
             void destroyShield() { *m_value = 0; }
 
@@ -64,6 +65,8 @@ namespace Logic
             unsigned* m_maxShield; // min value 100
             unsigned* m_regenVal;
             CEntity*  m_subEntity;
+
+			float m_time;
 
             void createShield(CEntity*, CScene*);
         };

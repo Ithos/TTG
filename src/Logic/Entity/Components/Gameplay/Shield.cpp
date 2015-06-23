@@ -62,13 +62,15 @@ namespace Logic
                 m_value     = new unsigned int();
                 m_maxShield = new unsigned int();
                 m_regenVal  = new unsigned int();
+
+				// get by config resistance value
+				if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD) && !m_player) {
+					*m_maxShield = *m_value = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD);
+					*m_regenVal = 1;
+				}
             }
             
-			// get by config resistance value
-            if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD) && !m_player) {
-                *m_maxShield = *m_value = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD);
-                *m_regenVal = 1;
-            }
+			
 
 			if (entityInfo->hasAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS))
 				m_resistance = entityInfo->getFloatAttribute(Common::Data::Spawn::COMMON_SHIELD_RESIS);
@@ -144,5 +146,18 @@ namespace Logic
             m_subEntity->activate();
         
         }
+
+		void CShield::regenShield(unsigned int msecs)
+		{
+			if(m_time < 0.5f){
+				m_time += msecs / 1000.0f;
+			}else{
+
+				if(m_time < 2.0f)
+					*m_value += *m_regenVal * m_time;
+
+				m_time = 0.0f;
+			}
+		}
     } // component
 }

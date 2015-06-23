@@ -40,7 +40,7 @@ namespace Application
 
 	const unsigned int BASE_SHIELD_REGEN = 0;
 	const unsigned int BASE_ENERGY_REGEN = 6;
-	const unsigned int SHIELD_REGEN_INCREMENT = 6;
+	const unsigned int SHIELD_REGEN_INCREMENT = 2;
 	const unsigned int ENERGY_REGEN_INCREMENT = 6;
 	const int MAX_INCREMENT_NUM = 5;
 
@@ -131,6 +131,7 @@ namespace Application
 
 		unsigned int getSensorLevel(){return m_sensorLevel;}
 		float getFuelConsuptionProportion(){return m_fuelConsumeProportion;}
+		float getDamageProportion(){return m_damageProportion;}
 
 		void showTargetMessage();
 		void hideTargetMessage();
@@ -190,6 +191,7 @@ namespace Application
 		float m_fuelConsumeProportion;
 		float m_mineralProportion;
 		float m_distanceProportion;
+		float m_damageProportion;
 
 		bool m_targetSystem, m_targetPlanet, m_inhabitedPlanet;
 

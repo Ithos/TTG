@@ -51,7 +51,7 @@ namespace AI
 		// · maxDistance = 400.0
 		// · alpha = PI / 4
 		// Cuidado: estos parámetros son datos y, por lo tanto, deberían declararse en un archivo de configuración externo.
-		this->addSensor(new CSightSensor(this,true,1.0f,400.0f,Common::Util::Math::PI/4.0f));
+		this->addSensor(new CSightSensor(this,true,1.0f,800.0f,Common::Util::Math::PI/4.0f));
 
 		// Señal:
 		// · type = PERCEPTION_SIGHT (es decir, que la señal es de visibilidad)

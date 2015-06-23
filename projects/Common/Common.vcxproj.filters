@@ -28,9 +28,6 @@
     <Filter Include="Data\Header Files">
       <UniqueIdentifier>{e7de695f-95ec-4c3a-b397-dc3e3e8b7568}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Data\Source Files">
-      <UniqueIdentifier>{e8e9f9d4-2d5d-4e3c-bea8-813714521b17}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Input">
       <UniqueIdentifier>{2d88c696-287a-4042-97d8-cf8fede3707b}</UniqueIdentifier>
     </Filter>

@@ -46,13 +46,19 @@ namespace Common { namespace Language
 		languageM.clear();
 
 		while(in){
-			std::string tag ("");
-			std::string val ("");
+			char start = in.peek();
+			if((start == '#') || (start == '\n')){
+				std::string comment;
+				getline(in,comment);
+			} else {
+				std::string tag ("");
+				std::string val ("");
 
-			getline(in,tag);
-			getline(in,val);
+				getline(in,tag);
+				getline(in,val);
 
-			languageM.insert(std::pair<std::string,std::string>(tag,val));
+				languageM.insert(std::pair<std::string,std::string>(tag,val));
+			}
 		}
 
 	}

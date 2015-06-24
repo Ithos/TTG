@@ -121,7 +121,7 @@ namespace Logic
             CEntity* ent = hitEnt->getEntity();
             std::string type = ent->getType();
 			if ( (type == "Asteroid") && (m_compShield->getValue() > 0) ) {
-				m_compShield->decreaseShield(40);
+                m_compShield->decreaseShield(30);
                 static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseAllLife();
 				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
 				m_particleMngr->startNextExplosion(pos);

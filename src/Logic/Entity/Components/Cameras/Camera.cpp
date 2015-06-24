@@ -146,24 +146,24 @@ namespace Logic
 			if(m_cameraDist < m_minDist)
                 m_cameraDist = m_minDist;
 
-
-            if (m_shake && m_timeShaking < 750) {
-                if (m_timeShaking >= 500 && m_amplitude > 0.0f)
+            if (m_shake && m_timeShaking < 800) {
+                if (m_timeShaking >= 500 && m_amplitude <= -2.0f )
                     m_amplitude -= 1;
-                float res =  Common::Util::Math::shake(m_valShake, m_amplitude);
-                m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, res + m_cameraDist));
-                m_valShake += 15; // increment 15 degrees
+                //float res =  Common::Util::Math::shake(m_valShake, m_amplitude+2);
+                m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, Common::Util::Math::shake(m_valShake, m_amplitude+2) + m_cameraDist));
+                
+                m_valShake += 21; // increment 21 degrees, yes 21
                 m_timeShaking += msecs;
             }
             else if (m_timeShaking != 0) {
                 resetShake();
                 m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
             }
-            else
+            else {
                 m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
+            }
 
-            
-			m_camera->lookAt(targetpoint);
+            m_camera->lookAt(targetpoint);
 
 			float targetDist(m_controller->getSpeed() * m_distConstant + m_minDist);
 

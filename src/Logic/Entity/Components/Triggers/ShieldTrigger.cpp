@@ -103,7 +103,7 @@ namespace Logic
                 m_timeOutReload += msecs;
                 if (m_timeOutReload >= m_msecsToReload) {
                     m_timeOutReload = 0;
-                    m_compShield->regenShield();
+                    m_compShield->regenShield(msecs);
                     // change quota every 1 of each 10 times
                     if ( ++m_timesChangeQuota >= 10 || m_firstTime) {
                         m_particleMngr->changeQuota(m_compShield->getValue(), m_compShield->getMaxShield());
@@ -121,13 +121,12 @@ namespace Logic
             CEntity* ent = hitEnt->getEntity();
             std::string type = ent->getType();
 			if ( (type == "Asteroid") && (m_compShield->getValue() > 0) ) {
-                m_compShield->destroyShield();
+				m_compShield->decreaseShield(40);
                 static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseAllLife();
 				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
-				destroyShield();
                 CCamera::shake();
             }
             else if ( (type == "Enemy") && (m_compShield->getValue() > 0) ) {

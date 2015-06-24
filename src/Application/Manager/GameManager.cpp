@@ -55,10 +55,10 @@ namespace Application
 	const int ENERGY_INCREMENT = 5;
 
     CGameManager::CGameManager():m_system(""), m_planet(""),m_totalLife(BASE_LIFE),m_life(BASE_LIFE), m_maxShield(BASE_SHIELD),
-        m_objectives(0),m_totalObjectives(NUM_TARGETS), m_curShield(BASE_SHIELD), m_maxEnergy(0), m_curEnergy(BASE_ENERGY),
+        m_objectives(0),m_totalObjectives(NUM_TARGETS), m_curShield(BASE_SHIELD), m_maxEnergy(BASE_ENERGY), m_curEnergy(BASE_ENERGY),
         m_menuWindow(nullptr), m_nameRepeatCounter(0),m_targetSystem(false), m_targetPlanet(false), m_inhabitedPlanet(false),m_notificationGUI(nullptr),
-		m_shieldRegen(1), m_energyRegen(BASE_ENERGY_REGEN), m_sensorLevel(0), m_fuelConsumeProportion(1.0f),
-        m_mineralProportion(1.0f), m_distanceProportion(1.0f)
+		m_shieldRegen(BASE_SHIELD_REGEN), m_energyRegen(BASE_ENERGY_REGEN), m_sensorLevel(0), m_fuelConsumeProportion(1.0f),
+        m_mineralProportion(1.0f), m_distanceProportion(1.0f), m_damageProportion(1.0f)
 	{
 		m_instance = this;
 		m_activeMission.first = 0;
@@ -199,31 +199,6 @@ namespace Application
 
 		setupEvents();
 		setupAnimations();
-
-		/// This is just for testing ///
-
-		addCrewMemberByName(Common::Data::Game::GAME_MILITARY);
-		addCrewMemberByName(Common::Data::Game::GAME_ENGINEERS,2);
-		addCrewMemberByName(Common::Data::Game::GAME_SCIENTIFICS);
-
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[4][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[5][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[6][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[7][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[8][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[9][2]);
-		addToCargo(Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][0],
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[10][2]);
 
 		return true;
 	}
@@ -484,6 +459,9 @@ namespace Application
 				}
 			}
             else if (str == Common::Data::Game::GAME_MILITARY) {
+
+				if(m_damageProportion < 1.5f) m_damageProportion += 0.1;
+
 				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
 					m_energyRegen = 2 * BASE_ENERGY_REGEN;
 				}
@@ -571,6 +549,23 @@ namespace Application
 					m_equipmentMap[Common::Data::Game::GAME_SENSORS].second = Common::Data::Game::GAME_SENSORS_LIST[3][1];
 					setSensorGUIInfo();
 					m_sensorLevel = 3;
+				}
+			}
+
+			if (str == Common::Data::Game::GAME_MILITARY) {
+
+				if(m_damageProportion > 1.0f) m_damageProportion -= 0.1;
+
+				m_energyRegen = BASE_ENERGY_REGEN;
+
+				if(m_crewMembersMap[str] > 1 && m_crewMembersMap[str] <= 3){
+					m_energyRegen = 2 * BASE_ENERGY_REGEN;
+				}
+                else if(m_crewMembersMap[str] > 3 && m_crewMembersMap[str] <= 4){
+					m_energyRegen = 3 * BASE_ENERGY_REGEN;
+				}
+                else if(m_crewMembersMap[str] > 4){
+					m_energyRegen = 4 * BASE_ENERGY_REGEN;
 				}
 			}
 
@@ -777,7 +772,6 @@ namespace Application
 
 	void CGameManager::registerInitialResources()
 	{
-		//This is just an example of how player resources could be initialised
 		m_stateMap[Common::Data::Game::GAME_FUEL] = 500;
 		m_stateMap[Common::Data::Game::GAME_ORE] = 200;
 		//m_stateMap[Common::Data::Game::GAME_TIME] = 200;
@@ -794,15 +788,15 @@ namespace Application
 
 		m_equipmentMap[Common::Data::Game::GAME_SENSORS] = std::pair<std::string,std::string>(
 			Common::Data::Game::GAME_SENSORS_LIST[0][0], Common::Data::Game::GAME_SENSORS_LIST[0][1]);
-		m_equipmentMap[Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0]] = std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2]);
+		/*m_equipmentMap[Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0]] = std::pair<std::string,std::string>(
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2]);*/
 
 
 		m_crewMembersMap[Common::Data::Game::GAME_MILITARY] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_ENGINEERS] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_SCIENTIFICS] = 0;
 
-		m_cargoMap.insert(
+		/*m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
 			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][1])));
@@ -811,21 +805,25 @@ namespace Application
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
 			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][1])));
+*/
+		/*m_cargoMap.insert(
+			std::pair<std::string,std::pair<std::string,std::string>>(
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0], std::pair<std::string,std::string>(
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2])));
 
 		m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][0], std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][2])));
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][2])));*/
 
-		m_cargoMap.insert(
+		/*m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_ENGINE, std::pair<std::string,std::string>(
 			Common::Data::Game::GAME_ENGINES_LIST[1][0], Common::Data::Game::GAME_ENGINES_LIST[1][1])));
 
 		addEngineData(Common::Data::Game::ENGINE_DATA_MAP[1].first, Common::Data::Game::ENGINE_DATA_MAP[1].second.first
-			, Common::Data::Game::ENGINE_DATA_MAP[1].second.second);
+			, Common::Data::Game::ENGINE_DATA_MAP[1].second.second);*/
 
-		// Just for testing
 		m_activeMission = std::pair<int,std::string>(0," ");
 
 		changeEquippedEngine(Common::Data::Game::ENGINE_DATA_MAP[0].first);
@@ -849,6 +847,7 @@ namespace Application
 		m_fuelConsumeProportion = 1.0f;
 		m_mineralProportion = 1.0f;
 		m_distanceProportion = 1.0f;
+		m_damageProportion = 1.0f;
 		m_objectives = 0;
 		m_targetPlanet = false;
 		m_targetSystem = false;
@@ -960,15 +959,16 @@ namespace Application
 	void CGameManager::checkSpecialItem(const std::string& str)
 	{
 		if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1]){
+			m_shieldRegen += SHIELD_REGEN_INCREMENT;
 			for(auto it = m_equipmentMap.begin(); it != m_equipmentMap.end(); ++it){
 				if(it->first == Common::Data::Game::GAME_SHIELD_ENHANCER){
-					++m_shieldRegen;
+					m_shieldRegen += 2 * SHIELD_REGEN_INCREMENT;
 					break;
 				}
 			}
 		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][1]){
 			if(m_shieldRegen != 0)
-				++m_shieldRegen;
+				m_shieldRegen += 2 * SHIELD_REGEN_INCREMENT;
 		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[2][1]){
 			increaseTotalLife(5);
 		}else if(str == Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[3][1]){

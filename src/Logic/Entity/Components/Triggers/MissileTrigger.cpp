@@ -140,6 +140,7 @@ namespace Logic
 				if (static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                         Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();  
 						m_scene->deactivateEntity(hitEnt);
+						m_scene->deleteEntity(hitEnt);
                         m_particles->startNextExplosion(pos);
                     }
                     else {

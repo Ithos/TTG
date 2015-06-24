@@ -20,6 +20,7 @@
 #include "../../Entity.h"
 #include <Common\data\TTG_Types.h>
 #include "../Gameplay/Life.h"
+#include "../Cameras/Camera.h"
 
 using namespace Common::Data;
 
@@ -32,6 +33,7 @@ namespace Logic { namespace Component {
 		CPhysicEntity::onContact(otherComponent);
 
 		static_cast<CLife*>(getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(10);
+        CCamera::shake();
         //otherComponent->getEntity(); con la que choca*/
 	}
 

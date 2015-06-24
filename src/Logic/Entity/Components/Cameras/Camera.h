@@ -57,23 +57,28 @@ namespace Logic
 
 			void tick(unsigned int msecs);
 
-            static void shake() { m_shake = true; }
-            void resetShake()
+            static void shake() { 
+                m_shake = true; 
+                m_amplitude = 2.0;
+                m_timeShaking = 0;
+            }
+
+            static bool isShaking() { return m_shake; }
+
+            static void resetShake()
             {
                 m_timeShaking = 0;
-                m_amplitude   = 2.0f;
+                m_amplitude   = 4.0f;
                 m_valShake    = 0.0f;
                 m_shake       = false;
             }
 
-            void resetAndIncrementShake()
+            static void resetAndIncrementShake()
             {
+                resetShake();
                 if (m_amplitude < MAX_AMPLITUDE)
                     m_amplitude += 1;
-                resetShake();
             }
-
-            bool isShaking() { return m_shake; }
 
 		protected:
 			/**

@@ -183,20 +183,25 @@ namespace Logic
                     m_playerLife = static_cast<CLife*>(hitEnt->getComponentByName(LIFE_COMP)); 
 
                 if (m_playerShield->hasShield()) {
-                    m_playerShield->decreaseShield(m_damage);
- 
+                    m_playerShield->decreaseShield(m_damage);  
                 }  
                 // if hit with player-> that means that player has no shield
                 else if (m_playerLife->decreaseLife(m_damage)) {
               //      m_scene->deactivateEntity(hitEnt);
 				//	m_scene->deleteEntity(hitEnt);
-                    Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
-                    m_particles->startNextExplosion(pos);
+                    //final explosion
                 }
                 else {
+                    Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+                    m_particles->startNextExplosion(pos);
                     //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                 }
 
+                if ( !CCamera::isShaking() )
+                    CCamera::shake();
+                else
+                    CCamera::resetAndIncrementShake();
+                
                 if (m_bb) { 
                     m_shooted = false;
                     m_set->removeBillboard(m_bb); 

@@ -148,7 +148,7 @@ namespace Logic
 
 
             if (m_shake && m_timeShaking < 750) {
-                if (m_timeShaking >= 500)
+                if (m_timeShaking >= 500 && m_amplitude > 0.0f)
                     m_amplitude -= 1;
                 float res =  Common::Util::Math::shake(m_valShake, m_amplitude);
                 m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, res + m_cameraDist));

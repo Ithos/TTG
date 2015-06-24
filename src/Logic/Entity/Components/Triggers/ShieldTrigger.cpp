@@ -32,6 +32,8 @@
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 
+#include "../Cameras/Camera.h"
+
 namespace Logic
 {
 	namespace Component
@@ -126,6 +128,7 @@ namespace Logic
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
 				destroyShield();
+                CCamera::shake();
             }
             else if ( (type == "Enemy") && (m_compShield->getValue() > 0) ) {
                 m_compShield->destroyShield();
@@ -135,6 +138,7 @@ namespace Logic
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
 			    destroyShield();
+                CCamera::shake();
             }
         }
 

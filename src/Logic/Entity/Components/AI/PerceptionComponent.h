@@ -50,7 +50,7 @@ namespace Logic
 			/*
 			Constructor
 			*/
-			CPerceptionComponent(void) : m_pEntity(NULL), playerSeen(false) {};
+			CPerceptionComponent(void) : m_pEntity(NULL), playerSeen(false), m_Time(0.0f) {};
 
 			/*
 			Destructor
@@ -115,6 +115,7 @@ namespace Logic
 			Entidad de percepción que se registra en el CPerceptionManager
 			*/
 			AI::CPerceptionEntity* m_pEntity;
+			float m_Time;
 
 			/*
 			Nos dice si esta entidad ya ha visto al player o no

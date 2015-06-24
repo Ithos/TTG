@@ -45,6 +45,9 @@ namespace Logic
 			virtual bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 			virtual void tick(unsigned int msecs);
 
+			void setEvadeObstacle(Vector3 pos);
+			void setEvadePlayer(Vector3 pos);
+
 		private:
 			float m_maxLinearSpeed, m_maxAngularSpeed, m_maxLinearAccel, m_maxAngularAccel, m_tolerance;
 			bool m_arrived;

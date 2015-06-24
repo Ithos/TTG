@@ -26,7 +26,7 @@ namespace AI
 	necesita que se siga invocando a la función tick() cíclicamente o si, aún sin haber
 	terminado, no necesita (de momento) la invocación a tick().
 	*/
-	CLatentAction::LAStatus CLatentAction::tick() 
+	CLatentAction::LAStatus CLatentAction::tick(unsigned int msecs) 
 	{
 		if (m_status == READY)
 			m_status = this->OnStart();

@@ -85,11 +85,30 @@ namespace Logic
 			{
 				m_evade->setEntity(entity);
 				// Ponemos el target a esquivar
-				m_evade->setTarget(Vector3(100,-300,1250));
-				m_evadeDistance = 100;
+				m_evade->setTarget(Vector3(10000,10000,10000));
+				m_evadeDistance = 200;
 			}
 
 			return true;
+
+		}
+
+		void CSteeringMovement::setEvadeObstacle(Vector3 pos)
+		{
+			float dist1(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(m_evade->getTarget()));
+			float dist2(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(pos));
+
+			if(dist2 < dist1)
+				m_evade->setTarget(pos);
+		}
+		
+		void CSteeringMovement::setEvadePlayer(Vector3 pos)
+		{
+			float dist1(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(m_evade->getTarget()));
+			float dist2(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(pos));
+
+			if(dist2 < 9000 && dist2 < dist1)
+				m_evade->setTarget(pos);
 
 		}
 

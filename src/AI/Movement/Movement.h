@@ -56,7 +56,8 @@ namespace AI
 			IMovement(float maxLinearSpeed, float maxAngularSpeed, float maxLinearAccel, float maxAngularAccel) : 
 				m_entity(0), m_maxLinearSpeed(maxLinearSpeed), m_maxAngularSpeed(maxAngularSpeed), 
 				m_maxLinearAccel(maxLinearAccel), m_maxAngularAccel(maxAngularAccel), 
-				m_maxLinearSpeed2(maxLinearSpeed * maxLinearSpeed), m_maxLinearAccel2(maxLinearAccel * maxLinearAccel) {};
+				m_maxLinearSpeed2(maxLinearSpeed * maxLinearSpeed), m_maxLinearAccel2(maxLinearAccel * maxLinearAccel), m_target(10000, 10000, 10000) 
+			{};
 			~IMovement() {};
 
 			void setEntity(Logic::CEntity* entity) { m_entity = entity; };

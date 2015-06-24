@@ -75,7 +75,7 @@ namespace Logic
 			}
 			// Ejecutamos la acción latente correspondiente al estado actual
 			if (m_currentAction != NULL)
-				m_currentAction->tick();
+				m_currentAction->tick(msecs);
 		}
 	}
 }

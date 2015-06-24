@@ -41,8 +41,15 @@ using namespace Common::Data;
 
 namespace Logic
 {
+#define MAX_TIME_SHAKING 750 // 750 msecs
+
 	using namespace Component;
 	IMP_FACTORY(CCamera);
+
+    bool CCamera::m_shake           = false;
+    unsigned CCamera::m_timeShaking = 0;
+    float CCamera::m_amplitude      = 2.0f;
+    float CCamera::m_valShake       = .0f;
 
     CCamera::~CCamera()
     {
@@ -67,10 +74,8 @@ namespace Logic
         if (entityInfo->hasAttribute(CAMERA_FOV))
             m_FOV = entityInfo->getFloatAttribute(CAMERA_FOV);
 
-        if (entityInfo->hasAttribute(CAMERA_HEIGHT)){
+        if (entityInfo->hasAttribute(CAMERA_HEIGHT))
             m_height = entityInfo->getFloatAttribute(CAMERA_HEIGHT);
-
-		 }
 
 		if (entityInfo->hasAttribute(CAMERA_DIST_CONSTANT))
 			m_distConstant = entityInfo->getFloatAttribute(CAMERA_DIST_CONSTANT);
@@ -141,7 +146,23 @@ namespace Logic
 			if(m_cameraDist < m_minDist)
                 m_cameraDist = m_minDist;
 
-            m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
+
+            if (m_shake && m_timeShaking < 750) {
+                if (m_timeShaking >= 500 && m_amplitude > 0.0f)
+                    m_amplitude -= 1;
+                float res =  Common::Util::Math::shake(m_valShake, m_amplitude);
+                m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, res + m_cameraDist));
+                m_valShake += 15; // increment 15 degrees
+                m_timeShaking += msecs;
+            }
+            else if (m_timeShaking != 0) {
+                resetShake();
+                m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
+            }
+            else
+                m_camera->getParentSceneNode()->setPosition(targetpoint + Vector3(0, m_height, m_cameraDist));
+
+            
 			m_camera->lookAt(targetpoint);
 
 			float targetDist(m_controller->getSpeed() * m_distConstant + m_minDist);

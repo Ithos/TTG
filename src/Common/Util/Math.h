@@ -159,6 +159,11 @@ namespace Common
                 float t_adj = (t / 1) - 1;
                 return (float)(-(amplitude * pow(2, 10 * t_adj) * sin((t_adj * 1-s) * (2*PI) / period )));
             }
+
+            static float shake(float val, float amplitude)
+            {
+                return sin(val*PI/180) * amplitude;
+            }
 		}
 	}
 }

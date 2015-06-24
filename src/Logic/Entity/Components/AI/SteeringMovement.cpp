@@ -181,7 +181,7 @@ namespace Logic
 				movement->move(m_currentProperties.linearSpeed);
 
 				// Aplicar la rotación
-				float angConst( 0.9/(msecs * 0.01));//5.1
+				float angConst( 0.7/(msecs * 0.01));//5.1
 				
 
 				movement->rotate((float)m_currentProperties.angularSpeed * angConst);
@@ -198,14 +198,18 @@ namespace Logic
 					m_currentProperties.angularSpeed = Ogre::Math::Sign((float)m_currentProperties.angularSpeed) * m_maxAngularSpeed;
 			}
 
-			if (m_frequency >=100)
+			float minTime(1.0f);
+
+			minTime +=(Application::CGameManager::getInstance()->getTotalObjectives() - 
+				Application::CGameManager::getInstance()->getObjectivesAquired()) * 0.5f;
+
+			if (m_frequency >= minTime + m_freq(m_generator))
 			{
 				m_weapons->shootSecondaryWeapon();
-				m_frequency = 0;
+				m_frequency = 0.0f;
+			}else{
+				m_frequency += (msecs/1000.0f);
 			}
-
-			m_frequency++;
-
 		}
 
 

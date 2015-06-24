@@ -865,7 +865,7 @@ namespace Map
 		/*for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {*/
 		unsigned int enemNumType(neg(generator));
 		int enemiesNum(enemyDist(generator)),div(5 - risk);
-		for (int i = 0; i < 1/*!risk ? 0 : i < Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div)*/; ++i) {
+		for (int i = 0; i < !risk ? 0 : i < Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div); ++i) {
 			char str[20];
 			std::string name = getDefaultValue(GEN_ENEMY_NAME);
 			sprintf(str,"%s%d",name.c_str(),i);
@@ -876,9 +876,19 @@ namespace Map
 			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
 			entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
 			entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
-			std::string enemy_position = "{" + std::to_string(enemy_distribution(enemy_generator)) +
-										 ", " + getDefaultValue(GEN_ENEMY_Y_PLANE) + ", " +
-										 std::to_string(enemy_distribution(enemy_generator)) +"}";
+
+			Vector3 enemPos;
+
+			do{
+				enemPos.x = enemy_distribution(enemy_generator);
+				enemPos.y = defaultValue<float>(GEN_ENEMY_Y_PLANE);
+				enemPos.z = enemy_distribution(enemy_generator);
+			}while(!checkDist(tmpPos,enemPos,200.0f));
+
+			std::string enemy_position = "{" + std::to_string(enemPos.x) +
+										 ", " + std::to_string(enemPos.y) + ", " +
+										 std::to_string(enemPos.z) +"}";
+
 			entityInProgress->setAttribute(COMMON_POSITION, enemy_position);
 			entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
 			entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));

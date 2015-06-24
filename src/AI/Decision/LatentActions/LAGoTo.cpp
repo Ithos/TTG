@@ -131,7 +131,7 @@ namespace AI
 
 		}else{
 
-			m_frequency += msecs/1000.0f;
+			m_frequency += (msecs/1000.0f);
 
 		}
 

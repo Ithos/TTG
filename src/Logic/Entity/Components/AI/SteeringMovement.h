@@ -24,6 +24,10 @@
 #include <AI/AI.h>
 
 #include "Logic/Entity/Components/Weapons/PlayerWeapons.h"
+#include <Application/Manager/GameManager.h>
+#include <random>
+#include <chrono>
+#include <ctime>
 
 namespace Logic 
 {
@@ -37,7 +41,9 @@ namespace Logic
 			CSteeringMovement() : IComponent(), m_arrived(true), m_maxLinearSpeed(0.05f), m_maxAngularSpeed(0.01f),
 				m_maxLinearAccel(0.1f), m_maxAngularAccel(0.1f), m_currentMovement(0), 
 				m_movType(AI::Movement::IMovement::MOVEMENT_DYNAMIC_ARRIVE), m_yaw(NULL), m_evade(NULL),
-				m_playerTarget(true), m_fixedTime(0.0f), m_frequency(0){ };
+				m_playerTarget(true), m_fixedTime(0.0f), m_frequency(0.0f), m_freq (0.0f, 2.0f), m_seed(std::chrono::system_clock::now().time_since_epoch().count()),
+				m_generator(m_seed)
+			{ };
 			~CSteeringMovement();
 			void setTarget(Vector3 target);
 			void setPlayerAsTarget() { m_playerTarget = true; };
@@ -58,13 +64,16 @@ namespace Logic
 			AI::Movement::IMovement* m_evade;
 			float m_evadeDistance;
 			AI::Movement::IMovement::DynamicMovement m_currentProperties;
+			std::time_t m_seed;
+			std::default_random_engine m_generator;
+			std::uniform_real_distribution<float> m_freq;
 
 			float m_fixedTime;
 
 			bool m_playerTarget;
 
 			Logic::Component::CWeapons* m_weapons;
-			unsigned m_frequency;
+			float m_frequency;
 		};
 
 	REG_FACTORY(CSteeringMovement);

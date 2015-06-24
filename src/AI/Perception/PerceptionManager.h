@@ -86,7 +86,7 @@ namespace AI
 		/*
 		Constructor por defecto
 		*/
-		CPerceptionManager() {};
+		CPerceptionManager(): m_Time(0.0f) {};
 		
 		/*
 		Destructor por defecto
@@ -119,6 +119,7 @@ namespace AI
 		Lista de entidades de percepción gestionadas
 		*/
 		std::list<CPerceptionEntity*> m_entities;
+		float m_Time;
 
 		/*
 		Lista de notificaciones de percepción pendientes de enviar

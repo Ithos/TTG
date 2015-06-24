@@ -51,6 +51,13 @@ namespace AI
 	*/
 	void CPerceptionManager::update(unsigned int msecs)
 	{
+
+		if(m_Time > 0.33f){
+			m_Time += msecs / 1000.0f;
+			return;
+		}
+
+		m_Time = 0;
 		// Sacamos del reloj de la aplicación el instante actual para gestionar los instantes de las notificaciones
 		unsigned int time = Application::CBaseApplication::getInstance()->getApptime();
 

@@ -55,7 +55,7 @@ namespace AI
 		necesita que se siga invocando a la función tick() cíclicamente o si, aún sin haber
 		terminado, no necesita (de momento) la invocación a tick().
 		*/
-		LAStatus tick();
+		LAStatus tick(unsigned int msecs);
 
 		/*
 		Cancela la tarea que se está ejecutando; se entiende que este método es llamado cuando el

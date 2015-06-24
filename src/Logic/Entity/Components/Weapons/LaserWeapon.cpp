@@ -118,6 +118,7 @@ namespace Logic
                         
 					if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
 							m_scene->deactivateEntity(hitEntity);
+							m_scene->deleteEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
                         }
                         else {

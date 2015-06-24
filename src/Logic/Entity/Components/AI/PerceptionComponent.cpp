@@ -131,10 +131,18 @@ namespace Logic
 		*/
 		void CPerceptionComponent::tick(unsigned int msecs)
 		{
+			if(m_Time < 0.33f)
+			{
+				m_Time += msecs / 1000.0f;
+				return;
+			}
+
 			IComponent::tick(msecs);
 
 			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
 			m_pEntity->setTransform(transf->getTransform());
+
+			m_Time = 0.0f;
 		}
 
 		/*
@@ -162,6 +170,15 @@ namespace Logic
 				Ogre::String str = xx+yy+zz;
 				std::string cadena = m_entity->getName()+" percibe a "+entity->getName()+" en "+str;
 				log_trace("MAIN",cadena.c_str());*/
+			}else{
+
+				if(entity->isPlayer()){
+					CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
+					steering->setEvadePlayer(transf->getPosition());
+				}else if(entity != m_entity){
+					CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
+					steering->setEvadeObstacle(transf->getPosition());
+				}
 			}
 
 			// El gestor de percepción se desentiende de las notificaciones una vez que las 

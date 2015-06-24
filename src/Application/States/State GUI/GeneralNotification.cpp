@@ -162,7 +162,7 @@ namespace Application
 			);
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->setFont("Jura-10");
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
-			CEGUI::String("->General:\nESC-->>pause\n->Galaxy:\nDrag window frame-->>Move window\nDouble click window frame-->>Hide window\nDrag window edge-->>Resize window\n->Combat:\nWASD-->>Move\nSPACE-->>Fire"))
+			CEGUI::String("->General:\nESC-->>pause\n->Galaxy:\nDrag window frame-->>Move window\nDouble click window frame-->>Hide window\nDrag window edge-->>Resize window\n->Combat:\nWASD-->>Move\nSPACE-->>Fire Primary\nRight Shift-->>Fire Secondary"))
 			);
 		/// TODO -- Internationalization -- /// }End
 	}

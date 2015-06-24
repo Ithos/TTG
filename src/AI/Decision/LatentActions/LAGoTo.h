@@ -85,7 +85,6 @@ namespace AI
 		*/
 		virtual LAStatus OnAbort();
 
-		unsigned seed;
 		Vector3 m_target;
 		float m_tolerance;
 		Logic::Component::CWeapons* m_weapons;
@@ -145,7 +144,7 @@ namespace AI
 		@return Estado de la acción tras la ejecución del método; permite indicar si la acción ha
 		terminado o se ha suspendido, o si sigue en ejecución.
 		*/
-		virtual LAStatus OnRun();
+		virtual LAStatus OnRun(unsigned int msecs);
 
 		int m_frequency;
 

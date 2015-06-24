@@ -56,7 +56,7 @@ namespace GUI
 			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::A, new Command::CTurnLeft()));
 			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::D, new Command::CTurnRight()));
             m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::SPACE, new Command::CPrimaryShoot()));
-            m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::M, new Command::CSecondaryShoot()));
+			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::RSHIFT, new Command::CSecondaryShoot()));
 
 			return true;
 		}

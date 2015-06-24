@@ -60,7 +60,7 @@ namespace AI
 		// · isActive = true
 		// · keepAlive = true (la señal no se destruye después de un ciclo de percepción, sino que sigue activa)
 		// Cuidado: estos parámetros son datos y, por lo tanto, deberían declararse en un archivo de configuración aparte.
-//		this->addSignal(new CPerceptionSignal(this,PERCEPTION_SIGHT,1.0f,0.0f,true,true));
+		this->addSignal(new CPerceptionSignal(this,PERCEPTION_SIGHT,1.0f,0.0f,true,true));
 	}
 
 	/*

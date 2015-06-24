@@ -772,7 +772,7 @@ namespace Map
 				pos.x = neg(generator)?posDist(generator):-posDist(generator);
 				pos.y = defaultValue<int>(GEN_ASTEROID_Y_AXIS_POS);
 				pos.z =	neg(generator)?posDist(generator):-posDist(generator);
-			} while(!checkDist(tmpPos,pos,10.0f));
+			} while(!checkDist(tmpPos,pos,100.0f));
 
 			tmpPos.push_back(pos);
 
@@ -796,6 +796,8 @@ namespace Map
 			entityInProgress->setAttribute("physic_mass", "10");
 			entityInProgress->setAttribute("physic_shape", "sphere");
 			entityInProgress->setAttribute("physic_group","2");
+
+			//entityInProgress->setAttribute("perception_entity_type","asteroid"); // Add the perception component to the asteroids in the blueprint before uncommenting this
 
 			int mod = astDist(generator);
 

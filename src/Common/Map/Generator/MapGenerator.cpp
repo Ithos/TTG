@@ -1,4 +1,4 @@
-/*
+    /*
  	Copyright 2015 Francisco Javier Martinez Garcia
 	Copyright 2015 Alvaro Perez Corral
 	Copyright 2015 Luis Valero Martin
@@ -809,51 +809,39 @@ namespace Map
 		tmpStr1 = "range11";
 		tmpStr2 = "200";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "range12";
 		tmpStr2 = "50";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "bank0";
 		tmpStr2 = "Master Bank.bank";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "bank1";
 		tmpStr2 = "Master Bank.strings.bank";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "bank2";
 		tmpStr2 = "Character.bank";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "event0";
 		tmpStr2 = "event:/Character/Footsteps/Footsteps";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "event1";
 		tmpStr2 = "event:/Character/Footsteps/Footsteps";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "eventName0";
 		tmpStr2 = "distEvent";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "eventName1";
 		tmpStr2 = "distEventEnem";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "parameter0";
 		tmpStr2 = "Surface";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "parameter1";
 		tmpStr2 = "Surface";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "parameterName0";
 		tmpStr2 = "paramSurf";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
 		tmpStr1 = "parameterName1";
 		tmpStr2 = "paramSurfEnem";
 		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
@@ -869,7 +857,7 @@ namespace Map
 		/*for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {*/
 		unsigned int enemNumType(neg(generator));
 		int enemiesNum(enemyDist(generator)),div(5 - risk);
-		for (int i=0; !risk?0:i< Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div); ++i) {
+		for (int i = 0; i < 1/*!risk ? 0 : i < Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div)*/; ++i) {
 			char str[20];
 			std::string name = getDefaultValue(GEN_ENEMY_NAME);
 			sprintf(str,"%s%d",name.c_str(),i);

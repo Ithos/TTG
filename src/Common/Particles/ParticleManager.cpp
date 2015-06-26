@@ -135,7 +135,9 @@ namespace Common
         
         void CParticleManager::startBombExplosion(const ::Vector3& pos)
         {
-            m_bombExplosion[m_iBombExplosion]->getTechnique(0)->position = pos;
+            int nTechniques = m_bombExplosion[m_iBombExplosion]->getNumTechniques();
+            for (int i = 0; i < nTechniques; ++i)
+                m_bombExplosion[m_iBombExplosion]->getTechnique(i)->position = pos;
             m_bombExplosion[m_iBombExplosion]->start(2);
             m_iBombExplosion = (m_iBombExplosion < MAX_EXPLOSIONS-1) ? m_iBombExplosion + 1 : 0;
         }

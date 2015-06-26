@@ -78,10 +78,10 @@ namespace Logic
             m_height = entityInfo->getFloatAttribute(CAMERA_HEIGHT);
 
 		if (entityInfo->hasAttribute(CAMERA_DIST_CONSTANT))
-			m_distConstant = entityInfo->getFloatAttribute(CAMERA_DIST_CONSTANT);
+			m_distConstant = entityInfo->getIntAttribute(CAMERA_DIST_CONSTANT);
 
 		if (entityInfo->hasAttribute(CAMERA_MIN_DISTANCE))
-			m_minDist = entityInfo->getFloatAttribute(CAMERA_MIN_DISTANCE);
+			m_minDist = entityInfo->getIntAttribute(CAMERA_MIN_DISTANCE);
 
 		if(entityInfo->hasAttribute(CAMERA_ACCEL))
 			m_accelConst = entityInfo->getFloatAttribute(CAMERA_ACCEL);
@@ -144,7 +144,7 @@ namespace Logic
             unsigned secs = msecs*0.001;
 			m_cameraDist += m_cameraVel * secs ;
 			if(m_cameraDist < m_minDist)
-                m_cameraDist = m_minDist;
+                m_cameraDist = (float)m_minDist;
 
             if (m_shake && m_timeShaking < 800) {
                 if (m_timeShaking >= 500 && m_amplitude <= .0f )

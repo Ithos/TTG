@@ -133,7 +133,7 @@ namespace Common
             }
         }
         
-        void CParticleManager::statBombExplosion(const Vector3& pos)
+        void CParticleManager::startBombExplosion(const ::Vector3& pos)
         {
             m_bombExplosion[m_iBombExplosion]->getTechnique(0)->position = pos;
             m_bombExplosion[m_iBombExplosion]->start(2);
@@ -362,6 +362,7 @@ namespace Common
             case LASER_BLUE:  return "LightRibbonTrail_blue";
             case LASER_GREEN: return "LightRibbonTrail_green";
             case LASER_RED:   return "LightRibbonTrail_red";
+            default:          return "LightRibbonTrail_blue";
             }
         }
 

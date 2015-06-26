@@ -1,12 +1,11 @@
-system wave
+system bombExplosion
 {
-    scale_velocity                              5
-    technique 
+    technique SmokeWave
     {
         visual_particle_quota                   1
-        material                                PUMediaPack/Ring_14
-        default_particle_width                  30
-        default_particle_height                 30
+        material                                smokeWave
+        default_particle_width                  20
+        default_particle_height                 20
         renderer                                Billboard
         {
             billboard_type                      perpendicular_common
@@ -18,23 +17,108 @@ system wave
             emission_rate                       1
             time_to_live                        1
             direction                           0 0 0
-            start_colour_range                  1 1 1 1
             force_emission                      true
         }
         affector                                Scale 
         {
-            xyz_scale                           30
+            xyz_scale                           100
         }
         affector                                Colour 
         {
-            time_colour                         0    1 1 1 1
-            time_colour                         1    0.752941 0.752941 0.752941 0.737255
+            time_colour                         0    0.431373 0.6 0.992157 1
+            time_colour                         1    0.847059 0.847059 1 0.486275
+            colour_operation                    multiply
         }
         observer                                OnClear 
         {
             handler                             DoStopSystem 
             {
             }
+        }
+    }
+    technique ShockWave
+    {
+        visual_particle_quota                   1
+        material                                shockWave
+        renderer                                Billboard
+        {
+            billboard_type                      perpendicular_common
+            common_direction                    0 1 0
+            common_up_vector                    0 0 1
+        }
+        emitter                                 Point wooshEmitter
+        {
+            emission_rate                       1
+            time_to_live                        1
+            direction                           0 0 0
+            force_emission                      true
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           100
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0.435294 0.6 0.992157 1
+            time_colour                         1    0.847059 0.847059 1 0.376471
+            colour_operation                    multiply
+        }
+        observer                                OnClear 
+        {
+            handler                             DoStopSystem 
+            {
+            }
+        }
+    }
+    technique Fire
+    {
+        visual_particle_quota                   100
+        material                                ParticleUniverse/Nucleus
+        default_particle_width                  80
+        default_particle_height                 80
+        default_particle_depth                  80
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point FireEmitter
+        {
+            emission_rate                       60
+            angle                               360
+            time_to_live                        1
+            velocity                            1.8
+            duration                            0.5
+            all_particle_dimensions             dyn_random
+            {
+                min                             0.6
+                max                             2.4
+            }
+            colour                              1 0.5 0.3 1
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           dyn_curved_linear
+            {
+                control_point                   0 60
+                control_point                   0.3 0.6
+                control_point                   1 0
+            }
+        }
+        affector                                TextureRotator 
+        {
+            use_own_rotation                    true
+            rotation                            dyn_random
+            {
+                min                             -90
+                max                             90
+            }
+            rotation_speed                      0
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         0.05  0.3 0.3 0.3 1
+            time_colour                         1    0 0 0 1
+            colour_operation                    multiply
         }
     }
     technique 
@@ -59,12 +143,12 @@ system wave
             }
             particle_width                      dyn_random
             {
-                min                             5
-                max                             7
+                min                             1
+                max                             10
             }
             particle_height                     dyn_random
             {
-                min                             5
+                min                             3
                 max                             7
             }
             enabled                             false
@@ -100,6 +184,64 @@ system wave
             }
             since_start_system                  true
             on_time                             greater_than 0.1
+        }
+    }
+    technique 
+    {
+        visual_particle_quota                   150
+        material                                PUMediaPack/AtlasSmoke
+        renderer                                Billboard
+        {
+            render_queue_group                  51
+            texture_coords_rows                 4
+            texture_coords_columns              4
+            billboard_rotation_type             vertex
+        }
+        emitter                                 Slave 
+        {
+            time_to_live                        1.2
+            all_particle_dimensions             dyn_random
+            {
+                min                             1.2
+                max                             3
+            }
+            direction                           0 0 0
+            master_technique_name               Fire
+            master_emitter_name                 FireEmitter
+        }
+        affector                                TextureRotator 
+        {
+            use_own_rotation                    true
+            rotation                            dyn_random
+            {
+                min                             -90
+                max                             90
+            }
+            rotation_speed                      0
+        }
+        affector                                TextureAnimator 
+        {
+            end_texture_coords_range            15
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           dyn_curved_linear
+            {
+                control_point                   0 60
+                control_point                   0.2 0.6
+                control_point                   1 0
+            }
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0 0 0 1
+            time_colour                         0.1  0 0 0 1
+            time_colour                         0.11  0.3 0.3 0.3 1
+            time_colour                         0.8  0.3 0.3 0.3 1
+            time_colour                         1    0 0 0 0
+        }
+        behaviour                               Slave
+        {
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Common
             void releaseExplosions();
 
             void initBomExplosions();
-            void statBombExplosion(const Vector3& pos);
+            void startBombExplosion(const Vector3& pos);
             void releaseBombExplosion();
 
             /*-------- Hits -----------*/

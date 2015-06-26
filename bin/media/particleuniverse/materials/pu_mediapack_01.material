@@ -745,7 +745,7 @@ material PUMediaPack/Ring_03
 }
 
 //-----------------------------------------------------------------------------------------
-material shockWave
+material PUMediaPack/ShockWave
 {
     technique
     {
@@ -764,7 +764,7 @@ material shockWave
     }
 }
 
-material smokeWave
+material PUMediaPack/SmokeWave
 {
     technique
     {

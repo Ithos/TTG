@@ -137,15 +137,14 @@ namespace Logic
             if (type == "Asteroid") {
                 if (!hitEnt->isActivated()) return;
 
+                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
 				if (static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
-                        Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();  
-						m_scene->deactivateEntity(hitEnt);
-						m_scene->deleteEntity(hitEnt);
-                        m_particles->startNextExplosion(pos);
-                    }
-                    else {
-                        //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
-                    }
+					m_scene->deactivateEntity(hitEnt);
+					m_scene->deleteEntity(hitEnt);
+                    m_particles->startNextExplosion(pos);
+                }
+                else 
+                    m_particles->startHit(pos);
 
                 if (m_bb) { 
                     m_shooted = false;
@@ -159,14 +158,14 @@ namespace Logic
                
                 // else if enemy impact with other enemy is friendly fire and we havent
                 // if is the player-> destroy tha mothafucking ship
+                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
 				if(static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)){
-					Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
 					m_scene->deactivateEntity(hitEnt);
 					m_scene->deleteEntity(hitEnt);
 					m_particles->startNextExplosion(pos);
 				}
                 else
-                    //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+                    m_particles->startHit(pos);
 
                 if (m_bb) { 
                     m_shooted = false;
@@ -182,6 +181,7 @@ namespace Logic
                 if (!m_playerLife)
                     m_playerLife = static_cast<CLife*>(hitEnt->getComponentByName(LIFE_COMP)); 
 
+                Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
                 if (m_playerShield->hasShield()) {
                     m_playerShield->decreaseShield(m_damage);  
                 }  
@@ -189,13 +189,10 @@ namespace Logic
                 else if (m_playerLife->decreaseLife(m_damage)) {
               //      m_scene->deactivateEntity(hitEnt);
 				//	m_scene->deleteEntity(hitEnt);
-                    //final explosion
+                    m_particles->startBombExplosion(pos);
                 }
-                else {
-                    Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+                else
                     m_particles->startNextExplosion(pos);
-                    //m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
-                }
 
                 if ( !CCamera::isShaking() )
                     CCamera::shake();

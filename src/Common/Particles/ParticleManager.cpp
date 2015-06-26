@@ -74,7 +74,7 @@ namespace Common
             for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
                 ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "hit", m_sceneMgr);
                 m_hits.push_back(pSys);
-                pSys->setScaleTime(10);
+                pSys->setScaleTime(2);
                 m_sceneMgr->getRootSceneNode()->attachObject(pSys);
             }
         }
@@ -101,6 +101,7 @@ namespace Common
             // create explosions
             for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
                 ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "explosion", m_sceneMgr);
+                pSys->setScaleTime(2);
                 m_explosions.push_back(pSys);
                 m_sceneMgr->getRootSceneNode()->attachObject(pSys);
             }

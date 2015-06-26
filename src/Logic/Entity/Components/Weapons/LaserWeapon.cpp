@@ -122,7 +122,7 @@ namespace Logic
                             m_particles->startNextExplosion(m_currPos);
                         }
                         else {
-                            m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+                             m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
                         }
                    /* }*/
                 } // hit asteroid or enemy

@@ -62,6 +62,8 @@
 #include "Entity/Components/Triggers/SceneEndTrigger.h"
 #include "Entity/Components/Triggers/ShieldTrigger.h"
 #include "Entity/Components/Triggers/MissileTrigger.h"
+#include "Entity/Components/Triggers/BombTrigger.h"
+#include "Entity/Components/Triggers/ExplosionTrigger.h"
 
 //Console
 //#include "Entity/Components/Graphic/GraphicPrimitive.h"

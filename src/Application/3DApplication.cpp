@@ -52,6 +52,8 @@
 #include <AI/AI.h>
 
 
+#include <Common/Language/Language.h>
+
 #define RENDER_IN_BACKGROUND
 
 namespace Application
@@ -121,6 +123,8 @@ namespace Application
 		if(!AI::CAI::init()) return false;
 
 		if(!Common::Sound::CSound::init())return false;
+
+		Common::Language::changeLanguage("en");
 
 		return true;
 	}

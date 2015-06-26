@@ -20,6 +20,7 @@
 #define __LOGIC_BOMBTRIGGER_H
 
 #include "../Physic/PhysicEntity.h"
+#include <vector>
 
 namespace Common
 {
@@ -33,12 +34,40 @@ using namespace Common::Particles;
 
 namespace Logic
 {
+	class CScene;
+
 	namespace Component
 	{
         class CBombTrigger : public CPhysicEntity
         {
-            
+			DEC_FACTORY(CBombTrigger);
+		public:
+			CBombTrigger():m_explode(false),m_damage(0),m_particles(nullptr),m_scene(nullptr){}
+
+			~CBombTrigger();
+
+			bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
+
+			bool activate();
+
+			void tick(unsigned int);
+
+            void onOverlapBegin(IPhysic* otherComponent);
+
+			void onOverlapEnd(IPhysic* otherComponent);
+
+			bool m_explode;
+
+		private:
+			std::vector<CEntity*> m_entitiesOnRange;
+
+			unsigned int m_damage;
+
+			CParticleManager*          m_particles;
+            CScene*                    m_scene;
+
         };
+		REG_FACTORY(CBombTrigger);
 
     }
 }

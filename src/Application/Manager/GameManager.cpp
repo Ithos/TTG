@@ -39,6 +39,8 @@
 #include "../States/State GUI/MissionNotification.h"
 #include "../States/State GUI/GeneralNotification.h"
 
+#include <Common/Language/Tags.h>
+
 
 namespace Application
 {
@@ -159,7 +161,7 @@ namespace Application
 
 		for(auto it = m_stateMap.begin(); it != m_stateMap.end(); ++it){
 
-			if(it->first == Common::Data::Game::GAME_FUEL){
+			if(it->first == Common::Language::getString(GAME_FUEL)){
 				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/ResourcesBoard"))->getItemFromIndex(1)->
 					appendText(" " + std::to_string(it->second));
 			}else if(it->first == Common::Data::Game::GAME_ORE){
@@ -379,7 +381,7 @@ namespace Application
 	{
 		if(m_stateMap.count(str) > 0 && (m_stateMap[str] - num) >= 0){
 
-			if(str == Common::Data::Game::GAME_FUEL){
+			if(str == Common::Language::getString(GAME_FUEL)){
 				num *= m_fuelConsumeProportion;
 			}
 
@@ -772,7 +774,7 @@ namespace Application
 
 	void CGameManager::registerInitialResources()
 	{
-		m_stateMap[Common::Data::Game::GAME_FUEL] = 500;
+		m_stateMap[Common::Language::getString(GAME_FUEL)] = 500;
 		m_stateMap[Common::Data::Game::GAME_ORE] = 200;
 		//m_stateMap[Common::Data::Game::GAME_TIME] = 200;
 

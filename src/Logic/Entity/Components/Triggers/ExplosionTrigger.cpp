@@ -28,6 +28,8 @@
 #include "common/Particles/ParticleManager.h"
 #include "../Cameras/Camera.h"
 
+#include "BombTrigger.h"
+
 using namespace Common::Util::PxConversor;
 using namespace Common::Data::Spawn;
 using namespace Common::Data;
@@ -72,6 +74,8 @@ namespace Logic
         
         void CExplosionTrigger::onOverlapBegin(IPhysic* otherComponent)
         {
+			if(!m_shooted) return;
+			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
         }
 
         void CExplosionTrigger::onOverlapEnd(IPhysic* otherComponent)

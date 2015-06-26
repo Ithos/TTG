@@ -68,6 +68,10 @@ namespace Common
             void startNextExplosion( const Vector3& pos);
             void releaseExplosions();
 
+            void initBomExplosions();
+            void statBombExplosion(const Vector3& pos);
+            void releaseBombExplosion();
+
             /*-------- Hits -----------*/
             void initHits();
             void startHit(const Vector3& pos);
@@ -105,6 +109,7 @@ namespace Common
             typedef std::vector<ParticleUniverse::ParticleSystem*> vPU;
 
             vPU m_explosions;
+            vPU m_bombExplosion;
             vPU m_hits;
             vPU m_stars;
             std::map<Weapons_t, vPU> m_shoots;
@@ -124,6 +129,7 @@ namespace Common
             // index
             unsigned m_index;
             unsigned m_iExplosion;
+            unsigned m_iBombExplosion;
             std::vector<unsigned> m_vShoots;
             unsigned m_iHits;
 

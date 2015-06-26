@@ -72,7 +72,7 @@ namespace Common
         void CParticleManager::initHits()
         {
             for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
-                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "wave", m_sceneMgr);
+                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "hit", m_sceneMgr);
                 m_hits.push_back(pSys);
                 pSys->setScaleTime(10);
                 m_sceneMgr->getRootSceneNode()->attachObject(pSys);

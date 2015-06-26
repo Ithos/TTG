@@ -1,45 +1,9 @@
-system wave
+system hit
 {
     scale_velocity                              5
     technique 
     {
-        visual_particle_quota                   1
-        material                                PUMediaPack/Ring_14
-        default_particle_width                  30
-        default_particle_height                 30
-        renderer                                Billboard
-        {
-            billboard_type                      perpendicular_common
-            common_direction                    0 1 0
-            common_up_vector                    0 0 1
-        }
-        emitter                                 Point wooshEmitter
-        {
-            emission_rate                       1
-            time_to_live                        1
-            direction                           0 0 0
-            start_colour_range                  1 1 1 1
-            force_emission                      true
-        }
-        affector                                Scale 
-        {
-            xyz_scale                           30
-        }
-        affector                                Colour 
-        {
-            time_colour                         0    1 1 1 1
-            time_colour                         1    0.752941 0.752941 0.752941 0.737255
-        }
-        observer                                OnClear 
-        {
-            handler                             DoStopSystem 
-            {
-            }
-        }
-    }
-    technique 
-    {
-        visual_particle_quota                   50
+        visual_particle_quota                   20
         material                                ParticleUniverse/Debris
         default_particle_width                  100
         default_particle_height                 100
@@ -51,7 +15,7 @@ system wave
         {
             emission_rate                       50
             angle                               360
-            time_to_live                        2
+            time_to_live                        1
             velocity                            dyn_random
             {
                 min                             18
@@ -59,13 +23,13 @@ system wave
             }
             particle_width                      dyn_random
             {
-                min                             5
-                max                             7
+                min                             1
+                max                             3
             }
             particle_height                     dyn_random
             {
-                min                             5
-                max                             7
+                min                             2
+                max                             4
             }
             enabled                             false
             force_emission                      true

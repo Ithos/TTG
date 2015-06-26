@@ -23,6 +23,9 @@
 #include "Common/Data/Spawn_Constants.h"
 #include "Logic/EntityFactory.h"
 
+#include "../Triggers/BombTrigger.h"
+#include "../../../ComponentFactory.h"
+
 #include <Application/Manager/GameManager.h>
 
 namespace Logic
@@ -37,7 +40,7 @@ namespace Logic
             using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
 
-            m_type = STATIC_BOMB;
+			m_type = Common::Data::Weapons_t::STATIC_BOMB;
             m_parent = parent;
             m_scene  = scene; 
 
@@ -55,8 +58,21 @@ namespace Logic
                 m_mapInfo[i]->setAttribute(BOMB_DAMAGE, getDefaultValue(GEN_STATICBOMB_DAMAGE));
                 m_mapInfo[i]->setAttribute(BOMB_COST,  getDefaultValue(GEN_STATICBOMB_COST));
                 m_mapInfo[i]->setAttribute(BOMB_RANGE, getDefaultValue(GEN_STATICBOMB_RANGE));
+
+				Map::CMapEntity* entinf = new Map::CMapEntity("..");
+				entinf->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
+                entinf->setAttribute("physic_type", "static");
+                entinf->setAttribute("physic_shape", "sphere");
+                entinf->setAttribute("physic_mass",  "1");
+                entinf->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_STATICBOMB_RANGE));
+                entinf->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
+
+				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
+				//TODO prioridad y posicion
                 
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
+				bombTrigger->spawn(ent,m_scene,entinf);
+				ent->createComponent(bombTrigger);
                 m_subEntity.push_back(ent);
             }
 

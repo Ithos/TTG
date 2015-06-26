@@ -41,6 +41,8 @@
 #include <CEGUI/widgets/ListboxItem.h>
 #include <CEGUI\widgets\PushButton.h>
 
+#include <Common/Language/Tags.h>
+
 namespace Application
 {
 	const char* const LOG_CEVENTGUI = "Application::CEventGUI";
@@ -804,7 +806,7 @@ namespace Application
 			std::uniform_int_distribution<int> fuelDist(5,30);
 			std::uniform_int_distribution<int> eventText(0,Common::Data::Game::MAX_EVENT_FUEL);
 			int fuelExtracted = fuelDist(generator) * 10;
-			m_mgrInstance->addResourceByName(Common::Data::Game::GAME_FUEL, fuelExtracted);
+			m_mgrInstance->addResourceByName(Common::Language::getString(GAME_FUEL), fuelExtracted);
 			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
 				new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_EVENT_FUEL_TEXT[planetType][eventText(generator)]) +std::string("\n" + std::to_string(fuelExtracted) + " fuel units obtained." )));

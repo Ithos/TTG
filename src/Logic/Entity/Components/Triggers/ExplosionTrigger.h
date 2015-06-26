@@ -44,7 +44,7 @@ namespace Logic
                 m_particles(nullptr), m_damage(.0f), m_range(.0f), m_isPlayer(false)
             {}
 
-            ~CExplosionTrigger();
+			~CExplosionTrigger(){}
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 

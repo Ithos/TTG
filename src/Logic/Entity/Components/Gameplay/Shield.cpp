@@ -125,6 +125,9 @@ namespace Logic
             using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
 
+			setDefaultFile(CONFIGURE_FILE);
+			setDefaultFile(getDefaultValue(CONF_GENERATOR_PATH).c_str());
+
             Map::CMapEntity eInfo("Shield");
             //-- attributes...
             eInfo.setType(getDefaultValue(GEN_SHIELD_TYPE));

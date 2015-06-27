@@ -71,7 +71,7 @@ namespace Logic
 
         // shots
         if (m_primaryShoot)
-            m_weapons->shootPrimaryWeapon();
+            m_weapons->shootPrimaryWeapon(msecs);
         else
             m_weapons->releasePrimaryTrigger();
 

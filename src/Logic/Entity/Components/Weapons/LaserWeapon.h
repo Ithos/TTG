@@ -70,11 +70,13 @@ namespace Logic
 
             void shoot(const Vector3& src, const Vector3& dir);
 
+			virtual void tick(unsigned int) override;
+
             /**
                 Set parameters for a weapon.
             */
 			void setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
-                int charger, bool triple = false, float beamDist=20.0f, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
+                int charger, const std::string& soundFile, bool triple = false, float beamDist=20.0f, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
         private:
 		   Ogre::SceneManager*  m_sceneMngr;
@@ -89,6 +91,9 @@ namespace Logic
            unsigned*            m_energy;
 		   bool					m_triple;
 		   float				m_beamDist;
+		   std::string			m_soundName;
+		   std::string			m_soundExplosion;
+		   float				m_time;
         };
     }
 }

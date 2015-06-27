@@ -296,6 +296,8 @@ namespace Common
 			void close();
 
 			bool ERRCHECK(int result);
+
+			void free3dSound(const std::string& str);
 		};
 	}
 }

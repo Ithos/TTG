@@ -48,6 +48,7 @@
 #include "Entity/Components/AI/PerceptionComponent.h"
 #include "Entity/Components/System/OrbitMovement.h"
 #include "Entity/Components/Gameplay/Shield.h"
+#include "Entity/Components/Sound/Listener.h"
 
 //Sound
 #include "Entity/Components/Sound/Listener.h"

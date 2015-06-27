@@ -18,10 +18,12 @@
 
 #include "MissileWeapon_Linear.h"
 #include "../Triggers/MissileTrigger.h"
+#include "../Movement/Transform.h"
 #include "Common/Map/MapEntity.h"
 #include "Common/Configure/Configure.h"
 #include "Common/Data/Spawn_Constants.h"
 #include "Logic/EntityFactory.h"
+#include "Common/Sound/Sound.h"
 
 #include <Application/Manager/GameManager.h>
 
@@ -34,12 +36,19 @@ namespace Logic
         const int MAX_MISSILES = 20;
 		const unsigned BASIC_MISSILE_COST = 50;
 
-		CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0), m_triple(false), m_beamDist(20.0f), m_rotate(false)
+		CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0),
+			m_triple(false), m_beamDist(20.0f), m_rotate(false), m_soundName("")
         {
+			static unsigned int num(0);
+
             m_type = MISSILE_LINEAR;
 
             using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
+
+			setDefaultFile(CONFIGURE_FILE);
+			setDefaultFile(getDefaultValue(CONF_GENERATOR_PATH).c_str());
+
             m_parent = parent;
             m_scene  = scene; 
 
@@ -69,6 +78,15 @@ namespace Logic
                 m_ammo = m_maxCharger;
 
 			m_cost = BASIC_MISSILE_COST;
+
+			if(m_parent->isPlayer())
+				m_soundName = "defaultPlayerMissileSound";
+			else{
+				m_soundName = "defaultMissileSound" + std::to_string(num);
+				++num;
+			}
+
+        	Common::Sound::CSound::getSingletonPtr()->add3dSound("Missile.wav", m_soundName);
         }
 
         CMissileWeapon_Linear::~CMissileWeapon_Linear()
@@ -87,6 +105,8 @@ namespace Logic
             }
 
 			m_cost = BASIC_MISSILE_COST;
+
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
         }
 
         void CMissileWeapon_Linear::tick(unsigned int msecs)
@@ -121,6 +141,9 @@ namespace Logic
 
 						/*--m_ammo;*/
 						Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
+
+						Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName,
+					static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
 
 						if(m_triple){
 
@@ -174,6 +197,9 @@ namespace Logic
 					m_subEntity[m_iMissile]->activate();
                 	static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
 
+					Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName,
+					static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+
                     if (m_iMissile < MAX_MISSILES-1 )
 							++m_iMissile;
 					else
@@ -183,7 +209,7 @@ namespace Logic
         }
 
 		void CMissileWeapon_Linear::setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
-                int charger, bool triple, float beamDist, bool rotate, Common::Data::Weapons_t type)
+                int charger, const std::string& soundFile, bool triple, float beamDist, bool rotate, Common::Data::Weapons_t type)
 		{
 			m_damage  = damage;
             m_cadence = cadence;
@@ -201,6 +227,9 @@ namespace Logic
 
 			using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
+
+			setDefaultFile(CONFIGURE_FILE);
+			setDefaultFile(getDefaultValue(CONF_GENERATOR_PATH).c_str());
 
 			 //init pool of missiles (
             for ( int i = 0; i < MAX_MISSILES; ++i) {
@@ -220,6 +249,9 @@ namespace Logic
                 m_subEntity.push_back(ent);
                 static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
             }
+
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
+			Common::Sound::CSound::getSingletonPtr()->add3dSound(soundFile, m_soundName);
 		}
 
     }

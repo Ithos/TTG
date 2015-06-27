@@ -47,8 +47,8 @@ namespace Logic
             void setPrimaryWeapon(Common::Data::Weapons_t weapon);
             void setSecondaryWeapon(Common::Data::Weapons_t weapon);
 
-            void shootPrimaryWeapon()   { shoot(m_primary);   }
-            void shootSecondaryWeapon() { shoot(m_secondary); }
+            void shootPrimaryWeapon(unsigned int msecs)   { shoot(m_primary, msecs);   }
+            void shootSecondaryWeapon() { shoot(m_secondary, 0); }
 
             void releasePrimaryTrigger()  { releaseTrigger(m_primary); }
             void releaseSecondayTrigger() { releaseTrigger(m_secondary); }
@@ -67,7 +67,7 @@ namespace Logic
 
             unsigned getWeapon(Common::Data::Weapons_t weapon);
             void releaseTrigger(int weapon);
-            void shoot(int index);
+            void shoot(int index, unsigned int msecs);
 		};
 
 	    REG_FACTORY(CWeapons);

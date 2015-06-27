@@ -32,6 +32,8 @@
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
 
+#include "Common/Sound/Sound.h"
+
 #include "../Cameras/Camera.h"
 
 namespace Logic
@@ -48,6 +50,8 @@ namespace Logic
 
         bool CShieldTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
+			static unsigned int num(0);
+
             using namespace Common::Data::Spawn;
 			if (!CPhysicEntity::spawn(entity, scene, entityInfo))
                 return false;
@@ -80,6 +84,9 @@ namespace Logic
               //  m_sceneNode->attachObject(ent);
               //  m_sceneNode->setScale(Vector3(80));
             }
+
+			m_soundName = "shieldExplosion" + std::to_string(num);
+			++num;
 
             return true;
         }
@@ -124,6 +131,10 @@ namespace Logic
                 m_compShield->decreaseShield(30);
                 static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseAllLife();
 				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
+
+				Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName, 
+				static_cast<CTransform*>(ent->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
@@ -133,6 +144,10 @@ namespace Logic
                 m_compShield->destroyShield();
                 static_cast<CLife*>(ent->getComponentByName(LIFE_COMP))->decreaseAllLife();
 				Vector3 pos = static_cast<CTransform*>(ent->getComponentByName(TRANSFORM_COMP))->getPosition();
+
+				Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName, 
+				static_cast<CTransform*>(ent->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+
 				m_particleMngr->startNextExplosion(pos);
 				m_scene->deactivateEntity(ent);
 				m_scene->deleteEntity(ent);
@@ -150,6 +165,20 @@ namespace Logic
             m_particleMngr->changeQuota(0, m_compShield->getMaxShield());
             m_activateShield = false;
         }
+
+		bool CShieldTrigger::activate()
+		{
+			if (!CPhysicEntity::activate()) return false;
+
+			Common::Sound::CSound::getSingletonPtr()->add3dSound("Explosion.wav", m_soundName);
+		}
+
+		void CShieldTrigger::deactivate()
+		{
+			CPhysicEntity::deactivate();
+
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
+		}
 
     }
 }

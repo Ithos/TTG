@@ -40,7 +40,7 @@ namespace Logic
                 Set parameters for a weapon.
             */
 			void setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
-                int charger, bool triple = false, float beamDist=20.0f, bool rotate = false, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
+                int charger, const std::string& soundFile, bool triple = false, float beamDist=20.0f, bool rotate = false, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
         private:
             unsigned  m_iMissile;
@@ -51,6 +51,7 @@ namespace Logic
 			unsigned int m_cost;
 			bool	m_triple, m_rotate;
 			float	m_beamDist;
+			std::string m_soundName;
         };
     }
 }

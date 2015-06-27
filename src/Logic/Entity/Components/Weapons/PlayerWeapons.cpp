@@ -75,35 +75,35 @@ namespace Logic
 
 				if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[0][0]){
 					setPrimaryWeapon(LASER); // Laser weapon
-					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f * damageProp, 1.0f, 25, 600, 1.0f, -1);
+					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f * damageProp, 1.0f, 25, 600, 1.0f, -1, "Laser1.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][0]){
 					setPrimaryWeapon(LASER);
-					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(10.0f * damageProp, 1.0f, 5, 400, 1.0f, -1);
+					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(10.0f * damageProp, 1.0f, 5, 400, 1.0f, -1, "Laser2.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0]){
 					setPrimaryWeapon(LASER_BEAM);
-					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(1.0f * damageProp, 1.0f, 600, 1.0f, -1, 1);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(4.0f * damageProp, 1.0f, 600, 1.0f, -1, 20, "TeslaBeam.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[3][0]){
 					setPrimaryWeapon(LASER);
-					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(60.0f * damageProp, 1.0f, 40, 1000, 1.0f, -1);
+					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(60.0f * damageProp, 1.0f, 40, 1000, 1.0f, -1, "Laser5.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0]){
 					setPrimaryWeapon(LASER_BEAM);
-					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(10.0f * damageProp, 1.0f, 300, 1.0f, -1, 2);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(20.0f * damageProp, 1.0f, 300, 1.0f, -1, 30, "EnergyBeam.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[5][0]){
 					setPrimaryWeapon(LASER);
-					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f * damageProp, 1.0f, 40, 600, 1.0f, -1, true);
+					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(35.0f * damageProp, 1.0f, 40, 600, 1.0f, -1, "Laser3.wav", true);
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[6][0]){
 					setPrimaryWeapon(LASER_BEAM);
-					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(45.0f * damageProp, 1.0f, 1000, 1.0f, -1, 7);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(45.0f * damageProp, 1.0f, 1000, 1.0f, -1, 40, "GravityBeam.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][0]){
 					setPrimaryWeapon(LASER);
-					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(50.0f * damageProp, 1.0f, 70, 1000, 1.0f, -1, true, 5.0f);
+					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(50.0f * damageProp, 1.0f, 70, 1000, 1.0f, -1, "Laser4.wav", true, 5.0f);
 
 				}
 
@@ -111,11 +111,11 @@ namespace Logic
 				//Secondary weapon
 				if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[0][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 70, 1000, 0.6f, -1);
+					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 70, 1000, 0.6f, -1, "Missile.wav");
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1);
+					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1, "Mine.wav");
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]){
 
@@ -123,18 +123,16 @@ namespace Logic
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[3][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f * damageProp, 1.0f, 50, 1000, 0.3f, -1, true, 20.0f, true);
+					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f * damageProp, 1.0f, 50, 1000, 0.3f, -1, "TriMissile.wav", true, 20.0f, true);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[4][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(60.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1, true, 20.0f, true);
+					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(60.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1, "TriMines.wav", true, 20.0f, true);
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f * damageProp, 1.0f, 100, 1000, 1.0f, -1, true, 5.0f);
+					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f * damageProp, 1.0f, 100, 1000, 1.0f, -1, "Missile.wav", true, 5.0f);
 				}
 			}
-
-			//setPrimaryWeapon(LASER_BEAM);
 
             return true;
         }
@@ -163,7 +161,7 @@ namespace Logic
             m_weapons[m_secondary]->tick(msecs);
         }
 
-        void CWeapons::shoot(int index)
+        void CWeapons::shoot(int index, unsigned int msecs)
         {
             Vector3 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
             using namespace Common::Data;
@@ -174,7 +172,7 @@ namespace Logic
                 m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
                 break;
             case LASER_BEAM:
-                m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
+                static_cast<CLaserBeam*>(m_weapons[index])->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()), msecs);
                 break;
             case MISSILE_LINEAR:
                 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
@@ -194,6 +192,8 @@ namespace Logic
                 static_cast<CLaserWeapon*>(m_weapons[weapon])->releaseTrigger(); break;
             case MISSILE_LINEAR:
                 static_cast<CMissileWeapon_Linear*>(m_weapons[weapon])->releaseTrigger(); break;
+			case LASER_BEAM:
+				static_cast<CLaserBeam*>(m_weapons[weapon])->releaseTrigger(); break;
             }
         }
 

@@ -86,9 +86,9 @@ namespace Common
 			listenerPosition.y = transform.getTrans().y;
 			listenerPosition.z = transform.getTrans().z;
 
-			listenerVelocity.x = vectorVelocity.x;
-			listenerVelocity.y = vectorVelocity.y;
-			listenerVelocity.z = vectorVelocity.z;
+			listenerVelocity.x = vectorVelocity.x;//vectorVelocity.x
+			listenerVelocity.y = vectorVelocity.y;//vectorVelocity.y
+			listenerVelocity.z = vectorVelocity.z;//vectorVelocity.z
 
 			listenerForward.x = m_listenerForward.x;
 			listenerForward.y = m_listenerForward.y;
@@ -135,11 +135,13 @@ namespace Common
 
 		void CSound::update3dSound(const std::string& soundName, const Ogre::Matrix4& transform)
 		{
-			assert("3dsound not found." && m_3dpos.find(soundName) != m_3dpos.end());
-			std::vector<Ogre::Vector3> tmpVec(m_3dpos[soundName]);
-			tmpVec[1]=tmpVec[0];//Save previous location
-			tmpVec[0]=transform.getTrans();//Get new location
-			m_3dpos[soundName]=tmpVec;
+			if(m_channels.find(soundName) != m_channels.end()){
+				assert("3dsound not found." && m_3dpos.find(soundName) != m_3dpos.end());
+				std::vector<Ogre::Vector3> tmpVec(m_3dpos[soundName]);
+				tmpVec[1]=tmpVec[0];//Save previous location
+				tmpVec[0]=transform.getTrans();//Get new location
+				m_3dpos[soundName]=tmpVec;
+			}
 		}
 
 		void CSound::updateDelayed(unsigned int msecs)
@@ -212,13 +214,16 @@ namespace Common
 
 			FMOD::Sound* sound;
 			FMOD_RESULT result;
+
 			if(loop)
-				result = m_systemFMOD->createStream(soundPath.c_str(), FMOD_LOOP_NORMAL | FMOD_3D | FMOD_3D_LINEARROLLOFF, 0, &sound);
+				result = m_systemFMOD->createSound(soundPath.c_str(), FMOD_LOOP_NORMAL | FMOD_3D |  FMOD_3D_LINEARSQUAREROLLOFF, 0, &sound);
 			else
-				result = m_systemFMOD->createStream(soundPath.c_str(), FMOD_3D| FMOD_3D_LINEARROLLOFF, 0, &sound);
+				result = m_systemFMOD->createSound(soundPath.c_str(), FMOD_3D |  FMOD_3D_LINEARSQUAREROLLOFF, 0, &sound);
 
 			if(ERRCHECK(result))
 				return false;
+
+			sound->set3DMinMaxDistance(0.0f, 2000.0f);
 
 			m_3dsounds[soundName] = sound;
 
@@ -294,12 +299,24 @@ namespace Common
 
 		void CSound::release3dSound(const std::string& soundName)
 		{
-			m_3dsounds[soundName]->release();
-			m_3dsounds.erase(soundName);
-			if(m_channels.find(soundName) != m_channels.end())
-				m_channels.erase(soundName);
-			if(m_3dpos.find(soundName) != m_3dpos.end())
-				m_3dpos.erase(soundName);
+			if(m_3dsounds.find(soundName) != m_3dsounds.end())
+			{
+				m_3dsounds[soundName]->release();
+				if(m_channels.find(soundName) != m_channels.end())
+					m_channels.erase(m_channels.find(soundName));
+				if(m_3dpos.find(soundName) != m_3dpos.end())
+					m_3dpos.erase(m_3dpos.find(soundName));
+				m_3dsounds.erase(m_3dsounds.find(soundName));
+			}
+		}
+
+		void CSound::free3dSound(const std::string& str)
+		{
+			m_3dsounds[str]->release();
+			if(m_channels.find(str) != m_channels.end())
+				m_channels.erase(str);
+			if(m_3dpos.find(str) != m_3dpos.end())
+				m_3dpos.erase(str);
 		}
 
 		void CSound::releaseEvent(const std::string& eventName)
@@ -401,16 +418,15 @@ namespace Common
 				log_error(LOG_CSOUND,"Sound: %s not found.\n",soundName); 
 				assert(!"Sound not found.");
 			}
-			
+		
 			FMOD_RESULT result = m_systemFMOD->playSound(sound, 0, false, &canal);
 			ERRCHECK(result);
 
 			result = canal->setVolume(volume);
 			ERRCHECK(result);
 
-			
 			std::vector<Ogre::Vector3> tmpVec;
-			tmpVec.push_back(Ogre::Vector3(0.0,0.0,0.0));//Previous location
+			tmpVec.push_back(transform.getTrans());//Previous location
 			tmpVec.push_back(transform.getTrans());//New Location
 			m_3dpos[soundName]=tmpVec;
 
@@ -421,11 +437,14 @@ namespace Common
 			result = canal->set3DAttributes(&initialPosition, NULL);
 			ERRCHECK(result);
 
+
 			int id;
 			result =canal->getIndex(&id);
 			ERRCHECK(result);
 
 			m_channels[soundName] = id;
+
+			canal->setPaused(false);
 		}
 
 		void CSound::startEvent(const std::string& eventName)
@@ -575,7 +594,10 @@ namespace Common
 
 			m_systemFMOD->getChannel(m_channels[soundName], &canal); 
 
-			FMOD_RESULT result = canal->stop();
+			FMOD_RESULT result = canal->setPaused(true);
+			ERRCHECK(result);
+
+			result = canal->stop();
 			ERRCHECK(result);
 
 			m_channels.erase(soundName);
@@ -655,9 +677,9 @@ namespace Common
 			if(ERRCHECK(result))
 				return false;
 
-			const float DOPPLER_SCALE(0.3);
-			const float DISTANCE_FACTOR(1.0);
-			const float ROLLOFF_SCALE(0.6);
+			const float DOPPLER_SCALE(0.01f);
+			const float DISTANCE_FACTOR(1.0f);
+			const float ROLLOFF_SCALE(1.0f);
 
 			m_systemFMOD->set3DSettings(DOPPLER_SCALE, DISTANCE_FACTOR, ROLLOFF_SCALE);
 
@@ -677,8 +699,10 @@ namespace Common
 			}
 
 			for(auto it=m_3dsounds.begin(); it!=m_3dsounds.end(); ++it){
-				release3dSound(it->first);
+				free3dSound(it->first);
 			}
+
+			m_3dsounds.clear();
 
 			result = m_systemFMOD->close();
 		}

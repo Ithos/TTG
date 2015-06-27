@@ -30,7 +30,7 @@ namespace Logic
 		void CListener::tick(unsigned int msec)
 		{
 			assert("Entity has no transform" && m_entity->getComponentByName("CTransform"));
-			Common::Sound::CSound::getSingletonPtr()->updateListener(static_cast<CTransform*>(m_entity->getComponentByName("CTransform"))->getTransform(),msec/1000.0);
+			Common::Sound::CSound::getSingletonPtr()->updateListener(static_cast<CTransform*>(m_entity->getComponentByName("CTransform"))->getTransform(),msec/1000.0f);
 		}
 
     }

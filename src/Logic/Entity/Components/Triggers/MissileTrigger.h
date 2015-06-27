@@ -51,7 +51,8 @@ namespace Logic
         public:
             CMissileTrigger() 
                 : m_parent(nullptr), moveFunc(nullptr), m_shooted(false), m_speed(.0f), m_damage(.0f), m_range(.0f), m_parentTrans(nullptr),
-                m_particles(nullptr), m_bb(nullptr), m_stillActive(false), m_isPlayer(false), m_playerLife(nullptr), m_playerShield(nullptr)
+                m_particles(nullptr), m_bb(nullptr), m_stillActive(false), m_isPlayer(false), m_playerLife(nullptr), m_playerShield(nullptr),
+				m_soundName("")
             {  }
 
             ~CMissileTrigger();
@@ -61,6 +62,8 @@ namespace Logic
             void tick(unsigned int);
 
             bool activate();
+
+			void deactivate() override;
 
             void onOverlapBegin(IPhysic* otherComponent);
 
@@ -94,6 +97,7 @@ namespace Logic
             bool                       m_isPlayer;
             CLife*                     m_playerLife;
             CShield*                   m_playerShield;
+			std::string				   m_soundName;
         };
 
         REG_FACTORY(CMissileTrigger)

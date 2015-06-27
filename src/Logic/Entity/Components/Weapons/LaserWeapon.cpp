@@ -29,6 +29,7 @@
 #include "Common/Data/Spawn_Constants.h"
 #include "Common/data/TTG_Types.h"
 #include "Common/Physic/PhysicManager.h"
+#include "Common/Sound/Sound.h"
 
 #include "Logic/Entity/Entity.h"
 #include "Logic/Entity/Components/Gameplay/Life.h"
@@ -44,8 +45,10 @@ namespace Logic
 
         CLaserWeapon::CLaserWeapon(CScene* scene, Ogre::SceneManager* sceneMngr, physx::PxScene* pxScene, const Map::CMapEntity* entityInfo, CEntity* player)
             : IWeapon(), m_scene(scene), m_sceneMngr(sceneMngr), m_pxScene(pxScene), m_player(player), m_cost(0), m_energy(nullptr), m_triple(false),
-			  m_beamDist(20.0f)
+			m_beamDist(20.0f), m_soundName(""), m_soundExplosion("laserExplosion"), m_time(0.0f)
         { 
+			static unsigned int num(0);
+
              m_type = LASER;
 
              using namespace Common::Data::Spawn;
@@ -68,10 +71,27 @@ namespace Logic
              m_particles->addShootType(LASER);
 
              m_phyMngr = Common::Physic::CPhysicManager::getInstance();
+
+			 //Sounds
+			 if(player->isPlayer())
+				m_soundName = "defaultPlayerSound";
+			 else
+			 {
+				 m_soundName = "defaultEnemySound" + std::to_string(num);
+				 m_soundExplosion += std::to_string(num);
+				 ++num;
+			 }
+			 
+				 Common::Sound::CSound::getSingletonPtr()->add3dSound("Laser1.wav", m_soundName);
+
+			 Common::Sound::CSound::getSingletonPtr()->add3dSound("Explosion.wav", m_soundExplosion);
         }
 
         CLaserWeapon::~CLaserWeapon()
         {
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
+
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundExplosion);
         }
 
 #pragma warning (push)
@@ -98,7 +118,13 @@ namespace Logic
                 }
                 else
                     return; // if dont have energy, cannot shoot
+
+				
             }
+
+			Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName,
+					static_cast<CTransform*>(m_player->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+
 
             CEntity* hitEntity = nullptr;
             m_ray.setOrigin(src);
@@ -117,6 +143,8 @@ namespace Logic
 					}
                         
 					if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+							Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
+					static_cast<CTransform*>(hitEntity->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
 							m_scene->deactivateEntity(hitEntity);
 							m_scene->deleteEntity(hitEntity);
                             m_particles->startNextExplosion(m_currPos);
@@ -163,6 +191,8 @@ namespace Logic
 						}
                         
 						if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+							Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
+					static_cast<CTransform*>(hitEntity->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
 								m_scene->deactivateEntity(hitEntity);
 								m_scene->deleteEntity(hitEntity);
 								m_particles->startNextExplosion(m_currPos);
@@ -207,6 +237,8 @@ namespace Logic
 						}
                         
 						if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
+							Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
+					static_cast<CTransform*>(hitEntity->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
 								m_scene->deactivateEntity(hitEntity);
 								m_scene->deleteEntity(hitEntity);
 								m_particles->startNextExplosion(m_currPos);
@@ -235,7 +267,27 @@ namespace Logic
         } // shoot
 #pragma warning (pop)
 
-        void CLaserWeapon::setWeapon(const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, int charger, bool triple, float beamDist, Common::Data::Weapons_t type)
+		void CLaserWeapon::tick(unsigned int msecs)
+		{
+			IWeapon::tick(msecs);
+
+			if(m_time >= 0.3f)
+			{
+				m_time = 0.0f;
+				
+				if(m_trigger){
+					Common::Sound::CSound::getSingletonPtr()->update3dSound(m_soundName, 
+					static_cast<CTransform*>(m_player->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+				}
+			}else{
+				m_time += msecs/1000.0f;
+			}
+
+		}
+
+        void CLaserWeapon::setWeapon(const float& damage, const float& cadence, const unsigned int& cost,
+			const float& range, const float& speed, int charger, const std::string& soundFile, bool triple, float beamDist,
+			Common::Data::Weapons_t type)
         {
             m_damage  = damage;
             m_cadence = cadence;
@@ -247,6 +299,9 @@ namespace Logic
 			m_beamDist = beamDist;
             if (type != END)
                 m_type = type;
+
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
+			Common::Sound::CSound::getSingletonPtr()->add3dSound(soundFile, m_soundName);
         }
 
     } // Component

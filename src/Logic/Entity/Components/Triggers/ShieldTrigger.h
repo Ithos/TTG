@@ -51,7 +51,7 @@ namespace Logic
             CShieldTrigger() :
                 m_parent(nullptr), m_trans(nullptr), m_particleMngr(nullptr), m_activateShield(true), m_secsNoShield(0),
                 m_timeOut(0), m_sceneNode(nullptr), m_nameChildNode(""), m_compShield(nullptr), m_scene(nullptr), 
-                m_msecsToReload(0), m_timeOutReload(0), m_firstTime(true), m_timesChangeQuota(0)
+                m_msecsToReload(0), m_timeOutReload(0), m_firstTime(true), m_timesChangeQuota(0), m_soundName("")
             { }
 
             ~CShieldTrigger();
@@ -59,6 +59,10 @@ namespace Logic
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 
             void tick(unsigned int);
+
+			bool activate() override;
+
+			void deactivate() override;
 
             void onOverlapBegin(IPhysic* otherComponent);
 
@@ -81,6 +85,7 @@ namespace Logic
             unsigned         m_timeOutReload;
             unsigned         m_timesChangeQuota;
             bool             m_firstTime;
+			std::string		 m_soundName;
         };
 
         REG_FACTORY(CShieldTrigger)

@@ -29,6 +29,7 @@
 #include "../Gameplay/Shield.h"
 #include "common/Particles/ParticleManager.h"
 #include "../Cameras/Camera.h"
+#include "Common/Sound/Sound.h"
 
 #include <Logic/Scene/Scene.h>
 #include "OGRE\OgreRibbonTrail.h"
@@ -51,6 +52,7 @@ namespace Logic
 
         bool CMissileTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
+			static unsigned int num(0);
             // create trigger
             if (!m_parent) {
                 CEntity* thisEnt = m_entity;
@@ -93,6 +95,11 @@ namespace Logic
                 m_set->removeBillboard(m_bb);
 
             m_bb = m_set->createBillboard(pos);
+
+			//Sound
+			m_soundName = "missileExplosion" + std::to_string(num);
+			++num;
+
             return true;
         }
 
@@ -139,6 +146,10 @@ namespace Logic
 
 				if (static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
                         Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();  
+
+						Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName, 
+				static_cast<CTransform*>(hitEnt->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+
 						m_scene->deactivateEntity(hitEnt);
 						m_scene->deleteEntity(hitEnt);
                         m_particles->startNextExplosion(pos);
@@ -161,6 +172,10 @@ namespace Logic
                 // if is the player-> destroy tha mothafucking ship
 				if(static_cast<CLife*>(hitComp->getEntity()->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)){
 					Vector3 pos = static_cast<CTransform*>(hitEnt->getComponentByName(TRANSFORM_COMP))->getPosition();
+
+					Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName, 
+				static_cast<CTransform*>(hitEnt->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+
 					m_scene->deactivateEntity(hitEnt);
 					m_scene->deleteEntity(hitEnt);
 					m_particles->startNextExplosion(pos);
@@ -234,7 +249,15 @@ namespace Logic
 		{
 			if (!IComponent::activate()) return false;
             if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
+			Common::Sound::CSound::getSingletonPtr()->add3dSound("Explosion.wav", m_soundName);
             return true;
+		}
+
+		void CMissileTrigger::deactivate()
+		{
+			IComponent::deactivate();
+
+			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
 		}
     }
 }

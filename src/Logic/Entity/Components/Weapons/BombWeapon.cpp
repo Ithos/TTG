@@ -74,6 +74,9 @@ namespace Logic
                 
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
 				bombTrigger->spawn(ent,m_scene,entinf);
+				
+				delete entinf;
+
 				ent->createComponent(bombTrigger);
                 m_subEntity.push_back(ent);
             }
@@ -99,7 +102,8 @@ namespace Logic
                 m_trigger = true;
 			/**/
 
-			if(m_parent->isPlayer() && Application::CGameManager::getInstance()->getEnergy() >= m_cost){
+			if(m_parent->isPlayer()){
+				if(Application::CGameManager::getInstance()->getEnergy() < m_cost) return;
 				Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
 			}
 

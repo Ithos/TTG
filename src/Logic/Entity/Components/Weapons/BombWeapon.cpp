@@ -24,6 +24,7 @@
 #include "Logic/EntityFactory.h"
 
 #include "../Triggers/BombTrigger.h"
+#include "../Triggers/ExplosionTrigger.h"
 #include "../../../ComponentFactory.h"
 
 #include <Application/Manager/GameManager.h>
@@ -36,6 +37,7 @@ namespace Logic
 
         CBombWeapon::CBombWeapon(CEntity* parent, CScene* scene)
             : m_parent(nullptr), m_scene(nullptr), m_cost(0), m_timeToExplode(.0f)
+			,m_currBomb(0)
         {
             using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
@@ -50,7 +52,7 @@ namespace Logic
                 m_mapInfo[i] = new Map::CMapEntity("Static_bomb" + std::to_string(i));
                 m_mapInfo[i]->setType(getDefaultValue(GEN_STATICBOMB_TYPE));
                 m_mapInfo[i]->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
-                m_mapInfo[i]->setAttribute("physic_type", "static");
+                m_mapInfo[i]->setAttribute("physic_type", "dynamic");
                 m_mapInfo[i]->setAttribute("physic_shape", "sphere");
                 m_mapInfo[i]->setAttribute("physic_mass",  "1");
                 m_mapInfo[i]->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_STATICBOMB_TRIGGER_RADIUS));
@@ -61,7 +63,7 @@ namespace Logic
 
 				Map::CMapEntity* entinf = new Map::CMapEntity("..");
 				entinf->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
-                entinf->setAttribute("physic_type", "static");
+                entinf->setAttribute("physic_type", "dynamic");
                 entinf->setAttribute("physic_shape", "sphere");
                 entinf->setAttribute("physic_mass",  "1");
                 entinf->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_STATICBOMB_RANGE));
@@ -96,9 +98,20 @@ namespace Logic
                 m_trigger = true;
 
 
+			if(m_parent->isPlayer()){
+				//TODO bajar energia blah blah
+			}
 
+			if(m_currBomb < MAX_BOMS - 1){
+				m_currBomb++;
+			} else {
+				m_currBomb = 0;
+			}
 
-
+			m_subEntity[m_currBomb]->spawnEx(m_parent,m_scene,m_mapInfo[m_currBomb]);
+			m_subEntity[m_currBomb]->activate();
+			static_cast<CBombTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CBombTrigger"))->setPosition(src);
+			static_cast<CExplosionTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CExplosionTrigger"))->setPosition(src);
         }
 
         void CBombWeapon::tick(unsigned int msecs)

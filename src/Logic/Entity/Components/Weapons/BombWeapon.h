@@ -63,6 +63,7 @@ namespace Logic
 			unsigned          m_cost;
             float             m_timeToExplode;
             CParticleManager* m_particles;
+			unsigned int	  m_currBomb;
         };
     }
 }

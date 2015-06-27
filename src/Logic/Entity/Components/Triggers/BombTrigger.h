@@ -56,6 +56,8 @@ namespace Logic
 
 			void onOverlapEnd(IPhysic* otherComponent);
 
+			void setPosition(const Vector3& pos);
+
 			bool m_explode;
 
 		private:

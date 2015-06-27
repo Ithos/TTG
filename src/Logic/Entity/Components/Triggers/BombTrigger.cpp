@@ -21,8 +21,11 @@
 #include <Common/Data/TTG_Types.h>
 #include <Common/data/Spawn_Constants.h>
 #include <Common/Map/MapEntity.h>
+#include <common/Physic/PhysicManager.h>
 #include <Logic/Scene/Scene.h>
 #include <Common/Particles/ParticleManager.h>
+
+#include <PxPhysicsAPI.h>
 
 #include "../../Entity.h"
 #include "../Gameplay/Life.h"
@@ -93,5 +96,13 @@ namespace Logic { namespace Component
 		if(found){
 			m_entitiesOnRange.erase(it);
 		}
+	}
+
+	void CBombTrigger::setPosition(const Vector3& pos)
+	{
+		physx::PxRigidDynamic* actor = m_actor->isRigidDynamic();
+		if(!actor) return;
+		Matrix4 tf; tf.setTrans(pos);
+		m_physicMng->moveDynamicActor(actor,tf);
 	}
 }}

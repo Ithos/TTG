@@ -28,6 +28,8 @@
 #include "common/Particles/ParticleManager.h"
 #include "../Cameras/Camera.h"
 
+#include <PxPhysicsAPI.h>
+
 #include "BombTrigger.h"
 
 using namespace Common::Util::PxConversor;
@@ -97,5 +99,13 @@ namespace Logic
             m_shooted = true;
             m_pos     = src;
         }
+
+		void CExplosionTrigger::setPosition(const Vector3& pos)
+		{
+			physx::PxRigidDynamic* actor = m_actor->isRigidDynamic();
+			if(!actor) return;
+			Matrix4 tf; tf.setTrans(pos);
+			m_physicMng->moveDynamicActor(actor,tf);
+		}
     }
 }

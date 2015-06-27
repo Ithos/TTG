@@ -59,6 +59,8 @@ namespace Logic
 
             void shoot(const Vector3&);
 
+			void setPosition(const Vector3& pos);
+
         private:
             bool                m_shooted;
             Vector3             m_pos;

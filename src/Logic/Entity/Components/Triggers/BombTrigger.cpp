@@ -67,6 +67,7 @@ namespace Logic { namespace Component
 	{
 		if(!m_explode) return;
 		for(auto it = m_entitiesOnRange.begin(); it != m_entitiesOnRange.end(); ++it){
+			//TODO if shield
 			if (static_cast<CLife*>((*it)->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)){
 				Vector3 pos = static_cast<CTransform*>((*it)->getComponentByName(TRANSFORM_COMP))->getPosition();  
 				m_scene->deactivateEntity(*it);

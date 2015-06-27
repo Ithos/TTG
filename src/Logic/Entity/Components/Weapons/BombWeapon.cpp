@@ -92,14 +92,15 @@ namespace Logic
 
         void CBombWeapon::shoot(const Vector3& src)
         {
+			/*?*/
             if (m_trigger)
                 return;
             else
                 m_trigger = true;
+			/**/
 
-
-			if(m_parent->isPlayer()){
-				//TODO bajar energia blah blah
+			if(m_parent->isPlayer() && Application::CGameManager::getInstance()->getEnergy() >= m_cost){
+				Application::CGameManager::getInstance()->decreaseEnergyState(m_cost);
 			}
 
 			if(m_currBomb < MAX_BOMS - 1){
@@ -126,7 +127,7 @@ namespace Logic
         */
 		void CBombWeapon::setWeapon(const float& damage, const unsigned int& cost, const float& range, Common::Data::Weapons_t type)
         {
-            
+            //TODO
         }
 
     }

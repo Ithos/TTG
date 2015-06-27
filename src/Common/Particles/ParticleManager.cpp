@@ -36,7 +36,7 @@ namespace Common
 
         CParticleManager::CParticleManager() 
             : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0), m_shieldNode(nullptr),
-              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0)
+              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0), m_iBombExplosion(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
                 m_galaxyParticles[i] = STAR_GALAXY + std::to_string(i);
@@ -72,9 +72,9 @@ namespace Common
         void CParticleManager::initHits()
         {
             for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
-                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "wave", m_sceneMgr);
+                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "hit", m_sceneMgr);
                 m_hits.push_back(pSys);
-                pSys->setScaleTime(10);
+                pSys->setScaleTime(2);
                 m_sceneMgr->getRootSceneNode()->attachObject(pSys);
             }
         }
@@ -101,6 +101,7 @@ namespace Common
             // create explosions
             for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
                 ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "explosion", m_sceneMgr);
+                pSys->setScaleTime(2);
                 m_explosions.push_back(pSys);
                 m_sceneMgr->getRootSceneNode()->attachObject(pSys);
             }
@@ -120,6 +121,35 @@ namespace Common
 
             m_explosions.clear();
             m_iExplosion = 0;
+        }
+
+        void CParticleManager::initBomExplosions()
+        {
+            // create bomb explosion
+            for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
+                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "bombExplosion", m_sceneMgr);
+                //pSys->setScaleTime(3); maybe!!
+                m_bombExplosion.push_back(pSys);
+                m_sceneMgr->getRootSceneNode()->attachObject(pSys);
+            }
+        }
+        
+        void CParticleManager::startBombExplosion(const ::Vector3& pos)
+        {
+            int nTechniques = m_bombExplosion[m_iBombExplosion]->getNumTechniques();
+            for (int i = 0; i < nTechniques; ++i)
+                m_bombExplosion[m_iBombExplosion]->getTechnique(i)->position = pos;
+            m_bombExplosion[m_iBombExplosion]->start(2);
+            m_iBombExplosion = (m_iBombExplosion < MAX_EXPLOSIONS-1) ? m_iBombExplosion + 1 : 0;
+        }
+        
+        void CParticleManager::releaseBombExplosion()
+        {
+            for (auto it = m_bombExplosion.begin(); it != m_bombExplosion.end(); ++it)
+                m_mgr->destroyParticleSystem(*it, m_sceneMgr);
+
+            m_bombExplosion.clear();
+            m_iBombExplosion = 0;
         }
 
         //----------- stars  ----------------//
@@ -335,6 +365,7 @@ namespace Common
             case LASER_BLUE:  return "LightRibbonTrail_blue";
             case LASER_GREEN: return "LightRibbonTrail_green";
             case LASER_RED:   return "LightRibbonTrail_red";
+            default:          return "LightRibbonTrail_blue";
             }
         }
 

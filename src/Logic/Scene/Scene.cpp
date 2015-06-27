@@ -97,9 +97,11 @@ namespace Logic
         Common::Particles::CParticleManager::getInstance()->init(m_sceneMgr);
 
         if (type  == Common::Data::SceneType::BATTLE) {
-            Common::Particles::CParticleManager::getInstance()->initHits();
-            Common::Particles::CParticleManager::getInstance()->initExplosions();
-            Common::Particles::CParticleManager::getInstance()->initShoots();
+            Common::Particles::CParticleManager* pmgr = Common::Particles::CParticleManager::getInstance();
+            pmgr->initHits();
+            pmgr->initExplosions();
+            pmgr->initShoots();
+            pmgr->initBomExplosions();
         }
 	}
 
@@ -111,9 +113,11 @@ namespace Logic
 		Common::Physic::CPhysicManager::getInstance()->destroyScene();
 
         if (m_type ==  Common::Data::SceneType::BATTLE) {
-            Common::Particles::CParticleManager::getInstance()->releaseHits();
-            Common::Particles::CParticleManager::getInstance()->releaseExplosions();
-            Common::Particles::CParticleManager::getInstance()->releaseShoots();
+            Common::Particles::CParticleManager* pmgr = Common::Particles::CParticleManager::getInstance();
+            pmgr->releaseHits();
+            pmgr->releaseExplosions();
+            pmgr->releaseShoots();
+            pmgr->releaseBombExplosion();
         }
 
 		destroyOgreScene();

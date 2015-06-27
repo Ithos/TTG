@@ -33,6 +33,8 @@
 #include <CEGUI/Animation.h>
 #include <CEGUI/AnimationInstance.h>
 
+#include <Common/Language/Tags.h>
+
 namespace Application
 {
 	const char* const LOG_CGALAXYSTATE = "Application::CGalaxyState";
@@ -400,10 +402,10 @@ namespace Application
 
 	bool CGalaxyState::onLabelClicked(const CEGUI::EventArgs& e)
 	{
-		if(CGameManager::getInstance()->getPlayerResourceByName(Common::Data::Game::GAME_FUEL) >= CGameManager::getInstance()->getEqEngineCons() ||
+		if(CGameManager::getInstance()->getPlayerResourceByName(Common::Language::getString(GAME_FUEL)) >= CGameManager::getInstance()->getEqEngineCons() ||
 			m_CurrentSystem == m_playerSystem){
 			if(m_CurrentSystem != m_playerSystem)
-				CGameManager::getInstance()->decreaseResourceByName(Common::Data::Game::GAME_FUEL,CGameManager::getInstance()->getEqEngineCons());
+				CGameManager::getInstance()->decreaseResourceByName(Common::Language::getString(GAME_FUEL),CGameManager::getInstance()->getEqEngineCons());
 
 			//Here we define a sound that is only gonna be used one time
 			Common::Sound::CSound::getSingletonPtr()->addSound("Button2.wav","labelButton");

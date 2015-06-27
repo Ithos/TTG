@@ -32,8 +32,6 @@ namespace Logic
         public:
             CBaseMissileWeapon() {}
             virtual ~CBaseMissileWeapon() {}
-
-            // How missile can move (linear, circles, IA..) 
             virtual void tick(unsigned int) = 0;
 
         protected:

@@ -745,7 +745,7 @@ material PUMediaPack/Ring_03
 }
 
 //-----------------------------------------------------------------------------------------
-material PUMediaPack/Ring_14
+material PUMediaPack/ShockWave
 {
     technique
     {
@@ -757,7 +757,26 @@ material PUMediaPack/Ring_14
 
             texture_unit
             {
-                texture pump_ring_04.png
+				texture pump_ring_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+material PUMediaPack/SmokeWave
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+				texture pump_smoke_01.png
                 tex_address_mode clamp
             }
         }

@@ -1,0 +1,69 @@
+system hit
+{
+    scale_velocity                              5
+    technique 
+    {
+        visual_particle_quota                   20
+        material                                ParticleUniverse/Debris
+        default_particle_width                  100
+        default_particle_height                 100
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+        }
+        emitter                                 Point Debris
+        {
+            emission_rate                       50
+            angle                               360
+            time_to_live                        1
+            velocity                            dyn_random
+            {
+                min                             18
+                max                             36
+            }
+            particle_width                      dyn_random
+            {
+                min                             5
+                max                             10
+            }
+            particle_height                     dyn_random
+            {
+                min                             6
+                max                             8
+            }
+            enabled                             false
+            force_emission                      true
+        }
+        affector                                Scale 
+        {
+            y_scale                             dyn_curved_linear
+            {
+                control_point                   0 -6
+                control_point                   0.3 -0.6
+                control_point                   1 0
+            }
+        }
+        affector                                Jet 
+        {
+            acceleration                        -0.06
+        }
+        affector                                LinearForce 
+        {
+            force_vector                        0 -3 0
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    0.8 1 1 1
+            time_colour                         1    0 0 0 1
+        }
+        observer                                OnTime 
+        {
+            handler                             DoEnableComponent 
+            {
+                enable_component                emitter_component Debris true
+            }
+            since_start_system                  true
+            on_time                             greater_than 0.1
+        }
+    }
+}

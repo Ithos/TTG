@@ -192,7 +192,8 @@ namespace Logic
 					else {
 						// sound empty weapon for example
 					}
-				}else {
+				}
+                else {
 					m_subEntity[m_iMissile]->spawnEx(m_parent, m_scene, m_mapInfo[m_iMissile]);
 					m_subEntity[m_iMissile]->activate();
                 	static_cast<CMissileTrigger*>(m_subEntity[m_iMissile]->getComponentByName(MISSILE_TRIGGER))->shoot(src, dir);
@@ -201,7 +202,7 @@ namespace Logic
 					static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
 
                     if (m_iMissile < MAX_MISSILES-1 )
-							++m_iMissile;
+						++m_iMissile;
 					else
 						m_iMissile = 0;
 				}

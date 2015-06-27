@@ -19,8 +19,10 @@
 #ifndef __COMMON_LANGUAGE_TAGS_H
 #define __COMMON_LANGUAGE_TAGS_H
 
-namespace Common { namespace Language
-{
+#include "Language.h"
 
-}}
+const char* const GAME_FUEL = "GAME_FUEL";
+const char* const GAME_TIME	= "GAME_TIME";
+const char* const GAME_ORE	= "GAME_ORE";
+
 #endif

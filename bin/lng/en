@@ -3,7 +3,7 @@
 #
 
 GAME_FUEL
->>Fuel:
+>>Fuel::
 
 GAME_TIME
 >>Time:

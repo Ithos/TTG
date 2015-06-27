@@ -65,6 +65,7 @@ namespace Common
             LASER = 0, 
             MISSILE_LINEAR,
             LASER_BEAM,
+            STATIC_BOMB,
             END
         };
 

@@ -229,6 +229,15 @@
     <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\LaserBeamWeapon.h">
       <Filter>Entity\Components\Weapons\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Weapons\BombWeapon.h">
+      <Filter>Entity\Components\Weapons\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\ExplosionTrigger.h">
+      <Filter>Entity\Components\Triggers\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Logic\Entity\Components\Triggers\BombTrigger.h">
+      <Filter>Entity\Components\Triggers\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Logic\Entity\Messages\Message.cpp">
@@ -363,6 +372,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\LaserBeamWeapon.cpp">
       <Filter>Entity\Components\Weapons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Weapons\BombWeapon.cpp">
+      <Filter>Entity\Components\Weapons\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\ExplosionTrigger.cpp">
+      <Filter>Entity\Components\Triggers\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Logic\Entity\Components\Triggers\BombTrigger.cpp">
+      <Filter>Entity\Components\Triggers\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

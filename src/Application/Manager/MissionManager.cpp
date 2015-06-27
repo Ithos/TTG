@@ -31,6 +31,8 @@
 
 #include "../States/State GUI/PlanetGUI.h"
 
+#include <Common/Language/Tags.h>
+
 namespace Application
 {
 	const char* const LOG_CMISSIONMGR = "Application::CMissionManager";
@@ -272,8 +274,8 @@ namespace Application
 			m_targets.first = 0;
 			m_targets.second = 0;
 
-			if(CGameManager::getInstance()->getPlayerResourceByName(Common::Data::Game::GAME_FUEL) >= m_targetsDefeated){
-				CGameManager::getInstance()->decreaseResourceByName(Common::Data::Game::GAME_FUEL, m_targetsDefeated);
+			if(CGameManager::getInstance()->getPlayerResourceByName(Common::Language::getString(GAME_FUEL)) >= m_targetsDefeated){
+				CGameManager::getInstance()->decreaseResourceByName(Common::Language::getString(GAME_FUEL), m_targetsDefeated);
 				getReward(false);
 				abandonMission();
 			}
@@ -400,8 +402,8 @@ namespace Application
 		}else if(m_missionType == 5 && m_targetSystem == std::atoi(CGameManager::getInstance()->getSystem().c_str())){
 			std::string str(CGameManager::getInstance()->getPlanet());
 			str = str.substr(str.length()-2,1);
-			if(m_targetPlanet == std::atoi(str.c_str()) && CGameManager::getInstance()->getPlayerResourceByName(Common::Data::Game::GAME_FUEL) >= m_targetsDefeated){
-				CGameManager::getInstance()->decreaseResourceByName(Common::Data::Game::GAME_FUEL,m_targetsDefeated);
+			if(m_targetPlanet == std::atoi(str.c_str()) && CGameManager::getInstance()->getPlayerResourceByName(Common::Language::getString(GAME_FUEL)) >= m_targetsDefeated){
+				CGameManager::getInstance()->decreaseResourceByName(Common::Language::getString(GAME_FUEL),m_targetsDefeated);
 				getReward();
 				abandonMission();
 			}

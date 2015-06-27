@@ -87,12 +87,8 @@ namespace Logic { namespace Component
 	{
 		auto it = m_entitiesOnRange.begin();
 		bool found = false;
-		while(it != m_entitiesOnRange.end() && !found){
-			if(*it == otherComponent->getEntity()){
-				found = true;
-			} else {
-				++it;
-			}
+		while(it != m_entitiesOnRange.end() && !(found = (*it == otherComponent->getEntity()))){
+			++it;
 		}
 		if(found){
 			m_entitiesOnRange.erase(it);

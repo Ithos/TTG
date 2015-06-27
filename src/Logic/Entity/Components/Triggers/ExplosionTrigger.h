@@ -41,7 +41,8 @@ namespace Logic
         public:
             CExplosionTrigger() :
                 m_shooted(false), m_pos(Vector3(.0f)), m_parent(nullptr), m_stillActive(false),
-                m_particles(nullptr), m_damage(.0f), m_range(.0f), m_isPlayer(false)
+                m_particles(nullptr), m_damage(.0f), m_range(.0f), m_isPlayer(false),
+				m_time(0), m_acumT(0)
             {}
 
 			~CExplosionTrigger(){}
@@ -49,6 +50,8 @@ namespace Logic
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 
             bool activate();
+
+			void tick(unsigned int);
 
             void onOverlapBegin(IPhysic* otherComponent);
 
@@ -65,6 +68,8 @@ namespace Logic
             float               m_damage;
             float               m_range;
             bool                m_isPlayer;
+			unsigned int        m_time;
+			unsigned int		m_acumT;
         };
 
         REG_FACTORY(CExplosionTrigger)

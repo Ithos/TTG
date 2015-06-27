@@ -71,6 +71,16 @@ namespace Logic
             if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
             return true;
         }
+
+		void CExplosionTrigger::tick(unsigned int msecs)
+		{
+			if(!m_shooted) return;
+
+			m_acumT += msecs;
+			if(m_time > m_acumT) return;
+
+			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
+		}
         
         void CExplosionTrigger::onOverlapBegin(IPhysic* otherComponent)
         {

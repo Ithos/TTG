@@ -68,7 +68,7 @@ namespace Logic
                 entinf->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
 
 				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
-				//TODO prioridad y posicion
+				bombTrigger->setPosition(0); bombTrigger->setPriority(1);
                 
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
 				bombTrigger->spawn(ent,m_scene,entinf);
@@ -80,6 +80,12 @@ namespace Logic
         
         CBombWeapon::~CBombWeapon()
         {
+			for(unsigned int i = 0; i < m_mapInfo.size(); ++i){
+				if(Map::CMapEntity* aux = m_mapInfo[i]){
+					delete aux;
+					m_mapInfo[i] = nullptr;
+				}
+			}
         }
 
         void CBombWeapon::shoot(const Vector3& src)
@@ -95,8 +101,12 @@ namespace Logic
 
         }
 
-        void CBombWeapontick(unsigned int msecs)
-        {}
+        void CBombWeapon::tick(unsigned int msecs)
+        {
+			for(auto it = m_subEntity.begin(); it != m_subEntity.end(); ++it){
+				(*it)->tick(msecs);
+			}
+		}
 
         /**
             Set parameters for a weapon.

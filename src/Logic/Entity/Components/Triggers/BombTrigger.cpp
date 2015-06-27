@@ -69,7 +69,7 @@ namespace Logic { namespace Component
 		if(!m_explode) return;
 		for(auto it = m_entitiesOnRange.begin(); it != m_entitiesOnRange.end(); ++it){
 			CShield* sh = static_cast<CShield*>((*it)->getComponentByName(SHIELD_COMP));
-			if(sh){
+			if(sh && sh->getValue() > 0){
 				sh->decreaseShield(m_damage);
 				//TODO also decrease life?
 				continue;

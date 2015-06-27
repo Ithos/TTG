@@ -70,7 +70,7 @@ namespace Logic
                 entinf->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
 
 				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
-				bombTrigger->setPosition(0); bombTrigger->setPriority(1);
+				bombTrigger->setPosition(1); bombTrigger->setPriority(1);
                 
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
 				bombTrigger->spawn(ent,m_scene,entinf);

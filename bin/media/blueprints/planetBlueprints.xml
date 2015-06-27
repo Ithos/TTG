@@ -78,6 +78,6 @@
   </entity>
   <entity type="Static_bomb">
     <!--<component name="CBombTrigger" number="0" priority="1" />-->
-	<component name="CExplosionTrigger" number="1" priority="1" />
+	<component name="CExplosionTrigger" number="0" priority="1" />
   </entity>
 </entities>

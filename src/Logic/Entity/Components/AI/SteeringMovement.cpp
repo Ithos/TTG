@@ -107,7 +107,7 @@ namespace Logic
 			float dist1(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(m_evade->getTarget()));
 			float dist2(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(pos));
 
-			if(dist2 < 9000 && dist2 < dist1)
+			if(dist2 < 5000 && dist2 < dist1)
 				m_evade->setTarget(pos);
 
 		}

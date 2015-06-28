@@ -244,7 +244,7 @@ namespace Logic
 
 		bool CMissileTrigger::activate()
 		{
-			if (!IComponent::activate()) return false;
+			if (!CPhysicEntity::activate()) return false;
             if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
 			Common::Sound::CSound::getSingletonPtr()->add3dSound("Explosion.wav", m_soundName);
             return true;
@@ -252,7 +252,7 @@ namespace Logic
 
 		void CMissileTrigger::deactivate()
 		{
-			IComponent::deactivate();
+			CPhysicEntity::deactivate();
 
 			Common::Sound::CSound::getSingletonPtr()->release3dSound(m_soundName);
 		}

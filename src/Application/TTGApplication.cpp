@@ -80,8 +80,8 @@ namespace Application
 		if(!addState("planet", new CPlanetState(this,Common::Data::GAME_STATE,m_root,m_GUISystem,m_renderWindow),true))
 			return false;
 
-		//if(!addState("game_over", new CGameOverState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
-		//	return false;
+		if(!addState("game_over", new CGameOverState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
+			return false;
 
 		if(!addState("game_finished", new CGameFinishedState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
 			return false;

@@ -1,8 +1,8 @@
-system blackHole
+system bombEffect
 {
     technique 
     {
-        visual_particle_quota                   100
+        visual_particle_quota                   50
         material                                PUMediaPack/Flare_04
         default_particle_width                  12
         default_particle_height                 12
@@ -32,7 +32,7 @@ system blackHole
     }
     technique 
     {
-        visual_particle_quota                   100
+        visual_particle_quota                   50
         material                                PUMediaPack/Streak_03
         renderer                                Billboard
         {

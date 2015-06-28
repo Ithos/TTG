@@ -112,10 +112,10 @@ namespace Logic
 
 				//Secondary weapon
 				if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[0][0]){
-					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 70, 1000, 0.6f, -1, "Missile.wav");
-					//setSecondaryWeapon(STATIC_BOMB);
-					//static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1000, 40, Common::Data::Weapons_t::STATIC_BOMB);
+					//setSecondaryWeapon(MISSILE_LINEAR);
+					//static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 70, 1000, 0.6f, -1, "Missile.wav");
+					setSecondaryWeapon(STATIC_BOMB);
+					static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1000, 40, Common::Data::Weapons_t::STATIC_BOMB);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0]){
 					//setSecondaryWeapon(MISSILE_LINEAR);

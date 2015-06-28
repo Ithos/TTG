@@ -77,6 +77,8 @@ namespace Logic { namespace Component
 
 	void CBombTrigger::tick(unsigned int)
 	{
+		if(!m_shooted) return;
+
 		if(!m_explode) return;
 		for(auto it = m_entitiesOnRange.begin(); it != m_entitiesOnRange.end(); ++it){
 			CShield* sh = static_cast<CShield*>((*it)->getComponentByName(SHIELD_COMP));

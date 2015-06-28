@@ -115,6 +115,7 @@ namespace Logic
 				m_currBomb = 0;
 			}
 
+			//FIXME spawnEx
 			m_subEntity[m_currBomb]->spawnEx(m_parent,m_scene,m_mapInfo[m_currBomb]);
 			m_subEntity[m_currBomb]->activate();
 			static_cast<CBombTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CBombTrigger"))->setPosition(src);

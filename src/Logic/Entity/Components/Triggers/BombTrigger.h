@@ -42,7 +42,7 @@ namespace Logic
         {
 			DEC_FACTORY(CBombTrigger);
 		public:
-			CBombTrigger():m_explode(false),m_damage(0),m_particles(nullptr),m_scene(nullptr){}
+			CBombTrigger():m_shooted(false),m_explode(false),m_damage(0),m_particles(nullptr),m_scene(nullptr){}
 
 			~CBombTrigger();
 
@@ -64,6 +64,7 @@ namespace Logic
 			std::vector<CEntity*> m_entitiesOnRange;
 
 			unsigned int m_damage;
+			bool m_shooted;
 
 			CParticleManager*          m_particles;
             CScene*                    m_scene;

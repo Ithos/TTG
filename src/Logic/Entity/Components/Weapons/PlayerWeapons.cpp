@@ -20,6 +20,7 @@
 #include "LaserWeapon.h"
 #include "LaserBeamWeapon.h"
 #include "MissileWeapon_Linear.h"
+#include "BombWeapon.h"
 #include "../Movement/Transform.h"
 #include <log.h>
 
@@ -55,6 +56,7 @@ namespace Logic
             m_weapons.push_back(new CLaserWeapon(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
             m_weapons.push_back(new CMissileWeapon_Linear(entity, scene));
             m_weapons.push_back(new CLaserBeam(scene, m_entity->getScene()->getSceneManager(), nullptr, entityInfo, entity));
+			m_weapons.push_back(new CBombWeapon(entity,scene));
 
       /*      if (entityInfo->hasAttribute(COMMON_PRIMARY_WEAPON))
                 m_primary = getWeapon(entityInfo->getStringAttribute(COMMON_PRIMARY_WEAPON));
@@ -112,10 +114,14 @@ namespace Logic
 				if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[0][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 70, 1000, 0.6f, -1, "Missile.wav");
+					//setSecondaryWeapon(STATIC_BOMB);
+					//static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1000, 40, Common::Data::Weapons_t::STATIC_BOMB);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0]){
-					setSecondaryWeapon(MISSILE_LINEAR);
-					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1, "Mine.wav");
+					//setSecondaryWeapon(MISSILE_LINEAR);
+					//static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1, "Mine.wav");
+					setSecondaryWeapon(STATIC_BOMB);
+					static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1000, 40, Common::Data::Weapons_t::STATIC_BOMB);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]){
 

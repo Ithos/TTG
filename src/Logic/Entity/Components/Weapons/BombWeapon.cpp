@@ -46,6 +46,8 @@ namespace Logic
             m_parent = parent;
             m_scene  = scene; 
 
+			setDefaultFile(CONFIGURE_FILE);
+			setDefaultFile(getDefaultValue(CONF_GENERATOR_PATH).c_str());
 
             //init pool of missiles (
             for ( int i = 0; i < MAX_BOMS; ++i) {
@@ -60,7 +62,7 @@ namespace Logic
                 m_mapInfo[i]->setAttribute(BOMB_DAMAGE, getDefaultValue(GEN_STATICBOMB_DAMAGE));
                 m_mapInfo[i]->setAttribute(BOMB_COST,  getDefaultValue(GEN_STATICBOMB_COST));
                 m_mapInfo[i]->setAttribute(BOMB_RANGE, getDefaultValue(GEN_STATICBOMB_RANGE));
-
+				/*
 				Map::CMapEntity* entinf = new Map::CMapEntity("..");
 				entinf->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
                 entinf->setAttribute("physic_type", "dynamic");
@@ -70,14 +72,14 @@ namespace Logic
                 entinf->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
 
 				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
-				bombTrigger->setPosition(1); bombTrigger->setPriority(1);
-                
+				bombTrigger->setPosition(2); bombTrigger->setPriority(1);
+                */
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
-				bombTrigger->spawn(ent,m_scene,entinf);
+				//bombTrigger->spawn(ent,m_scene,entinf);//FIXME
 				
-				delete entinf;
+				//delete entinf;
 
-				ent->createComponent(bombTrigger);
+				//ent->createComponent(bombTrigger);
                 m_subEntity.push_back(ent);
             }
 
@@ -131,7 +133,48 @@ namespace Logic
         */
 		void CBombWeapon::setWeapon(const float& damage, const unsigned int& cost, const float& range, Common::Data::Weapons_t type)
         {
-            //TODO
+			using namespace Common::Data::Spawn;
+		    using namespace Common::Configuration;
+
+			m_subEntity.clear();
+
+			m_type = type;
+			m_cost = cost;
+			m_damage = damage;
+
+            //init pool of missiles (
+            for ( int i = 0; i < MAX_BOMS; ++i) {
+                m_mapInfo[i] = new Map::CMapEntity("Static_bomb" + std::to_string(i));
+                m_mapInfo[i]->setType(getDefaultValue(GEN_STATICBOMB_TYPE));
+                m_mapInfo[i]->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
+                m_mapInfo[i]->setAttribute("physic_type", "dynamic");
+                m_mapInfo[i]->setAttribute("physic_shape", "sphere");
+                m_mapInfo[i]->setAttribute("physic_mass",  "1");
+                m_mapInfo[i]->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_STATICBOMB_TRIGGER_RADIUS));
+                m_mapInfo[i]->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
+				m_mapInfo[i]->setAttribute(BOMB_DAMAGE, std::to_string(damage));
+                m_mapInfo[i]->setAttribute(BOMB_COST,  std::to_string(cost));
+				m_mapInfo[i]->setAttribute(BOMB_RANGE, std::to_string(range));
+				/*
+				Map::CMapEntity* entinf = new Map::CMapEntity("..");
+				entinf->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
+                entinf->setAttribute("physic_type", "dynamic");
+                entinf->setAttribute("physic_shape", "sphere");
+                entinf->setAttribute("physic_mass",  "1");
+				entinf->setAttribute(PHYSIC_RADIUS,  std::to_string(range));
+                entinf->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
+
+				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
+				bombTrigger->setPosition(2); bombTrigger->setPriority(1);
+                */
+                CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
+				//bombTrigger->spawn(ent,m_scene,entinf);
+				
+				//delete entinf;
+
+				//ent->createComponent(bombTrigger);
+                m_subEntity.push_back(ent);
+			}
         }
 
     }

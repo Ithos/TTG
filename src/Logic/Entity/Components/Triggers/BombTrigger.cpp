@@ -46,7 +46,18 @@ namespace Logic { namespace Component
 
 	bool CBombTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
 	{
-		if(!CPhysicEntity::spawn(entity,scene,entityInfo)) return false;
+
+		Map::CMapEntity* entinf = new Map::CMapEntity("..");
+		entinf->setAttribute(PHYSIC_ENTITY,  entityInfo->getStringAttribute(PHYSIC_ENTITY));
+        entinf->setAttribute("physic_type", "dynamic");
+        entinf->setAttribute("physic_shape", "sphere");
+        entinf->setAttribute("physic_mass",  "1");
+		entinf->setAttribute(PHYSIC_RADIUS,  entityInfo->getStringAttribute(BOMB_RANGE));
+		entinf->setAttribute(PHYSIC_TRIGGER, entityInfo->getStringAttribute(PHYSIC_TRIGGER));
+
+		if(!CPhysicEntity::spawn(entity,scene,entinf)) return false;
+
+		delete entinf;
 
 		if(entityInfo->hasAttribute(BOMB_DAMAGE))
 			m_damage = entityInfo->getIntAttribute(BOMB_DAMAGE);

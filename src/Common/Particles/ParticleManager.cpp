@@ -165,7 +165,7 @@ namespace Common
             }
         }
         
-        void CParticleManager::startBombEffect(const Vector3& pos)
+        void CParticleManager::startBombEffect(const ::Vector3& pos)
         {
             int nTechniques = m_bomEffect[m_ibombEffect]->getNumTechniques();
             for (int i = 0; i < nTechniques; ++i)

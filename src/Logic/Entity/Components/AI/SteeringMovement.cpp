@@ -203,12 +203,13 @@ namespace Logic
 			minTime +=(Application::CGameManager::getInstance()->getTotalObjectives() - 
 				Application::CGameManager::getInstance()->getObjectivesAquired()) * 0.5f;
 
-			if (m_frequency >= minTime + m_freq(m_generator))
-			{
-				m_weapons->shootSecondaryWeapon();
-				m_frequency = 0.0f;
-			}else{
-				m_frequency += (msecs/1000.0f);
+			if (m_playerTarget) {
+				if (m_frequency >= minTime + m_freq(m_generator)) {
+					m_weapons->shootSecondaryWeapon();
+					m_frequency = 0.0f;
+				}
+				else
+					m_frequency += (msecs/1000.0f);
 			}
 		}
 

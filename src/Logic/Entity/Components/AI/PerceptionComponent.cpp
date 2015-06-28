@@ -156,30 +156,19 @@ namespace Logic
 		{
 			CEntity* entity = (CEntity*) notification->getPerceivedEntity()->getUserData();
 			CTransform* transf = static_cast<CTransform*>(entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
+			CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
 
-			if (entity->isPlayer() && !playerSeen) {
-				CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
-				steering->setPlayerAsTarget();
-				playerSeen = true;
-
-				Application::CPlanetGUI::getInstance()->addLock();
-
-				/*Ogre::String xx = Ogre::StringConverter::toString(transf->getPosition().x) + " ";
-				Ogre::String yy = Ogre::StringConverter::toString(transf->getPosition().y) + " ";
-				Ogre::String zz = Ogre::StringConverter::toString(transf->getPosition().z) + "\n";
-				Ogre::String str = xx+yy+zz;
-				std::string cadena = m_entity->getName()+" percibe a "+entity->getName()+" en "+str;
-				log_trace("MAIN",cadena.c_str());*/
-			}else{
-
-				if(entity->isPlayer()){
-					CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
-					steering->setEvadePlayer(transf->getPosition());
-				}else if(entity != m_entity){
-					CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
-					steering->setEvadeObstacle(transf->getPosition());
+			if (entity->isPlayer()) {
+				if (!playerSeen) {
+					steering->setPlayerAsTarget();
+					playerSeen = true;
+					Application::CPlanetGUI::getInstance()->addLock();
 				}
+				else
+					steering->setEvadePlayer(transf->getPosition());
 			}
+			else
+				steering->setEvadeObstacle(transf->getPosition());
 
 			// El gestor de percepción se desentiende de las notificaciones una vez que las 
 			// envía. Es responsabilidad del receptor eliminarlas.

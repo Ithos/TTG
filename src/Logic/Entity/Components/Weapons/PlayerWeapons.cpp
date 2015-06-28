@@ -125,7 +125,8 @@ namespace Logic
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]){
 
-					/// TODO ///
+					setSecondaryWeapon(MISSILE_LINEAR);
+					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(100.0f * damageProp, 1.0f, 70, 1000, 0.0f, -1, "Mine.wav");
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[3][0]){
 					setSecondaryWeapon(MISSILE_LINEAR);

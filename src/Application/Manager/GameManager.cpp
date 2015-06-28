@@ -666,7 +666,7 @@ namespace Application
 
 	void CGameManager::decreaseLife(unsigned int num)
 	{
-		if (num >= m_life) {
+		if (num >= m_life && m_life > 0) {
 			m_life = 0;
 			CPlanetGUI::getInstance()->shipDestroyed();
 		}
@@ -790,101 +790,53 @@ namespace Application
 
 		m_equipmentMap[Common::Data::Game::GAME_SENSORS] = std::pair<std::string,std::string>(
 			Common::Data::Game::GAME_SENSORS_LIST[0][0], Common::Data::Game::GAME_SENSORS_LIST[0][1]);
-		/*m_equipmentMap[Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0]] = std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2]);*/
-
 
 		m_crewMembersMap[Common::Data::Game::GAME_MILITARY] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_ENGINEERS] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_SCIENTIFICS] = 0;
 
-		/*m_cargoMap.insert(
+		/*for(int i = 0; i < Common::Data::Game::TOTAL_PRIMARY_WEAPONS; ++i){
+			m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][1])));
+			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[i][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[i][1])));
 
-		m_cargoMap.insert(
+		}
+
+
+		for(int i = 0; i < Common::Data::Game::TOTAL_SECONDARY_WEAPONS; ++i){
+			m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][1])));
-*/
-		/*m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][0], std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[0][2])));
+			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[i][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[i][1])));
 
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][0], std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][1], Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[1][2])));*/
+		}
 
-		/*m_cargoMap.insert(
+		for(int i = 0; i < Common::Data::Game::TOTAL_ENGINES; ++i){
+			m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
 			Common::Data::Game::GAME_ENGINE, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_ENGINES_LIST[1][0], Common::Data::Game::GAME_ENGINES_LIST[1][1])));
+			Common::Data::Game::GAME_ENGINES_LIST[i][0],Common::Data::Game::GAME_ENGINES_LIST[i][1])));
 
-		addEngineData(Common::Data::Game::ENGINE_DATA_MAP[1].first, Common::Data::Game::ENGINE_DATA_MAP[1].second.first
-			, Common::Data::Game::ENGINE_DATA_MAP[1].second.second);*/
+		}
 
-		m_cargoMap.insert(
+		for(int i = 0; i < Common::Data::Game::TOTAL_SPECIAL; ++i){
+			m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[1][1])));
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][0], std::pair<std::string,std::string>(
+			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][2])));
 
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[2][1])));
+		}
 
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[3][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[3][1])));
 
-		m_cargoMap.insert(
+		for(int i = 0; i < Common::Data::Game::TOTAL_ITEMS; ++i){
+			m_cargoMap.insert(
 			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][1])));
+			Common::Data::Game::GAME_ITEM, std::pair<std::string,std::string>(
+			Common::Data::Game::GAME_ITEM_LIST[i][0],Common::Data::Game::GAME_ITEM_LIST[i][0])));
 
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[5][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[5][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[6][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[6][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[7][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[3][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[3][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[4][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[4][1])));
-
-		m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][0], Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[5][1])));
+		}*/
+		
 
 		m_activeMission = std::pair<int,std::string>(0," ");
 

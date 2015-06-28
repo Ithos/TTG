@@ -41,6 +41,8 @@ namespace Map
 {
 	const char* const LOG_CMAPGENERATOR = "Map::CMapGenerator";
 
+	/*static std::time_t preconf_seed(123456);*/
+
 	typedef std::list<Map::CMapEntity*> TEntityList;
 
 	CMapGenerator::CMapGenerator()
@@ -81,6 +83,12 @@ namespace Map
 			//Else generate a new one and store it
 			seed = std::chrono::system_clock::now().time_since_epoch().count();
 			m_SeedMap[descriptor] = seed;
+
+			/// JUST FOR DEMOS ///
+			/*seed = preconf_seed;
+			m_SeedMap[descriptor] = preconf_seed;
+			++preconf_seed;*/
+			/////////////////////
 		}
         std::default_random_engine generator(seed);
 		std::uniform_int_distribution<int> distribution(Common::Configuration::defaultValue<int>(GEN_SYSTEM_MINGEN),
@@ -272,6 +280,12 @@ namespace Map
 			//Else generate a new one and store it
 			seed = std::chrono::system_clock::now().time_since_epoch().count();
 			m_SeedMap[descriptor] = seed;
+
+			/// JUST FOR DEMOS ///
+			/*seed = preconf_seed;
+			m_SeedMap[descriptor] = preconf_seed;
+			++preconf_seed;*/
+			/////////////////////
 		}
 
 		//Several distributions are declared here

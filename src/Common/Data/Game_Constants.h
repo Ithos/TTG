@@ -1002,7 +1002,7 @@ namespace Common
 				GAME_BIG_COMPRESSOR, "Heat Cogenerator", "Special Device\nModified engine refrigeration system that\nuses the heat produced by the engine\nto pre-heat the fuel.\n-15% Fuel Cost"
 			};
 
-			const int TOTAL_SPECIAL = 12;
+			const int TOTAL_SPECIAL = 11;//12
 
 			const std::pair<std::string,std::pair<int, int>> SPECIAL_EQUIPMENT_COST[] =
 			{
@@ -1016,8 +1016,8 @@ namespace Common
 				std::make_pair (GAME_ITEM_PROCESSOR_BIG[0],std::make_pair (280, 28)),
 				std::make_pair (GAME_ITEM_COMPRESSOR_SMALL[0],std::make_pair (80, 11)),
 				std::make_pair (GAME_ITEM_COMPRESSOR_MEDIUM[0],std::make_pair (160, 22)),
-				std::make_pair (GAME_ITEM_COMPRESSOR_BIG[0],std::make_pair (360, 33)),
-				std::make_pair (GAME_ITEM_STEALTH[0],std::make_pair (300, 10))
+				std::make_pair (GAME_ITEM_COMPRESSOR_BIG[0],std::make_pair (360, 33))/*,
+				std::make_pair (GAME_ITEM_STEALTH[0],std::make_pair (300, 10))*/
 			};
 
 			const std::array<const char* const*,TOTAL_SPECIAL> GAME_SPECIAL_EQUIPMENT_LIST = {
@@ -1031,8 +1031,8 @@ namespace Common
 				GAME_ITEM_PROCESSOR_BIG,
 				GAME_ITEM_COMPRESSOR_SMALL,
 				GAME_ITEM_COMPRESSOR_MEDIUM,
-				GAME_ITEM_COMPRESSOR_BIG,
-				GAME_ITEM_STEALTH
+				GAME_ITEM_COMPRESSOR_BIG/*,
+				GAME_ITEM_STEALTH*/
 			};
 
 			// Items

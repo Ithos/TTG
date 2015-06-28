@@ -72,6 +72,10 @@ namespace Common
             void startBombExplosion(const Vector3& pos);
             void releaseBombExplosion();
 
+            void initBomEffect();
+            void startBombEffect(const Vector3& pos);
+            void releaseBombEffect();
+
             /*-------- Hits -----------*/
             void initHits();
             void startHit(const Vector3& pos);
@@ -110,6 +114,7 @@ namespace Common
 
             vPU m_explosions;
             vPU m_bombExplosion;
+            vPU m_bomEffect;
             vPU m_hits;
             vPU m_stars;
             std::map<Weapons_t, vPU> m_shoots;
@@ -127,6 +132,7 @@ namespace Common
             unsigned m_iRt;
             
             // index
+            unsigned m_ibombEffect;
             unsigned m_index;
             unsigned m_iExplosion;
             unsigned m_iBombExplosion;

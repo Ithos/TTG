@@ -152,6 +152,37 @@ namespace Common
             m_iBombExplosion = 0;
         }
 
+        //------------
+
+        void CParticleManager::initBomEffect()
+        {
+            // create bomb explosion
+            for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
+                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "bombEffect", m_sceneMgr);
+                //pSys->setScaleTime(3); maybe!!
+                m_bomEffect.push_back(pSys);
+                m_sceneMgr->getRootSceneNode()->attachObject(pSys);
+            }
+        }
+        
+        void CParticleManager::startBombEffect(const Vector3& pos)
+        {
+            int nTechniques = m_bomEffect[m_ibombEffect]->getNumTechniques();
+            for (int i = 0; i < nTechniques; ++i)
+                m_bomEffect[m_ibombEffect]->getTechnique(i)->position = pos;
+            m_bomEffect[m_ibombEffect]->start(2);
+            m_ibombEffect = (m_ibombEffect < MAX_EXPLOSIONS-1) ? m_ibombEffect + 1 : 0;
+        }
+
+        void CParticleManager::releaseBombEffect()
+        {
+            for (auto it = m_bomEffect.begin(); it != m_bomEffect.end(); ++it)
+                m_mgr->destroyParticleSystem(*it, m_sceneMgr);
+
+            m_bomEffect.clear();
+            m_ibombEffect = 0;
+        }
+
         //----------- stars  ----------------//
         void CParticleManager::addStar(star_t type, Ogre::SceneNode* node)
         {

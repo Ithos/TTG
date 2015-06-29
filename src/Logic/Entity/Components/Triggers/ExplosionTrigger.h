@@ -42,7 +42,7 @@ namespace Logic
             CExplosionTrigger() :
                 m_shooted(false), m_pos(Vector3(.0f)), m_parent(nullptr), m_stillActive(false),
                 m_particles(nullptr), m_damage(.0f), m_range(.0f), m_isPlayer(false),
-				m_time(0), m_acumT(0),m_delay(0)
+				m_time(0), m_acumT(0),m_delay(0),m_ff(false)
             {}
 
 			~CExplosionTrigger(){}
@@ -59,7 +59,7 @@ namespace Logic
 
             void shoot(const Vector3&);
 
-			void setPosition(const Vector3& pos);
+			void setPosition(const Vector3& pos,CEntity* parent);
 
         private:
             bool                m_shooted;
@@ -73,6 +73,7 @@ namespace Logic
 			unsigned int        m_time;
 			int					m_delay;
 			unsigned int		m_acumT;
+			bool				m_ff;
         };
 
         REG_FACTORY(CExplosionTrigger)

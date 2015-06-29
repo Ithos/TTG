@@ -111,7 +111,8 @@ namespace Logic { namespace Component
 		bool filter = (type == "Asteroid" || type == "Enemy" || type == "Player");
 
 		if(!m_ff){
-			filter = filter && (type != m_parent->getType());
+			filter = filter && (type != m_parent->getType());// Type
+			//filter = filter && (otherComponent->getEntity() != m_parent);
 		}
 
 		if(filter){

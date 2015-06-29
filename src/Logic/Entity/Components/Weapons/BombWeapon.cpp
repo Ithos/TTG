@@ -31,8 +31,6 @@
 
 #include <Application/Manager/GameManager.h>
 
-#include <log.h>
-
 namespace Logic
 {
     namespace Component
@@ -119,12 +117,10 @@ namespace Logic
 			m_subEntity[m_currBomb]->activate();
 			static_cast<CTransform*>(m_subEntity[m_currBomb]->getComponentByName("CTransform"))->setPosition(src);
 			static_cast<CBombTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CBombTrigger"))->setPosition(src,m_parent);
-			static_cast<CExplosionTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CExplosionTrigger"))->setPosition(src);
+			static_cast<CExplosionTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CExplosionTrigger"))->setPosition(src,m_parent);
 
 			m_canShoot = false;
 			m_shootDelay = 2000;
-
-			log_trace("Logic","Shooting bomb\n");
 
 			//FIXME
 			//m_particles->startBombEffect(src);

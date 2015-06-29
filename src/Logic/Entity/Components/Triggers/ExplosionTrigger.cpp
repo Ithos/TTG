@@ -45,29 +45,6 @@ namespace Logic
 
         bool CExplosionTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
-			//FIXME
-            // create trigger
-			/*
-            if (!m_parent) {
-                CEntity* thisEnt = m_entity;
-                if (!CPhysicEntity::spawn(entity, scene, entityInfo))
-                    return false;
-
-                m_entity      = thisEnt;
-                m_parent      = entity;			
-         //       m_parentTrans = static_cast<CTransform*>(m_parent->getComponentByName(Common::Data::TRANSFORM_COMP));
-       //         m_scene       = scene;
-                m_isPlayer    = m_parent->isPlayer();
-            
-                if (entityInfo->hasAttribute(MISSILE_DAMAGE))
-                    m_damage = entityInfo->getFloatAttribute(MISSILE_DAMAGE);
-
-//                m_trans = Matrix4::IDENTITY;
-                m_particles = Common::Particles::CParticleManager::getInstance();
-            }
-            else 
-                m_stillActive = true;
-        */
 			if(!CPhysicEntity::spawn(entity,scene,entityInfo)) return false;
 
 			if(entityInfo->hasAttribute("bomb_time"))
@@ -75,6 +52,10 @@ namespace Logic
 
 			if(entityInfo->hasAttribute("bomd_delay"))
 			m_delay = entityInfo->getIntAttribute("bomd_delay");
+
+			m_ff = false;
+			if(entityInfo->hasAttribute(BOMB_FF))
+				m_ff = entityInfo->getBoolAttribute(BOMB_FF);
 
 			m_particles = Common::Particles::CParticleManager::getInstance();
 
@@ -85,7 +66,6 @@ namespace Logic
         bool CExplosionTrigger::activate()
         {
             if (!IComponent::activate()) return false;
-            //if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
             return true;
         }
 
@@ -110,6 +90,7 @@ namespace Logic
         {
 			if(!m_shooted) return;
 			if(m_delay > 0) return;
+			if(!m_ff && otherComponent->getEntity() == m_parent) return;
 			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
 			//FIXME
 			m_particles->startBombExplosion(static_cast<CTransform*>(this->m_entity->getComponentByName("CTransform"))->getPosition());
@@ -126,13 +107,14 @@ namespace Logic
             m_pos     = src;
         }
 
-		void CExplosionTrigger::setPosition(const Vector3& pos)
+		void CExplosionTrigger::setPosition(const Vector3& pos,CEntity* parent)
 		{
 			physx::PxRigidDynamic* actor = m_actor->isRigidDynamic();
 			if(!actor) return;
 			Matrix4 tf; tf.setTrans(pos);
 			m_physicMng->moveDynamicActor(actor,tf);
 			m_shooted = true;
+			m_parent = parent;
 		}
     }
 }

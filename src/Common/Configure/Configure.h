@@ -254,6 +254,7 @@ const char* const GEN_STATICBOMB_COST   = "static_bomb_energy_cost";
 const char* const GEN_STATICBOMB_TRIGGER_ENTITY = "static_bomb_trigger_entity";
 const char* const GEN_STATICBOMB_TRIGGER_RADIUS = "staitc_bomb_trigger_radius";
 const char* const GEN_STATICBOMB_TRIGGER_ISTRIGGER = "static_bomb_trigger_istrigger";
+const char* const GEN_STATICBOMB_FF = "static_bomb_ff";
 
 // Camera
 const char* const GEN_CAMERA_NAME				= "camera_name";

@@ -78,6 +78,7 @@
     <component name="CMissileTrigger" number="0" priority="1" />
   </entity>
   <entity type="Static_bomb">
+	<component name="CTransform" number="0" priority="0" />
     <component name="CBombTrigger" number="1" priority="1" />
 	<component name="CExplosionTrigger" number="2" priority="1" />
   </entity>

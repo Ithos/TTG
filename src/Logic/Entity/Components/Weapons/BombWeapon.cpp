@@ -21,13 +21,17 @@
 #include "Common/Map/MapEntity.h"
 #include "Common/Configure/Configure.h"
 #include "Common/Data/Spawn_Constants.h"
+#include <Common/Particles/ParticleManager.h>
 #include "Logic/EntityFactory.h"
 
 #include "../Triggers/BombTrigger.h"
 #include "../Triggers/ExplosionTrigger.h"
+#include "../Movement/Transform.h"
 #include "../../../ComponentFactory.h"
 
 #include <Application/Manager/GameManager.h>
+
+#include <log.h>
 
 namespace Logic
 {
@@ -37,15 +41,16 @@ namespace Logic
 
         CBombWeapon::CBombWeapon(CEntity* parent, CScene* scene)
             : m_parent(nullptr), m_scene(nullptr), m_cost(0), m_timeToExplode(.0f)
-			,m_currBomb(0)
+			,m_currBomb(0),m_shootDelay(2000),m_canShoot(true)
         {
             using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
 
 			m_type = Common::Data::Weapons_t::STATIC_BOMB;
             m_parent = parent;
-            m_scene  = scene; 
-
+            m_scene  = scene;
+			m_particles = Common::Particles::CParticleManager::getInstance();
+			/*
 			setDefaultFile(CONFIGURE_FILE);
 			setDefaultFile(getDefaultValue(CONF_GENERATOR_PATH).c_str());
 
@@ -73,7 +78,7 @@ namespace Logic
 
 				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
 				bombTrigger->setPosition(2); bombTrigger->setPriority(1);
-                */
+                
                 CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
 				//bombTrigger->spawn(ent,m_scene,entinf);//FIXME
 				
@@ -82,7 +87,7 @@ namespace Logic
 				//ent->createComponent(bombTrigger);
                 m_subEntity.push_back(ent);
             }
-
+			*/
         }
         
         CBombWeapon::~CBombWeapon()
@@ -97,12 +102,7 @@ namespace Logic
 
         void CBombWeapon::shoot(const Vector3& src)
         {
-			/*?*/
-            if (m_trigger)
-                return;
-            else
-                m_trigger = true;
-			/**/
+			if(!m_canShoot) return;
 
 			if(m_parent->isPlayer()){
 				if(Application::CGameManager::getInstance()->getEnergy() < m_cost) return;
@@ -114,16 +114,25 @@ namespace Logic
 			} else {
 				m_currBomb = 0;
 			}
-
-			//FIXME spawnEx
-			m_subEntity[m_currBomb]->spawnEx(m_parent,m_scene,m_mapInfo[m_currBomb]);
+			//m_subEntity[m_currBomb]->spawnEx(m_parent,m_scene,m_mapInfo[m_currBomb]);
+			m_subEntity[m_currBomb]->spawn(m_scene,m_mapInfo[m_currBomb]);
 			m_subEntity[m_currBomb]->activate();
-			static_cast<CBombTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CBombTrigger"))->setPosition(src);
+			static_cast<CTransform*>(m_subEntity[m_currBomb]->getComponentByName("CTransform"))->setPosition(src);
+			static_cast<CBombTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CBombTrigger"))->setPosition(src,m_parent);
 			static_cast<CExplosionTrigger*>(m_subEntity[m_currBomb]->getComponentByName("CExplosionTrigger"))->setPosition(src);
+
+			m_canShoot = false;
+			m_shootDelay = 2000;
+
+			log_trace("Logic","Shooting bomb\n");
+
+			//FIXME
+			//m_particles->startBombEffect(src);
         }
 
         void CBombWeapon::tick(unsigned int msecs)
         {
+			m_canShoot = ((m_shootDelay-=msecs) <= 0);
 			for(auto it = m_subEntity.begin(); it != m_subEntity.end(); ++it){
 				(*it)->tick(msecs);
 			}
@@ -132,7 +141,8 @@ namespace Logic
         /**
             Set parameters for a weapon.
         */
-		void CBombWeapon::setWeapon(const float& damage, const unsigned int& cost, const float& range, Common::Data::Weapons_t type)
+		void CBombWeapon::setWeapon(const float& damage, const unsigned int& cost, const float& range, const unsigned int& time, 
+			const unsigned int& delay, Common::Data::Weapons_t type)
         {
 			using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;
@@ -142,12 +152,17 @@ namespace Logic
 			m_type = type;
 			m_cost = cost;
 			m_damage = damage;
+			m_timeToExplode = time;
+			m_delay = delay;
 
-            //init pool of missiles (
+			setDefaultFile(CONFIGURE_FILE);
+			setDefaultFile(getDefaultValue(CONF_GENERATOR_PATH).c_str());
+
             for ( int i = 0; i < MAX_BOMS; ++i) {
                 m_mapInfo[i] = new Map::CMapEntity("Static_bomb" + std::to_string(i));
                 m_mapInfo[i]->setType(getDefaultValue(GEN_STATICBOMB_TYPE));
                 m_mapInfo[i]->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
+				m_mapInfo[i]->setAttribute(COMMON_POSITION,"{0.0, -300.0, 4700.0}");
                 m_mapInfo[i]->setAttribute("physic_type", "dynamic");
                 m_mapInfo[i]->setAttribute("physic_shape", "sphere");
                 m_mapInfo[i]->setAttribute("physic_mass",  "1");
@@ -156,24 +171,12 @@ namespace Logic
 				m_mapInfo[i]->setAttribute(BOMB_DAMAGE, std::to_string(damage));
                 m_mapInfo[i]->setAttribute(BOMB_COST,  std::to_string(cost));
 				m_mapInfo[i]->setAttribute(BOMB_RANGE, std::to_string(range));
-				/*
-				Map::CMapEntity* entinf = new Map::CMapEntity("..");
-				entinf->setAttribute(PHYSIC_ENTITY,  getDefaultValue(GEN_STATICBOMB_TRIGGER_ENTITY));
-                entinf->setAttribute("physic_type", "dynamic");
-                entinf->setAttribute("physic_shape", "sphere");
-                entinf->setAttribute("physic_mass",  "1");
-				entinf->setAttribute(PHYSIC_RADIUS,  std::to_string(range));
-                entinf->setAttribute(PHYSIC_TRIGGER, getDefaultValue(GEN_STATICBOMB_TRIGGER_ISTRIGGER));
-
-				IComponent* bombTrigger = Logic::CComponentFactory::getInstance()->create("CBombTrigger");
-				bombTrigger->setPosition(2); bombTrigger->setPriority(1);
-                */
-                CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
-				//bombTrigger->spawn(ent,m_scene,entinf);
+				m_mapInfo[i]->setAttribute("bomb_time", std::to_string(time));
+				m_mapInfo[i]->setAttribute("bomd_delay", std::to_string(delay));
+				m_mapInfo[i]->setAttribute(BOMB_FF, getDefaultValue(GEN_STATICBOMB_FF));
 				
-				//delete entinf;
-
-				//ent->createComponent(bombTrigger);
+                CEntity* ent = CEntityFactory::getInstance()->createEntity(m_mapInfo[i], nullptr);
+				
                 m_subEntity.push_back(ent);
 			}
         }

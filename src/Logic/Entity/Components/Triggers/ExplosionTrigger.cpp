@@ -27,6 +27,7 @@
 #include <Common/Physic/PhysicManager.h>
 #include "common/Particles/ParticleManager.h"
 #include "../Cameras/Camera.h"
+#include "../Movement/Transform.h"
 
 #include <PxPhysicsAPI.h>
 
@@ -44,7 +45,9 @@ namespace Logic
 
         bool CExplosionTrigger::spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo)
         {
+			//FIXME
             // create trigger
+			/*
             if (!m_parent) {
                 CEntity* thisEnt = m_entity;
                 if (!CPhysicEntity::spawn(entity, scene, entityInfo))
@@ -64,13 +67,25 @@ namespace Logic
             }
             else 
                 m_stillActive = true;
-        
+        */
+			if(!CPhysicEntity::spawn(entity,scene,entityInfo)) return false;
+
+			if(entityInfo->hasAttribute("bomb_time"))
+			m_time = entityInfo->getIntAttribute("bomb_time");
+
+			if(entityInfo->hasAttribute("bomd_delay"))
+			m_delay = entityInfo->getIntAttribute("bomd_delay");
+
+			m_particles = Common::Particles::CParticleManager::getInstance();
+
+			return true;
+
         }
 
         bool CExplosionTrigger::activate()
         {
             if (!IComponent::activate()) return false;
-            if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
+            //if (!m_stillActive)          m_physicMng->activateActor(m_actor,true);
             return true;
         }
 
@@ -78,16 +93,27 @@ namespace Logic
 		{
 			if(!m_shooted) return;
 
+			m_delay -= msecs;
+			if(m_delay > 0) return;
+
 			m_acumT += msecs;
 			if(m_time > m_acumT) return;
 
 			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
+			//FIXME
+			//m_particles->startBombExplosion(static_cast<CTransform*>(this->m_entity->getComponentByName("CTransform"))->getPosition());
+			m_particles->startBombExplosion(Vector3(0,-100,0));
+			m_shooted = false;
 		}
         
         void CExplosionTrigger::onOverlapBegin(IPhysic* otherComponent)
         {
 			if(!m_shooted) return;
+			if(m_delay > 0) return;
 			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
+			//FIXME
+			m_particles->startBombExplosion(static_cast<CTransform*>(this->m_entity->getComponentByName("CTransform"))->getPosition());
+			m_shooted = false;
         }
 
         void CExplosionTrigger::onOverlapEnd(IPhysic* otherComponent)
@@ -106,6 +132,7 @@ namespace Logic
 			if(!actor) return;
 			Matrix4 tf; tf.setTrans(pos);
 			m_physicMng->moveDynamicActor(actor,tf);
+			m_shooted = true;
 		}
     }
 }

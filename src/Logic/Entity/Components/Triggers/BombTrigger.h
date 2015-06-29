@@ -42,7 +42,7 @@ namespace Logic
         {
 			DEC_FACTORY(CBombTrigger);
 		public:
-			CBombTrigger():m_shooted(false),m_explode(false),m_damage(0),m_particles(nullptr),m_scene(nullptr){}
+			CBombTrigger():m_shooted(false),m_explode(false),m_damage(0),m_particles(nullptr),m_scene(nullptr),m_parent(nullptr){}
 
 			~CBombTrigger();
 
@@ -56,7 +56,7 @@ namespace Logic
 
 			void onOverlapEnd(IPhysic* otherComponent);
 
-			void setPosition(const Vector3& pos);
+			void setPosition(const Vector3& pos,CEntity* parent);
 
 			bool m_explode;
 
@@ -65,9 +65,11 @@ namespace Logic
 
 			unsigned int m_damage;
 			bool m_shooted;
+			bool m_ff;
 
 			CParticleManager*          m_particles;
             CScene*                    m_scene;
+			CEntity*                   m_parent;
 
         };
 		REG_FACTORY(CBombTrigger);

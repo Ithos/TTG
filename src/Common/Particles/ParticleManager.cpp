@@ -36,7 +36,7 @@ namespace Common
 
         CParticleManager::CParticleManager() 
             : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0), m_shieldNode(nullptr),
-              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0), m_iBombExplosion(0)
+			m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0), m_iBombExplosion(0),m_ibombEffect(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
                 m_galaxyParticles[i] = STAR_GALAXY + std::to_string(i);

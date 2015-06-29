@@ -115,13 +115,13 @@ namespace Logic
 					//setSecondaryWeapon(MISSILE_LINEAR);
 					//static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 70, 1000, 0.6f, -1, "Missile.wav");
 					setSecondaryWeapon(STATIC_BOMB);
-					static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1000, 40, Common::Data::Weapons_t::STATIC_BOMB);
+					static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 50, 100, 3000, 3000, Common::Data::Weapons_t::STATIC_BOMB);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[1][0]){
 					//setSecondaryWeapon(MISSILE_LINEAR);
 					//static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1.0f, 40, 1000, -0.1f, -1, "Mine.wav");
 					setSecondaryWeapon(STATIC_BOMB);
-					static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 1000, 40, Common::Data::Weapons_t::STATIC_BOMB);
+					static_cast<CBombWeapon*>(m_weapons[m_secondary])->setWeapon(80.0f * damageProp, 50, 100, 3000, 3000, Common::Data::Weapons_t::STATIC_BOMB);
 
 				}else if(secondaryWeapon == Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[2][0]){
 
@@ -185,6 +185,9 @@ namespace Logic
                 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
                 m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
                 break;
+			case STATIC_BOMB:
+				static_cast<CBombWeapon*>(m_weapons[index])->shoot(m_trans->getPosition()); 
+				break;
             }
         }
 

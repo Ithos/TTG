@@ -22,6 +22,7 @@
 #include "..\Component.h"
 #include <vector>
 #include <Common/data/TTG_Types.h>
+#include <common/Util/Math.h>
 
 namespace Logic
 {
@@ -56,6 +57,8 @@ namespace Logic
             IWeapon* getPrimaryWeapon()   { return m_weapons[m_primary];   }
             IWeapon* getSecondaryWeapon() { return m_weapons[m_secondary]; }
 
+			void setTargetPos(const Vector3& pos) {m_targetPos = pos;}
+
             const std::vector<IWeapon*>& getAllWeapons() { return m_weapons; }
 
         private:
@@ -64,6 +67,7 @@ namespace Logic
             std::vector<IWeapon*> m_weapons;
             CTransform*           m_trans;
             int                   m_shipRadius;
+			Vector3				  m_targetPos;
 
             unsigned getWeapon(Common::Data::Weapons_t weapon);
             void releaseTrigger(int weapon);

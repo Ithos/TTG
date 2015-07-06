@@ -73,7 +73,7 @@ namespace GUI
 
 			TKeyCommandMap m_keyCommands;
 
-			typedef std::map<InputListener::CMouseState*,GUI::Controller::Command::ICommand*> 
+			typedef std::map<Common::Input::Button::TMouseButton, GUI::Controller::Command::ICommand*> 
 				TMouseCommandMap;
 
 			TMouseCommandMap m_mouseCommands;

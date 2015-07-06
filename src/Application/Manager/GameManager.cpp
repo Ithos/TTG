@@ -794,48 +794,6 @@ namespace Application
 		m_crewMembersMap[Common::Data::Game::GAME_MILITARY] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_ENGINEERS] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_SCIENTIFICS] = 0;
-
-		/*for(int i = 0; i < Common::Data::Game::TOTAL_PRIMARY_WEAPONS; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[i][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[i][1])));
-
-		}
-
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_SECONDARY_WEAPONS; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[i][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[i][1])));
-
-		}
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_ENGINES; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_ENGINE, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_ENGINES_LIST[i][0],Common::Data::Game::GAME_ENGINES_LIST[i][1])));
-
-		}
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_SPECIAL; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][0], std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][2])));
-
-		}
-
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_ITEMS; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_ITEM, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_ITEM_LIST[i][0],Common::Data::Game::GAME_ITEM_LIST[i][0])));
-
-		}*/
 		
 
 		m_activeMission = std::pair<int,std::string>(0," ");

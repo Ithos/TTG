@@ -89,7 +89,7 @@ namespace Common
             void startShoot(Weapons_t type, const Vector3& src, const Vector3& dir, float = 0.0f, Ogre::Node* = nullptr);
             void releaseShoots(Weapons_t = ALL);
 
-            void laserShot(const Vector3& init, const Vector3& dir, const float& range, ribbonTrail_t trail = LASER_BLUE);
+            void laserShot(Vector3 init, Vector3 dir, float range, ribbonTrail_t trail = LASER_BLUE);
 
             /********** Stars **********/
             void addStar(star_t , Ogre::SceneNode* = nullptr);

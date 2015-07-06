@@ -20,6 +20,13 @@ namespace GUI
                     ->primaryShoot(action == Common::Input::Action::KEY_PRESSED);
 			}
 
+			void CPrimaryShoot::execute(Common::Input::Action::TKeyMouseAction action,
+					                Logic::CEntity *entity, const Vector3& vec)
+			{
+				static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
+                    ->primaryShoot(action == Common::Input::Action::MOUSE_PRESSED, vec);
+			}
+
             //---------- 2º shoot
             void CSecondaryShoot::execute() {}
 
@@ -30,6 +37,13 @@ namespace GUI
                 static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
                     ->secondaryShoot(action == Common::Input::Action::KEY_PRESSED);
             }
+
+			void CSecondaryShoot::execute(Common::Input::Action::TKeyMouseAction action,
+					                Logic::CEntity *entity, const Vector3& vec)
+			{
+				 static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
+                    ->secondaryShoot(action == Common::Input::Action::MOUSE_PRESSED, vec);
+			}
 		}
 	}
 }

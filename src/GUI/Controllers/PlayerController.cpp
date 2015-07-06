@@ -18,6 +18,10 @@
 
 #include "PlayerController.h"
 
+#include <CEGUI/CEGUI.h>
+#include <Logic/Entity/Entity.h>
+#include <Logic/Scene/Scene.h>
+
 #include "GUI\InputManager.h"
 #include "Commands\MoveForward.h"
 #include "Commands\SlowDown.h"
@@ -55,8 +59,11 @@ namespace GUI
 			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::S, new Command::CSlowDown()));
 			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::A, new Command::CTurnLeft()));
 			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::D, new Command::CTurnRight()));
-            m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::SPACE, new Command::CPrimaryShoot()));
-			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::LSHIFT, new Command::CSecondaryShoot()));
+           /* m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::SPACE, new Command::CPrimaryShoot()));
+			m_keyCommands.insert(std::pair<TKeyID, Command::ICommand*>(TKeyID::LSHIFT, new Command::CSecondaryShoot()));*/
+
+			m_mouseCommands.insert(std::pair<Common::Input::Button::TMouseButton, Command::ICommand*>(Common::Input::Button::LEFT, new Command::CPrimaryShoot()));
+			m_mouseCommands.insert(std::pair<Common::Input::Button::TMouseButton, Command::ICommand*>(Common::Input::Button::RIGHT, new Command::CSecondaryShoot()));
 
 			return true;
 		}
@@ -106,11 +113,44 @@ namespace GUI
 
 		bool CPlayerController::mousePressed(const InputListener::CMouseState &mouseState)
 		{
+			if(m_avatar){
+				CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
+				Ogre::Ray mouseRay = m_avatar->getScene()->getSceneCamera()->getCameraToViewportRay(mousePos.d_x/float(mouseState.width),mousePos.d_y/float(mouseState.height));
+
+				 Ogre::Vector3 point = mouseRay.getPoint(Ogre::Real(1300));
+
+				 float err =0.001;
+                int i =0;
+                while(point.y > -295.0 || point.y < -305.0 || i < 20){
+                    point = mouseRay.getPoint(Ogre::Real(1300 + point.y + 0.01*err));
+                    err+=point.y;
+                    i+=1;
+                }
+                point.y = -300.0f;
+
+				auto it (m_mouseCommands.find(mouseState.button));
+				if(it != m_mouseCommands.end()){
+					m_mouseCommands[mouseState.button]->execute
+						(Common::Input::Action::MOUSE_PRESSED,m_avatar,point);
+					//return true; //We're not returning true because we want the mouse event to get to the GUI
+				}
+				
+			}
 			return false;
 		}
 		
 		bool CPlayerController::mouseReleased(const InputListener::CMouseState &mouseState)
 		{
+
+			if(m_avatar){
+				auto it (m_mouseCommands.find(mouseState.button));
+				if(it != m_mouseCommands.end()){
+					m_mouseCommands[mouseState.button]->execute
+						(Common::Input::Action::MOUSE_RELEASED,m_avatar);
+					//return true; //We're not returning true because we want the mouse event to get to the GUI
+				}
+			}
+
 			return false;
 		}
 	}

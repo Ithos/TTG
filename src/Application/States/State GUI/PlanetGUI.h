@@ -69,6 +69,11 @@ namespace Application
 		bool onBackClicked(const CEGUI::EventArgs& e);
 		bool onLandClicked(const CEGUI::EventArgs& e);
 
+		void onBackActivated();
+		void onLandActivated();
+
+		void setPause(bool pause) {m_Pause = pause;}
+
 		void shipDestroyed();
 		void updateMission();
 	private:
@@ -95,6 +100,7 @@ namespace Application
 		CGameManager* m_mgrInstance;
 
 		unsigned int m_backLockCount;
+		bool m_Pause;
 
 		CPlanetGUI(CEGUI::System* sys, Ogre::Root* root, CPlanetState* state);
 		~CPlanetGUI();

@@ -137,12 +137,13 @@ namespace Application
 		{
 		case Common::Input::Key::ESCAPE:
 			m_app->setState("pause");
-			break;
-		case Common::Input::Key::G:
-			/*m_app->popState();*/
+			m_guiInstance->setPause(true);
 			break;
 		case Common::Input::Key::E:
-			/*m_app->setState("event");*/
+			m_guiInstance->onLandActivated();
+			break;
+		case Common::Input::Key::Q:
+			m_guiInstance->onBackActivated();
 			break;
 		default:
 			return false;

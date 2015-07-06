@@ -612,6 +612,8 @@ namespace Application
 				m_shopMap.insert(std::pair<std::string, std::pair<std::string,std::string>>(Common::Data::Game::GAME_ENGINE,
 					std::pair<std::string,std::string>(Common::Data::Game::GAME_ENGINES_LIST[engine][0],Common::Data::Game::GAME_ENGINES_LIST[engine][1])));
 
+				m_engineDataMap[Common::Data::Game::ENGINE_DATA_MAP[engine].first] = Common::Data::Game::ENGINE_DATA_MAP[engine].second;
+
 			}else if(itemType == 3){
 
 				int specialItem(specialItemDist(generator));
@@ -764,7 +766,7 @@ namespace Application
 				m_mgrInstance->addToCargo(Common::Data::Game::GAME_ITEM,Common::Data::Game::GAME_ITEM_LIST[planetType + 1][0], Common::Data::Game::GAME_ITEM_LIST[planetType + 1][1]);
 				/// TODO -- Internationalization -- /// Begin{
 				static_cast<CEGUI::Listbox*>(m_menuWindow->getChildElement("EventPage/LogWindow/MessageBoard"))->addItem(
-					new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_EVENT_ITEM_TEXT[planetType]) + std::string("\n" + std::string(Common::Data::Game::GAME_ITEM_LIST[1][0])+ " added to cargo.") ));
+					new CEGUI::ListboxTextItem(std::string(Common::Data::Game::GAME_EVENT_ITEM_TEXT[planetType]) + std::string("\n" + std::string(Common::Data::Game::GAME_ITEM_LIST[planetType + 1][0])+ " added to cargo.") ));
 				/// TODO -- Internationalization -- /// }End
 			}else{
 				std::uniform_int_distribution<int> crewType(0,2);

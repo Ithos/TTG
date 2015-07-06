@@ -326,7 +326,7 @@ namespace Common
             }
         }
 
-        void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range, ribbonTrail_t trail)
+        void CParticleManager::laserShot(::Vector3 src, ::Vector3 dir, float range, ribbonTrail_t trail)
         {
             if (m_node1[m_iRt]) {
                 m_node1[m_iRt]->detachAllObjects();

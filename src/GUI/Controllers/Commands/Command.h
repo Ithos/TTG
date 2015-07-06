@@ -20,6 +20,7 @@
 #define __GUI_CONTROLLERS_COMMANDS_COMMAND_H
 
 #include "../../../Common/Input/Input.h"
+#include "../../../Common/Util/Math.h"
 
 namespace Logic
 {
@@ -42,6 +43,8 @@ namespace GUI
 				virtual void execute(Logic::CEntity *entity){}
 				virtual void execute(Common::Input::Action::TKeyMouseAction action,
 					                 Logic::CEntity *entity){}
+				virtual void execute(Common::Input::Action::TKeyMouseAction action,
+					                 Logic::CEntity *entity, const Vector3& vec){}
 			protected:
 			private:
 			};

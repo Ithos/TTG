@@ -20,6 +20,7 @@
 #define __LOGIC_CONTROLLER_H
 
 #include "../Component.h"
+#include <common/Util/Math.h>
 
 namespace Logic
 {
@@ -45,7 +46,9 @@ namespace Logic
             void moveForward(bool b)    { m_moveForward    = b; }
             void slowDown(bool b)       { m_braking        = b; }
             void primaryShoot(bool b)   { m_primaryShoot   = b; }
+			void primaryShoot(bool b, const Vector3& vec);
             void secondaryShoot(bool b) { m_secondaryShoot = b; }
+			void secondaryShoot(bool b, const Vector3& vec);
             void turnRight(bool b)      { m_turningRight   = b; }
             void turnLeft(bool b)       { m_turningLeft    = b; }
             //---

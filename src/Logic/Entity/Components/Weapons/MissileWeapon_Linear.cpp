@@ -224,7 +224,10 @@ namespace Logic
             if (type != END)
                 m_type = type;
 
-			m_subEntity.clear();
+            while (!m_subEntity.empty()) {
+                CEntityFactory::getInstance()->deleteEntityEx(m_subEntity[m_subEntity.size()-1]);
+                m_subEntity.pop_back();
+            }
 
 			using namespace Common::Data::Spawn;
 		    using namespace Common::Configuration;

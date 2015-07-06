@@ -93,60 +93,6 @@ namespace AI
 		unsigned long m_endingTime;
 	};
 
-
-
-	class CLAShoot : public CLatentAction
-	{
-	public:
-		/*
-		Constructor.
-		@param time Tiempo de espera
-		*/
-		CLAShoot() {};
-
-		/*
-		Destructor
-		*/
-		~CLAShoot() {};
-
-		/*
-		Método invocado al principio de la ejecución de la acción, para que se realicen las tareas
-		que son únicamente necesarias al principio (y no durante toda la vida de la acción).
-		@return Estado al que pasa la acción; si se indica que la acción ha terminado
-		(LatentAction::Completed), se invocará al OnStop().
-		*/
-		virtual LAStatus OnStart();
-
-		/*
-		Método invocado al final de la ejecución de la acción, para que se realicen las tareas que
-		son únicamente necesarias al final (y no durante toda la vida de la acción). En la mayoría de
-		los casos este método no hace nada.
-		*/
-		virtual void OnStop();
-
-		/*
-		Método invocado cíclicamente para que se continúe con la ejecución de la acción.
-		@return Estado de la acción tras la ejecución del método; permite indicar si la acción ha
-		terminado o se ha suspendido, o si sigue en ejecución.
-		*/
-		virtual LAStatus OnRun();
-
-		/*
-		Método invocado cuando la acción ha sido cancelada (el comportamiento al que pertenece se
-		ha abortado por cualquier razón). La tarea puede en este momento realizar las acciones que
-		considere oportunas para "salir de forma ordenada". IMPORTANTE: el Abort NO provoca la
-		ejecución de OnStop().
-		@return Estado de la acción tras la ejecución del método.
-		*/
-		virtual LAStatus OnAbort();
-
-		/*
-		Solicita la finalización de la acción en el siguiente tick, estableciendo el estado	a
-		SUCCESS o FAIL según el valor del parámetro de entrada.
-		*/
-		virtual void finish(bool success);
-	};
-
 }
 
 #endif

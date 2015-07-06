@@ -120,36 +120,6 @@ namespace AI
 
 	};
 
-
-
-	/*
-	Acción latente que lleva la entidad a un destino aleatorio mientras dispara
-	*/
-	class CLAShoottingGoTo : public CLAGoToRandom
-	{
-	public:
-		/*
-		Constructor.
-		*/
-		CLAShoottingGoTo(Logic::CEntity* entity, float tolerance) : CLAGoToRandom(entity,tolerance), m_frequency(0) {};
-
-		/*
-		Destructor.
-		*/
-		~CLAShoottingGoTo() {};
-
-	protected:
-		/*
-		Método invocado cíclicamente para que se continúe con la ejecución de la acción.
-		@return Estado de la acción tras la ejecución del método; permite indicar si la acción ha
-		terminado o se ha suspendido, o si sigue en ejecución.
-		*/
-		virtual LAStatus OnRun(unsigned int msecs);
-
-		int m_frequency;
-
-	};
-
 }
 
 #endif

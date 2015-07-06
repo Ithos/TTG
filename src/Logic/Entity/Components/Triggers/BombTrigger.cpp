@@ -61,6 +61,10 @@ namespace Logic { namespace Component
 
 		if(entityInfo->hasAttribute(BOMB_DAMAGE))
 			m_damage = entityInfo->getIntAttribute(BOMB_DAMAGE);
+		
+		m_ff = false;
+		if(entityInfo->hasAttribute(BOMB_FF))
+			m_ff = entityInfo->getBoolAttribute(BOMB_FF);
 
 		m_scene = scene;
 		m_entitiesOnRange.clear();
@@ -77,6 +81,8 @@ namespace Logic { namespace Component
 
 	void CBombTrigger::tick(unsigned int)
 	{
+		if(!m_shooted) return;
+
 		if(!m_explode) return;
 		for(auto it = m_entitiesOnRange.begin(); it != m_entitiesOnRange.end(); ++it){
 			CShield* sh = static_cast<CShield*>((*it)->getComponentByName(SHIELD_COMP));
@@ -93,14 +99,29 @@ namespace Logic { namespace Component
                 m_particles->startNextExplosion(pos);
 			}
 		}
+		m_entitiesOnRange.clear();
 		m_explode = false;
+		m_shooted = false;
 	}
 
     void CBombTrigger::onOverlapBegin(IPhysic* otherComponent)
 	{
 		std::string type = otherComponent->getEntity()->getType();
 
-		if(type == "Asteroid" || type == "Enemy" || type == "Player"){
+		bool filter = (type == "Asteroid" || type == "Enemy" || type == "Player");
+
+		if(!m_ff){
+			filter = filter && (type != m_parent->getType());// Type
+			//filter = filter && (otherComponent->getEntity() != m_parent);
+		}
+
+		if(filter){
+			auto it = m_entitiesOnRange.begin();
+			bool found = false;
+			while(it != m_entitiesOnRange.end() && !(found = (*it == otherComponent->getEntity()))){
+				++it;
+			}
+			if(found) return;
 			m_entitiesOnRange.push_back(otherComponent->getEntity());
 		}
 	}
@@ -117,11 +138,13 @@ namespace Logic { namespace Component
 		}
 	}
 
-	void CBombTrigger::setPosition(const Vector3& pos)
+	void CBombTrigger::setPosition(const Vector3& pos, CEntity* parent)
 	{
 		physx::PxRigidDynamic* actor = m_actor->isRigidDynamic();
 		if(!actor) return;
 		Matrix4 tf; tf.setTrans(pos);
 		m_physicMng->moveDynamicActor(actor,tf);
+		m_shooted = true;
+		m_parent = parent;
 	}
 }}

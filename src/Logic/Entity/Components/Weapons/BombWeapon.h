@@ -53,7 +53,8 @@ namespace Logic
             /**
                 Set parameters for a weapon.
             */
-			void setWeapon(const float& damage, const unsigned int& cost, const float& range, 
+			void setWeapon(const float& damage, const unsigned int& cost, const float& range, const unsigned int& time,
+							const unsigned int& delay,
                            Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
         private:
@@ -61,9 +62,12 @@ namespace Logic
             CEntity*          m_parent;
             CScene*           m_scene;
 			unsigned          m_cost;
-            float             m_timeToExplode;
+            unsigned int      m_timeToExplode;
+			unsigned int	  m_delay;
             CParticleManager* m_particles;
 			unsigned int	  m_currBomb;
+			int				  m_shootDelay;
+			bool			  m_canShoot;
         };
     }
 }

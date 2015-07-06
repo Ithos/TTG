@@ -36,7 +36,7 @@ namespace Common
 
         CParticleManager::CParticleManager() 
             : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0), m_shieldNode(nullptr),
-              m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0), m_iBombExplosion(0)
+			m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0), m_iBombExplosion(0),m_ibombEffect(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
                 m_galaxyParticles[i] = STAR_GALAXY + std::to_string(i);
@@ -150,6 +150,37 @@ namespace Common
 
             m_bombExplosion.clear();
             m_iBombExplosion = 0;
+        }
+
+        //------------
+
+        void CParticleManager::initBomEffect()
+        {
+            // create bomb explosion
+            for (unsigned i = 0; i < MAX_EXPLOSIONS; ++i) {
+                ParticleSystem* pSys = m_mgr->createParticleSystem(buildName(PARTCLE_NAME, m_index++), "bombEffect", m_sceneMgr);
+                //pSys->setScaleTime(3); maybe!!
+                m_bomEffect.push_back(pSys);
+                m_sceneMgr->getRootSceneNode()->attachObject(pSys);
+            }
+        }
+        
+        void CParticleManager::startBombEffect(const ::Vector3& pos)
+        {
+            int nTechniques = m_bomEffect[m_ibombEffect]->getNumTechniques();
+            for (int i = 0; i < nTechniques; ++i)
+                m_bomEffect[m_ibombEffect]->getTechnique(i)->position = pos;
+            m_bomEffect[m_ibombEffect]->start(2);
+            m_ibombEffect = (m_ibombEffect < MAX_EXPLOSIONS-1) ? m_ibombEffect + 1 : 0;
+        }
+
+        void CParticleManager::releaseBombEffect()
+        {
+            for (auto it = m_bomEffect.begin(); it != m_bomEffect.end(); ++it)
+                m_mgr->destroyParticleSystem(*it, m_sceneMgr);
+
+            m_bomEffect.clear();
+            m_ibombEffect = 0;
         }
 
         //----------- stars  ----------------//

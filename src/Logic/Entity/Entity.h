@@ -80,7 +80,7 @@ namespace Logic
 		void deactivateComponent(Component::IComponent* comp);
         bool spawnEx(CEntity*, CScene*, const Map::CMapEntity *);
 
-	protected:
+	//protected:
 		friend class CScene;
 
 		bool spawn(CScene *scene, const Map::CMapEntity *entity);

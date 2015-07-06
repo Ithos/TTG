@@ -108,34 +108,4 @@ namespace AI
 		return RUNNING;
 	}
 
-	/*
-	Método invocado cíclicamente para que se continúe con la ejecución de la acción.
-	@return Estado de la acción tras la ejecución del método; permite indicar si la acción ha
-	terminado o se ha suspendido, o si sigue en ejecución.
-	*/
-	CLatentAction::LAStatus CLAShoottingGoTo::OnRun(unsigned int msecs)
-	{
-		Logic::Component::CTransform* transf =
-			static_cast<Logic::Component::CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP));
-
-		std::time_t seed = std::chrono::system_clock::now().time_since_epoch().count();
-		std::default_random_engine generator(seed);
-		std::uniform_int_distribution<int> d100(0,100);
-		std::uniform_real_distribution<float> freq(0.0f,0.3f);
-//		if (distribution(generator) < 50)
-		if (m_frequency >= 0.8f + freq(generator))
-		{
-
-			m_weapons->shootSecondaryWeapon();
-			m_frequency = 0;
-
-		}else{
-
-			m_frequency += (msecs/1000.0f);
-
-		}
-
-		return (transf->getPosition().positionEquals(m_target, m_tolerance)) ? SUCCESS : RUNNING;
-	}
-
 }

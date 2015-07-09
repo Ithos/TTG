@@ -17,6 +17,7 @@
 */
 
 #include "InputManager.h"
+#include <OgreRoot.h>
 
 namespace GUI
 {
@@ -29,11 +30,13 @@ namespace GUI
 									m_priorityMouseListener(nullptr)
 	{
 		m_instance = this;
+		Ogre::Root::getSingleton().addFrameListener(this);
 	}
 
 	CInputManager::~CInputManager()
 	{
 		m_instance = 0;
+		Ogre::Root::getSingleton().removeFrameListener(this);
 	}
 
 	bool CInputManager::init(OIS::InputManager* input,
@@ -181,6 +184,38 @@ namespace GUI
         }
 
 		return Common::Input::TKey(text,(const Common::Input::Key::TKeyID)e.key);
+	}
+
+	bool CInputManager::frameRenderingQueued(const Ogre::FrameEvent& fe)
+	{
+		
+		m_keyboard->capture();
+
+		for(int i = Common::Input::Key::TKeyID::UNASSIGNED; i <= Common::Input::Key::TKeyID::MEDIASELECT; ++i){
+			if(m_keyboard->isKeyDown(static_cast<OIS::KeyCode>(i))){
+
+				if(!m_keyListeners.empty()){
+					std::list<InputListener::CkeyBoardListener*>::const_iterator it 
+					(m_keyListeners.begin());
+					for(; it != m_keyListeners.end(); ++it){
+						(*it)->pollingKeyCheckPressed(Common::Input::TKey(0xFFFFFFFF,(const Common::Input::Key::TKeyID)i));
+					}
+				}
+
+			}else{
+
+				if(!m_keyListeners.empty()){
+					std::list<InputListener::CkeyBoardListener*>::const_iterator it 
+					(m_keyListeners.begin());
+					for(; it != m_keyListeners.end(); ++it){
+						(*it)->pollingKeyCheckReleased(Common::Input::TKey(0xFFFFFFFF,(const Common::Input::Key::TKeyID)i));
+					}
+
+				}
+			}
+		}
+
+		return true;
 	}
 
 	bool CInputManager::keyPressed(const OIS::KeyEvent &e)

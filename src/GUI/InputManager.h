@@ -24,6 +24,7 @@
 #include "../Common/Input/Input.h"
 
 #include "InputListeners/InputListener.h"
+#include <OgreFrameListener.h>
 
 namespace OIS
 {
@@ -33,7 +34,7 @@ namespace OIS
 namespace GUI
 {
 
-	class CInputManager : public OIS::KeyListener, public OIS::MouseListener
+	class CInputManager : public OIS::KeyListener, public OIS::MouseListener, public Ogre::FrameListener
 	{
 	public:
 		static CInputManager* getInstance(){return m_instance;}
@@ -72,6 +73,7 @@ namespace GUI
 			return m_keyboard->isModifierDown((OIS::Keyboard::Modifier)modifier);
 		}
 	protected:
+		virtual bool frameRenderingQueued(const Ogre::FrameEvent& fe);
 	private:
 		static CInputManager* m_instance;
 

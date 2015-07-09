@@ -106,6 +106,32 @@ namespace GUI
 			return false;
 		}
 
+		bool CPlayerController::pollingKeyCheckPressed(Common::Input::TKey key)
+		{
+			if(m_avatar){
+				TKeyCommandMap::const_iterator it (m_keyCommands.find(key.id));
+				if(it != m_keyCommands.end()){
+					m_keyCommands[key.id]->execute
+						(Common::Input::Action::KEY_PRESSED,m_avatar);
+					return true;
+				}
+			}
+			return false;
+		}
+
+		bool CPlayerController::pollingKeyCheckReleased(Common::Input::TKey key)
+		{
+			if(m_avatar){
+				TKeyCommandMap::const_iterator it (m_keyCommands.find(key.id));
+				if(it != m_keyCommands.end()){
+					m_keyCommands[key.id]->execute
+						(Common::Input::Action::KEY_RELEASED,m_avatar);
+					return true;
+				}
+			}
+			return false;
+		}
+
 		bool CPlayerController::mouseMoved(const InputListener::CMouseState &mouseState)
 		{
 			return false;

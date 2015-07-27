@@ -177,9 +177,9 @@ namespace Logic
             float currRoll = Common::Util::Math::getRoll(m_trans->getTransform());
 
             // set a precision of 4 decimals
-			if ((int)(currRoll*10000) < 0)
+			if ((int)(currRoll*10000) < -100)
                 rotate(.0f, .0f, m_rollSpeed-0.01);
-			else if ((int)(currRoll*10000) > 0)
+			else if ((int)(currRoll*10000) > 100)
 				rotate(.0f, .0f, -m_rollSpeed+0.01);
             else {
                 m_nextRot = 0.0f;

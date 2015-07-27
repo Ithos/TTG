@@ -36,7 +36,7 @@ namespace AI
 		/*
 		Constructor.
 		*/
-		CLAGoToRandom(Logic::CEntity* entity, float tolerance) : CLatentAction(), m_tolerance(tolerance) {this->setEntity(entity);};
+		CLAGoToRandom(Logic::CEntity* entity, float tolerance);
 
 		/*
 		Destructor.
@@ -85,9 +85,19 @@ namespace AI
 		*/
 		virtual LAStatus OnAbort();
 
+		enum RANDOM_RANGES{
+			RANGE_0,
+			RANGE_1,
+			RANGE_2,
+			RANGE_3,
+			RANGE_4,
+			RANGE_5
+		};
+
 		Vector3 m_target;
 		float m_tolerance;
 		Logic::Component::CWeapons* m_weapons;
+		RANDOM_RANGES m_range;
 
 	};
 

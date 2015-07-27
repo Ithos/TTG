@@ -83,6 +83,8 @@ namespace GUI
 		m_keyboard->setEventCallback(this);
 		m_mouse->setEventCallback(this);
 
+		m_keyboard->copyKeyStates(m_keyState);
+
 		return true;
 	}
 
@@ -93,6 +95,7 @@ namespace GUI
 		m_inputSystem = 0;
 		m_priorityKeyBoardListener = nullptr;
 		m_priorityMouseListener = nullptr;
+		removeAllListeners();
 	}
 
 	void CInputManager::addKeyListener(InputListener::CkeyBoardListener *keyListener)
@@ -214,6 +217,24 @@ namespace GUI
 				}
 			}
 		}
+
+		char keyboardState[256];
+		m_keyboard->copyKeyStates(keyboardState);
+
+		for(int i = Common::Input::Key::TKeyID::UNASSIGNED; i <= Common::Input::Key::TKeyID::MEDIASELECT; ++i){
+
+			if(keyboardState[i] == 1 && m_keyState[i] == 0){
+
+				keyPressed(OIS::KeyEvent(m_keyboard, OIS::KeyCode(i),0xFFFFFFFF));
+
+			}else if(keyboardState[i] == 0 && m_keyState[i] == 1){
+
+				keyReleased(OIS::KeyEvent(m_keyboard, OIS::KeyCode(i),0xFFFFFFFF));
+
+			}
+		}
+
+		m_keyboard->copyKeyStates(m_keyState);
 
 		return true;
 	}

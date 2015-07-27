@@ -29,7 +29,7 @@ namespace Logic
         struct IWeapon
         {
             IWeapon() 
-                : m_damage(.0f), m_cadence(.0f), m_range(0), m_speed(.0f) 
+                : m_damage(.0f), m_cadence(.0f), m_range(0), m_speed(.0f), m_trigger(false) 
             { }
 
             virtual ~IWeapon() { }
@@ -43,6 +43,8 @@ namespace Logic
             virtual void shoot( const Vector3& src, const Vector3& dir ) { }
 
             virtual void releaseTrigger() { m_trigger = false; }
+
+			virtual float getRange() {return m_range;}
 
             float    m_damage;
             float    m_cadence;

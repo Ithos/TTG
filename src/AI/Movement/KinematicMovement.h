@@ -67,6 +67,15 @@ namespace AI
 
 			void move(DynamicMovement& currentProperties);
 		};
+
+		class CKinematicAlignToTarget : public IMovement
+		{
+		public:
+			CKinematicAlignToTarget(float maxLinearSpeed, float maxAngularSpeed, float maxLinearAccel, float maxAngularAccel) : 
+				IMovement(maxLinearSpeed, maxAngularSpeed, maxLinearAccel, maxAngularAccel) { };
+
+			void move(DynamicMovement& currentProperties);
+		};
 	}
 }
 

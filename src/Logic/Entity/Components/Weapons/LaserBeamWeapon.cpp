@@ -31,6 +31,8 @@
 #include "Common/Physic/PhysicManager.h"
 #include "Common/Sound/Sound.h"
 
+#include "Logic/Entity/Components/Gameplay/Shield.h"
+
 #include "Logic/Entity/Entity.h"
 #include "Logic/Entity/Components/Gameplay/Life.h"
 #include "Logic/Scene/Scene.h"
@@ -146,42 +148,70 @@ namespace Logic
 
             if (hitEntity) {
                 std::string type = hitEntity->getType();
-                if (type == "Asteroid" || type == "Enemy") {
-                    /*int* life = static_cast<CLife*>(hitEntity->getComponentByName("CLife"))->m_life;*/
-                    m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
-                    float distance = src.distance(m_currPos);
-                    m_particles->laserShot(src, dir, distance, LASER_RED);
-					if(distance >= 800.0f){
-							m_particles->laserShot(src, dir, distance/1.75, LASER_RED);
-					}
+				if(m_player->isPlayer()){
+					if (type == "Asteroid" || type == "Enemy") {
+						m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
+						float distance = src.distance(m_currPos);
+						m_particles->laserShot(src, dir, distance, LASER_RED);
                         
-					m_acumDamage += m_damage * msecs * 0.001;
-					int tmpDamage = m_acumDamage;
-                    if (tmpDamage >= 1.0f && static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(tmpDamage)) {
-						m_acumDamage -= tmpDamage;
-						Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
-					static_cast<CTransform*>(hitEntity->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
-                            m_scene->deactivateEntity(hitEntity);
-							m_scene->deleteEntity(hitEntity);
-                            m_particles->startNextExplosion(m_currPos);
-                        }
-                        else {
-                            m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
-                        }
-                   /* }*/
-                } // hit asteroid or enemy
-                else {
-                    m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
-					if(m_range >= 800.0f){
-							 m_particles->laserShot(src - (81 * dir), dir, m_range/1.75, LASER_GREEN);
+						m_acumDamage += m_damage * msecs * 0.001;
+						int tmpDamage = (int)m_acumDamage;
+						if (tmpDamage >= 1.0f && static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(tmpDamage)) {
+							m_acumDamage -= tmpDamage;
+							Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
+						static_cast<CTransform*>(hitEntity->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+								m_scene->deactivateEntity(hitEntity);
+								m_scene->deleteEntity(hitEntity);
+								m_particles->startNextExplosion(m_currPos);
+							}
+							else {
+								m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+							}
+					} // hit asteroid or enemy
+					else {
+						m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
 					}
-                }
+				}else{
+
+
+					if (type == "Player" || type == "Asteroid") {
+						m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
+						float distance = src.distance(m_currPos);
+						m_particles->laserShot(src, dir, distance, LASER_RED);
+
+					m_acumDamage += m_damage * msecs * 0.001;
+					int tmpDamage = (int)m_acumDamage;
+
+					if(hitEntity->isPlayer() && static_cast<CShield*>(hitEntity->getComponentByName(SHIELD_COMP))->hasShield() && tmpDamage >= 1){
+
+							static_cast<CShield*>(hitEntity->getComponentByName(SHIELD_COMP))->decreaseShield(tmpDamage);
+							m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+
+							m_acumDamage -= tmpDamage;
+
+						}else if (tmpDamage >= 1 && static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife((int)(tmpDamage/10.0f))) {
+							Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
+								static_cast<CTransform*>(hitEntity->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
+							m_scene->deactivateEntity(hitEntity);
+							m_scene->deleteEntity(hitEntity);
+							m_particles->startNextExplosion(m_currPos);
+							m_acumDamage -= tmpDamage;
+						}
+						else {
+							m_particles->startHit(m_currPos + (-dir * (((CGraphics*)(hitEntity->getComponentByName(GRAPHICS_COMP)))->getScale() >= 30.0 ? 20 : 0) ));
+						}
+					} // hit asteroid or enemy
+					else {
+						m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
+					}
+
+
+
+
+				}
             }
             else { //no hit
-                m_particles->laserShot(src - (81 * dir), dir, m_range, LASER_GREEN);
-				if(m_range >= 800.0f){
-							 m_particles->laserShot(src - (81 * dir), dir, m_range/1.75, LASER_GREEN);
-					}
+                m_particles->laserShot(src, dir, m_range, LASER_GREEN);
             }
 
         }

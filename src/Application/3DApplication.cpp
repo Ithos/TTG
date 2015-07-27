@@ -273,7 +273,7 @@ namespace Application
 		}
 
 		if(m_inputSystem->getNumberOfDevices(OIS::OISKeyboard) > 0){
-			m_keyboard = static_cast<OIS::Keyboard*>(m_inputSystem->createInputObject(OIS::OISKeyboard, true));
+			m_keyboard = static_cast<OIS::Keyboard*>(m_inputSystem->createInputObject(OIS::OISKeyboard, false));
 		}
 
 		if(m_inputSystem->getNumberOfDevices(OIS::OISMouse) > 0){

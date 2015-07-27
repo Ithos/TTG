@@ -41,12 +41,12 @@ namespace Logic
 			CSteeringMovement() : IComponent(), m_arrived(true), m_maxLinearSpeed(0.05f), m_maxAngularSpeed(0.01f),
 				m_maxLinearAccel(0.1f), m_maxAngularAccel(0.1f), m_currentMovement(0), 
 				m_movType(AI::Movement::IMovement::MOVEMENT_DYNAMIC_ARRIVE), m_yaw(NULL), m_evade(NULL),
-				m_playerTarget(true), m_fixedTime(0.0f), m_frequency(0.0f), m_freq (0.0f, 2.0f), m_seed(std::chrono::system_clock::now().time_since_epoch().count()),
-				m_generator(m_seed)
-			{ };
+				m_playerTarget(false), m_fixedTime(0.0f), m_frequency(0.0f), m_freq (0.0f, 2.0f), m_seed(std::chrono::system_clock::now().time_since_epoch().count()),
+				m_generator(m_seed), m_evading(false), m_stopEvadeDistance(0.0f), m_evadeDistance(0.0f), m_primary(false), m_shootingBeam(false)
+			{ if(m_freq(m_generator) < 1.0f){ m_primary = true; }};
 			~CSteeringMovement();
 			void setTarget(Vector3 target);
-			void setPlayerAsTarget() { m_playerTarget = true; };
+			void setPlayerAsTarget();
 
 			virtual bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 			virtual void tick(unsigned int msecs);
@@ -62,7 +62,7 @@ namespace Logic
 			AI::Movement::IMovement* m_currentMovement;
 			AI::Movement::IMovement* m_yaw;
 			AI::Movement::IMovement* m_evade;
-			float m_evadeDistance;
+			float m_evadeDistance, m_stopEvadeDistance;
 			AI::Movement::IMovement::DynamicMovement m_currentProperties;
 			std::time_t m_seed;
 			std::default_random_engine m_generator;
@@ -70,10 +70,13 @@ namespace Logic
 
 			float m_fixedTime;
 
-			bool m_playerTarget;
+			bool m_playerTarget, m_shootingBeam;
 
 			Logic::Component::CWeapons* m_weapons;
 			float m_frequency;
+			bool m_evading;
+			bool m_primary;
+
 		};
 
 	REG_FACTORY(CSteeringMovement);

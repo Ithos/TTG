@@ -147,6 +147,7 @@ namespace Application
 	void CGeneralNotification::setupWindow()
 	{
 		/// TODO -- Internationalization -- /// Begin{
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->setFont("Jura-13");
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String(">>Encrypted Message<<        >>Written by:XXXXX<<\nThe job consists in investigating 4 encrypted tachyon\nsignals which are supposed to be emmitted by active emrgency beacons.\nAlso, you should know that there is\nsome people very interested in keeping those beacons lost,\nso you should be carefull.\n>>End Message<<"))
 			);
@@ -163,6 +164,26 @@ namespace Application
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->setFont("Jura-10");
 		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
 			CEGUI::String("->General:\nESC-->>pause\n->Galaxy:\nDrag window frame-->>Move window\nDouble click window frame-->>Hide window\nDrag window edge-->>Resize window\n->Combat:\nWASD-->>Move\nLeft Mouse Button-->>Fire Primary\nRight Mouse Button-->>Fire Secondary\nE-->>Land on Planet\nQ-->>Leave Planet"))
+			);
+		/// TODO -- Internationalization -- /// }End
+	}
+
+	void CGeneralNotification::showSignalNotification()
+	{
+		setupSignalNotification();
+		m_menuWindow->getChild("NoteWindow/NoteContinueButton")->disable();
+		m_blendIn->start();
+	}
+
+	void CGeneralNotification::setupSignalNotification()
+	{
+		/// TODO -- Internationalization -- /// Begin{
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->setFont("Jura-13");
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
+			CEGUI::String(">> Notification\n"))
+			);
+		static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
+			CEGUI::String(">> An active tachyon signal has been detected in this system <<"))
 			);
 		/// TODO -- Internationalization -- /// }End
 	}

@@ -42,6 +42,8 @@ namespace Logic
 
             void tick(unsigned int);
 
+			void deactivate();
+
             const int& getNumPrimaryWeapon()   const { return m_primary;   }
             const int& getNumSecondaryWeapon() const { return m_secondary; }
 
@@ -60,6 +62,9 @@ namespace Logic
 			void setTargetPos(const Vector3& pos) {m_targetPos = pos;}
 
             const std::vector<IWeapon*>& getAllWeapons() { return m_weapons; }
+
+			Common::Data::Weapons_t getPrimaryWeaponType();
+			Common::Data::Weapons_t getSecondaryWeaponType();
 
         private:
             int                   m_primary;

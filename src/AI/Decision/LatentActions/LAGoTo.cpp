@@ -29,9 +29,23 @@
 
 namespace AI 
 {
-	const float NEG_BOUNDARY = -3000.0f;
-	const float POS_BOUNDARY = 3000.0f;
+	const float NEG_BOUNDARY = -5000.0f;
+	const float POS_BOUNDARY = 5000.0f;
+	const float RANGES_DIST = 800.0f;
 	const float Y_PLANE = -300.0f;
+	const int	MAX_RANGES = 5;
+
+	CLAGoToRandom::CLAGoToRandom(Logic::CEntity* entity, float tolerance) : CLatentAction(), m_tolerance(tolerance)
+	{
+		this->setEntity(entity);
+
+		unsigned seed = Application::CBaseApplication::getInstance()->getApptime();
+		std::default_random_engine generator(seed);
+		std::uniform_int_distribution<int> distribution(1,MAX_RANGES);
+
+		m_range = RANDOM_RANGES(distribution(generator));
+
+	}
 
 	/*
 	Método invocado al principio de la ejecución de la acción, para que se realicen las tareas
@@ -49,7 +63,7 @@ namespace AI
 
 		unsigned seed = Application::CBaseApplication::getInstance()->getApptime() + transform->getPosition().x;
 		std::default_random_engine generator(seed);
-		std::uniform_int_distribution<int> distribution(NEG_BOUNDARY,POS_BOUNDARY);
+		std::uniform_int_distribution<int> distribution(-m_range * RANGES_DIST, m_range * RANGES_DIST);
 
 		m_target.x = distribution(generator);
 		m_target.y = Y_PLANE;

@@ -44,6 +44,8 @@ namespace Application
 		void showTutorialMessage();
 		void repeatTutorial();
 
+		void showSignalNotification();
+
 		void resetTutorial(){m_showTut=true;}
 
 	private:
@@ -63,6 +65,8 @@ namespace Application
 		void setupEvents();
 		void setupWindow();
 		void setupSecondWindow();
+
+		void setupSignalNotification();
 
 		bool onBackPushed(const CEGUI::EventArgs& e);
 		bool onContinuePushed(const CEGUI::EventArgs& e);

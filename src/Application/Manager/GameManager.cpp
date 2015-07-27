@@ -829,7 +829,7 @@ namespace Application
 		m_system = "";
 		m_planet = "";
 		m_nameRepeatCounter = 0;
-		//m_notificationGUI->resetTutorial();//Uncoment this to allow the tutorial to be shown every new game
+		m_notificationGUI->resetTutorial();//Uncoment this to allow the tutorial to be shown every new game
 	}
 
 	bool CGameManager::onSelectionChanged(const CEGUI::EventArgs &e)
@@ -966,22 +966,27 @@ namespace Application
 
 	void CGameManager::showTargetMessage()
 	{
+		if(!isSystemVisited()){
+			CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem","target_message");
+					item->setFont("Jura-10");
+					/// TODO -- Internationalization -- /// Begin{
+					item->setText("!!>>Signal detected in the system");
+					item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,"An active signal has been\ndetected in this system.");
+					/// TODO -- Internationalization -- /// }End
 
-		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem","target_message");
-				item->setFont("Jura-10");
-				/// TODO -- Internationalization -- /// Begin{
-				item->setText("!!>>Signal detected in the system");
-				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,"An active signal has been\ndetected in this system.");
-				/// TODO -- Internationalization -- /// }End
-
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+		
+			m_notificationGUI->showSignalNotification();
+		}
 	}
 
 	void CGameManager::hideTargetMessage()
 	{
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->removeItem(
-			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(4));
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+		if(!isSystemVisited()){
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->removeItem(
+				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(4));
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+		}
 	}
 
 }

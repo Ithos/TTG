@@ -97,6 +97,8 @@ namespace GUI
 		OIS::Mouse* m_mouse;
 		OIS::Keyboard* m_keyboard;
 
+		char m_keyState[256];
+
 		InputListener::CMouseState m_mouseState;
 
 		OIS::InputManager* m_inputSystem;

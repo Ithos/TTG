@@ -86,5 +86,35 @@ namespace Logic
 			m_secondaryShoot   = b; 
 			m_weapons->setTargetPos(vec);
 		}
+
+		 void CController::moveForward(bool b)    
+		 { 
+			 m_moveForward    = b; 
+		 }
+
+        void CController::slowDown(bool b)       
+		{ 
+			m_braking        = b; 
+		}
+
+        void CController::primaryShoot(bool b)   
+		{ 
+			m_primaryShoot   = b; 
+		}
+
+		void CController::secondaryShoot(bool b) 
+		{ 
+			m_secondaryShoot = b; 
+		}
+
+		 void CController::turnRight(bool b)     
+		 { 
+			 m_turningRight   = b; 
+		 }
+
+         void CController::turnLeft(bool b) 
+		 { 
+			 m_turningLeft    = b; 
+		 }
 	}
 }

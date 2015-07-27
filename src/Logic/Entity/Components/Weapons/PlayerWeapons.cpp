@@ -30,6 +30,10 @@
 #include <Common/Data/Game_Constants.h>
 #include <Application/Manager/GameManager.h>
 
+#include <random>
+#include <chrono>
+#include <ctime>
+
 namespace Logic 
 {
     namespace Component
@@ -135,6 +139,24 @@ namespace Logic
 					setSecondaryWeapon(MISSILE_LINEAR);
 					static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(50.0f * damageProp, 1.0f, 100, 1000, 1.0f, -1, "Missile.wav", true, 5.0f);
 				}
+			}else{
+
+				// Pick a primary weapon for the enemy
+				std::time_t seed(std::chrono::system_clock::now().time_since_epoch().count());
+				std::default_random_engine generator(seed);
+
+				std::uniform_int_distribution<int> coinToss(0,3);
+
+				if(coinToss(generator) <= 2){
+					setPrimaryWeapon(LASER); // Laser weapon
+					static_cast<CLaserWeapon*>(m_weapons[m_primary])->setWeapon(20.0f, 1.0f, 25, 600, 1.0f, -1, Common::Util::Math::PI/4, "Laser1.wav");
+				}else{
+					setPrimaryWeapon(LASER_BEAM);
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(75.0f, 1.0f, 800, 1.0f, -1, 20, "EnergyBeam.wav");
+				}
+
+				setSecondaryWeapon(MISSILE_LINEAR);
+				static_cast<CMissileWeapon_Linear*>(m_weapons[m_secondary])->setWeapon(40.0f, 1.0f, 40, 1200, 0.6f, -1, "Mine.wav");
 			}
 
             return true;
@@ -147,6 +169,14 @@ namespace Logic
             
             m_weapons.clear();
         }
+
+		void CWeapons::deactivate()
+		{
+			IComponent::deactivate();
+
+			m_weapons[m_primary]->releaseTrigger();
+            m_weapons[m_secondary]->releaseTrigger();
+		}
 
         void CWeapons::setPrimaryWeapon(Common::Data::Weapons_t weapon)
         {
@@ -209,5 +239,15 @@ namespace Logic
                 if (m_weapons[i]->m_type == weapon)
                     return i;
         }
+
+		Common::Data::Weapons_t CWeapons::getPrimaryWeaponType() 
+		{
+			return m_weapons[m_primary]->m_type;
+		}
+
+		Common::Data::Weapons_t CWeapons::getSecondaryWeaponType() 
+		{
+			return m_weapons[m_secondary]->m_type;
+		}
     }
 }

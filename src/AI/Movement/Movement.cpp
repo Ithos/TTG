@@ -40,6 +40,9 @@ namespace AI
 					case MOVEMENT_KINEMATIC_ALIGN_TO_SPEED:
 						return new CKinematicAlignToSpeed(maxLinearSpeed, maxAngularSpeed, maxLinearAccel, maxAngularAccel);
 						break;
+					case MOVEMENT_KINEMATIC_ALIGN_TO_TARGET:
+						return new CKinematicAlignToTarget(maxLinearSpeed, maxAngularSpeed, maxLinearAccel, maxAngularAccel);
+						break;
 					case MOVEMENT_KINEMATIC_FLEE:
 						return new CKinematicFlee(maxLinearSpeed, maxAngularSpeed, maxLinearAccel, maxAngularAccel);
 						break;

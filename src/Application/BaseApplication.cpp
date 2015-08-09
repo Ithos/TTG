@@ -40,6 +40,7 @@ namespace Application
 										  m_currentState(0),
 										  m_nextState(0),
 										  m_exit(false),
+										  m_reset(false),
 										  m_root(nullptr),
 										  m_renderWindow(nullptr),
 										  m_clock(nullptr)
@@ -84,7 +85,7 @@ namespace Application
 
 	}
 
-	void CBaseApplication::run()
+	bool CBaseApplication::run()
 	{
         m_clock->updateTime();
 
@@ -96,6 +97,14 @@ namespace Application
 
             tick(m_clock->getLastFrameDuration());
 		}
+
+		if(resetRequested()){
+			m_exit = false;
+			m_reset = false;
+			return true;
+		}
+		else
+			return false;
 	}
 
     bool CBaseApplication::addState(const std::string &name, CApplicationState* state, bool asleep)

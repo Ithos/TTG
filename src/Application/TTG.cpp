@@ -58,7 +58,7 @@ WinMain(HINSTANCE zhInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 #endif
 	{
 		const char* const logFile = "./conf/log.conf";
-		Application::CTTGApplication ttg;
+		Application::CTTGApplication* ttg(new Application::CTTGApplication());
 		try{
 			
 #ifdef _DEBUG
@@ -71,8 +71,15 @@ WinMain(HINSTANCE zhInstance, HINSTANCE prevInstance, LPSTR lpCmdLine, int nCmdS
 			log_set_up(logFile,log_file.c_str(),true);
 			blog_set_up(0,Common::BLog::Level::TRACE,false);
 			log_trace("MAIN","Opening...\n");
-			if(ttg.init()) ttg.run();
-			ttg.release();
+			if(ttg->init()) 
+				while(ttg->run()){
+					ttg->release();
+					delete ttg;
+					ttg = new Application::CTTGApplication();
+					ttg->init();
+				}
+			ttg->release();
+			delete ttg;
 			log_trace("MAIN","Closing...\n");
 		} catch(std::runtime_error e){
 			//Needed for the log

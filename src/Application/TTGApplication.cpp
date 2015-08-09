@@ -33,6 +33,7 @@
 #include "Application\States\LoadState.h"
 #include "Application\States\GameOverState.h"
 #include "Application\States\GameFinishedState.h"
+#include "Application\States\OptionsMenu.h"
 
 #include <Common/Save/Save.h>
 
@@ -69,6 +70,9 @@ namespace Application
 			return false;
 
 		if(!addState("pause", new CPauseState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
+			return false;
+
+		if(!addState("options", new COptionsMenu(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))
 			return false;
 
 		if(!addState("event", new CEventState(this,Common::Data::MENU_STATE,m_root,m_renderWindow)))

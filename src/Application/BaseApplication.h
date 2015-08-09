@@ -25,6 +25,7 @@
 #include <stack>
 
 #include <GUI/InputListeners/InputListener.h>
+#include <OgreCommon.h>
 
 namespace Ogre
 {
@@ -54,10 +55,12 @@ namespace Application
 		virtual void release();
 		virtual void releaseAllStates();
 
-		virtual void run();
+		virtual bool run();
 
 		void exitRequest()   { m_exit = true; }
+		void resetRequest()	 { m_exit = true; m_reset = true; }
 		bool exitRequested() { return m_exit; }
+		bool resetRequested() { return m_reset; }
 
 		bool addState(const std::string &name, CApplicationState *state, bool asleep = false);
 		bool setState(const std::string &name);
@@ -80,6 +83,8 @@ namespace Application
         CClock* getClock() { return m_clock; }
 		Ogre::Root* getOgreRoot() {return m_root;}
 
+		virtual void reconfigure(Ogre::NameValuePairList& options) {};
+
     protected:
 		void changeState();
 
@@ -96,6 +101,7 @@ namespace Application
 
 		bool m_exit;
 		bool m_initialized;
+		bool m_reset;
 
 		CApplicationState*  m_currentState;
 		CApplicationState*  m_nextState;

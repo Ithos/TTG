@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GUILayout version="4" >
+  <Window type="Generic/Image" name="GameMenuRoot" >
+    <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+    <Property name="Image" value="GameMenuImages/Background" />
+    <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
+    <Window type="Generic/Image" name="TopBar" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{0,0}}" />
+      <Property name="Image" value="GameMenuImages/TopBar" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="AspectMode" value="Expand" />
+      <Property name="AspectRatio" value="13.714" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="AlwaysOnTop" value="True" />
+      <Window type="Generic/Label" name="TopBarLabel" >
+        <Property name="Area" value="{{0,0},{0.4,0},{0.4,0},{0.7,0}}" />
+        <Property name="Font" value="Jura-16" />
+        <Property name="Text" value="Options" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF00A9FF" />
+        <Property name="HorizontalAlignment" value="Centre" />
+      </Window>
+      <!--TopBarLabel-->
+    </Window>
+    <!--TopBar-->
+    <Window type="Generic/Image" name="BotBar" >
+      <Property name="Area" value="{{0,-1},{0,1},{1,-1},{0,1}}" />
+      <Property name="Image" value="GameMenuImages/BotBar" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="AspectMode" value="Expand" />
+      <Property name="AspectRatio" value="13.714" />
+      <Property name="VerticalAlignment" value="Bottom" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Property name="AlwaysOnTop" value="True" />
+      <Window type="Generic/Label" name="BotBarLabel" >
+        <Property name="Area" value="{{0,0},{0.32,0},{0.8,0},{0.87,0}}" />
+        <Property name="Font" value="Jura-13" />
+        <Property name="Text" value="Please select a resolution and a colour depth option" />
+        <Property name="Visible" value="False" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="VertFormatting" value="TopAligned" />
+        <Property name="NormalTextColour" value="FFFFF900" />
+        <Property name="HorizontalAlignment" value="Centre" />
+      </Window>
+      <!--BotBarLabel-->
+    </Window>
+    <!--BotBar-->
+    <Window type="DefaultWindow" name="InnerPartContainer" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="VerticalAlignment" value="Centre" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Window type="Generic/Image" name="InsideImage1" >
+        <Property name="Area" value="{{0,0},{0,0},{0,0},{0.347222,0}}" />
+        <Property name="Image" value="GameMenuImages/CenterImageInside" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="AspectMode" value="Expand" />
+        <Property name="VerticalAlignment" value="Centre" />
+        <Property name="HorizontalAlignment" value="Centre" />
+        <Property name="MousePassThroughEnabled" value="True" />
+      </Window>
+      <!--InsideImage1-->
+    </Window>
+    <!--InnerPartContainer-->
+    <Window type="DefaultWindow" name="InnerButtonsContainer" >
+      <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+      <Property name="MaxSize" value="{{1,0},{1,0}}" />
+      <Property name="MousePassThroughEnabled" value="True" />
+      <Window type="TaharezLook/FrameWindow" name="CancelContainer" >
+        <Property name="Area" value="{{0.56275,0},{0.779,0},{0.89725,0},{0.820667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Window type="Generic/Label" name="CancelLabel" >
+          <Property name="Area" value="{{0.0,0},{0.0,0},{1.0,0},{1.0,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Cancel" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="DisabledTextColour" value="FF0094FF" />
+          <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+        <!--CancelLabel-->
+      </Window>
+      <!--CancelContainer-->
+      <Window type="TaharezLook/FrameWindow" name="ApplyContainer" >
+        <Property name="Area" value="{{0.11275,0},{0.779,0},{0.44725,0},{0.820667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Window type="Generic/Label" name="ApplyLabel" >
+          <Property name="Area" value="{{0.0,0},{0.0,0},{1.0,0},{1.0,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Apply" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="DisabledTextColour" value="FF0094FF" />
+          <Property name="HorizontalAlignment" value="Centre" />
+        </Window>
+        <!--ApplyLabel-->
+      </Window>
+      <!--ApplyContainer-->
+      <Window type="Generic/Label" name="VolumeLabel" >
+        <Property name="Area" value="{{0.33275,0},{0.279,0},{0.66725,0},{0.320667,0}}" />
+        <Property name="Font" value="DejaVuSans-14" />
+        <Property name="Text" value="Volume" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--VolumeLabel-->
+      
+      <Window type="Generic/Label" name="SoundFXLabel" >
+        <Property name="Area" value="{{0.33275,0},{0.329,0},{0.45725,0},{0.370667,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="Text" value="Sound Effects" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--SoundFXLabel-->
+      <Window type="TaharezLook/HorizontalScrollbar" name="SoundFXSlider" >
+        <Property name="Area" value="{{0.45775,0},{0.329,0},{0.66725,0},{0.370667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="Font" value="DejaVuSans-10" />
+        <Property name="Text" value="Sound Effects" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+      </Window>
+      <!--SoundFXSlider-->
+      <Window type="Generic/Label" name="SoundFXNum" >
+        <Property name="Area" value="{{0.67025,0},{0.329,0},{0.70725,0},{0.370667,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="Text" value="100" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--SoundFXNum-->
+      
+      <Window type="Generic/Label" name="MenuFXLabel" >
+        <Property name="Area" value="{{0.33275,0},{0.379,0},{0.45725,0},{0.420667,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="Text" value="Menu Sounds" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--MenuFXLabel-->
+      <Window type="TaharezLook/HorizontalScrollbar" name="MenuFXSlider" >
+        <Property name="Area" value="{{0.45775,0},{0.379,0},{0.66725,0},{0.420667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="Font" value="DejaVuSans-10" />
+        <Property name="Text" value="Menu Sounds" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+      </Window>
+      <!--MenuFXSlider-->
+      <Window type="Generic/Label" name="MenuFXNum" >
+        <Property name="Area" value="{{0.67025,0},{0.379,0},{0.70725,0},{0.420667,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="Text" value="100" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--MenuFXNum-->
+      
+      <Window type="Generic/Label" name="MusicLabel" >
+        <Property name="Area" value="{{0.33275,0},{0.429,0},{0.45725,0},{0.470667,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="Text" value="Music" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--MusicLabel-->
+      <Window type="TaharezLook/HorizontalScrollbar" name="MusicSlider" >
+        <Property name="Area" value="{{0.45775,0},{0.429,0},{0.66725,0},{0.470667,0}}" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="Font" value="DejaVuSans-10" />
+        <Property name="Text" value="Music" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+      </Window>
+      <!--MusicSlider-->
+      <Window type="Generic/Label" name="MusicNum" >
+        <Property name="Area" value="{{0.67025,0},{0.429,0},{0.70725,0},{0.470667,0}}" />
+        <Property name="Font" value="DejaVuSans-12" />
+        <Property name="Text" value="100" />
+        <Property name="MaxSize" value="{{1,0},{1,0}}" />
+        <Property name="NormalTextColour" value="FF0094FF" />
+        <Property name="DisabledTextColour" value="FF0094FF" />
+      </Window>
+      <!--MusicNum-->
+        
+      <Window type="TaharezLook/Combobox" name="ResolutionCombobox" >
+          <Property name="Area" value="{{0.33275,0},{0.529,0},{0.66725,0},{0.770667,0}}" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Resolution" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="MaxEditTextLength" value="1073741823" />
+      </Window>
+      <!--ResolutionListbox-->
+      <Window type="TaharezLook/Combobox" name="ColourDepthCombobox" >
+          <Property name="Area" value="{{0.33275,0},{0.579,0},{0.66725,0},{0.720667,0}}" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Colour Depth" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+          <Property name="MaxEditTextLength" value="1073741823" />
+      </Window>
+      <!--ColourDepthCombobox-->
+      <Window type="TaharezLook/Checkbox" name="FullScreenButton" >
+          <Property name="Area" value="{{0.33275,0},{0.629,0},{0.66725,0},{0.670667,0}}" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="Full Screen" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+      </Window>
+      <!--FullScreenButton-->
+      <Window type="TaharezLook/Checkbox" name="VSyncButton" >
+          <Property name="Area" value="{{0.33275,0},{0.679,0},{0.66725,0},{0.720667,0}}" />
+          <Property name="MaxSize" value="{{1,0},{1,0}}" />
+          <Property name="Font" value="DejaVuSans-14" />
+          <Property name="Text" value="VSync" />
+          <Property name="NormalTextColour" value="FF0094FF" />
+      </Window>
+      <!--FullScreenButton-->
+    </Window>
+    <!--InnerButtonsContainer-->
+  </Window>
+  <!--GameMenuRoot-->
+</GUILayout>

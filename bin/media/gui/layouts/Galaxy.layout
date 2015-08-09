@@ -39,12 +39,13 @@
         <Property name="AutoRenderingSurface" value="True" />
         <Property name="MousePassThroughEnabled" value="True" />
         <Window type="Generic/Label" name="LabelProceed" >
-          <Property name="Area" value="{{0,0},{0,0},{0.6,0},{0.3,0}}" />
+          <Property name="Area" value="{{0,0},{0,0},{0.9,0},{0.3,0}}" />
           <Property name="Font" value="Jura-10" />
           <Property name="Text" value="Proceed" />
           <Property name="MaxSize" value="{{1,0},{1,0}}" />
           <Property name="NormalTextColour" value="FF0094FF" />
           <Property name="DisabledTextColour" value="FF0094FF" />
+          <Property name="HorzFormatting" value="LeftAligned" />
           <Property name="HorizontalAlignment" value="Left" />
           <Property name="VerticalAlignment" value="Top" />
         </Window>
@@ -52,11 +53,11 @@
       </Window>
       <!--PopupLinesLoad-->
       <Window type="Generic/Image" name="PlanetButton" >
-        <Property name="Area" value="{{0,0},{0.3,0},{0.2,0},{0.883,0}}" />
+        <Property name="Area" value="{{0,0},{0.3,0},{0.22,0},{0.883,0}}" />
         <Property name="Image" value="GameMenuImages/DotOuter" />
         <Property name="MaxSize" value="{{1,0},{1,0}}" />
-        <Property name="HorzFormatting" value="RightAligned" />
-        <Property name="VertFormatting" value="BottomAligned" />
+        <Property name="HorzFormatting" value="CentreAligned" />
+        <Property name="VertFormatting" value="CentreAligned" />
         <Property name="HorizontalAlignment" value="Right" />
         <Property name="AutoRenderingSurface" value="True" />
         <Property name="MousePassThroughEnabled" value="False" />

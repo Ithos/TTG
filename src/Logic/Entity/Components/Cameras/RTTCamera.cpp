@@ -96,6 +96,7 @@ namespace Logic
 
 		m_camNode = m_entity->getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode(m_nodeName);
         m_camera  = m_entity->getScene()->getSceneManager()->createCamera(m_camName);
+		m_camera->setAutoAspectRatio(true);
 
 		if(!m_camera)
 			return false;

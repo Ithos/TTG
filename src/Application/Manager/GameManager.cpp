@@ -323,7 +323,7 @@ namespace Application
 
 	void CGameManager::release()
 	{
-		assert(m_instance && "Application::CGameManager hasn't been initialized!");
+		//assert(m_instance && "Application::CGameManager hasn't been initialized!");
 
 		log_trace(LOG_CGAMEMGR,"Release\n");
 

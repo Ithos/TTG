@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\src\Application\States\GameOverState.cpp" />
     <ClCompile Include="..\..\src\Application\States\LoadState.cpp" />
     <ClCompile Include="..\..\src\Application\States\MenuState.cpp" />
+    <ClCompile Include="..\..\src\Application\States\OptionsMenu.cpp" />
     <ClCompile Include="..\..\src\Application\States\PauseState.cpp" />
     <ClCompile Include="..\..\src\Application\States\PlanetState.cpp" />
     <ClCompile Include="..\..\src\Application\States\State GUI\EventGUI.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="..\..\src\Application\States\GameOverState.h" />
     <ClInclude Include="..\..\src\Application\States\LoadState.h" />
     <ClInclude Include="..\..\src\Application\States\MenuState.h" />
+    <ClInclude Include="..\..\src\Application\States\OptionsMenu.h" />
     <ClInclude Include="..\..\src\Application\States\PauseState.h" />
     <ClInclude Include="..\..\src\Application\States\PlanetState.h" />
     <ClInclude Include="..\..\src\Application\States\State GUI\EventGUI.h" />

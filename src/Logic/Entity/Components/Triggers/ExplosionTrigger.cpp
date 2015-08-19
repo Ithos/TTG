@@ -81,8 +81,8 @@ namespace Logic
 
 			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
 			//FIXME
-			//m_particles->startBombExplosion(static_cast<CTransform*>(this->m_entity->getComponentByName("CTransform"))->getPosition());
-			m_particles->startBombExplosion(Vector3(0,-100,0));
+            Vector3 pos = static_cast<CBombTrigger*>(m_entity->getComponentByName("CBombTrigger"))->getPosition();
+			m_particles->startBombExplosion(pos);
 			m_shooted = false;
 		}
         
@@ -93,7 +93,8 @@ namespace Logic
 			if(!m_ff && otherComponent->getEntity() == m_parent) return;
 			static_cast<CBombTrigger*>(this->m_entity->getComponentByName("CBombTrigger"))->m_explode  = true;
 			//FIXME
-			m_particles->startBombExplosion(static_cast<CTransform*>(this->m_entity->getComponentByName("CTransform"))->getPosition());
+            Vector3 pos = static_cast<CBombTrigger*>(m_entity->getComponentByName("CBombTrigger"))->getPosition();
+			m_particles->startBombExplosion(pos);
 			m_shooted = false;
         }
 

@@ -123,7 +123,7 @@ namespace Logic
 			m_shootDelay = 2000;
 
 			//FIXME
-			//m_particles->startBombEffect(src);
+			m_particles->startBombEffect(src);
         }
 
         void CBombWeapon::tick(unsigned int msecs)

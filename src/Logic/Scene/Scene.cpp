@@ -102,6 +102,7 @@ namespace Logic
             pmgr->initExplosions();
             pmgr->initShoots();
             pmgr->initBomExplosions();
+            pmgr->initBomEffect();
         }
 	}
 
@@ -118,6 +119,7 @@ namespace Logic
             pmgr->releaseExplosions();
             pmgr->releaseShoots();
             pmgr->releaseBombExplosion();
+            pmgr->releaseBombEffect();
         }
 
 		destroyOgreScene();

@@ -186,7 +186,8 @@ namespace Logic
                 m_weapons[index]->shoot(pos, Common::Util::Math::getDirection(m_trans->getTransform()));
                 break;
 			case STATIC_BOMB:
-				static_cast<CBombWeapon*>(m_weapons[index])->shoot(m_trans->getPosition()); 
+                pos = m_trans->getPosition();
+				static_cast<CBombWeapon*>(m_weapons[index])->shoot(pos); 
 				break;
             }
         }

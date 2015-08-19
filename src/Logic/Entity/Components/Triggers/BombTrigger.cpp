@@ -93,10 +93,10 @@ namespace Logic { namespace Component
 			}
 
 			if (static_cast<CLife*>((*it)->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)){
-				Vector3 pos = static_cast<CTransform*>((*it)->getComponentByName(TRANSFORM_COMP))->getPosition();  
+                m_pos = static_cast<CTransform*>((*it)->getComponentByName(TRANSFORM_COMP))->getPosition();  
 				m_scene->deactivateEntity(*it);
 				m_scene->deleteEntity(*it);
-                m_particles->startNextExplosion(pos);
+                m_particles->startNextExplosion(m_pos);
 			}
 		}
 		m_entitiesOnRange.clear();

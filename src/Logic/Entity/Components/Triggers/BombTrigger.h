@@ -58,6 +58,8 @@ namespace Logic
 
 			void setPosition(const Vector3& pos,CEntity* parent);
 
+            const Vector3& getPosition() { return m_pos; }
+
 			bool m_explode;
 
 		private:
@@ -70,6 +72,7 @@ namespace Logic
 			CParticleManager*          m_particles;
             CScene*                    m_scene;
 			CEntity*                   m_parent;
+            Vector3                    m_pos;
 
         };
 		REG_FACTORY(CBombTrigger);

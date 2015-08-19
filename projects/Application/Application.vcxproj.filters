@@ -102,6 +102,9 @@
     <ClCompile Include="..\..\src\Application\States\State GUI\GeneralNotification.cpp">
       <Filter>States\State GUI\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Application\States\OptionsMenu.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Application\TTGApplication.h">
@@ -166,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Application\States\State GUI\GeneralNotification.h">
       <Filter>States\State GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Application\States\OptionsMenu.h">
+      <Filter>States\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

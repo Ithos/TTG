@@ -323,7 +323,7 @@ namespace Application
 
 	void CGameManager::release()
 	{
-		assert(m_instance && "Application::CGameManager hasn't been initialized!");
+		//assert(m_instance && "Application::CGameManager hasn't been initialized!");
 
 		log_trace(LOG_CGAMEMGR,"Release\n");
 
@@ -794,48 +794,6 @@ namespace Application
 		m_crewMembersMap[Common::Data::Game::GAME_MILITARY] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_ENGINEERS] = 0;
 		m_crewMembersMap[Common::Data::Game::GAME_SCIENTIFICS] = 0;
-
-		/*for(int i = 0; i < Common::Data::Game::TOTAL_PRIMARY_WEAPONS; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_PRIMARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[i][0],Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[i][1])));
-
-		}
-
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_SECONDARY_WEAPONS; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SECONDARY_WEAPON, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[i][0],Common::Data::Game::GAME_SECONDARY_WEAPONS_LIST[i][1])));
-
-		}
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_ENGINES; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_ENGINE, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_ENGINES_LIST[i][0],Common::Data::Game::GAME_ENGINES_LIST[i][1])));
-
-		}
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_SPECIAL; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][0], std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][1],Common::Data::Game::GAME_SPECIAL_EQUIPMENT_LIST[i][2])));
-
-		}
-
-
-		for(int i = 0; i < Common::Data::Game::TOTAL_ITEMS; ++i){
-			m_cargoMap.insert(
-			std::pair<std::string,std::pair<std::string,std::string>>(
-			Common::Data::Game::GAME_ITEM, std::pair<std::string,std::string>(
-			Common::Data::Game::GAME_ITEM_LIST[i][0],Common::Data::Game::GAME_ITEM_LIST[i][0])));
-
-		}*/
 		
 
 		m_activeMission = std::pair<int,std::string>(0," ");
@@ -871,7 +829,7 @@ namespace Application
 		m_system = "";
 		m_planet = "";
 		m_nameRepeatCounter = 0;
-		//m_notificationGUI->resetTutorial();//Uncoment this to allow the tutorial to be shown every new game
+		m_notificationGUI->resetTutorial();//Uncoment this to allow the tutorial to be shown every new game
 	}
 
 	bool CGameManager::onSelectionChanged(const CEGUI::EventArgs &e)
@@ -1008,22 +966,27 @@ namespace Application
 
 	void CGameManager::showTargetMessage()
 	{
+		if(!isSystemVisited()){
+			CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem","target_message");
+					item->setFont("Jura-10");
+					/// TODO -- Internationalization -- /// Begin{
+					item->setText("!!>>Signal detected in the system");
+					item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,"An active signal has been\ndetected in this system.");
+					/// TODO -- Internationalization -- /// }End
 
-		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem","target_message");
-				item->setFont("Jura-10");
-				/// TODO -- Internationalization -- /// Begin{
-				item->setText("!!>>Signal detected in the system");
-				item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION,"An active signal has been\ndetected in this system.");
-				/// TODO -- Internationalization -- /// }End
-
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+		
+			m_notificationGUI->showSignalNotification();
+		}
 	}
 
 	void CGameManager::hideTargetMessage()
 	{
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->removeItem(
-			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(4));
-		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+		if(!isSystemVisited()){
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->removeItem(
+				static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(4));
+			static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
+		}
 	}
 
 }

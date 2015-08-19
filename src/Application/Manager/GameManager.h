@@ -142,7 +142,7 @@ namespace Application
 		void deactivateHUD();
 		void fadeOutHUD();
 
-		/// TODO -- Serialization/deserialization --- ///
+		void showSignalNotification();
 
 		private:
 

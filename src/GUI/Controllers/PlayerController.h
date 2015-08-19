@@ -60,6 +60,8 @@ namespace GUI
 
 			bool keyPressed(Common::Input::TKey key);
 			bool keyReleased(Common::Input::TKey key);
+			bool pollingKeyCheckPressed(Common::Input::TKey key);
+			bool pollingKeyCheckReleased(Common::Input::TKey key);
 
 			bool mouseMoved(const InputListener::CMouseState &mouseState);
 			bool mousePressed(const InputListener::CMouseState &mouseState);
@@ -73,7 +75,7 @@ namespace GUI
 
 			TKeyCommandMap m_keyCommands;
 
-			typedef std::map<InputListener::CMouseState*,GUI::Controller::Command::ICommand*> 
+			typedef std::map<Common::Input::Button::TMouseButton, GUI::Controller::Command::ICommand*> 
 				TMouseCommandMap;
 
 			TMouseCommandMap m_mouseCommands;

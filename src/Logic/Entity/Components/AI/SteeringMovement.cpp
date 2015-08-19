@@ -22,6 +22,7 @@
 #include "../../../Scene/Scene.h"
 #include "../Movement/Transform.h"
 #include "../Movement/Movement.h"
+#include "Logic/Entity/Components/Weapons/Weapon.h"
 
 #include <Common/Map/MapEntity.h>
 #include <AI/Movement/Movement.h>
@@ -87,6 +88,7 @@ namespace Logic
 				// Ponemos el target a esquivar
 				m_evade->setTarget(Vector3(10000,10000,10000));
 				m_evadeDistance = 200;
+				m_stopEvadeDistance = 300;
 			}
 
 			return true;
@@ -107,7 +109,7 @@ namespace Logic
 			float dist1(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(m_evade->getTarget()));
 			float dist2(static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP))->getPosition().squaredDistance(pos));
 
-			if(dist2 < 5000 && dist2 < dist1)
+			if(dist2 < 9000 && dist2 < dist1)
 				m_evade->setTarget(pos);
 
 		}
@@ -122,7 +124,10 @@ namespace Logic
 			//setting the target
 			if (m_playerTarget) {
 				CEntity* player_target = CLogic::getInstance()->getScene()->getEntityByName("Player");
+				if(!player_target) return;
+
 				m_target = static_cast<CTransform*>(player_target->getComponentByName(TRANSFORM_COMP))->getPosition();
+				m_yaw->setTarget(m_target);
 			}
 
 			//getting info from the movable entity
@@ -163,8 +168,15 @@ namespace Logic
 					Vector3 position = transf->getPosition();
 					Vector3 distance = m_evade->getTarget() - position;
 					float distanceMagnitude = distance.length();
-					if (distanceMagnitude <= m_evadeDistance)
-						m_currentProperties.linearAccel += 0.15f * evadeProperties.linearAccel;
+					if (distanceMagnitude <= m_evadeDistance){
+						m_currentProperties.linearAccel += (10.0f * evadeProperties.linearAccel * (msecs * 0.001));
+						m_evading = true;
+					} else if(m_evading &&  distanceMagnitude <= m_stopEvadeDistance){
+						m_currentProperties.linearAccel += (10.0f * evadeProperties.linearAccel  * (msecs * 0.001));
+					}else if(distanceMagnitude > m_stopEvadeDistance)
+						m_evading = false;
+				}else{
+					m_evading = false;
 				}
 	
 				// Calculamos la rotación
@@ -204,20 +216,69 @@ namespace Logic
 				Application::CGameManager::getInstance()->getObjectivesAquired()) * 0.5f;
 
 			if (m_playerTarget) {
-				if (m_frequency >= minTime + m_freq(m_generator)) {
-					m_weapons->shootSecondaryWeapon();
+				if ( !m_primary ? m_frequency >= minTime + m_freq(m_generator) :  
+					(m_weapons->getPrimaryWeaponType() == Common::Data::Weapons_t::LASER_BEAM ? m_frequency >= minTime + m_freq(m_generator) :
+					m_frequency >= ((minTime + m_freq(m_generator))/2.0f)) ) {
+
+					if(m_primary){
+						if(m_weapons->getPrimaryWeaponType() == Common::Data::Weapons_t::LASER_BEAM){
+
+							if(((m_weapons->getPrimaryWeapon()->getRange() * m_weapons->getPrimaryWeapon()->getRange()) * 1.1) >= 
+						static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getPosition().squaredDistance(m_target) ){
+								m_shootingBeam = !m_shootingBeam;
+								if(m_shootingBeam)
+									m_weapons->shootPrimaryWeapon(msecs);
+								else
+									m_weapons->getPrimaryWeapon()->releaseTrigger();
+							}else{
+								m_shootingBeam = false;
+								m_weapons->getPrimaryWeapon()->releaseTrigger();
+							}
+
+						}else{
+							if(((m_weapons->getPrimaryWeapon()->getRange() * m_weapons->getPrimaryWeapon()->getRange()) * 1.1) >= 
+						static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getPosition().squaredDistance(m_target) )
+							m_weapons->shootPrimaryWeapon(msecs);
+						}
+					}else{
+						if(((m_weapons->getSecondaryWeapon()->getRange() * m_weapons->getSecondaryWeapon()->getRange()) * 1.1) >= 
+					static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getPosition().squaredDistance(m_target) )
+						m_weapons->shootSecondaryWeapon();
+					}
+
 					m_frequency = 0.0f;
-				}
-				else
+
+				}else{
 					m_frequency += (msecs/1000.0f);
+
+					if(m_primary && m_weapons->getPrimaryWeaponType() == Common::Data::Weapons_t::LASER_BEAM && m_shootingBeam){
+						if(((m_weapons->getPrimaryWeapon()->getRange() * m_weapons->getPrimaryWeapon()->getRange()) * 1.1) >= 
+						static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getPosition().squaredDistance(m_target) ){
+							m_weapons->shootPrimaryWeapon(msecs);
+						}else{
+							m_weapons->getPrimaryWeapon()->releaseTrigger();
+						}
+					}
+				}
 			}
 		}
 
 
 		void CSteeringMovement::setTarget(Vector3 target)
 		{
-			m_target = target;
-			m_playerTarget = false;
+			if(!m_playerTarget){
+				m_target = target;
+				m_playerTarget = false;
+			}
+		}
+
+		void CSteeringMovement::setPlayerAsTarget()
+		{
+			 m_playerTarget = true;
+			 delete m_yaw;
+			 m_yaw = AI::Movement::IMovement::getMovement(AI::Movement::IMovement::MOVEMENT_KINEMATIC_ALIGN_TO_TARGET, 
+				m_maxLinearSpeed, m_maxAngularSpeed, m_maxLinearAccel, m_maxAngularAccel); 
+			 m_yaw->setEntity(m_entity);
 		}
 	}
 }

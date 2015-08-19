@@ -68,6 +68,14 @@ namespace Application
 			CBaseApplication::getInstance()->exitRequest();
 			return false;
 		}
+
+		void windowFocusChange(Ogre::RenderWindow *rw)
+		{
+			Ogre::WindowEventListener::windowFocusChange(rw);
+			if(CBaseApplication::getInstance()){
+				static_cast<C3DApplication*>(CBaseApplication::getInstance())->reRenderCEGUI();
+			}
+		}
 	};
 
 	const char* const LOG_C3DAPP = "Application::C3DApplication";
@@ -156,18 +164,26 @@ namespace Application
 	{
 		CBaseApplication::tick(msecs);
 
-		CEGUI::System::getSingleton().injectTimePulse( msecs/1000.0f );
+		if(m_renderWindow->isActive()){
+			CEGUI::System::getSingleton().injectTimePulse( msecs/1000.0f );
 
-        CEGUI::System::getSingleton().getDefaultGUIContext().injectTimePulse(msecs/1000.0f);
+			CEGUI::System::getSingleton().getDefaultGUIContext().injectTimePulse(msecs/1000.0f);
 
-		GUI::CInputManager::getInstance()->tick();
+			GUI::CInputManager::getInstance()->tick();
 
-		Common::Sound::CSound::getSingletonPtr()->tick(msecs);
-
-		if(m_root){
-			Ogre::WindowEventUtilities::messagePump();
-			m_root->renderOneFrame(msecs/1000.0f);
+			Common::Sound::CSound::getSingletonPtr()->tick(msecs);
+		}else{
+			CEGUI::System::getSingleton().invalidateAllCachedRendering();
 		}
+
+		if(m_root)
+			Ogre::WindowEventUtilities::messagePump();
+			if(m_renderWindow->isActive()){
+				m_root->renderOneFrame(msecs/1000.0f);
+			}else{
+				m_root->clearEventTimes();
+		}
+
 	}
 	
 	bool C3DApplication::initOgre()
@@ -210,7 +226,15 @@ namespace Application
 
 		log_trace(LOG_C3DAPP,"Config Loaded\n");
 		log_trace(LOG_C3DAPP,"Creating render window\n");
+
 		m_renderWindow = m_root->initialise(true,"TTG");//config file
+
+
+		// Disable the sizing and the maximize box
+		HWND hwnd = 0;
+		m_renderWindow->getCustomAttribute("WINDOW", (void*)&hwnd); 
+		SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX);
+
 		log_trace(LOG_C3DAPP,"Render window created\n");
 
 		return true;
@@ -273,7 +297,7 @@ namespace Application
 		}
 
 		if(m_inputSystem->getNumberOfDevices(OIS::OISKeyboard) > 0){
-			m_keyboard = static_cast<OIS::Keyboard*>(m_inputSystem->createInputObject(OIS::OISKeyboard, true));
+			m_keyboard = static_cast<OIS::Keyboard*>(m_inputSystem->createInputObject(OIS::OISKeyboard, false));
 		}
 
 		if(m_inputSystem->getNumberOfDevices(OIS::OISMouse) > 0){
@@ -354,6 +378,20 @@ namespace Application
 		return true;
 	}
 
+	void C3DApplication::reRenderCEGUI()
+	{
+		// Re render everything when losing or gaining focus to avoid errors 
+		CEGUI::WindowManager::WindowIterator it = CEGUI::WindowManager::getSingletonPtr()->getIterator();
+		it.toStart();
+		while (!it.isAtEnd()){
+			(*it)->invalidate(); 
+			it++;
+		}
+
+		m_GUISystem->getDefaultGUIContext().getMouseCursor().invalidate();
+
+	}
+
 	void C3DApplication::releaseOgre()
 	{
 		if(m_renderWindow){
@@ -369,7 +407,8 @@ namespace Application
 		}
 
 		if(m_root){
-			delete m_root;
+				m_root->shutdown();
+				//delete m_root;
 			m_root = nullptr;
 		}
 	}
@@ -399,5 +438,19 @@ namespace Application
 			CEGUI::System::destroy();
 			m_GUISystem = nullptr;
 		}
+	}
+
+	void C3DApplication::reconfigure(Ogre::NameValuePairList& options)
+	{
+		Ogre::RenderSystem* rs(m_root->getRenderSystem());
+
+		for (Ogre::NameValuePairList::iterator it = options.begin(); it != options.end(); it++)
+		{
+			rs->setConfigOption(it->first, it->second);
+		}
+
+		 m_root->saveConfig();
+
+		 resetRequest();
 	}
 }

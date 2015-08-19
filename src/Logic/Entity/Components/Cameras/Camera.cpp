@@ -85,7 +85,7 @@ namespace Logic
 
 		if(entityInfo->hasAttribute(CAMERA_ACCEL))
 			m_accelConst = entityInfo->getFloatAttribute(CAMERA_ACCEL);
-				
+
 		return true;
 	}
 
@@ -94,6 +94,7 @@ namespace Logic
         m_activate = true;
 		m_camNode  = m_entity->getScene()->getSceneManager()->getRootSceneNode()->createChildSceneNode(m_nodeName);
         m_camera   = m_entity->getScene()->getSceneManager()->createCamera(m_name);
+		m_camera->setAutoAspectRatio(true);
 
 		if (!m_camera)
 			return false;

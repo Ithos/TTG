@@ -24,6 +24,7 @@
 #endif
 
 #include "BaseApplication.h"
+#include <OgreCommon.h>
 
 namespace Ogre
 {
@@ -63,6 +64,10 @@ namespace Application
 		virtual bool secondInit();
         virtual void release();
 
+		virtual void reconfigure(Ogre::NameValuePairList& options);
+
+		void reRenderCEGUI();
+
 	protected:
         virtual void tick(unsigned int msecs);
 
@@ -88,6 +93,8 @@ namespace Application
 		CEGUI::XMLParser*     m_xmlParser;
         // listener
         CWindowEventListener* m_ogreListener;
+
+
 	};
 }
 

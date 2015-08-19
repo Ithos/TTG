@@ -101,6 +101,9 @@ namespace GUI
 		public:
 			virtual bool keyPressed(Common::Input::TKey key){return false;}
 			virtual bool keyReleased(Common::Input::TKey key){return false;}
+			/// TODO -- Polling methods -- ///
+			virtual bool pollingKeyCheckPressed(Common::Input::TKey key){return false;}
+			virtual bool pollingKeyCheckReleased(Common::Input::TKey key){return false;}
 		};
 	}
 }

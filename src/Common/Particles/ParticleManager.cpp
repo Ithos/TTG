@@ -36,7 +36,7 @@ namespace Common
 
         CParticleManager::CParticleManager() 
             : m_index(0), m_mgr(nullptr), m_sceneMgr(nullptr), m_iExplosion(0), m_shieldNode(nullptr),
-			m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(2), m_iRt(0), m_iBombExplosion(0),m_ibombEffect(0)
+			m_iHits(0), MAX_EXPLOSIONS(20), MAX_HITS(100), MAX_SHOOTS(200), MAX_TRAILS(10), m_iRt(0), m_iBombExplosion(0),m_ibombEffect(0)
         {
             for (unsigned i = 0; i < NUM_PART_TYPES_GALAXY; ++i)
                 m_galaxyParticles[i] = STAR_GALAXY + std::to_string(i);
@@ -357,7 +357,7 @@ namespace Common
             }
         }
 
-        void CParticleManager::laserShot(const ::Vector3& src, const ::Vector3& dir, const float& range, ribbonTrail_t trail)
+        void CParticleManager::laserShot(::Vector3 src, ::Vector3 dir, float range, ribbonTrail_t trail)
         {
             if (m_node1[m_iRt]) {
                 m_node1[m_iRt]->detachAllObjects();
@@ -372,8 +372,8 @@ namespace Common
             m_node2[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
             m_rt[m_iRt] = static_cast<Ogre::RibbonTrail*>(m_sceneMgr->createMovableObject(buildName(LASER_NAME, m_index++).c_str(), "RibbonTrail"));
             m_rt[m_iRt]->setMaterialName(getRibbontrailName(trail));
-            m_rt[m_iRt]->setTrailLength(500);
-            m_rt[m_iRt]->setMaxChainElements(500);
+            m_rt[m_iRt]->setTrailLength(range);
+            m_rt[m_iRt]->setMaxChainElements(range);
           //  m_rt[m_iRt]->setInitialColour(0, 0.58, 0.7, 0.88, 0.74);
             m_rt[m_iRt]->setColourChange(0, 1, 1, 1, 1);
             m_rt[m_iRt]->setInitialWidth(0, 5);

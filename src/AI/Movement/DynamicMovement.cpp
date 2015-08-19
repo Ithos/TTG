@@ -68,6 +68,7 @@ namespace AI
 		{
 			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP));
 			currentProperties.linearAccel = transf->getPosition() - m_target;
+			currentProperties.linearAccel = currentProperties.linearAccel + currentProperties.linearAccel.crossProduct(Vector3(0.0f, 1.0f, 0.0f));
 			currentProperties.linearAccel.normalise();
 			currentProperties.linearAccel *= m_maxLinearAccel;
 		}

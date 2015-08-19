@@ -68,7 +68,7 @@ namespace Logic
             CLaserWeapon(CScene*, Ogre::SceneManager*, physx::PxScene*, const Map::CMapEntity*, CEntity*);
             ~CLaserWeapon();
 
-            void shoot(const Vector3& src, const Vector3& dir);
+            void shoot(const Vector3& src, const Vector3& dir, const Vector3& target);
 
 			virtual void tick(unsigned int) override;
 
@@ -76,7 +76,7 @@ namespace Logic
                 Set parameters for a weapon.
             */
 			void setWeapon( const float& damage, const float& cadence, const unsigned int& cost, const float& range, const float& speed, 
-                int charger, const std::string& soundFile, bool triple = false, float beamDist=20.0f, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
+                int charger, float ang, const std::string& soundFile, bool triple = false, float beamDist=20.0f, Common::Data::Weapons_t type = Common::Data::Weapons_t::END);
 
         private:
 		   Ogre::SceneManager*  m_sceneMngr;
@@ -94,6 +94,10 @@ namespace Logic
 		   std::string			m_soundName;
 		   std::string			m_soundExplosion;
 		   float				m_time;
+		   float				m_angle;
+
+		   void drawLines(Ogre::SceneNode *parentNode, Ogre::Radian angle, float dist);
+		   void destroyLines(Ogre::SceneNode *parentNode);
         };
     }
 }

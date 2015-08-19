@@ -97,6 +97,7 @@ namespace Application
 
 		bool startReleased(const CEGUI::EventArgs& e);
 		bool exitReleased(const CEGUI::EventArgs& e);
+		bool optionsReleased(const CEGUI::EventArgs& e);
 
 		bool handleStartPopupLinesShipsDisplay(const CEGUI::EventArgs& args);
 		bool handleStartPopupLinesLoadDisplay(const CEGUI::EventArgs& args);

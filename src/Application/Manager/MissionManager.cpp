@@ -86,7 +86,7 @@ namespace Application
 
 	void CMissionManager::release()
 	{
-		assert(m_instance && "Application::CMissionManager hasn't been initialized!");
+		//assert(m_instance && "Application::CMissionManager hasn't been initialized!");
 
 		log_trace(LOG_CMISSIONMGR,"Release\n");
 

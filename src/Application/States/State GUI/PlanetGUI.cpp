@@ -54,7 +54,7 @@ namespace Application
 	CPlanetGUI::CPlanetGUI(CEGUI::System* sys, Ogre::Root* root, CPlanetState* state):m_menuWindow(nullptr), m_image(nullptr), m_ceguiSystem(sys), m_blackScreenFadeOut(nullptr), m_blackScreenFadeIn(nullptr),
 		m_planetGUIScreenFadeOut(nullptr), m_planetGUIScreenFadeIn(nullptr), m_minimapImageScreenFadeOut(nullptr), m_minimapImageScreenFadeIn(nullptr),
 		m_buttonFadeOut(nullptr), m_buttonFadeIn(nullptr), m_mgrInstance(nullptr), m_root(root), m_planetState(state), m_backLockCount(0), m_buttonLandFadeOut(nullptr),
-		m_messageFadeOut(nullptr)
+		m_messageFadeOut(nullptr), m_Pause(false)
 	{
 		m_instance = this;
 
@@ -128,6 +128,19 @@ namespace Application
 		m_buttonFadeIn->start();
 		m_planetGUIScreenFadeIn->start();
 		m_minimapImageScreenFadeIn->start();
+
+		//Check if the player has been detected
+
+		if(m_backLockCount > 0 && !m_menuWindow->getChild("PlanetHUD/LeaveButton")->isDisabled())
+			m_menuWindow->getChild("PlanetHUD/LeaveButton")->disable();
+
+		if(m_backLockCount > 0 && !m_menuWindow->getChild("PlanetHUD/PlanetButton")->isDisabled())
+			m_menuWindow->getChild("PlanetHUD/PlanetButton")->disable();
+
+		if(m_backLockCount > 0 && !m_menuWindow->getChild("PlanetHUD/DetectionBoard")->isVisible())
+			m_menuWindow->getChild("PlanetHUD/DetectionBoard")->setVisible(true);
+
+		m_Pause = false;
 
 	}
 
@@ -326,6 +339,22 @@ namespace Application
 		return true;
 	}
 
+	void CPlanetGUI::onBackActivated()
+	{
+		if(m_menuWindow->getChild("PlanetHUD/LeaveButton")->isVisible() && !m_menuWindow->getChild("PlanetHUD/LeaveButton")->isDisabled()){
+			CEGUI::EventArgs e;
+			onBackClicked(e);
+		}
+	}
+	
+	void CPlanetGUI::onLandActivated()
+	{
+		if(m_menuWindow->getChild("PlanetHUD/PlanetButton")->isVisible() && !m_menuWindow->getChild("PlanetHUD/PlanetButton")->isDisabled()){
+			CEGUI::EventArgs e;
+			onLandClicked(e);
+		}
+	}
+
 	void CPlanetGUI::shipDestroyed()
 	{
 		m_menuWindow->getChild("BlackScreen")->subscribeEvent(CEGUI::AnimationInstance::EventAnimationEnded,
@@ -363,7 +392,7 @@ namespace Application
 
 	void CPlanetGUI::releaseLock()
 	{
-		if(m_backLockCount > 0)
+		if(m_backLockCount > 0 && !m_Pause)
 			--m_backLockCount;
 		
 		if(m_backLockCount == 0 && m_menuWindow->getChild("PlanetHUD/LeaveButton")->isDisabled())

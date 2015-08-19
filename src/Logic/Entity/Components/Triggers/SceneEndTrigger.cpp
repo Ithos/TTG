@@ -39,7 +39,8 @@ namespace Logic
 
 	void CSceneEndTrigger::onOverlapBegin(IPhysic* otherComponent)
 	{
-		if(otherComponent->getEntity()->isPlayer()){
+		if(otherComponent->getEntity()->isPlayer() && !m_activated){
+			m_activated = true;
 			CEGUI::EventArgs e;
 			Application::CPlanetGUI::getInstance()->onBackClicked(e);
 		}

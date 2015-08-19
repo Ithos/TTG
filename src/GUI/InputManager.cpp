@@ -17,6 +17,7 @@
 */
 
 #include "InputManager.h"
+#include <OgreRoot.h>
 
 namespace GUI
 {
@@ -29,11 +30,13 @@ namespace GUI
 									m_priorityMouseListener(nullptr)
 	{
 		m_instance = this;
+		Ogre::Root::getSingleton().addFrameListener(this);
 	}
 
 	CInputManager::~CInputManager()
 	{
 		m_instance = 0;
+		Ogre::Root::getSingleton().removeFrameListener(this);
 	}
 
 	bool CInputManager::init(OIS::InputManager* input,
@@ -80,6 +83,8 @@ namespace GUI
 		m_keyboard->setEventCallback(this);
 		m_mouse->setEventCallback(this);
 
+		m_keyboard->copyKeyStates(m_keyState);
+
 		return true;
 	}
 
@@ -90,6 +95,7 @@ namespace GUI
 		m_inputSystem = 0;
 		m_priorityKeyBoardListener = nullptr;
 		m_priorityMouseListener = nullptr;
+		removeAllListeners();
 	}
 
 	void CInputManager::addKeyListener(InputListener::CkeyBoardListener *keyListener)
@@ -181,6 +187,56 @@ namespace GUI
         }
 
 		return Common::Input::TKey(text,(const Common::Input::Key::TKeyID)e.key);
+	}
+
+	bool CInputManager::frameRenderingQueued(const Ogre::FrameEvent& fe)
+	{
+		
+		m_keyboard->capture();
+
+		for(int i = Common::Input::Key::TKeyID::UNASSIGNED; i <= Common::Input::Key::TKeyID::MEDIASELECT; ++i){
+			if(m_keyboard->isKeyDown(static_cast<OIS::KeyCode>(i))){
+
+				if(!m_keyListeners.empty()){
+					std::list<InputListener::CkeyBoardListener*>::const_iterator it 
+					(m_keyListeners.begin());
+					for(; it != m_keyListeners.end(); ++it){
+						(*it)->pollingKeyCheckPressed(Common::Input::TKey(0xFFFFFFFF,(const Common::Input::Key::TKeyID)i));
+					}
+				}
+
+			}else{
+
+				if(!m_keyListeners.empty()){
+					std::list<InputListener::CkeyBoardListener*>::const_iterator it 
+					(m_keyListeners.begin());
+					for(; it != m_keyListeners.end(); ++it){
+						(*it)->pollingKeyCheckReleased(Common::Input::TKey(0xFFFFFFFF,(const Common::Input::Key::TKeyID)i));
+					}
+
+				}
+			}
+		}
+
+		char keyboardState[256];
+		m_keyboard->copyKeyStates(keyboardState);
+
+		for(int i = Common::Input::Key::TKeyID::UNASSIGNED; i <= Common::Input::Key::TKeyID::MEDIASELECT; ++i){
+
+			if(keyboardState[i] == 1 && m_keyState[i] == 0){
+
+				keyPressed(OIS::KeyEvent(m_keyboard, OIS::KeyCode(i),0xFFFFFFFF));
+
+			}else if(keyboardState[i] == 0 && m_keyState[i] == 1){
+
+				keyReleased(OIS::KeyEvent(m_keyboard, OIS::KeyCode(i),0xFFFFFFFF));
+
+			}
+		}
+
+		m_keyboard->copyKeyStates(m_keyState);
+
+		return true;
 	}
 
 	bool CInputManager::keyPressed(const OIS::KeyEvent &e)

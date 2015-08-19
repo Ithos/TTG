@@ -69,8 +69,21 @@ namespace AI
 		{
 			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP));
 			currentProperties.linearSpeed = transf->getPosition() - m_target;
+			currentProperties.linearAccel = currentProperties.linearAccel + currentProperties.linearAccel.crossProduct(Vector3(0.0f, 1.0f, 0.0f));
 			currentProperties.linearSpeed.normalise();
 			currentProperties.linearSpeed *= m_maxLinearSpeed;
+		}
+
+		void CKinematicAlignToTarget::move(DynamicMovement& currentProperties)
+		{
+			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP));
+			Vector3 vec(m_target - transf->getPosition());
+			currentProperties.angularSpeed = (atan2(-vec.x, -vec.z) - transf->getYaw());//
+			currentProperties.angularSpeed = AI::CAI::correctAngle(currentProperties.angularSpeed);
+			//currentProperties.angularSpeed /= IMovement::ATTENUATION;
+			if (abs(currentProperties.angularSpeed) > m_maxAngularSpeed) {
+				currentProperties.angularSpeed = Ogre::Math::Sign(currentProperties.angularSpeed) * m_maxAngularSpeed;
+			}
 		}
 	}
 }

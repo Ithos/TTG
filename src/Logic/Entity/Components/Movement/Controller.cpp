@@ -32,52 +32,89 @@
 
 namespace Logic
 {
-	using namespace Component;
-
-	IMP_FACTORY(CController);
-
-	void CController::tick(unsigned int msecs)
+	namespace Component
 	{
-		IComponent::tick(msecs);
-      
-		/*WARNING right now there is NO physX so we're gonna move the 
-			player manually BUT if we use physX this should be done with
-			the PhysicComponent...
-		*/
 
-        // not in spawn function because controller component creates before movement
-        using namespace Common::Data;
-        if (!m_mov)
-            m_mov = static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP));
+		IMP_FACTORY(CController);
 
-        if (!m_weapons)
-            m_weapons = static_cast<CWeapons*>(m_entity->getComponentByName(WEAPONS_COMP));
+		void CController::tick(unsigned int msecs)
+		{
+			IComponent::tick(msecs);
 
-        // move
-        if (m_moveForward)
-            m_mov->moveForward(msecs);
-        else if (m_braking)
-            m_mov->moveBackward(msecs);
-        else
-            m_mov->slowDownByFriction(msecs);
+			// not in spawn function because controller component creates before movement
+			using namespace Common::Data;
+			if (!m_mov)
+				m_mov = static_cast<CMovement*>(m_entity->getComponentByName(MOVEMENT_COMP));
 
-        // turn
-        if (m_turningRight && !m_turningLeft)
-            m_mov->turnRight();
-        else if (m_turningLeft && !m_turningRight)
-            m_mov->turnLeft();
-        else
-            m_mov->dontTurn();
+			if (!m_weapons)
+				m_weapons = static_cast<CWeapons*>(m_entity->getComponentByName(WEAPONS_COMP));
 
-        // shots
-        if (m_primaryShoot)
-            m_weapons->shootPrimaryWeapon(msecs);
-        else
-            m_weapons->releasePrimaryTrigger();
+			// move
+			if (m_moveForward)
+				m_mov->moveForward(msecs);
+			else if (m_braking)
+				m_mov->moveBackward(msecs);
+			else
+				m_mov->slowDownByFriction(msecs);
 
-        if (m_secondaryShoot)
-            m_weapons->shootSecondaryWeapon();
-        else
-            m_weapons->releaseSecondayTrigger();
+			// turn
+			if (m_turningRight && !m_turningLeft)
+				m_mov->turnRight();
+			else if (m_turningLeft && !m_turningRight)
+				m_mov->turnLeft();
+			else
+				m_mov->dontTurn();
+
+			// shots
+			if (m_primaryShoot)
+				m_weapons->shootPrimaryWeapon(msecs);
+			else
+				m_weapons->releasePrimaryTrigger();
+
+			if (m_secondaryShoot)
+				m_weapons->shootSecondaryWeapon();
+			else
+				m_weapons->releaseSecondayTrigger();
+		}
+
+		void CController::primaryShoot(bool b, const Vector3& vec){ 
+			m_primaryShoot   = b; 
+			m_weapons->setTargetPos(vec);
+		}
+
+		void CController::secondaryShoot(bool b, const Vector3& vec){ 
+			m_secondaryShoot   = b; 
+			m_weapons->setTargetPos(vec);
+		}
+
+		 void CController::moveForward(bool b)    
+		 { 
+			 m_moveForward    = b; 
+		 }
+
+        void CController::slowDown(bool b)       
+		{ 
+			m_braking        = b; 
+		}
+
+        void CController::primaryShoot(bool b)   
+		{ 
+			m_primaryShoot   = b; 
+		}
+
+		void CController::secondaryShoot(bool b) 
+		{ 
+			m_secondaryShoot = b; 
+		}
+
+		 void CController::turnRight(bool b)     
+		 { 
+			 m_turningRight   = b; 
+		 }
+
+         void CController::turnLeft(bool b) 
+		 { 
+			 m_turningLeft    = b; 
+		 }
 	}
 }

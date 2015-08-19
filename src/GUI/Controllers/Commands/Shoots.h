@@ -38,6 +38,8 @@ namespace GUI
 				virtual void execute(Logic::CEntity *entity);
 				virtual void execute(Common::Input::Action::TKeyMouseAction action,
 					                 Logic::CEntity *entity);
+				virtual void execute(Common::Input::Action::TKeyMouseAction action,
+					                 Logic::CEntity *entity, const Vector3& vec);
 			};
 
             /// --------- 2º Shoot --------------
@@ -51,6 +53,8 @@ namespace GUI
 				virtual void execute(Logic::CEntity *entity);
 				virtual void execute(Common::Input::Action::TKeyMouseAction action,
 					                 Logic::CEntity *entity);
+				virtual void execute(Common::Input::Action::TKeyMouseAction action,
+					                 Logic::CEntity *entity, const Vector3& vec);
             };
 		}
 	}

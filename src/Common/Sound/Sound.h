@@ -219,6 +219,22 @@ namespace Common
 			*/
 			bool hasMusic(const std::string& soundName){return (m_music.find(soundName) != m_music.end());}
 
+			float getMenuSoundsVolume(){return GLOBAL_MENU_SOUNDS_VOLUME;}
+			float getSoundEffectsVolume(){return GLOBAL_EFFECTS_VOLUME;}
+			float getMusicVolume(){return GLOBAL_MUSIC_VOLUME;}
+
+			void increaseMenuSoundsVolume(float num){GLOBAL_MENU_SOUNDS_VOLUME+=num;}
+			void decreaseMenuSoundsVolume(float num){GLOBAL_MENU_SOUNDS_VOLUME+=num;}
+			void setMenuSoundsVolume(float num){GLOBAL_MENU_SOUNDS_VOLUME=num;}
+
+			void increaseSoundEffectsVolume(float num){GLOBAL_EFFECTS_VOLUME+=num;}
+			void decreaseSoundEffectsVolume(float num){GLOBAL_EFFECTS_VOLUME+=num;}
+			void setSoundEffectsVolume(float num){GLOBAL_EFFECTS_VOLUME=num;}
+
+			void increaseMusicVolumeVolume(float num){GLOBAL_MUSIC_VOLUME+=num;}
+			void decreaseMusicVolumeVolume(float num){GLOBAL_MUSIC_VOLUME+=num;}
+			void setMusicVolumeVolume(float num){GLOBAL_MUSIC_VOLUME=num;}
+
 		protected:
 			CSound();
 			~CSound();

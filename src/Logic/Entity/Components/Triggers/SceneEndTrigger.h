@@ -30,7 +30,7 @@ namespace Logic
 			DEC_FACTORY(CSceneEndTrigger);
 		public:
 
-			CSceneEndTrigger()
+			CSceneEndTrigger() : m_activated(false)
 			{}
 
 			~CSceneEndTrigger()
@@ -39,6 +39,10 @@ namespace Logic
 			virtual bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);
 
 			virtual void onOverlapBegin(IPhysic* otherComponent);
+
+		private:
+
+			bool m_activated;
 		};
 
 		REG_FACTORY(CSceneEndTrigger);

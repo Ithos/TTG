@@ -37,7 +37,7 @@ namespace Logic
 		const unsigned BASIC_MISSILE_COST = 50;
 
 		CMissileWeapon_Linear::CMissileWeapon_Linear(CEntity* parent, CScene* scene) : m_iMissile(0),
-			m_triple(false), m_beamDist(20.0f), m_rotate(false), m_soundName("")
+			m_triple(false), m_beamDist(20.0f), m_rotate(false), m_soundName("") 
         {
 			static unsigned int num(0);
 
@@ -70,6 +70,8 @@ namespace Logic
                 m_subEntity.push_back(ent);
                 static_cast<CMissileTrigger*>(ent->getComponentByName(MISSILE_TRIGGER))->setMove(); // no funtion->linear movement
             }
+
+			m_range = Common::Configuration::defaultValue<float>(GEN_MISSILE_LINEAR_RANGE);
 
             m_maxCharger = atoi(getDefaultValue(GEN_MISSILE_LINEAR_MAXCHARGER).c_str());
             m_ammo       = atoi(getDefaultValue(GEN_MISSILE_LINEAR_AMMO).c_str());

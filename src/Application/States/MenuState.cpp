@@ -154,6 +154,15 @@ namespace Application
 
 	}
 
+	bool CMenuState::optionsReleased(const CEGUI::EventArgs& e)
+	{
+		if(static_cast<const CEGUI::MouseEventArgs&>(e).button == CEGUI::LeftButton){
+			Common::Sound::CSound::getSingletonPtr()->playSound("innerButtonSound");
+			m_app->setState("options");
+		}
+		return true;
+	}
+
 	bool CMenuState::handleStartPopupLinesShipsDisplay(const CEGUI::EventArgs& args)
 	{
 		Common::Sound::CSound::getSingletonPtr()->playSound("innerButtonSound");
@@ -275,12 +284,12 @@ namespace Application
 
 	void CMenuState::stopStartPopupLinesAnimations()
 	{
-		m_popupLinesShipsAnimInst->setPosition(m_popupLinesShipsAnimInst->getDefinition()->getDuration());
+		/*m_popupLinesShipsAnimInst->setPosition(m_popupLinesShipsAnimInst->getDefinition()->getDuration());
 		m_popupLinesShipsAnimInst->apply();
 		m_popupLinesShipsAnimInst->pause();
 		m_popupLinesLoadAnimInst->setPosition(m_popupLinesLoadAnimInst->getDefinition()->getDuration());
 		m_popupLinesLoadAnimInst->apply();
-		m_popupLinesLoadAnimInst->pause();
+		m_popupLinesLoadAnimInst->pause();*/
 		m_popupLinesQuitAnimInst->setPosition(m_popupLinesQuitAnimInst->getDefinition()->getDuration());
 		m_popupLinesQuitAnimInst->apply();
 		m_popupLinesQuitAnimInst->pause();
@@ -288,28 +297,28 @@ namespace Application
 		m_popupLinesOptionsAnimInst->apply();
 		m_popupLinesOptionsAnimInst->pause();
 
-		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters")->setVisible(false);
-		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad")->setVisible(false);
+		/*m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters")->setVisible(false);
+		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad")->setVisible(false);*/
 		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesQuit")->setVisible(false);
 		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesOptions")->setVisible(false);
 	}
 
 	void CMenuState::makeAllSelectionIconsInvisible()
 	{
-		m_menuWindow->getChild("InnerButtonsContainer/Name1SelectionIcon")->setVisible(false);
+		/*m_menuWindow->getChild("InnerButtonsContainer/Name1SelectionIcon")->setVisible(false);
 		m_menuWindow->getChild("InnerButtonsContainer/Name2SelectionIcon")->setVisible(false);
 		m_menuWindow->getChild("InnerButtonsContainer/Name3SelectionIcon")->setVisible(false);
-		m_menuWindow->getChild("InnerButtonsContainer/LoadSelectionIcon")->setVisible(false);
+		m_menuWindow->getChild("InnerButtonsContainer/LoadSelectionIcon")->setVisible(false);*/
 		m_menuWindow->getChild("InnerButtonsContainer/OptionsSelectionIcon")->setVisible(false);
 		m_menuWindow->getChild("InnerButtonsContainer/QuitSelectionIcon")->setVisible(false);
 	}
 
 	void CMenuState::setupWindows()
 	{
-		CEGUI::Window* buttonCharacters = m_menuWindow->getChild("InnerButtonsContainer/ButtonShips");
+		/*CEGUI::Window* buttonCharacters = m_menuWindow->getChild("InnerButtonsContainer/ButtonShips");
 		buttonCharacters->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&CMenuState::handleStartPopupLinesShipsDisplay, this));
 		CEGUI::Window* buttonLoad = m_menuWindow->getChild("InnerButtonsContainer/ButtonLoad");
-		buttonLoad->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&CMenuState::handleStartPopupLinesLoadDisplay, this));
+		buttonLoad->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&CMenuState::handleStartPopupLinesLoadDisplay, this));*/
 		CEGUI::Window* buttonQuit = m_menuWindow->getChild("InnerButtonsContainer/ButtonQuit");
 		buttonQuit->subscribeEvent(CEGUI::Window::EventMouseClick, CEGUI::Event::Subscriber(&CMenuState::handleStartPopupLinesQuitDisplay, this));
 		CEGUI::Window* buttonOptions = m_menuWindow->getChild("InnerButtonsContainer/ButtonOptions");
@@ -323,13 +332,17 @@ namespace Application
 			subscribeEvent(CEGUI::Window::EventMouseClick, 
 				CEGUI::SubscriberSlot(&CMenuState::startReleased, this));
 
+		m_menuWindow->getChild("InnerButtonsContainer/OptionsSelectionIcon")->
+			subscribeEvent(CEGUI::Window::EventMouseClick,
+			CEGUI::SubscriberSlot(&CMenuState::optionsReleased, this));
+
 		setupInnerButtonsSubOptionsLabels();
 	}
 
 	void CMenuState::setupInnerButtonsSubOptionsLabels()
 	{
 		CEGUI::Window* label;
-		label = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters/LabelName1");
+		/*label = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters/LabelName1");
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelEntered, this));
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelLeft, this));
 		label = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters/LabelName2");
@@ -340,7 +353,7 @@ namespace Application
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelLeft, this));
 		label = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad/LabelLoad");
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelEntered, this));
-		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelLeft, this));
+		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelLeft, this));*/
 		label = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesQuit/LabelQuit");
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelEntered, this));
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelLeft, this));
@@ -348,7 +361,7 @@ namespace Application
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelEntered, this));
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonsLabelLeft, this));
 
-		label = m_menuWindow->getChild("InnerButtonsContainer/LoadSelectionIcon");
+		/*label = m_menuWindow->getChild("InnerButtonsContainer/LoadSelectionIcon");
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonEntered, this));
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonLeft, this));
 		label = m_menuWindow->getChild("InnerButtonsContainer/Name1SelectionIcon");
@@ -359,7 +372,7 @@ namespace Application
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonLeft, this));
 		label = m_menuWindow->getChild("InnerButtonsContainer/Name3SelectionIcon");
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonEntered, this));
-		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonLeft, this));
+		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonLeft, this));*/
 		label = m_menuWindow->getChild("InnerButtonsContainer/QuitSelectionIcon");
 		label->subscribeEvent(CEGUI::Window::EventMouseEntersArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonEntered, this));
 		label->subscribeEvent(CEGUI::Window::EventMouseLeavesArea, CEGUI::Event::Subscriber(&CMenuState::handleInnerButtonLeft, this));
@@ -418,12 +431,14 @@ namespace Application
 		m_buttonFadeInAnimInst1 = animMgr.instantiateAnimation(buttonFadeInAnim);
 		CEGUI::Window* window = m_menuWindow->getChild("InnerButtonsContainer/ButtonOptions");
 		m_buttonFadeInAnimInst1->setTargetWindow(window);
-		m_buttonFadeInAnimInst2 = animMgr.instantiateAnimation(buttonFadeInAnim);
+
+		/*m_buttonFadeInAnimInst2 = animMgr.instantiateAnimation(buttonFadeInAnim);
 		window = m_menuWindow->getChild("InnerButtonsContainer/ButtonLoad");
 		m_buttonFadeInAnimInst2->setTargetWindow(window);
 		m_buttonFadeInAnimInst3 = animMgr.instantiateAnimation(buttonFadeInAnim);
 		window = m_menuWindow->getChild("InnerButtonsContainer/ButtonShips");
-		m_buttonFadeInAnimInst3->setTargetWindow(window);
+		m_buttonFadeInAnimInst3->setTargetWindow(window);*/
+
 		m_buttonFadeInAnimInst4 = animMgr.instantiateAnimation(buttonFadeInAnim);
 		window = m_menuWindow->getChild("InnerButtonsContainer/ButtonQuit");
 		m_buttonFadeInAnimInst4->setTargetWindow(window);
@@ -458,12 +473,12 @@ namespace Application
 		CEGUI::AnimationManager& animMgr = CEGUI::AnimationManager::getSingleton();
 
 		CEGUI::Animation* sizeGrowth = animMgr.getAnimation("SizeGrowth");
-		window = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad");
+		/*window = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad");
 		m_popupLinesLoadAnimInst = animMgr.instantiateAnimation(sizeGrowth);
-		m_popupLinesLoadAnimInst->setTarget(window);
-		window = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters");
+		m_popupLinesLoadAnimInst->setTarget(window);*/
+		/*window = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters");
 		m_popupLinesShipsAnimInst = animMgr.instantiateAnimation(sizeGrowth);
-		m_popupLinesShipsAnimInst->setTarget(window);
+		m_popupLinesShipsAnimInst->setTarget(window);*/
 		window = m_menuWindow->getChild("InnerButtonsContainer/PopupLinesQuit");
 		m_popupLinesQuitAnimInst = animMgr.instantiateAnimation(sizeGrowth);
 		m_popupLinesQuitAnimInst->setTarget(window);
@@ -481,13 +496,13 @@ namespace Application
 		CEGUI::Animation* iconAnimationStop = animMgr.getAnimation("StopRotate");
 		CEGUI::AnimationInstance* iconAnimInst;
 
-		window = m_menuWindow->getChild("InnerButtonsContainer/LoadSelectionIcon");
+		/*window = m_menuWindow->getChild("InnerButtonsContainer/LoadSelectionIcon");
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationLoop);
 		iconAnimInst->setTargetWindow(window);
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationStop);
-		iconAnimInst->setTargetWindow(window);
+		iconAnimInst->setTargetWindow(window);*/
 
-		window = m_menuWindow->getChild("InnerButtonsContainer/Name1SelectionIcon");
+		/*window = m_menuWindow->getChild("InnerButtonsContainer/Name1SelectionIcon");
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationLoop);
 		iconAnimInst->setTargetWindow(window);
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationStop);
@@ -501,7 +516,8 @@ namespace Application
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationLoop);
 		iconAnimInst->setTargetWindow(window);
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationStop);
-		iconAnimInst->setTargetWindow(window);
+		iconAnimInst->setTargetWindow(window);*/
+
 		window = m_menuWindow->getChild("InnerButtonsContainer/QuitSelectionIcon");
 		iconAnimInst = animMgr.instantiateAnimation(iconAnimationLoop);
 		iconAnimInst->setTargetWindow(window);
@@ -519,8 +535,8 @@ namespace Application
 		m_centerButtonsBlendInInst->setPosition(m_centerButtonsBlendInInst->getDefinition()->getDuration());
 		m_centerButtonsBlendInInst->apply();
 
-		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad")->setVisible(false);
-		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters")->setVisible(false);
+		/*m_menuWindow->getChild("InnerButtonsContainer/PopupLinesLoad")->setVisible(false);
+		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesCharacters")->setVisible(false);*/
 		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesQuit")->setVisible(false);
 		m_menuWindow->getChild("InnerButtonsContainer/PopupLinesOptions")->setVisible(false);
 
@@ -540,10 +556,12 @@ namespace Application
 		//so the values will be taken correctly after starting them again
 		m_buttonFadeInAnimInst1->setPosition(m_buttonFadeInAnimInst1->getDefinition()->getDuration());
 		m_buttonFadeInAnimInst1->apply();
-		m_buttonFadeInAnimInst2->setPosition(m_buttonFadeInAnimInst2->getDefinition()->getDuration());
+
+		/*m_buttonFadeInAnimInst2->setPosition(m_buttonFadeInAnimInst2->getDefinition()->getDuration());
 		m_buttonFadeInAnimInst2->apply();
 		m_buttonFadeInAnimInst3->setPosition(m_buttonFadeInAnimInst3->getDefinition()->getDuration());
-		m_buttonFadeInAnimInst3->apply();
+		m_buttonFadeInAnimInst3->apply();*/
+
 		m_buttonFadeInAnimInst4->setPosition(m_buttonFadeInAnimInst4->getDefinition()->getDuration());
 		m_buttonFadeInAnimInst4->apply();
 	}
@@ -557,8 +575,8 @@ namespace Application
 		m_insideImage4RotateInInst->start();
 		m_insideImageRingsContainerSizeInInst->start();
 		m_buttonFadeInAnimInst1->start();
-		m_buttonFadeInAnimInst2->start();
-		m_buttonFadeInAnimInst3->start();
+		/*m_buttonFadeInAnimInst2->start();
+		m_buttonFadeInAnimInst3->start();*/
 		m_buttonFadeInAnimInst4->start();
 
 		startButtonsAnims();

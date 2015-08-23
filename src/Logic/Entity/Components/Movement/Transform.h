@@ -38,8 +38,8 @@ namespace Logic
 			void setTransform(Matrix4 transform) { m_transform = transform;   }
             void setPosition(const Vector3& pos) { m_transform.setTrans(pos); }
 
-			const Vector3& getPosition() { return m_transform.getTrans();}
-            Matrix4& getTransform()      { return m_transform; }
+			const Vector3 getPosition() { return m_transform.getTrans();}
+            const Matrix4 getTransform()      { return m_transform; }
 			Quaternion getOrientation()  { return m_transform.extractQuaternion(); }
             float getYaw() const         { return Common::Util::Math::getYaw(m_transform); }
 

@@ -33,6 +33,7 @@ namespace AI
 		bool tick(unsigned int msecs);
 		CPerceptionManager* getPerceptionManager() { return m_pManager; };
 		static double correctAngle(double angle);
+		void clearNotifications();
 
 	private:
 		CAI();

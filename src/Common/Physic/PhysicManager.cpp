@@ -226,7 +226,7 @@ namespace Physic
 	bool CPhysicManager::tick(unsigned int msecs) 
 	{
 		assert(m_scene);
-		m_scene->simulate(msecs / 1000.0f);
+		m_scene->simulate(msecs/1000.0f);
 		return m_scene->fetchResults(true);
 	}
 

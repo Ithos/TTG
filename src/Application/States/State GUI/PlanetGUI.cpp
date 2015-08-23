@@ -25,6 +25,8 @@
 #include "../../../Common/Sound/Sound.h"
 #include "MissionNotification.h"
 
+#include "../../States/State GUI/PlanetGUI.h"
+
 #include <log.h>
 
 #include <OGRE\OgreTexture.h>

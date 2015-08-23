@@ -16,15 +16,17 @@ namespace GUI
 
 			void CPrimaryShoot::execute(TKeyMouseAction action, Logic::CEntity *entity)
 			{
-				static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
-                    ->primaryShoot(action == Common::Input::Action::KEY_PRESSED);
+				if(entity && entity->getComponentByName("CController") && static_cast<Logic::Component::CController*>(entity->getComponentByName("CController")) )
+					static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
+						->primaryShoot(action == Common::Input::Action::KEY_PRESSED);
 			}
 
 			void CPrimaryShoot::execute(Common::Input::Action::TKeyMouseAction action,
 					                Logic::CEntity *entity, const Vector3& vec)
 			{
-				static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
-                    ->primaryShoot(action == Common::Input::Action::MOUSE_PRESSED, vec);
+				if(entity && entity->getComponentByName("CController") && static_cast<Logic::Component::CController*>(entity->getComponentByName("CController")) )
+					static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
+						->primaryShoot(action == Common::Input::Action::MOUSE_PRESSED, vec);
 			}
 
             //---------- 2º shoot
@@ -34,15 +36,17 @@ namespace GUI
 
             void CSecondaryShoot::execute(TKeyMouseAction action,  Logic::CEntity *entity)
             {
-                static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
-                    ->secondaryShoot(action == Common::Input::Action::KEY_PRESSED);
+				if(entity && entity->getComponentByName("CController") && static_cast<Logic::Component::CController*>(entity->getComponentByName("CController")) )
+					static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
+						->secondaryShoot(action == Common::Input::Action::KEY_PRESSED);
             }
 
 			void CSecondaryShoot::execute(Common::Input::Action::TKeyMouseAction action,
 					                Logic::CEntity *entity, const Vector3& vec)
 			{
-				 static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
-                    ->secondaryShoot(action == Common::Input::Action::MOUSE_PRESSED, vec);
+				if(entity && entity->getComponentByName("CController") && static_cast<Logic::Component::CController*>(entity->getComponentByName("CController")) )
+					 static_cast<Logic::Component::CController*>(entity->getComponentByName("CController"))
+						->secondaryShoot(action == Common::Input::Action::MOUSE_PRESSED, vec);
 			}
 		}
 	}

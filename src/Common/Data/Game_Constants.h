@@ -130,7 +130,7 @@ namespace Common
 												"Tso_Hea","Gienah","Algorab","Minkar",
 												"Acrux","Gacrux","CanopusII","Edasich",
 												"Dziban","Acamar","Castor","Al_Na'ir",
-												"Al_Dhanab","Kornephoros","Ukdah","Cor_Koraelis",
+												"Al_Dhanab","Korneph","Ukdah","Cor_Korae",
 												"Zozma","Ras_Elased","Tsze_Tseang","Vega",
 												"Sulafat","Yed","Zed","Hiades",
 												"Betelgeuse","Rigel","Saiph","Fomalhaut",
@@ -384,8 +384,7 @@ namespace Common
 			const char* const GAME_EVENT_CREW_TEXT[] = {
 				"You found a lost mercenary who agrees to work for you in echange for getting out of the planet.",
 				"In a lost mining station there is a mechanic that agrees to join your crew.",
-				"While extracting minerals from the planet the ship has detected a great magnetic anomaly.",
-				""
+				"While extracting minerals from the planet the ship has detected a great magnetic anomaly and a scienific settlement."
 			};
 
 			//Ship crashed
@@ -638,7 +637,7 @@ namespace Common
 			};
 
 			const char* const GAME_PLANETS_SYSTEM21[] = {
-				"Kornephoros_0_","Kornephoros_1_","Kornephoros_2_","Kornephoros_3_","Kornephoros_4_","Kornephoros_5_","Kornephoros_6_","Kornephoros_7_","Kornephoros_8_","Kornephoros_9_" 
+				"Korneph_0_","Korneph_1_","Korneph_2_","Korneph_3_","Korneph_4_","Korneph_5_","Korneph_6_","Korneph_7_","Korneph_8_","Korneph_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM22[] = {
@@ -646,7 +645,7 @@ namespace Common
 			};
 
 			const char* const GAME_PLANETS_SYSTEM23[] = {
-				"Cor_Koraelis_0_","Cor_Koraelis_1_","Cor_Koraelis_2_","Cor_Koraelis_3_","Cor_Koraelis_4_","Cor_Koraelis_5_","Cor_Koraelis_6_","Cor_Koraelis_7_","Koerus","Cor_Koraelis_9_" 
+				"Cor_Korae_0_","Cor_Korae_1_","Cor_Korae_2_","Cor_Korae_3_","Cor_Korae_4_","Cor_Korae_5_","Cor_Korae_6_","Cor_Korae_7_","Koerus","Cor_Korae_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM24[] = {
@@ -801,7 +800,7 @@ namespace Common
 			};
 
 			const char* const GAME_MULTI_MINES[2] = {
-				"Multi Mines", "Secondary Weapon\The mine counterpart for the multi missiles.\nIt fires several small mines in differen directions."
+				"Multi Mines", "Secondary Weapon\nThe mine counterpart for the multi missiles.\nIt fires several small mines in differen directions."
 			};
 
 			const char* const GAME_SUPER_MISSILE[2] = {

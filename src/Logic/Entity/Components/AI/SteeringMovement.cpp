@@ -190,7 +190,7 @@ namespace Logic
 				// Mover
 				float speedValue = m_currentProperties.linearSpeed.length();
 				movement->setSpeed(speedValue);
-				movement->move(m_currentProperties.linearSpeed);
+				movement->move( Vector3(m_currentProperties.linearSpeed.x, 0.0f,m_currentProperties.linearSpeed.z) );
 
 				// Aplicar la rotación
 				float angConst( 0.7/(msecs * 0.01));//5.1

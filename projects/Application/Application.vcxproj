@@ -149,6 +149,7 @@
     <ClInclude Include="..\..\src\Application\States\State GUI\PlanetGUI.h" />
     <ClInclude Include="..\..\src\Application\States\SystemState.h" />
     <ClInclude Include="..\..\src\Application\TTGApplication.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AI\AI.vcxproj">
@@ -183,6 +184,12 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Application.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\bin\icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

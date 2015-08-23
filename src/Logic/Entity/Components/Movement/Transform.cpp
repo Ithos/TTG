@@ -44,6 +44,8 @@ namespace Logic
 			m_transform.setTrans(position);
 		}
 
+		
+
 		if(entityInfo->hasAttribute(COMMON_ORIENTATION)) {
 			Vector3 orientation(entityInfo->getVector3Attribute(COMMON_ORIENTATION));//x=yaw,y=pitch,z=roll
 			orientation.x = Common::Util::Math::fromDegreesToRadians(orientation.x);

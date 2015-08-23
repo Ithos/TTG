@@ -32,7 +32,9 @@ namespace Logic
         {
             DEC_FACTORY(CInterpolation);
 	    public:
-            CInterpolation() : IComponent() { }
+			CInterpolation() : IComponent(), m_iniPos(0.0f, 0.0f, 0.0f), m_endPos(0.0f, 0.0f, 0.0f), m_currPos(0.0f, 0.0f, 0.0f),
+			m_iniRot(0.0f, 0.0f, 0.0f), m_endRot(0.0f, 0.0f, 0.0f), m_currRot(0.0f, 0.0f, 0.0f), m_mov(nullptr), m_freq(0.0f), m_factor(0.0f),
+			m_renderTransform(Matrix4::IDENTITY){ }
             ~CInterpolation() { }
 
             bool spawn(CEntity* entity, CScene* scene, const Map::CMapEntity* entityInfo);

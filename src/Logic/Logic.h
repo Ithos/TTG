@@ -54,6 +54,7 @@ namespace Logic
 			Ogre::RenderWindow* render,
 			Common::Data::SceneType type);
 		void unloadLevel();
+		void reloadLevel();
 
 	protected:
 	private:
@@ -66,6 +67,11 @@ namespace Logic
 		CScene *m_scene;
 
 		static CLogic* m_instance;
+
+		std::string m_lastFilename;
+		Ogre::Root* m_root;
+		Ogre::RenderWindow* m_window;
+		Common::Data::SceneType m_lastSceneType;
 	};
 }
 

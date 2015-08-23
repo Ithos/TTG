@@ -173,5 +173,18 @@
     <ClInclude Include="..\..\src\Application\States\OptionsMenu.h">
       <Filter>States\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Application.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\bin\icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

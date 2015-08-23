@@ -114,6 +114,9 @@ namespace AI
 		*/
 		void unregisterEntity(CPerceptionEntity* entity);
 
+
+		void clearNotifications() {while(!m_notifications.empty())m_notifications.pop();}
+
 	private:
 		/*
 		Lista de entidades de percepción gestionadas

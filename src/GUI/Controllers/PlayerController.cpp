@@ -143,13 +143,13 @@ namespace GUI
 				CEGUI::Vector2f mousePos = CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().getPosition();
 				Ogre::Ray mouseRay = m_avatar->getScene()->getSceneCamera()->getCameraToViewportRay(mousePos.d_x/float(mouseState.width),mousePos.d_y/float(mouseState.height));
 
-				 Ogre::Vector3 point = mouseRay.getPoint(Ogre::Real(1300));
+				float dist(1300.0f);
+				 Ogre::Vector3 point = mouseRay.getPoint(Ogre::Real(dist));
 
-				 float err =0.001;
                 int i =0;
-                while(point.y > -295.0 || point.y < -305.0 || i < 20){
-                    point = mouseRay.getPoint(Ogre::Real(1300 + point.y + 0.01*err));
-                    err+=point.y;
+                while((point.y > -295.0 || point.y < -305.0) && i < 20){
+					dist += 300.0 + point.y;
+                    point = mouseRay.getPoint(Ogre::Real(dist));
                     i+=1;
                 }
                 point.y = -300.0f;

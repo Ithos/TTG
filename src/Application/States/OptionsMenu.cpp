@@ -207,6 +207,16 @@ namespace Application
 	bool COptionsMenu::cancelReleased(const CEGUI::EventArgs& e)
 	{
 		if(static_cast<const CEGUI::MouseEventArgs&>(e).button == CEGUI::LeftButton){
+
+			CEGUI::Scrollbar* Slider = static_cast<CEGUI::Scrollbar*>(m_menuWindow->getChild("InnerButtonsContainer/SoundFXSlider"));
+			m_soundInstance->setSoundEffectsVolume(Slider->getScrollPosition() > 1.0f ? 1.0f : Slider->getScrollPosition());
+
+			Slider = static_cast<CEGUI::Scrollbar*>(m_menuWindow->getChild("InnerButtonsContainer/MenuFXSlider"));
+			m_soundInstance->setMenuSoundsVolume(Slider->getScrollPosition() > 1.0f ? 1.0f : Slider->getScrollPosition());
+
+			Slider = static_cast<CEGUI::Scrollbar*>(m_menuWindow->getChild("InnerButtonsContainer/MusicSlider"));
+			m_soundInstance->setMusicVolumeVolume(Slider->getScrollPosition() > 1.0f ? 1.0f : Slider->getScrollPosition());
+
 			Common::Sound::CSound::getSingletonPtr()->playSound("buttonSoundOptions");
 			m_app->popState();
 		}

@@ -51,9 +51,9 @@ namespace AI
 	*/
 	void CPerceptionManager::update(unsigned int msecs)
 	{
+		m_Time += msecs / 1000.0f;
 
-		if(m_Time > 0.33f){
-			m_Time += msecs / 1000.0f;
+		if(m_Time < 0.33f){
 			return;
 		}
 
@@ -140,7 +140,8 @@ namespace AI
 		CNotification* notification;
 		while(!m_notifications.empty() && (notification = m_notifications.top())->getTime() <= time ) {
 			m_notifications.pop();
-			notification->getSensor()->getPerceptionEntity()->sendNotification(notification);
+			if(notification)
+				notification->getSensor()->getPerceptionEntity()->sendNotification(notification);
 		}
 	}
 

@@ -95,8 +95,6 @@ namespace Map
 														Common::Configuration::defaultValue<int>(GEN_SYSTEM_MAXGEN));
 		int nodeNum = distribution(generator);
 
-		/// TODO --Establish a minimum distance between stars-- ///
-
 		TEntityList entityList;
 		CMapEntity *entityInProgress;
 		std::string tmpStr1,tmpStr2;
@@ -308,8 +306,6 @@ namespace Map
 		
 		{
 			//Creation of the star at the center of the scene
-
-			//TODO -Add aditional information extracted from the descriptor-- //
 
 			entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_STAR_NAME));
 
@@ -674,87 +670,60 @@ namespace Map
 
 		entityInProgress->setAttribute("perception_entity_type","player");
 
-		//(Player) Example of multiple soundbank and event loading
-		/*tmpStr1 = "property0";
-		tmpStr2 = "distance";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "property1";
-		tmpStr2 = "distance";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "entities0";
-		tmpStr2 = "Asteroid";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "entities1";
-		tmpStr2 = "Enemy";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "range00";
-		tmpStr2 = "900";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "range01";
-		tmpStr2 = "500";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "range02";
-		tmpStr2 = "200";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "range10";
-		tmpStr2 = "400";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		tmpStr1 = "range11";
-		tmpStr2 = "200";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "range12";
-		tmpStr2 = "50";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "bank0";
-		tmpStr2 = "Master Bank.bank";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "bank1";
-		tmpStr2 = "Master Bank.strings.bank";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "bank2";
-		tmpStr2 = "Character.bank";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "event0";
-		tmpStr2 = "event:/Character/Footsteps/Footsteps";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "event1";
-		tmpStr2 = "event:/Character/Footsteps/Footsteps";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "eventName0";
-		tmpStr2 = "distEvent";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "eventName1";
-		tmpStr2 = "distEventEnem";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "parameter0";
-		tmpStr2 = "Surface";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "parameter1";
-		tmpStr2 = "Surface";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "parameterName0";
-		tmpStr2 = "paramSurf";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-		tmpStr1 = "parameterName1";
-		tmpStr2 = "paramSurfEnem";
-		entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
-
 		entityList.push_back(entityInProgress);
 
 		Vector3 pPos(entityInProgress->getVector3Attribute(COMMON_POSITION));
 
+		//Static Asteroids
+		std::vector<Ogre::Vector3> tmpPos;
+		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_STATIC_ASTEROID_MIN_NUM) + numAsteroids2(generator); ++i)
+		{
+			char str[32];
+			std::string name = Common::Configuration::getDefaultValue(GEN_STATIC_ASTEROID_TYPE);
+			sprintf(str,"%s%d",name.c_str(),i);
+
+			entityInProgress = new CMapEntity(str);
+
+			tmpStr1 = name;
+			entityInProgress->setType(tmpStr1.c_str());
+
+			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_STATIC_ASTEROID_GRAPHIC_STATIC));
+
+			Ogre::Vector3 pos(0.0f,0.0f,0.0f);
+
+			do{
+				pos.x = neg(generator)?posDist2(generator):-posDist2(generator);
+				pos.y = defaultValue<int>(GEN_STATIC_ASTEROID_Y_AXIS_POS);
+				pos.z =	neg(generator)?posDist2(generator):-posDist2(generator);
+			} while(!checkDist(tmpPos,pos,10.0f));
+
+			tmpPos.push_back(pos);
+
+			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
+			entityInProgress->setAttribute(COMMON_POSITION, tmpStr2.c_str());
+
+			pos.x = neg(generator)? degDist2(generator) : -degDist2(generator);
+            pos.y = neg(generator)? degDist2(generator) : -degDist2(generator);
+			pos.z =	neg(generator)? degDist2(generator) : -degDist2(generator);
+
+			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
+			entityInProgress->setAttribute(COMMON_ORIENTATION,tmpStr2.c_str());
+
+			int mod = astDist2(generator);
+
+			std::string aux = GEN_STATIC_ASTEROID_MODEL + std::to_string(mod);
+			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
+
+			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_STATIC_ASTEROID_VISIBILITY_MASK).c_str());
+
+			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_STATIC_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
+			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
+
+			entityList.push_back(entityInProgress);
+		}
 
 		/// Asteroids
-
-		std::vector<Ogre::Vector3> tmpPos;
+		tmpPos.clear();
 		tmpPos.push_back(pPos);
 
 		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_ASTEROID_MIN_NUM) + numAsteroids(generator); ++i)
@@ -820,63 +789,12 @@ namespace Map
 			entityList.push_back(entityInProgress);
         }
 
-		//Static Asteroids
-
-		tmpPos.clear();
-
-		for(int i = 0 ;i < Common::Configuration::defaultValue<int>(GEN_STATIC_ASTEROID_MIN_NUM) + numAsteroids2(generator); ++i)
-		{
-			char str[32];
-			std::string name = Common::Configuration::getDefaultValue(GEN_STATIC_ASTEROID_TYPE);
-			sprintf(str,"%s%d",name.c_str(),i);
-
-			entityInProgress = new CMapEntity(str);
-
-			tmpStr1 = name;
-			entityInProgress->setType(tmpStr1.c_str());
-
-			entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_STATIC_ASTEROID_GRAPHIC_STATIC));
-
-			Ogre::Vector3 pos(0.0f,0.0f,0.0f);
-
-			do{
-				pos.x = neg(generator)?posDist2(generator):-posDist2(generator);
-				pos.y = defaultValue<int>(GEN_STATIC_ASTEROID_Y_AXIS_POS);
-				pos.z =	neg(generator)?posDist2(generator):-posDist2(generator);
-			} while(!checkDist(tmpPos,pos,10.0f));
-
-			tmpPos.push_back(pos);
-
-			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
-			entityInProgress->setAttribute(COMMON_POSITION, tmpStr2.c_str());
-
-			pos.x = neg(generator)? degDist2(generator) : -degDist2(generator);
-            pos.y = neg(generator)? degDist2(generator) : -degDist2(generator);
-			pos.z =	neg(generator)? degDist2(generator) : -degDist2(generator);
-
-			tmpStr2 = "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " + std::to_string(pos.z) + "}";
-			entityInProgress->setAttribute(COMMON_ORIENTATION,tmpStr2.c_str());
-
-			int mod = astDist2(generator);
-
-			std::string aux = GEN_STATIC_ASTEROID_MODEL + std::to_string(mod);
-			entityInProgress->setAttribute(GRAPHIC_MODEL, Common::Configuration::getDefaultValue(aux));
-
-			entityInProgress->setAttribute(GRAPHIC_VISIBILITY, getDefaultValue(GEN_STATIC_ASTEROID_VISIBILITY_MASK).c_str());
-
-			tmpStr2 = std::to_string((float)(defaultValue<float>(GEN_STATIC_ASTEROID_GRAPHIC_SCALE) * (mod+1)));
-			entityInProgress->setAttribute(GRAPHIC_SCALE, tmpStr2.c_str());
-
-			entityList.push_back(entityInProgress);
-		}
-
 		//Wanderer Enemies
 		unsigned enemy_seed = std::chrono::system_clock::now().time_since_epoch().count();
 		std::default_random_engine enemy_generator(enemy_seed);
-		std::uniform_int_distribution<int> enemy_distribution(
+		std::uniform_real_distribution<float> enemy_distribution(
 					atof(getDefaultValue(GEN_ENEMY_NEG_BOUNDARY).c_str()),
 					atof(getDefaultValue(GEN_ENEMY_POS_BOUNDARY).c_str()));
-		/*for (int i=0; i<defaultValue<int>(GEN_WANDER_ENEMY_NUM); ++i) {*/
 		unsigned int enemNumType(neg(generator));
 		int enemiesNum(enemyDist(generator)),div(5 - risk);
 		for (int i = 0; i < !risk ? 0 : i < Application::CGameManager::getInstance()->getObjectivesAquired() + (enemiesNum/div); ++i) {
@@ -893,11 +811,14 @@ namespace Map
 
 			Vector3 enemPos;
 
+			std::vector<Ogre::Vector3> playerPos;
+			playerPos.push_back(pPos);
+
 			do{
 				enemPos.x = enemy_distribution(enemy_generator);
 				enemPos.y = defaultValue<float>(GEN_ENEMY_Y_PLANE);
 				enemPos.z = enemy_distribution(enemy_generator);
-			}while(!checkDist(tmpPos,enemPos,200.0f));
+			}while(!checkDist(tmpPos,enemPos,200.0f)  && !checkDist(playerPos, enemPos, 1000.0f));
 
 			std::string enemy_position = "{" + std::to_string(enemPos.x) +
 										 ", " + std::to_string(enemPos.y) + ", " +
@@ -936,134 +857,6 @@ namespace Map
 			entityList.push_back(entityInProgress);
 		}
 
-		//Dummy Enemy
-
-		//entityInProgress = new CMapEntity("DummyEnemy"/*+'0'*/);//The commented 0 is for sound events
-
-		//entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
-
-		//entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
-		//entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
-		//entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
-		//entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
-		//entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
-		//entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
-		//entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-		//entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
-		////entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
-		////entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		////entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
-		////entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
-		//entityInProgress->setAttribute("physic_entity", "rigid");
-		//entityInProgress->setAttribute("physic_type", "dynamic");
-		//entityInProgress->setAttribute("physic_shape", "sphere");
-		//entityInProgress->setAttribute("physic_mass", "10");
-		//entityInProgress->setAttribute("physic_group","2");
-		//entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		//entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
-		//entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
-		//entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
-		//entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
-  //      entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
-		//entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
-		//entityInProgress->setAttribute(AI_BEHAVIOR,"dummy");
-
-		//entityInProgress->setAttribute("perception_entity_type","enemy");
-		//
-		//entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
-		//entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
-
-		//entityList.push_back(entityInProgress);
-
-		//////Steering Enemy
-
-		//entityInProgress = new CMapEntity("SteeringEnemy"/*+'0'*/);//The commented 0 is for sound events
-
-		//entityInProgress->setType(getDefaultValue(GEN_ENEMY_TYPE));
-
-		//entityInProgress->setAttribute(GRAPHIC_STATIC, getDefaultValue(GEN_ENEMY_GRAPHIC_STATIC));
-		//entityInProgress->setAttribute(MINIMAP_ENTITY_SCALE, getDefaultValue(GEN_ENEMY_MINIMAP_SCALE));
-		//entityInProgress->setAttribute(MINIMAP_ENTITY_ENEMY, getDefaultValue(GEN_ENEMY_MINIMAP_ENEMY));
-		////entityInProgress->setAttribute(COMMON_POSITION, getDefaultValue(GEN_ENEMY_START_POSITION));
-		//entityInProgress->setAttribute(COMMON_POSITION, "{1000, -300, 1000}");
-		//entityInProgress->setAttribute(COMMON_ORIENTATION, getDefaultValue(GEN_ENEMY_START_ORIENTATION));
-		//entityInProgress->setAttribute(COMMON_MAX_SPEED, getDefaultValue(GEN_ENEMY_MAX_SPEED));
-		//entityInProgress->setAttribute(COMMON_ROTATION_SPEED, getDefaultValue(GEN_ENEMY_ROTATION_SPEED));
-		//entityInProgress->setAttribute(GRAPHIC_MODEL, getDefaultValue(GEN_ENEMY_MODEL  + std::to_string(enemNumType)));
-		////entityInProgress->setAttribute(PHYSIC_ENTITY, getDefaultValue(GEN_ENEMY_PHYSX_SHAPE));
-		////entityInProgress->setAttribute(PHYSIC_RADIUS, getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		////entityInProgress->setAttribute(PHYSIC_HEIGHT, getDefaultValue(GEN_ENEMY_PHYSX_HEIGHT));
-		////entityInProgress->setAttribute(PHYSIC_CONTACT_FUNCTION,std::to_string(onContactFunction::ENEMY));
-		//entityInProgress->setAttribute("physic_entity", "rigid");
-		//entityInProgress->setAttribute("physic_type", "dynamic");
-		//entityInProgress->setAttribute("physic_shape", "sphere");
-		//entityInProgress->setAttribute("physic_mass", "10");
-		//entityInProgress->setAttribute("physic_group","2");
-		//entityInProgress->setAttribute(PHYSIC_RADIUS,  getDefaultValue(GEN_ENEMY_PHYSX_RADIUS));
-		//entityInProgress->setAttribute(COMMON_MAXROLL, getDefaultValue(GEN_ENEMY_MAXROLL));
-		//entityInProgress->setAttribute(COMMON_ROLLSPEED, getDefaultValue(GEN_ENEMY_ROLL_SPEED));
-		//entityInProgress->setAttribute(COMMON_ACCEL, getDefaultValue(GEN_ENEMY_ACCEL));
-		//entityInProgress->setAttribute(COMMON_ROTATION_ACCEL, getDefaultValue(GEN_ENEMY_ROTATION_ACCEL));
-  //      entityInProgress->setAttribute(COMMON_LIFE, getDefaultValue(GEN_ENEMY_LIFE));
-		//entityInProgress->setAttribute(AI_TOLERANCE, getDefaultValue(GEN_ENEMY_MOV_TOLERANCE));
-
-		//entityInProgress->setAttribute("perception_entity_type","enemy");
-
-		//entityInProgress->setAttribute(COMMON_PRIMARY_WEAPON, "laser");
-		//entityInProgress->setAttribute(COMMON_SECONDARY_WEAPON, "missile_linear");
-  //      
-		//////(Enemy) Example of sound loading
-		/////*tmpStr1 = "loop0";
-		////tmpStr2 = "true";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "loop1";
-		////tmpStr2 = "true";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "autoPlay0";
-		////tmpStr2 = "true";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "autoPlay1";
-		////tmpStr2 = "true";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "minDist0";
-		////tmpStr2 = "40.0";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "maxDist0";
-		////tmpStr2 = "600.0";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "minDist1";
-		////tmpStr2 = "40.0";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "maxDist1";
-		////tmpStr2 = "600.0";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "soundFile0";
-		////tmpStr2 = "SoundIntro1.wav";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "soundFile1";
-		////tmpStr2 = "SoundIntro2.wav";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "soundName0";
-		////tmpStr2 = "EnemySound";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());
-
-		////tmpStr1 = "soundName1";
-		////tmpStr2 = "EnemySecSound";
-		////entityInProgress->setAttribute(tmpStr1.c_str(),tmpStr2.c_str());*/
-
-		//entityList.push_back(entityInProgress);
-
-
 		//Camera
         entityInProgress = new CMapEntity(getDefaultValue(GEN_CAMERA_NAME));
         entityInProgress->setType(CAMERA_TYPE);
@@ -1081,7 +874,6 @@ namespace Map
 		entityList.push_back(entityInProgress);
 
 		//Texture Camera
-//#ifndef _DEBUG
 		entityInProgress = new CMapEntity(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYNAME));
 		entityInProgress->setType(getDefaultValue(GEN_PLANET_TEXTURE_CAMERA_ENTITYTYPE));
 
@@ -1096,7 +888,7 @@ namespace Map
 		entityInProgress->setAttribute(CAMERA_ACCEL,				getDefaultValue(GEN_CAMERA_ACCEL_CONST));
 
 		entityList.push_back(entityInProgress);
-//#endif
+
 		//Skybox
 		entityInProgress = new CMapEntity(Common::Configuration::getDefaultValue(GEN_SKYBOX_NAME));
 

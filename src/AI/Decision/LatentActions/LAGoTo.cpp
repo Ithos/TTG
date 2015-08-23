@@ -29,8 +29,8 @@
 
 namespace AI 
 {
-	const float NEG_BOUNDARY = -5000.0f;
-	const float POS_BOUNDARY = 5000.0f;
+	const float NEG_BOUNDARY = -4500.0f;
+	const float POS_BOUNDARY = 4500.0f;
 	const float RANGES_DIST = 800.0f;
 	const float Y_PLANE = -300.0f;
 	const int	MAX_RANGES = 5;

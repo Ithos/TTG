@@ -234,6 +234,11 @@ namespace Application
 		HWND hwnd = 0;
 		m_renderWindow->getCustomAttribute("WINDOW", (void*)&hwnd); 
 		SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_THICKFRAME & ~WS_MAXIMIZEBOX);
+		//Set an application icon
+		HINSTANCE hInst = (HINSTANCE)GetModuleHandle(NULL);
+		 HICON icon = LoadIcon(hInst, MAKEINTRESOURCE(101));
+		SendMessage(hwnd, WM_SETICON, ICON_BIG, LPARAM(icon));
+		SendMessage(hwnd, WM_SETICON, ICON_SMALL, LPARAM(icon));
 
 		log_trace(LOG_C3DAPP,"Render window created\n");
 

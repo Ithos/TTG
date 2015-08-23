@@ -50,7 +50,7 @@ namespace Logic
 			/*
 			Constructor
 			*/
-			CPerceptionComponent(void) : m_pEntity(NULL), playerSeen(false), m_Time(0.0f) {};
+			CPerceptionComponent(void) : m_pEntity(nullptr), playerSeen(false), m_Time(0.0f) {};
 
 			/*
 			Destructor

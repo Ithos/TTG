@@ -139,12 +139,6 @@ namespace Common
             std::vector<unsigned> m_vShoots;
             unsigned m_iHits;
 
-            // max pools
-            const unsigned int MAX_EXPLOSIONS;
-            const unsigned int MAX_HITS;
-            const unsigned int MAX_SHOOTS;
-            const unsigned int MAX_TRAILS;
-
             static CParticleManager* m_instance;
 
             static std::string getRibbontrailName(ribbonTrail_t t);

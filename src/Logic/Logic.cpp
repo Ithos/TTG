@@ -30,7 +30,7 @@ namespace Logic
 	const char* const LOG_CLOGIC = "Logic::CLogic";
 	CLogic* CLogic::m_instance = 0;
 
-	CLogic::CLogic(): m_scene(nullptr)
+	CLogic::CLogic(): m_scene(nullptr), m_lastFilename(""), m_root(nullptr), m_window(nullptr), m_lastSceneType(Common::Data::DUMMY)
 	{
 		m_instance = this;
 	}
@@ -85,6 +85,11 @@ namespace Logic
 		Ogre::RenderWindow* render,
 		Common::Data::SceneType type)
 	{
+		m_lastFilename = filename;
+		m_root = root;
+		m_window = render;
+		m_lastSceneType = type;
+
 		unloadLevel();
 		log_trace(LOG_CLOGIC,"Loading level...\n");
 		if(m_scene = CScene::createSceneFromFile(filename,root,render,type)){
@@ -102,6 +107,12 @@ namespace Logic
 			delete m_scene;
 			m_scene = 0;
 		}
+	}
+
+	void CLogic::reloadLevel()
+	{
+		loadLevel(m_lastFilename, m_root, m_window, m_lastSceneType);
+		m_scene->activate();
 	}
 
 	bool CLogic::open()

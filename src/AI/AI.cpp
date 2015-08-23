@@ -67,4 +67,9 @@ namespace AI {
 		return angle;
 	}
 
+	void CAI::clearNotifications()
+	{
+		m_pManager->clearNotifications();
+	}
+
 }

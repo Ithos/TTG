@@ -79,12 +79,14 @@ namespace Logic
 
 		void CController::primaryShoot(bool b, const Vector3& vec){ 
 			m_primaryShoot   = b; 
-			m_weapons->setTargetPos(vec);
+			if(m_weapons)
+				m_weapons->setTargetPos(vec);
 		}
 
 		void CController::secondaryShoot(bool b, const Vector3& vec){ 
-			m_secondaryShoot   = b; 
-			m_weapons->setTargetPos(vec);
+			m_secondaryShoot   = b;
+			if(m_weapons)
+				m_weapons->setTargetPos(vec);
 		}
 
 		 void CController::moveForward(bool b)    

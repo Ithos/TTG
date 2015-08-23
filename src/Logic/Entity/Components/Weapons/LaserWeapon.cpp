@@ -136,9 +136,6 @@ namespace Logic
 			Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundName,
 				static_cast<CTransform*>(m_player->getComponentByName(Common::Data::TRANSFORM_COMP))->getTransform());
 
-
-			/// TODO -- get target dir & check angle -- ///
-
 			Vector3 unitTarget(target - src);
 			unitTarget.normalise();
 

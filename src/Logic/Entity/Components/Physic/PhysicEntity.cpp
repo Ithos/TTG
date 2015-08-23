@@ -63,6 +63,9 @@ bool CPhysicEntity::spawn(CEntity* entity, CScene *scene, const Map::CMapEntity 
 
 	m_actor = createActor(entityInfo);
 
+	if(!m_actor)
+		return false;
+
 	return true;
 }
 
@@ -178,6 +181,8 @@ void CPhysicEntity::onOverlapEnd(IPhysic* otherComponent)
 
 void CPhysicEntity::tick(unsigned int msecs) 
 {
+	if(!m_actor)return;
+
 	PxRigidDynamic *dinActor = m_actor->isRigidDynamic();
 	if (!dinActor) 
 		return;
@@ -199,6 +204,8 @@ void CPhysicEntity::tick(unsigned int msecs)
 		}
 		m_physicMng->moveDynamicActor(dinActor,static_cast<CTransform*>(m_entity->getComponentByName(TRANSFORM_COMP))->getTransform());
 	}
+
+
 	if(m_physicMng->isKinematic(dinActor)){
 		if(m_onContact){
 			Matrix4 m = m_physicMng->getActorTransform(m_actor);

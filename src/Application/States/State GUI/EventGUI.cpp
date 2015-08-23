@@ -652,8 +652,6 @@ namespace Application
 	
 	void CEventGUI::setupCity()
 	{
-		///TODO -- get real texts --///
-
 		Application::CMissionManager::TMissionDescriptor mission = m_missionManager->generateMission();
 
 		Application::CMissionManager::TItemDescriptor item = m_missionManager->getTmpItemReward();

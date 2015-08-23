@@ -19,7 +19,11 @@
 #include "PerceptionComponent.h"
 
 #include "Logic/Entity/Entity.h"
+#include "Logic/Logic.h"
 #include "Common/Map/MapEntity.h"
+
+#include <Common/Configure/Configure.h>
+#include <Common/Map/MapEntity.h>
 
 #include "AI/Perception/PerceptionSignal.h"
 #include "AI/Perception/PerceptionEntity.h"
@@ -31,6 +35,9 @@
 #include "Logic/Entity/Components/AI/SteeringMovement.h"
 #include "Common/Data/TTG_Types.h"
 
+#include "GUI\GUI.h"
+#include "GUI\Controllers\PlayerController.h"
+
 #include <Application/States/State GUI/PlanetGUI.h>
 
 #include <log.h>
@@ -40,6 +47,9 @@ namespace Logic
 {
 	namespace Component
 	{
+		const float MARGIN = 100.0f;
+		const float MAX_TIME = 5.00f;
+
 		IMP_FACTORY(CPerceptionComponent);
 	
 		/*
@@ -48,7 +58,7 @@ namespace Logic
 		CPerceptionComponent::~CPerceptionComponent(void)
 		{
 			// Eliminamos la entidad de percepción que hemos creado en el spawn
-			if (m_pEntity != NULL)
+			if (m_pEntity)
 				delete m_pEntity;
 		}
 
@@ -131,18 +141,16 @@ namespace Logic
 		*/
 		void CPerceptionComponent::tick(unsigned int msecs)
 		{
-			if(m_Time < 0.33f)
+		
+			if(m_Time < MAX_TIME)
 			{
 				m_Time += msecs / 1000.0f;
-				return;
 			}
 
 			IComponent::tick(msecs);
 
 			CTransform* transf = static_cast<CTransform*>(m_entity->getComponentByName(Common::Data::TRANSFORM_COMP)); 
 			m_pEntity->setTransform(transf->getTransform());
-
-			m_Time = 0.0f;
 		}
 
 		/*
@@ -159,10 +167,34 @@ namespace Logic
 			CSteeringMovement* steering = static_cast<CSteeringMovement*>(m_entity->getComponentByName(Common::Data::STEERING_MOV));
 
 			if (entity->isPlayer()) {
+
+				//This is here beacause of an awfull bug
+				if(m_Time < MAX_TIME){
+					Common::Configuration::setDefaultFile(CONFIGURE_FILE);
+					Common::Configuration::setDefaultFile(Common::Configuration::getDefaultValue(CONF_GENERATOR_PATH).c_str());
+
+					Map::CMapEntity* entityInfo(new Map::CMapEntity(""));
+					entityInfo->setAttribute("pos", Common::Configuration::getDefaultValue(GEN_PLAYER_START_POSITION));
+					Vector3 playerInitPos(entityInfo->getVector3Attribute("pos"));
+					if(transf->getPosition().x <= playerInitPos.x + MARGIN && transf->getPosition().x >= playerInitPos.x - MARGIN &&
+						transf->getPosition().z <= playerInitPos.z + MARGIN && transf->getPosition().z >= playerInitPos.z - MARGIN){
+						delete notification;
+						notification = nullptr;
+						AI::CAI::getInstance()->clearNotifications();
+						Application::CPlanetGUI::getInstance()->deactivate();
+						GUI::CGUI::getInstance()->getPlayerController()->deactivate();
+						entity->deactivate();
+						Logic::CLogic::getInstance()->reloadLevel();
+						GUI::CGUI::getInstance()->getPlayerController()->activate();
+						Application::CPlanetGUI::getInstance()->activate();
+						return;
+					}
+				}
+
 				if (!playerSeen) {
 					steering->setPlayerAsTarget();
 					playerSeen = true;
-					Application::CPlanetGUI::getInstance()->addLock();
+					Application::CPlanetGUI::getInstance()->addLock();	
 				}
 				else
 					steering->setEvadePlayer(transf->getPosition());
@@ -173,6 +205,7 @@ namespace Logic
 			// El gestor de percepción se desentiende de las notificaciones una vez que las 
 			// envía. Es responsabilidad del receptor eliminarlas.
 			delete notification;
+			notification = nullptr;
 		}
 	}
 }

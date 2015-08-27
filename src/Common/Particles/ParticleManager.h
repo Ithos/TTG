@@ -54,12 +54,6 @@ namespace Common
                 return (!m_instance) ? m_instance = new CParticleManager() : m_instance;
             }
 
-            ~CParticleManager()
-            { 
-                if (m_instance)
-                    delete m_instance;
-            }
-
             // Fill all particle pools.
             bool init(Ogre::SceneManager*);
 
@@ -106,6 +100,12 @@ namespace Common
 
         private:
             CParticleManager();
+
+			 ~CParticleManager()
+            { 
+               
+            }
+
             std::string getShootScript(Weapons_t);
 
             Ogre::SceneManager* m_sceneMgr;
@@ -129,6 +129,7 @@ namespace Common
             std::vector<Ogre::SceneNode*>   m_node1; // node for creating ribbontrail
             std::vector<Ogre::SceneNode*>   m_node2; // node for moving ribbontrail
             std::vector<Ogre::RibbonTrail*> m_rt; 
+			std::vector<std::string> m_names;
             unsigned m_iRt;
             
             // index

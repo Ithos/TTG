@@ -34,6 +34,9 @@ namespace Common
         const char* const STAR_GALAXY  = "starGalaxy";
         const char* const LASER_NAME   = "laserTrail_";
 
+		const std::string ONE = "_1";
+		const std::string TWO = "_2";
+
 		// max pools
         const unsigned int MAX_EXPLOSIONS = 20;
         const unsigned int MAX_HITS = 100;
@@ -51,6 +54,7 @@ namespace Common
                 m_rt.push_back(nullptr);
                 m_node1.push_back(nullptr);
                 m_node2.push_back(nullptr);
+				m_names.push_back("");
             }
         }
 
@@ -68,13 +72,26 @@ namespace Common
 		    ParticleSystemManager::getSingletonPtr()->destroyAllParticleSystems(m_sceneMgr);
             // delete trails
             for (unsigned i = 0; i < m_rt.size(); ++i) {
-				if(i < m_node1.size() && m_node1[i])
+				bool tmpB1(false), tmpB2(false);
+				if(i < m_node1.size() && m_node1[i] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + ONE).c_str())){
 					m_sceneMgr->destroySceneNode(m_node1[i]);
-				if(i < m_node2.size() && m_node2[i])
+					tmpB1 = true;
+				}
+				if(i < m_node2.size() && m_node2[i] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + TWO).c_str())){
 					m_sceneMgr->destroySceneNode(m_node2[i]);
-				if(i < m_rt.size() && m_rt[i])
+					tmpB2 = true;
+				}
+				if(i < m_rt.size() && m_rt[i]){
 					m_sceneMgr->destroyRibbonTrail(m_rt[i]);
+					m_names[i] = "";
+				}
             }
+
+			if(m_instance)
+			{
+				delete m_instance;
+				m_instance = nullptr;
+			}
         }
 
         //----------- hits ------------------//
@@ -328,17 +345,21 @@ namespace Common
 
                 if (m_node1.size() && m_node1[0]) {
                     for (unsigned i = 0; i < MAX_TRAILS; ++i) {
-						if(i < m_node1.size() && m_node1[i]){
+						bool tmpB1(false), tmpB2(false);
+						if(i < m_node1.size() && m_node1[i] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + ONE).c_str())){
+							tmpB1 = true;
 							m_sceneMgr->destroySceneNode(m_node1[i]);
 							m_node1[i] = nullptr;
 						}
-						if(i < m_node2.size() && m_node2[i]){
+						if(i < m_node2.size() && m_node2[i] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + TWO).c_str())){
+							tmpB2 = true;
 							m_sceneMgr->destroySceneNode(m_node2[i]);
 							m_node2[i] = nullptr;
 						}
-                        if (i < m_rt.size() && m_rt[i]){
+                        if (i < m_rt.size() && m_rt[i] && tmpB1 && tmpB2 ){
                             m_sceneMgr->destroyRibbonTrail(m_rt[i]);
 							m_rt[i] =  nullptr;
+							m_names[i] = "";
 						}
                     }
                 }
@@ -348,17 +369,21 @@ namespace Common
             else {
                 if (type == LASER) {
                     for (unsigned i = 0; i < MAX_TRAILS; ++i) {
-						if(i < m_node1.size() && m_node1[i]){
+						bool tmpB1(false), tmpB2(false);
+						if(i < m_node1.size() && m_node1[i] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + ONE).c_str())){
+							tmpB1 = true;
 							m_sceneMgr->destroySceneNode(m_node1[i]);
 							m_node1[i] = nullptr;
 						}
-						if(i < m_node2.size() && m_node2[i]){
+						if(i < m_node2.size() && m_node2[i] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + TWO).c_str())){
+							tmpB2 = true;
 							m_sceneMgr->destroySceneNode(m_node2[i]);
 							m_node2[i] = nullptr;
 						}
-                        if (i < m_rt.size() && m_rt[i]){
+                        if (i < m_rt.size() && m_rt[i] && tmpB1 && tmpB2){
                             m_sceneMgr->destroyRibbonTrail(m_rt[i]);
 							m_rt[i] =  nullptr;
+							m_names[i] = "";
 						}
                     }
                 }
@@ -374,36 +399,24 @@ namespace Common
 
         void CParticleManager::laserShot(::Vector3 src, ::Vector3 dir, float range, ribbonTrail_t trail)
         {
-			if(m_iRt > MAX_TRAILS - 1)m_iRt-=MAX_TRAILS;
 
-			if(m_iRt >= m_node1.size() || m_iRt >= m_node2.size() || m_iRt >= m_rt.size()){
-				while(m_node1.size() < MAX_TRAILS)
-					m_node1.push_back(nullptr);
-				while(m_node2.size() < MAX_TRAILS)
-					m_node2.push_back(nullptr);
-				while(m_rt.size() < MAX_TRAILS)
-					m_rt.push_back(nullptr);
-			}
-
-            if (m_node1[m_iRt]) {
-				try{
+			if (m_node1[m_iRt] && m_node2[m_iRt] && m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + ONE).c_str()) 
+				&& m_sceneMgr->hasSceneNode(std::string(m_names[m_iRt] + TWO).c_str())) {
 					m_node1[m_iRt]->detachAllObjects();
 					m_node2[m_iRt]->detachAllObjects();
 					m_sceneMgr->destroySceneNode(m_node1[m_iRt]);
 					m_sceneMgr->destroySceneNode(m_node2[m_iRt]);
-				}catch(Ogre::Exception ex){
-				}
 
-				try{
 					if (m_rt[m_iRt]){
 						m_sceneMgr->destroyRibbonTrail(m_rt[m_iRt]);
 					}
-				}catch(Ogre::Exception ex){
-				}
+
+					m_names[m_iRt] = "";
             }
 
-            m_node1[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
-            m_node2[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+			m_names[m_iRt] = buildName(LASER_NAME, m_index);
+			m_node1[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode(std::string(buildName(LASER_NAME, m_index) + ONE).c_str());
+            m_node2[m_iRt] = m_sceneMgr->getRootSceneNode()->createChildSceneNode(std::string(buildName(LASER_NAME, m_index) + TWO).c_str());
             m_rt[m_iRt] = static_cast<Ogre::RibbonTrail*>(m_sceneMgr->createMovableObject(buildName(LASER_NAME, m_index++).c_str(), "RibbonTrail"));
             m_rt[m_iRt]->setMaterialName(getRibbontrailName(trail));
             m_rt[m_iRt]->setTrailLength(range);
@@ -416,6 +429,7 @@ namespace Common
             m_node2[m_iRt]->attachObject(m_rt[m_iRt]);
             m_node2[m_iRt]->setPosition(src); // end
             m_node1[m_iRt]->setPosition(src + (dir * range)); // init
+
 
             if (m_iRt < MAX_TRAILS-1)
                 ++m_iRt;            

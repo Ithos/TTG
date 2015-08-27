@@ -343,7 +343,8 @@ namespace Application
 
 	void CPlanetGUI::onBackActivated()
 	{
-		if(m_menuWindow->getChild("PlanetHUD/LeaveButton")->isVisible() && !m_menuWindow->getChild("PlanetHUD/LeaveButton")->isDisabled()){
+		if(m_menuWindow->getChild("PlanetHUD/LeaveButton")->isVisible() && !m_menuWindow->getChild("PlanetHUD/LeaveButton")->isDisabled() &&
+			!m_planetGUIScreenFadeIn->isRunning() && !m_planetGUIScreenFadeOut->isRunning()){
 			CEGUI::EventArgs e;
 			onBackClicked(e);
 		}
@@ -351,7 +352,8 @@ namespace Application
 	
 	void CPlanetGUI::onLandActivated()
 	{
-		if(m_menuWindow->getChild("PlanetHUD/PlanetButton")->isVisible() && !m_menuWindow->getChild("PlanetHUD/PlanetButton")->isDisabled()){
+		if(m_menuWindow->getChild("PlanetHUD/PlanetButton")->isVisible() && !m_menuWindow->getChild("PlanetHUD/PlanetButton")->isDisabled() &&
+			!m_planetGUIScreenFadeIn->isRunning() && !m_planetGUIScreenFadeOut->isRunning()){
 			CEGUI::EventArgs e;
 			onLandClicked(e);
 		}

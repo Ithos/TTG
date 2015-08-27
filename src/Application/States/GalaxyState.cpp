@@ -207,16 +207,6 @@ namespace Application
 		case Common::Input::Key::ESCAPE:
 			m_app->setState("pause");
 			break;
-		case Common::Input::Key::G:
-			/*m_app->setState("system");*/
-			//This indicates that the planet that the player is in has to be initialized in the systemState
-			/*CGameManager::getInstance()->setPlanet("");*/
-			m_app->setState("game_finished");
-			break;
-		case Common::Input::Key::E:
-			/*m_app->setState("event");*/
-			m_app->setState("game_over");
-			break;
 		default:
 			return false;
 		}

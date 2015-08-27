@@ -175,7 +175,8 @@ namespace Logic
 					if (type == "Asteroid" || type == "Enemy") {
 						m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 						float distance = src.distance(m_currPos);
-						m_particles->laserShot(src, modDir, distance);
+						if(m_particles)
+							m_particles->laserShot(src, modDir, distance);
 
 						if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
 							Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
@@ -195,7 +196,8 @@ namespace Logic
 					if (type == "Player" || type == "Asteroid") {
 						m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 						float distance = src.distance(m_currPos);
-						m_particles->laserShot(src, modDir, distance);
+						if(m_particles)
+							m_particles->laserShot(src, modDir, distance);
 
 						if(hitEntity->isPlayer() && static_cast<CShield*>(hitEntity->getComponentByName(SHIELD_COMP))->hasShield()){
 
@@ -214,12 +216,14 @@ namespace Logic
 						}
 					} // hit asteroid or enemy
 					else {
-						m_particles->laserShot(src - (81 * modDir), modDir, m_range);
+						if(m_particles)
+							m_particles->laserShot(src - (81 * modDir), modDir, m_range);
 					}
 				}
 			}
 			else { //no hit
-				m_particles->laserShot(src, modDir, m_range);
+				if(m_particles)
+					m_particles->laserShot(src, modDir, m_range);
 			}
 
 
@@ -242,7 +246,8 @@ namespace Logic
 						if (type == "Asteroid" || type == "Enemy") {
 							m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 							float distance = nSrc.distance(m_currPos);
-							m_particles->laserShot(nSrc, modDir, distance);
+							if(m_particles)
+								m_particles->laserShot(nSrc, modDir, distance);
 
 							if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
 								Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
@@ -256,13 +261,15 @@ namespace Logic
 							}
 						} // hit asteroid or enemy
 						else {
-							m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
+							if(m_particles)
+								m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
 						}
 					}else{
 						if (type == "Player" || type == "Asteroid") {
 							m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 							float distance = src.distance(m_currPos);
-							m_particles->laserShot(nSrc, modDir, distance);
+							if(m_particles)
+								m_particles->laserShot(nSrc, modDir, distance);
 
 							if(hitEntity->isPlayer() && static_cast<CShield*>(hitEntity->getComponentByName(SHIELD_COMP))->hasShield()){
 
@@ -281,12 +288,14 @@ namespace Logic
 							}
 						} // hit asteroid or enemy
 						else {
-							m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
+							if(m_particles)
+								m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
 						}
 					}
 				}
 				else { //no hit
-					m_particles->laserShot(nSrc, modDir, m_range);
+					if(m_particles)
+						m_particles->laserShot(nSrc, modDir, m_range);
 				}
 
 				nSrc = src;
@@ -306,7 +315,8 @@ namespace Logic
 						if (type == "Asteroid" || type == "Enemy") {
 							m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 							float distance = src.distance(m_currPos);
-							m_particles->laserShot(nSrc, modDir, distance);
+							if(m_particles)
+								m_particles->laserShot(nSrc, modDir, distance);
 
 							if (static_cast<CLife*>(hitEntity->getComponentByName(LIFE_COMP))->decreaseLife(m_damage)) {
 								Common::Sound::CSound::getSingletonPtr()->play3dSound(m_soundExplosion,
@@ -320,13 +330,15 @@ namespace Logic
 							}
 						} // hit asteroid or enemy
 						else {
-							m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
+							if(m_particles)
+								m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
 						}
 					}else{
 						if (type == "Player" || type == "Asteroid") {
 							m_currPos = static_cast<CTransform*>(hitEntity->getComponentByName(TRANSFORM_COMP))->getPosition();
 							float distance = nSrc.distance(m_currPos);
-							m_particles->laserShot(nSrc, modDir, distance);
+							if(m_particles)
+								m_particles->laserShot(nSrc, modDir, distance);
 
 							if(hitEntity->isPlayer() && static_cast<CShield*>(hitEntity->getComponentByName(SHIELD_COMP))->hasShield()){
 
@@ -345,12 +357,14 @@ namespace Logic
 							}
 						} // hit asteroid or enemy
 						else {
-							m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
+							if(m_particles)
+								m_particles->laserShot(nSrc - (81 * modDir), modDir, m_range);
 						}
 					}
 				}
 				else { //no hit
-					m_particles->laserShot(nSrc, modDir, m_range);
+					if(m_particles)
+						m_particles->laserShot(nSrc, modDir, m_range);
 				}
 
 			}

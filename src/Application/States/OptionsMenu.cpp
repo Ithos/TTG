@@ -59,7 +59,6 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->addSound("Button2.wav","buttonSoundOptions");
 		Common::Sound::CSound::getSingletonPtr()->addSound("SoundIntro2.wav","buttonHoverOptions");
 		Common::Sound::CSound::getSingletonPtr()->addSound("Intro1.wav","introPauseSoundOptions");
-		Common::Sound::CSound::getSingletonPtr()->addSound("Failed2.wav","failedSoundOptions");
 
 		return true;
 	}
@@ -71,7 +70,6 @@ namespace Application
 		Common::Sound::CSound::getSingletonPtr()->releaseSound("buttonSoundOptions");
 		Common::Sound::CSound::getSingletonPtr()->releaseSound("buttonHoverOptions");
 		Common::Sound::CSound::getSingletonPtr()->releaseSound("introPauseSoundOptions");
-		Common::Sound::CSound::getSingletonPtr()->releaseSound("failedSoundOptions");
 
 		CApplicationState::release();
 
@@ -153,52 +151,55 @@ namespace Application
 
 			CEGUI::Combobox* Resolution( static_cast<CEGUI::Combobox*>(m_menuWindow->getChild("InnerButtonsContainer/ResolutionCombobox")) );
 			CEGUI::Combobox* ColourDepth( static_cast<CEGUI::Combobox*>(m_menuWindow->getChild("InnerButtonsContainer/ColourDepthCombobox")) );
-			if(Resolution->getSelectedItem() != nullptr && ColourDepth->getSelectedItem() != nullptr)
-			{
-				Ogre::ConfigOptionMap& options = m_app->getOgreRoot()->getRenderSystem()->getConfigOptions();
-				Ogre::NameValuePairList newOptions;
 
-				for(auto it = options.begin(); it != options.end(); ++it){
-					if(it->first == "Colour Depth"){
+			Ogre::ConfigOptionMap& options = m_app->getOgreRoot()->getRenderSystem()->getConfigOptions();
+			Ogre::NameValuePairList newOptions;
 
-						newOptions[it->first] = Ogre::String(ColourDepth->getSelectedItem()->getText().c_str());
+			std::string colourDepth;
 
-					}else if(it->first == "Video Mode"){
+			if(ColourDepth->getSelectedItem() != nullptr)
+					colourDepth = Ogre::String(ColourDepth->getSelectedItem()->getText().c_str());
+				
 
-						Ogre::String str(Ogre::String(Resolution->getSelectedItem()->getText().c_str()) + " @ " 
-							+ Ogre::String(ColourDepth->getSelectedItem()->getText().c_str()) + "-bit colour");
+			for(auto it = options.begin(); it != options.end(); ++it){
+				if(it->first == "Video Mode"){
 
-						newOptions[it->first] = str;
+					Ogre::String str("");
 
-					}else if(it->first == "Full Screen"){
+					if(Resolution->getSelectedItem() != nullptr && ColourDepth->getSelectedItem() != nullptr)
+						str = Ogre::String(Resolution->getSelectedItem()->getText().c_str()) + " @ " 
+							+ Ogre::String(colourDepth) + "-bit colour";
+					else if(Resolution->getSelectedItem() != nullptr){
+						str = Ogre::String(it->second.currentValue.c_str());
+						str = Ogre::String(Resolution->getSelectedItem()->getText().c_str()) + " " + str.substr(str.find('@'));
+					}else if(ColourDepth->getSelectedItem() != nullptr){
+						str = Ogre::String(it->second.currentValue.c_str());
+						str = str.substr(0,str.find('@')) + "@ " + Ogre::String(colourDepth) + "-bit colour";
+					}else
+						str = Ogre::String(it->second.currentValue.c_str());
 
-						newOptions[it->first] = static_cast<CEGUI::ToggleButton*>(m_menuWindow->getChild("InnerButtonsContainer/FullScreenButton"))
-							->isSelected() ? "Yes" : "No";
+					newOptions[it->first] = str;
 
-					}else if(it->first == "VSync"){/// TODO ///
+				}else if(it->first == "Full Screen"){
 
-						newOptions[it->first] = static_cast<CEGUI::ToggleButton*>(m_menuWindow->getChild("InnerButtonsContainer/VSyncButton"))
-							->isSelected() ? "Yes" : "No";
+					newOptions[it->first] = static_cast<CEGUI::ToggleButton*>(m_menuWindow->getChild("InnerButtonsContainer/FullScreenButton"))
+						->isSelected() ? "Yes" : "No";
 
-					}else{
+				}else if(it->first == "VSync"){
 
-						newOptions[it->first] = it->second.currentValue;
+					newOptions[it->first] = static_cast<CEGUI::ToggleButton*>(m_menuWindow->getChild("InnerButtonsContainer/VSyncButton"))
+						->isSelected() ? "Yes" : "No";
 
-					}
+				}else{
+
+					newOptions[it->first] = it->second.currentValue;
+
 				}
-
-				m_app->reconfigure(newOptions);
-
-				Common::Sound::CSound::getSingletonPtr()->playSound("buttonSoundOptions");
-
-			}else{
-
-				m_menuWindow->getChild("BotBar/BotBarLabel")->setVisible(true);
-
-				Common::Sound::CSound::getSingletonPtr()->playSound("failedSoundOptions");
 			}
 
-			
+			m_app->reconfigure(newOptions);
+
+			Common::Sound::CSound::getSingletonPtr()->playSound("buttonSoundOptions");
 
 		}
 		return false;

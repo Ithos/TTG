@@ -4,6 +4,7 @@
   <Window type="DefaultWindow" name="PlanetRoot" >
     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
     <Property name="MaxSize" value="{{1,0},{1,0}}" />
+     <Property name="MousePassThroughEnabled" value="True" />
     <Window type="Generic/Image" name="BlackScreen" >
       <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
       <Property name="Image" value="GameMenuImages/Background" />
@@ -13,6 +14,7 @@
     <Window type="DefaultWindow" name="PlanetHUD" >
     <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
     <Property name="MaxSize" value="{{1,0},{1,0}}" />
+    <Property name="MousePassThroughEnabled" value="True" />
       <Window type="AlfiskoSkin/FrameWindow" name="InfoBoard" >
         <Property name="Area" value="{{0,0},{-0.03,0},{1.0,0},{0.175,0}}" />
         <Property name="MaxSize" value="{{1,0},{1,0}}" />
@@ -24,6 +26,7 @@
         <Property name="TitlebarEnabled" value="False" />
         <Property name="DragMovingEnabled" value="False" />
         <Property name="FrameEnabled" value="False" />
+         <Property name="MousePassThroughEnabled" value="True" />
         <Window type="TaharezLook/Listbox" name="PrimaryWindow" >
           <Property name="Area" value="{{0.33,0},{0.03,0},{0.53,0},{0.93,0}}" />
           <Property name="Font" value="Jura-10" />
@@ -135,6 +138,7 @@
         <Property name="Alpha" value="1.0" />
         <Property name="Font" value="Jura-10" />
         <Property name="Visible" value="False" />
+         <Property name="MousePassThroughEnabled" value="True" />
         <Window type="TaharezLook/ListboxItem" name="MessageTag" >
           <Property name="Font" value="Jura-13" />
           <Property name="Selectable" value="False" />

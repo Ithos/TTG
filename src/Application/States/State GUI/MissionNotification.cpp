@@ -105,7 +105,7 @@ namespace Application
 		if(mainMission){
 			/// TODO -- Internationalization -- /// Begin{
 			static_cast<CEGUI::Listbox*>(m_menuWindow->getChild("NoteWindow/NoteBoard"))->addItem(new CEGUI::ListboxTextItem(
-				m_gameManager->getObjectivesAquired()!=m_gameManager->getTotalObjectives() ? CEGUI::String("Signal source found.") : CEGUI::String("All signals checked.")
+				m_gameManager->getObjectivesAquired()!=m_gameManager->getTotalObjectives() ? CEGUI::String("Signal source found and recolected.") : CEGUI::String("All signals checked.")
 				));
 			/// TODO -- Internationalization -- /// }End
 		}else{

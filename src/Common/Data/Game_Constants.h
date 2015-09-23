@@ -738,7 +738,7 @@ namespace Common
 			};
 
 			const char* const GAME_LASER_CANNON[2] = {
-				"Laser Cannon","Primary Weapon\nCommonly used in heavy ships\nthis weapon is a bigger version of the standar\nlaser seapons."
+				"Laser Cannon","Primary Weapon\nCommonly used in heavy ships\nthis weapon is a bigger version of the standar\nlaser weapons."
 			};
 
 			const char* const GAME_ENERGY_BEAM[2] = {

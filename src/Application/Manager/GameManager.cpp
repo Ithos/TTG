@@ -195,7 +195,7 @@ namespace Application
 		CEGUI::Window* item = static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->createChild("TaharezLook/ListboxItem", Common::Data::Game::GAME_MISSION_NAME);
 		item->setFont("Jura-10");
 		item->setText("=== " + std::string(Common::Data::Game::GAME_MISSION_TEXT) + std::to_string(m_objectives) + "/" + std::to_string(m_totalObjectives) + " ===");
-		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, Common::Data::Game::GAME_MISSION_TEXT);
+		item->setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, std::string(Common::Data::Game::GAME_MISSION_TEXT) + " " + std::to_string(m_objectives));
 
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->endInitialisation();
 
@@ -769,6 +769,9 @@ namespace Application
 		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(3)->setText(
 			"=== " + std::string(Common::Data::Game::GAME_MISSION_TEXT) + std::to_string(m_objectives) + "/" + std::to_string(m_totalObjectives) + " ==="
 			);
+
+		static_cast<CEGUI::ItemListbox*>(m_menuWindow->getChild("RightWindow/InformationBoard"))->getItemFromIndex(3)->
+			setUserString(Common::Data::Game::GAME_HUD_DESCRIPTION, std::string(Common::Data::Game::GAME_MISSION_TEXT) + " " + std::to_string(m_objectives));
 
 	}
 

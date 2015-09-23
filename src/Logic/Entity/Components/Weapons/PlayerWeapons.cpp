@@ -22,6 +22,7 @@
 #include "MissileWeapon_Linear.h"
 #include "BombWeapon.h"
 #include "../Movement/Transform.h"
+#include "../Movement/Movement.h"
 #include <log.h>
 
 #include <Common/Map/MapEntity.h>
@@ -196,7 +197,15 @@ namespace Logic
 
         void CWeapons::shoot(int index, unsigned int msecs)
         {
-            Vector3 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+			Vector3 pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+
+			Vector3 tmp = Common::Util::Math::getDirection(m_trans->getTransform());
+
+			if(m_entity->isPlayer() && static_cast<CMovement*>(m_entity->getComponentByName("CMovement"))->getSpeed() < 0)
+				pos = m_trans->getPosition() + (1.1 * m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+			else
+				pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+
             using namespace Common::Data;
             log_trace(LOG_PWEAPON, "Shoot with secondary weapon\n");
             switch (m_weapons[index]->m_type)

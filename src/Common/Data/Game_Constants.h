@@ -131,7 +131,7 @@ namespace Common
 												"Acrux","Gacrux","CanopusII","Edasich",
 												"Dziban","Acamar","Castor","Al_Na'ir",
 												"Al_Dhanab","Korneph","Ukdah","Cor_Korae",
-												"Zozma","Ras_Elased","Tsze_Tseang","Vega",
+												"Zozma","Ras_Elased","Tsze_Tsea","Vega",
 												"Sulafat","Yed","Zed","Hiades",
 												"Betelgeuse","Rigel","Saiph","Fomalhaut",
 												"Sirius","Arcturus","Aldebaran","Tseen_Ke"
@@ -657,7 +657,7 @@ namespace Common
 			};
 
 			const char* const GAME_PLANETS_SYSTEM26[] = {
-				"Tsze_Tseang_0_","Tsze_Tseang_1_","Tsze_Tseang_2_","Kuma","Tsze_Tseang_4_","Tsze_Tseang_5_","Tsze_Tseang_6_","Tsze_Tseang_7_","Tsze_Tseang_8_","Tsze_Tseang_9_" 
+				"Tsze_Tsea_0_","Tsze_Tsea_1_","Tsze_Tsea_2_","Kuma","Tsze_Tsea_4_","Tsze_Tsea_5_","Tsze_Tsea_6_","Tsze_Tsea_7_","Tsze_Tsea_8_","Tsze_Tsea_9_" 
 			};
 
 			const char* const GAME_PLANETS_SYSTEM27[] = {
@@ -842,7 +842,7 @@ namespace Common
 			};
 
 			const char* const GAME_REPULSION_ENGINE[2] = {
-				"Repulsion Engine", "Engine\nThe most used engine in cargo ships.\nIts jump distance its quite high, but its fuel consume too.\nJump Distance:85\nFuel Cost:300\nMax speed: 0.75 -- Acceleration: 1.0 -- Rotation speed: 1.5"
+				"Repulsion Engine", "Engine\nThe most used engine in cargo ships.\nIt has a quite high jump distance, but its fuel consmption is also high.\nJump Distance:85\nFuel Cost:300\nMax speed: 0.75 -- Acceleration: 1.0 -- Rotation speed: 1.5"
 			};
 
 			const char* const GAME_GRAVITY_ENGINE[2] = {
@@ -850,7 +850,7 @@ namespace Common
 			};
 
 			const char* const GAME_SOLAR_ENGINE[2] = {
-				"Solar Wind Wing", "Engine\nNormally considered just a expensive toy\nthis \"engine\" captures ions theat escape from stars\nrather than generating any kind of impulse.\nJump Distance:45\nFuel Cost:90\nMax speed: 1.75 -- Acceleration: 1.75 -- Rotation speed: 1.5"
+				"Solar Wind Wing", "Engine\nNormally considered just a expensive toy\nthis \"engine\" captures ions that escape from stars\nrather than generating any kind of impulse.\nJump Distance:45\nFuel Cost:90\nMax speed: 1.75 -- Acceleration: 1.75 -- Rotation speed: 1.5"
 			};
 
 			const char* const GAME_COPOSITE_ENGINE[2] = {
@@ -858,7 +858,7 @@ namespace Common
 			};
 
 			const char* const GAME_WORMHOLE_ENGINE[2] = {
-				"Wormhole Engine", "Engine\nThought to be just a rumour this engine appeared\nin some ships some years ago.\nIt's said that it's the result of some\nillegal teleportation experiments.\nJump Distance:70\nFuel Cost:250\nMax speed: 2.0 -- Acceleration: 1.0 -- Rotation speed: 1.0"
+				"Wormhole Engine", "Engine\nThought to be just a rumour this engine appeared\nin some ships some years ago.\nIt's said that is the result of some\nillegal teleportation experiments.\nJump Distance:70\nFuel Cost:250\nMax speed: 2.0 -- Acceleration: 1.0 -- Rotation speed: 1.0"
 			};
 
 			const char* const GAME_GAMMA_ENGINE[2] = {
@@ -887,14 +887,14 @@ namespace Common
 			{
 				std::make_tuple(GAME_PULSE_ENGINE[0], 1.0,1.0,1.0),//max speed, acceleration, rotation speed
 				std::make_tuple(GAME_RESONANCE_ENGINE[0], 1.0,1.5,1.25),
-				std::make_tuple(GAME_SPATIAL_ENGINE[0], 0.75,1.0,0.75),
-				std::make_tuple(GAME_REPULSION_ENGINE[0], 0.75,1.0,1.5),
-				std::make_tuple(GAME_GRAVITY_ENGINE[0], 0.75,1.0,1.5),
-				std::make_tuple(GAME_SOLAR_ENGINE[0], 1.75,1.75,1.5),
-				std::make_tuple(GAME_COPOSITE_ENGINE[0], 1.25,1.25,1.0),
-				std::make_tuple(GAME_WORMHOLE_ENGINE[0], 2.0,1.0,1.0),
-				std::make_tuple(GAME_GAMMA_ENGINE[0], 1.75,2.0,1.75),
-				std::make_tuple(GAME_PLASMA_ENGINE[0], 2.0,1.5,1.5)
+				std::make_tuple(GAME_SPATIAL_ENGINE[0], 0.5,1.0,0.75),
+				std::make_tuple(GAME_REPULSION_ENGINE[0], 0.5,1.0,1.5),
+				std::make_tuple(GAME_GRAVITY_ENGINE[0], 0.5,1.0,1.5),
+				std::make_tuple(GAME_SOLAR_ENGINE[0], 2.0,2.0,1.5),
+				std::make_tuple(GAME_COPOSITE_ENGINE[0], 1.5,1.5,1.0),
+				std::make_tuple(GAME_WORMHOLE_ENGINE[0], 2.5,1.0,1.0),
+				std::make_tuple(GAME_GAMMA_ENGINE[0], 2.0,2.5,1.75),
+				std::make_tuple(GAME_PLASMA_ENGINE[0], 2.5,2.0,1.5)
 			};
 
 			const int TOTAL_ENGINES = 10;

@@ -92,7 +92,7 @@ namespace Logic
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[4][0]){
 					setPrimaryWeapon(LASER_BEAM);
-					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(20.0f * damageProp, 1.0f, 300, 1.0f, -1, 30, "EnergyBeam.wav");
+					static_cast<CLaserBeam*>(m_weapons[m_primary])->setWeapon(20.0f * damageProp, 1.0f, 300, 1.0f, -1, 60, "EnergyBeam.wav");
 
 				}else if(primaryWeapon == Common::Data::Game::GAME_PRIMARY_WEAPONS_LIST[5][0]){
 					setPrimaryWeapon(LASER);
@@ -201,10 +201,10 @@ namespace Logic
 
 			Vector3 tmp = Common::Util::Math::getDirection(m_trans->getTransform());
 
-			if(m_entity->isPlayer() && static_cast<CMovement*>(m_entity->getComponentByName("CMovement"))->getSpeed() < 0)
+			/*if(m_entity->isPlayer() && static_cast<CMovement*>(m_entity->getComponentByName("CMovement"))->getSpeed() < 0)*/
 				pos = m_trans->getPosition() + (1.1 * m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
-			else
-				pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));
+			/*else
+				pos = m_trans->getPosition() + (m_shipRadius * Common::Util::Math::getDirection(m_trans->getTransform()));*/
 
             using namespace Common::Data;
             log_trace(LOG_PWEAPON, "Shoot with secondary weapon\n");
